@@ -32,7 +32,6 @@ namespace GoninDigital.Models
         public byte[] Image { get; set; }
 
         public virtual Brand Brand { get; set; }
-        public virtual ProductCategory Category { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }

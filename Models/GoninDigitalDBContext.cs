@@ -46,9 +46,7 @@ namespace GoninDigital.Models
             {
                 entity.ToTable("Brand");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -102,9 +100,7 @@ namespace GoninDigital.Models
             {
                 entity.ToTable("Invoice");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("date")
@@ -234,12 +230,6 @@ namespace GoninDigital.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PRODUCT_BRAND");
 
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PRODUCT_CATEGORY");
-
                 entity.HasOne(d => d.Vendor)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.VendorId)
@@ -251,9 +241,10 @@ namespace GoninDigital.Models
             {
                 entity.ToTable("ProductCategory");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.HasIndex(e => e.Name, "UK_CATEGORY_NAME")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -345,14 +336,12 @@ namespace GoninDigital.Models
             {
                 entity.ToTable("UserType");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Desciption)
+                entity.Property(e => e.Description)
                     .IsRequired()
                     .HasColumnType("text")
-                    .HasColumnName("desciption");
+                    .HasColumnName("description");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -364,9 +353,7 @@ namespace GoninDigital.Models
             {
                 entity.ToTable("Vendor");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Address)
                     .HasColumnType("text")
