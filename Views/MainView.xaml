@@ -7,10 +7,36 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         xmlns:ui="http://schemas.modernwpf.com/2019"
-        ui:WindowHelper.UseModernWindowStyle="True">
-    <ui:SimpleStackPanel Margin="12" Spacing="24">
-        <TextBlock Text="My first ModernWPF app" Style="{StaticResource HeaderTextBlockStyle}" />
-        <Button Content="I am a button" />
-        <Button Content="I am an accent button" Style="{StaticResource AccentButtonStyle}" />
-    </ui:SimpleStackPanel>
+        ui:WindowHelper.UseModernWindowStyle="True"
+        ui:ThemeManager.IsThemeAware="True"
+        xmlns:vw="clr-namespace:GoninDigital.Views">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ui:NavigationView x:Name="nvSample6"
+                        Height="460"
+                        PaneDisplayMode="Top">
+            <ui:NavigationView.MenuItems>
+                <ui:NavigationViewItem Content="Home" Tag="SamplePage1" />
+                <ui:NavigationViewItem Content="Your Shop" Tag="SamplePage2" />
+                <ui:NavigationViewItem Content="Production" Tag="SamplePage3" />
+                <ui:NavigationViewItem Content="Cart" Tag="SamplePage3" />
+            </ui:NavigationView.MenuItems>
+            <ui:NavigationView.AutoSuggestBox>
+                <ui:AutoSuggestBox QueryIcon="Find" 
+                                   AutomationProperties.Name="Search"
+                                   Width="150"/>
+            </ui:NavigationView.AutoSuggestBox>
+            <ui:NavigationView.PaneFooter>
+                <ui:NavigationViewItem  Icon="Contact" 
+                                        ToolTipService.ToolTip="Account" 
+                                        Tag="SamplePage2"
+                                        Width="40"/>
+            </ui:NavigationView.PaneFooter>
+            
+        </ui:NavigationView>
+    </Grid>
 </Window>
