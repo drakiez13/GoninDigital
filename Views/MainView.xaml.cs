@@ -23,6 +23,9 @@ namespace GoninDigital
         public MainWindow()
         {
             InitializeComponent();
+            /*GoninDigitalDBContext db = new GoninDigitalDBContext();
+            db.Add(new ProductCategory { Id="unique", Name = "A" });
+            db.SaveChanges();*/
         }
     }
 }
