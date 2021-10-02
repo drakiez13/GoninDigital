@@ -24,10 +24,17 @@
                                    Width="150"/>
             </ui:NavigationView.AutoSuggestBox>
             <ui:NavigationView.PaneFooter>
-                <ui:NavigationViewItem  Icon="Contact" 
+                <StackPanel Orientation="Horizontal">
+                    <ui:NavigationViewItem  Icon="Contact" 
                                         ToolTipService.ToolTip="Account" 
-                                        Tag="SamplePage2"
+                                        Tag="AccountPage"
                                         Width="40"/>
+                    <ui:NavigationViewItem  Icon="Message" 
+                                        ToolTipService.ToolTip="Message" 
+                                        Tag="MessagePage"
+                                        Width="40"/>
+                </StackPanel>
+                
             </ui:NavigationView.PaneFooter>
             <ui:NavigationView.Content>
                 <ui:Frame x:Name="contentFrame"/>
