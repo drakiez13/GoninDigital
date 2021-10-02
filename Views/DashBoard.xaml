@@ -1,12 +1,33 @@
-﻿<Window x:Class="GoninDigital.Views.DashBoard"
+﻿<UserControl x:Class="GoninDigital.Views.DashBoard"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoninDigital.Views"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
         mc:Ignorable="d"
-        Title="DashBoard" Height="450" Width="800">
+        Height="450" Width="800">
     <Grid>
-        <Button>Click Me</Button>
+        <ui:NavigationView x:Name="nvSample6"
+                        Height="460"
+                        PaneDisplayMode="Top" Grid.ColumnSpan="2">
+            <ui:NavigationView.MenuItems>
+                <ui:NavigationViewItem Content="Home" Tag="SamplePage1" />
+                <ui:NavigationViewItem Content="Your Shop" Tag="SamplePage2" />
+                <ui:NavigationViewItem Content="Production" Tag="SamplePage3" />
+                <ui:NavigationViewItem Content="Cart" Tag="SamplePage3" />
+            </ui:NavigationView.MenuItems>
+            <ui:NavigationView.AutoSuggestBox>
+                <ui:AutoSuggestBox QueryIcon="Find" 
+                                   AutomationProperties.Name="Search"
+                                   Width="150"/>
+            </ui:NavigationView.AutoSuggestBox>
+            <ui:NavigationView.PaneFooter>
+                <ui:NavigationViewItem  Icon="Contact" 
+                                        ToolTipService.ToolTip="Account" 
+                                        Tag="SamplePage2"
+                                        Width="40"/>
+            </ui:NavigationView.PaneFooter>
+        </ui:NavigationView>
     </Grid>
-</Window>
+</UserControl>

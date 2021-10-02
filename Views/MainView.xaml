@@ -12,31 +12,11 @@
         xmlns:vw="clr-namespace:GoninDigital.Views">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
-        <ui:NavigationView x:Name="nvSample6"
-                        Height="460"
-                        PaneDisplayMode="Top">
-            <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Content="Home" Tag="SamplePage1" />
-                <ui:NavigationViewItem Content="Your Shop" Tag="SamplePage2" />
-                <ui:NavigationViewItem Content="Production" Tag="SamplePage3" />
-                <ui:NavigationViewItem Content="Cart" Tag="SamplePage3" />
-            </ui:NavigationView.MenuItems>
-            <ui:NavigationView.AutoSuggestBox>
-                <ui:AutoSuggestBox QueryIcon="Find" 
-                                   AutomationProperties.Name="Search"
-                                   Width="150"/>
-            </ui:NavigationView.AutoSuggestBox>
-            <ui:NavigationView.PaneFooter>
-                <ui:NavigationViewItem  Icon="Contact" 
-                                        ToolTipService.ToolTip="Account" 
-                                        Tag="SamplePage2"
-                                        Width="40"/>
-            </ui:NavigationView.PaneFooter>
-            
-        </ui:NavigationView>
+        <Grid Grid.Row="0">
+            <vw:DashBoard></vw:DashBoard>
+        </Grid>
     </Grid>
 </Window>
