@@ -9,13 +9,14 @@
         Height="450" Width="800">
     <Grid>
         <ui:NavigationView x:Name="nvSample6"
-                        Height="460"
-                        PaneDisplayMode="Top" Grid.ColumnSpan="2">
+                           Height="460"
+                           SelectionChanged="NavigationView_SelectionChanged"
+                           PaneDisplayMode="Top" Grid.ColumnSpan="2">
             <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Content="Home" Tag="SamplePage1" />
-                <ui:NavigationViewItem Content="Your Shop" Tag="SamplePage2" />
-                <ui:NavigationViewItem Content="Production" Tag="SamplePage3" />
-                <ui:NavigationViewItem Content="Cart" Tag="SamplePage3" />
+                <ui:NavigationViewItem Content="Home" Tag="HomePage" />
+                <ui:NavigationViewItem Content="My Shop" Tag="MyShopPage" />
+                <ui:NavigationViewItem Content="Hot Deal" Tag="HotDealPage" />
+                <ui:NavigationViewItem Content="Cart" Tag="CartPage" />
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.AutoSuggestBox>
                 <ui:AutoSuggestBox QueryIcon="Find" 
@@ -23,11 +24,21 @@
                                    Width="150"/>
             </ui:NavigationView.AutoSuggestBox>
             <ui:NavigationView.PaneFooter>
-                <ui:NavigationViewItem  Icon="Contact" 
+                <StackPanel Orientation="Horizontal">
+                    <ui:NavigationViewItem  Icon="Contact" 
                                         ToolTipService.ToolTip="Account" 
-                                        Tag="SamplePage2"
+                                        Tag="AccountPage"
                                         Width="40"/>
+                    <ui:NavigationViewItem  Icon="Message" 
+                                        ToolTipService.ToolTip="Message" 
+                                        Tag="MessagePage"
+                                        Width="40"/>
+                </StackPanel>
+                
             </ui:NavigationView.PaneFooter>
+            <ui:NavigationView.Content>
+                <ui:Frame x:Name="contentFrame"/>
+            </ui:NavigationView.Content>
         </ui:NavigationView>
     </Grid>
 </UserControl>

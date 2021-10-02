@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GoninDigital.Views
+namespace GoninDigital.Views.DashBoardPages
 {
     /// <summary>
-    /// Interaction logic for DashBoard.xaml
+    /// Interaction logic for AccountPage.xaml
     /// </summary>
-    public partial class DashBoard : UserControl
+    public partial class AccountPage : Page
     {
-        public DashBoard()
+        public AccountPage()
         {
             InitializeComponent();
         }
