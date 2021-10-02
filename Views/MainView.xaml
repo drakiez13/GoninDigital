@@ -11,12 +11,6 @@
         ui:ThemeManager.IsThemeAware="True"
         xmlns:vw="clr-namespace:GoninDigital.Views">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <vw:DashBoard></vw:DashBoard>
-        </Grid>
+        <vw:DashBoard></vw:DashBoard>
     </Grid>
 </Window>
