@@ -12,5 +12,6 @@
         xmlns:vw="clr-namespace:GoninDigital.Views">
     <Grid>
         <vw:DashBoard></vw:DashBoard>
+        
     </Grid>
 </Window>

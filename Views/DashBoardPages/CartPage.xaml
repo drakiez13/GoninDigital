@@ -9,49 +9,35 @@
       xmlns:ui="http://schemas.modernwpf.com/2019"
       Title="CartPage">
 
-    <Grid>
-        <ui:NavigationView x:Name="nvSample6"
-                           Height="460"
-                           SelectionChanged="NavigationView_SelectionChanged"
-                           PaneDisplayMode="Top" Grid.ColumnSpan="2">
-            <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Content="Home" Tag="HomePage" />
-                <ui:NavigationViewItem Content="My Shop" Tag="MyShopPage" />
-                <ui:NavigationViewItem Content="Hot Deal" Tag="HotDealPage" />
-                <ui:NavigationViewItem Content="Cart" Tag="CartPage" />
-            </ui:NavigationView.MenuItems>
-            <ui:NavigationView.AutoSuggestBox>
-                <ui:AutoSuggestBox QueryIcon="Find" 
-                                   AutomationProperties.Name="Search"
-                                   Width="150"/>
-            </ui:NavigationView.AutoSuggestBox>
-            <ui:NavigationView.PaneFooter>
-                <StackPanel Orientation="Horizontal">
-                    <ui:NavigationViewItem  Icon="Contact" 
-                                        ToolTipService.ToolTip="Account" 
-                                        Tag="AccountPage"
-                                        Width="40"/>
-                    <ui:NavigationViewItem  Icon="Message" 
-                                        ToolTipService.ToolTip="Message" 
-                                        Tag="MessagePage"
-                                        Width="40"/>
-                </StackPanel>
 
-            </ui:NavigationView.PaneFooter>
-            <ui:NavigationView.Content>
-                <ui:Frame x:Name="contentFrame"/>
-            </ui:NavigationView.Content>
-        </ui:NavigationView>
-        <Border 
-                    Padding="96"
-                    ui:ThemeManager.RequestedTheme="Light">
-            <ui:ThemeShadowChrome
-                    IsShadowEnabled="True"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Depth="{Binding ElementName=DepthSlider, Path=Value}">
-                
-            </ui:ThemeShadowChrome>
-        </Border>
+    <Grid>
+        <ListView Margin="10">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Width="100"
+                                   Height="100"
+                                   Source="Binding img"/>
+                            <TextBlock Grid.Column="1"
+                                       Text="Binding Price"/>
+                            <TextBlock Grid.Column="2"
+                                       Text="Binding quantity"/>
+                            <TextBlock Grid.Column="3"
+                                       Text="Binding total"/>
+                            <TextBlock Grid.Column="4"
+                                       Text="Binding act"/>
+                        </Grid>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>
