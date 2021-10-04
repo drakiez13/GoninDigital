@@ -26,6 +26,7 @@ namespace GoninDigital.Views
         public DashBoard()
         {
             InitializeComponent();
+            contentFrame.Navigate(typeof(HomePage));
         }
         private void NavigationView_SelectionChanged(ModernWpf.Controls.NavigationView sender, ModernWpf.Controls.NavigationViewSelectionChangedEventArgs args)
         {
