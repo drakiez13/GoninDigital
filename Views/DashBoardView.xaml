@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GoninDigital.Views"
         xmlns:ui="http://schemas.modernwpf.com/2019"
         mc:Ignorable="d"
-        Height="450" Width="800">
+        Height="auto"  Width="auto">
     <Grid>
         <ui:NavigationView x:Name="nvSample6"
                            Height="460"
