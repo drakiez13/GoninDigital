@@ -7,6 +7,8 @@ namespace GoninDigital.Models
 {
     public partial class User
     {
+        private static User _instance;
+        public static User Instance => _instance ?? (_instance = new User());
         public User()
         {
             Carts = new HashSet<Cart>();
