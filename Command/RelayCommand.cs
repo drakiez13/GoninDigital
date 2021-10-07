@@ -3,28 +3,33 @@ using System.Windows.Input;
 
 namespace GoninDigital.Command
 {
-    public class RelayCommand : ICommand
+    class RelayCommand<T> : ICommand
     {
-        private readonly Action _action;
-        private Func<bool> _canExecute;
+        private readonly Predicate<T> _canExecute;
+        private readonly Action<T> _execute;
+
+        public RelayCommand(Predicate<T> canExecute, Action<T> execute)
+        {
+            if (execute == null)
+                throw new ArgumentNullException("execute");
+            _canExecute = canExecute;
+            _execute = execute;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return _canExecute == null ? true : _canExecute((T)parameter);
+        }
+
+        public void Execute(object parameter)
+        {
+            _execute((T)parameter);
+        }
 
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
-        }
-        public RelayCommand(Action action, Func<bool> canExecute = null)
-        {
-            _action = action;
-            _canExecute = canExecute;
-        }
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute == null ? true : _canExecute.Invoke();
-        }
-        public void Execute(object parameter)
-        {
-            _action.Invoke();
         }
     }
 }

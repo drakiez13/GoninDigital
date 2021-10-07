@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GoninDigital.Models;
+using GoninDigital.ViewModels;
 
 namespace GoninDigital.Views
 {
@@ -25,10 +26,10 @@ namespace GoninDigital.Views
         {
             InitializeComponent();
         }
-
         private void Password_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            User.Instance.Password = Password.Password;
+            if (this.DataContext != null)
+            { ((dynamic)this.DataContext).Password = ((PasswordBox)sender).Password; }
         }
     }
 }

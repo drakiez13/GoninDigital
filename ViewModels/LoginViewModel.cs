@@ -9,6 +9,7 @@ using System.ComponentModel;
 
 using GoninDigital.Models;
 using GoninDigital.Command;
+using System.Windows.Controls;
 
 namespace GoninDigital.ViewModels
 {
@@ -16,7 +17,6 @@ namespace GoninDigital.ViewModels
     {
         #region Properties
         private Window window;
-        public ICommand LoginCommand { get; set; }
         public Action CloseAction { get; set; }
         private string _usrname;
         public string UserName
@@ -29,30 +29,44 @@ namespace GoninDigital.ViewModels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UserName"));
             }
         }
+        private string _passwrd;
+        public string Password
+        {
+            get { return _passwrd; }
+            set
+            {
+                if (_passwrd == value) { return; }
+                _passwrd = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Password"));
+            }
+        }
+        public ICommand Passwordchangedcommand { get; set; }
+        public ICommand LoginCommand { get; set; }
         #endregion
 
         #region Constructor
         public LoginViewModel(Window window)
         {
             this.window = window;
-            User.Instance.UserName = UserName;
-            LoginCommand = new RelayCommand(LoginCommandExecute);
+            LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginCommandExecute(); });
+            Passwordchangedcommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { _passwrd = p.Password; });
         }
         #endregion
 
         #region Private Methods
         private void LoginCommandExecute()
         {
-            User.Instance.UserName = UserName;
-            if (User.Instance.UserName == null || User.Instance.Password == null)
+            _usrname = UserName;
+            if (_usrname == null || _passwrd == null)
             {
                 //MessageBox.Show("Both username and password should be filled in.");
                 return;
             }
-            if (true)
+            int accCount = DataProvider.Instance.Db.Users.Where(x => x.UserName == _usrname && x.Password == _passwrd).Count();
+            if (accCount > 0)
             {
                 this.window = new Window();
-                this.window.Show();
+                window.Show();
             }
             else
             {
