@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GoninDigital.Command;
-using GoninDigital.Model;
+using System.ComponentModel;
+using GoninDigital.Views;
 namespace GoninDigital.ViewModels
 {
     class RegisterViewModel: MainViewModel
     {
-        public List<String> Gender { get; } = new List<string>() { "Other", "Female", "Male" };
-        public List<String> TypeU { get; } = new List<string>() { "Admin", "Seller", "Customer" };
+        private Window window;
+        public List<String> LGender { get; } = new List<string>() { "Other", "Female", "Male" };
+        public List<String> LTypeU { get; } = new List<string>() { "Admin", "Seller", "Customer" };
         private string _userName;
         public string userName { get => _userName; set { _userName = value; OnPropertyChanged(nameof(userName)); 
                 OnPropertyChanged(nameof(CanRegister)); } }
         private string _passWord;
-        public string passWord { get => _passWord; set { _passWord = value; OnPropertyChanged(nameof(passWord));
+        public string Password { get => _passWord; set { _passWord = value; OnPropertyChanged(nameof(Password));
                 OnPropertyChanged(nameof(CanRegister));
             } }
         private string _CpassWord;
@@ -31,7 +34,33 @@ namespace GoninDigital.ViewModels
         public string lastName { get => _lastName; set { _lastName = value; OnPropertyChanged(nameof(lastName));
                 OnPropertyChanged(nameof(CanRegister));
             } }
-
+        private string _Gender;
+        public string Gender
+        {
+            get => _Gender; set
+            {
+                _Gender = value; OnPropertyChanged(nameof(Gender));
+                OnPropertyChanged(nameof(CanRegister));
+            }
+        }
+        private string _DoB;
+        public string DoB
+        {
+            get => _DoB; set
+            {
+                _DoB = value; OnPropertyChanged(nameof(DoB));
+                OnPropertyChanged(nameof(CanRegister));
+            }
+        }
+        private string _TypeUser;
+        public string TypeUser
+        {
+            get => _TypeUser; set
+            {
+                _TypeUser = value; OnPropertyChanged(nameof(TypeUser));
+                OnPropertyChanged(nameof(CanRegister));
+            }
+        }
         private string _Email;
         public string Email { get => _Email; set { _Email = value; OnPropertyChanged(nameof(Email));
                 OnPropertyChanged(nameof(CanRegister));
@@ -45,38 +74,58 @@ namespace GoninDigital.ViewModels
             !string.IsNullOrEmpty(firstName) &&
             !string.IsNullOrEmpty(lastName) &&
             !string.IsNullOrEmpty(phoneNum) &&
-            !string.IsNullOrEmpty(passWord) &&
-            !string.IsNullOrEmpty(CpassWord);
-        #region Constructor
+            !string.IsNullOrEmpty(DoB);
+          //  !string.IsNullOrEmpty(Password) &&
+          //!string.IsNullOrEmpty(CpassWord);
+        public ICommand RegisterCommand { get; set; }
+        public ICommand CancelCommand { get; set; }
         public RegisterViewModel()
         {
-            RegisterCommand = new RelayCommand(RegisterCommandExecute);
+            this.window = window;
+            RegisterCommand = new RelayCommand(RegisterExecute);
+            CancelCommand = new RelayCommand(CancelExecute);
         }
-        #endregion
-        #region Private Methods
-        private void RegisterCommandExecute()
+        void RegisterExecute()
         {
-            if (Email)
+            if (!CanRegister)
+                MessageBox.Show("Chưa nhập đủ thông tin");
+            else
             {
-                MessageBox.Show("Both email and password should be filled in.");
-                return;
-            }
-            if (AccountManager.EmailExists(Email))
-            {
-                MessageBox.Show(string.Format("The email {0} already exists", Email));
-                return;
-            }
-            var Validator = new PersonalAccountValidator().ValidatePassword(UserModel.Instance.Password);
-            if (!Validator.IsValid)
-            {
-                MessageBox.Show(Validator.ValidationMessage);
-                return;
-            }
-            if (SendEmailCode(window, Resources.RegisterAccountEmailSubject, Resources.GenericEmailContent))
-            {
-                //CloseAction?.Invoke();
+                int a=0;
+                if (phoneNum[0] == '0' & int.TryParse(phoneNum, out a))
+                {
+                    string t = Email.Substring(Email.Length - 10, 10);
+                    if (t!="@gmail.com")
+                    {
+                        MessageBox.Show("Email không hợp lệ");
+                    }
+
+                    else
+                    {
+                        if(Password!=CpassWord)
+                        {
+                            MessageBox.Show("Password va Confirm Password không khớp");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Đăng kí thành công");
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("SDT không hợp lệ");
+                }
+
+
             }
         }
-        #endregion
+        void CancelExecute()
+        {
+            this.window.Close();
+        }
+
+       
+        
     }
 }

@@ -7,6 +7,7 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         xmlns:ViewModels="clr-namespace:GoninDigital.ViewModels" x:Class="GoninDigital.Views.Register"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:components="clr-namespace:GoninDigital.Components"
         DataContext="{StaticResource RegisterVM}"
         mc:Ignorable="d"
         Title="Register" Height="550" Width="600">
@@ -33,7 +34,8 @@
         <ComboBox
                             x:Name="CbbGender"
                             IsEditable="True"
-                            ItemsSource="{Binding Gender}"
+                            ItemsSource="{Binding LGender}"
+                            SelectedItem="{Binding Gender}"
                             SelectedIndex="2"
                             Width="200" Margin="162,118,0,0"/>
         <DatePicker
@@ -41,38 +43,34 @@
                     VerticalAlignment="Top"
                     Margin="162,161,0,0"
                     Height="32"
-            Text="{Binding DoB, UpdateSourceTrigger=PropertyChanged}"/>
+            SelectedDate="{Binding DoB, UpdateSourceTrigger=PropertyChanged}"/>
         <ComboBox
                             x:Name="CbbTypeUser"
                             IsEditable="True"
-                            ItemsSource="{Binding TypeU}"
+                            ItemsSource="{Binding LTypeU}"
+                            SelectedItem="{Binding TypeUser}"
                             SelectedIndex="2"
                             Width="200" Margin="162,198,0,0"/>
 
         <!--  <TextBox Height="15" HorizontalAlignment="Left" Margin="148,208,0,0" Name="textBoxType" Text="{Binding typeUser, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="222" /> -->
         <TextBox Height="15" HorizontalAlignment="Left" Margin="162,238,0,0" x:Name="textBoxUsername" Text="{Binding userName, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="222" />
-        <PasswordBox Height="36"  HorizontalAlignment="Left" Margin="162,278,0,0" x:Name="passwordBoxPass" 
-                         PasswordChar="*" VerticalAlignment="Top" Width="222">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="PasswordChanged">
-                    <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" 
-                                   CommandParameter="{Binding ElementName=passwordBoxPass}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </PasswordBox>
-        <PasswordBox Height="34"  HorizontalAlignment="Left" Margin="162,318,0,0" x:Name="passwordBoxCPass" 
-                         PasswordChar="*" VerticalAlignment="Top" Width="222">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="PasswordChanged">
-                    <i:InvokeCommandAction Command="{Binding CPasswordChangedCommand}" 
-                                   CommandParameter="{Binding ElementName=passwordBoxCPass}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </PasswordBox>
+        <components:BindablePasswordBox Height="36"  HorizontalAlignment="Left" Margin="162,278,0,0" x:Name="passwordBox" 
+                          VerticalAlignment="Top" Width="222"
+                                 Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+
+
+        <components:BindablePasswordBox Height="34"  HorizontalAlignment="Left" Margin="162,318,0,0" x:Name="passwordBoxCPass" 
+                          VerticalAlignment="Top" Width="222"
+                                        Password="{Binding CpassWord, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+
+        </components:BindablePasswordBox>
         <TextBox Height="23" HorizontalAlignment="Left" Margin="162,398,0,0" x:Name="textBoxEmail" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="222" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="162,358,0,0" x:Name="textBoxPhoneNum" Text="{Binding phoneNum, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="222" />
         <!--For password-->
         <Button Content="Submit" Height="30" Margin="143,457,0,0" x:Name="BtnSubmit" Command="{Binding RegisterCommand}" IsDefault="True" VerticalAlignment="Top" Width="70" />
-        <Button x:Name="BtnCancel" Content="Cancel" Height="30" Margin="244,457,0,0" VerticalAlignment="Top" Width="70" />
+        <Button x:Name="BtnCancel" Content="Cancel" Height="30" Margin="244,457,0,0" Command="{Binding CancelCommand}" VerticalAlignment="Top" Width="70" />
     </Grid>
 </Window>
+
+    

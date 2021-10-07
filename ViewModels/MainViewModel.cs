@@ -33,7 +33,7 @@ namespace GoninDigital.ViewModels
                 text += data.Name;
             }
             _ = MessageBox.Show("Hello world");
-            
+          
         }
     }
 }

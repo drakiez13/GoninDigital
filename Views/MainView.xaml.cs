@@ -26,8 +26,7 @@ namespace GoninDigital
             /*GoninDigitalDBContext db = new GoninDigitalDBContext();
             db.Add(new ProductCategory { Id="unique", Name = "A" });
             db.SaveChanges();*/
-            Register reg = new Register();
-            reg.ShowDialog();
+
 
         }
     }

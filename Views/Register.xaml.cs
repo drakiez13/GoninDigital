@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
 namespace GoninDigital.Views
 {
     /// <summary>
@@ -23,6 +22,7 @@ namespace GoninDigital.Views
         public Register()
         {
             InitializeComponent();
+
     }
 
     } 
