@@ -7,37 +7,12 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       xmlns:ui="http://schemas.modernwpf.com/2019"
-      Title="CartPage">
+      Title="CartPage"
+      Background="{DynamicResource AppBackgroundBrush}"
+      >
 
 
-    <Grid>
-        <ListView Margin="10">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <WrapPanel>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="70"/>
-                                <ColumnDefinition Width="70"/>
-                                <ColumnDefinition Width="70"/>
-                                <ColumnDefinition Width="70"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Width="100"
-                                   Height="100"
-                                   Source="Binding img"/>
-                            <TextBlock Grid.Column="1"
-                                       Text="Binding Price"/>
-                            <TextBlock Grid.Column="2"
-                                       Text="Binding quantity"/>
-                            <TextBlock Grid.Column="3"
-                                       Text="Binding total"/>
-                            <TextBlock Grid.Column="4"
-                                       Text="Binding act"/>
-                        </Grid>
-                    </WrapPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+    <Grid >
+        
     </Grid>
 </Page>
