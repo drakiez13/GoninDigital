@@ -12,7 +12,29 @@
       >
 
 
-    <Grid >
-        
+    <Grid Background="Wheat">
+        <StackPanel Orientation="Vertical">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button/>
+                <Image Grid.Column="1"/>
+                <TextBlock Grid.Column="2"
+                           Text="from data"/>
+                <TextBlock Grid.Column="3"
+                           Text="price from data"/>
+                <Button Grid.Column="4"/>
+                <TextBlock Grid.Column="5"
+                           Text="total price"/>
+                <Button Grid.Column="6"/>
+            </Grid>
+        </StackPanel>
     </Grid>
 </Page>
