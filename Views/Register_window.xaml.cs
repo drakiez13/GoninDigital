@@ -10,19 +10,22 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 namespace GoninDigital.Views
 {
     /// <summary>
-    /// Interaction logic for Registerr.xaml
+    /// Interaction logic for Register.xaml
     /// </summary>
-    public partial class Registerr : UserControl
-    {
-        public Registerr()
+
+    public partial class Register : Window
+    { 
+        public Register()
         {
             InitializeComponent();
-        }
+
     }
+
+    } 
+        
+        
 }

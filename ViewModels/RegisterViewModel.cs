@@ -8,13 +8,13 @@ using System.Windows.Input;
 using GoninDigital.Command;
 using System.ComponentModel;
 using GoninDigital.Views;
+using GoninDigital.Models;
 namespace GoninDigital.ViewModels
 {
     class RegisterViewModel: MainViewModel
     {
-        private Window window;
         public List<String> LGender { get; } = new List<string>() { "Other", "Female", "Male" };
-        public List<String> LTypeU { get; } = new List<string>() { "Admin", "Seller", "Customer" };
+        public List<String> LTypeU { get; } = new List<string>() { "Admin", "Saler", "Customer" };
         private string _userName;
         public string userName { get => _userName; set { _userName = value; OnPropertyChanged(nameof(userName)); 
                 OnPropertyChanged(nameof(CanRegister)); } }
@@ -74,14 +74,16 @@ namespace GoninDigital.ViewModels
             !string.IsNullOrEmpty(firstName) &&
             !string.IsNullOrEmpty(lastName) &&
             !string.IsNullOrEmpty(phoneNum) &&
-            !string.IsNullOrEmpty(DoB);
-          //  !string.IsNullOrEmpty(Password) &&
-          //!string.IsNullOrEmpty(CpassWord);
+            !string.IsNullOrEmpty(DoB) &&
+            !string.IsNullOrEmpty(Password) &&
+            !string.IsNullOrEmpty(CpassWord);
+        private int type_User;
+        private int type_Gender;
+
         public ICommand RegisterCommand { get; set; }
         public ICommand CancelCommand { get; set; }
         public RegisterViewModel()
         {
-            this.window = window;
             RegisterCommand = new RelayCommand(RegisterExecute);
             CancelCommand = new RelayCommand(CancelExecute);
         }
@@ -108,7 +110,55 @@ namespace GoninDigital.ViewModels
                         }
                         else
                         {
-                            MessageBox.Show("Đăng kí thành công");
+                            int checkUsername = DataProvider.Instance.Db.Users.Where(x => x.UserName == _userName).Count();
+                            int checkEmail = DataProvider.Instance.Db.Users.Where(x => x.Email == _Email).Count();
+                            if (checkUsername > 0)
+                                MessageBox.Show("Tài khoản đã tồn tại");
+                            else if (checkEmail > 0)
+                                MessageBox.Show("Email đã tồn tại");
+                            else
+                            {
+                                MessageBox.Show("Đăng kí thành công");
+                                switch(TypeUser)
+                                {
+                                    case "Admin":
+                                        type_User = 1;
+                                        break;
+                                    case "Saler":
+                                        type_User = 2;
+                                        break;
+                                    case "Customer":
+                                        type_User = 6;
+                                        break;
+                                }
+                                    switch (Gender)
+                                    {
+                                        case "Female":
+                                            type_Gender = 0;
+                                            break;
+                                        case "Maler":
+                                            type_Gender = 1;
+                                            break;
+                                        case "Others":
+                                            type_Gender = 2;
+                                            break;
+                                    }
+                                DateTime dmy;
+                                DateTime.TryParse(DoB, out dmy);
+                                User u = new User();
+                                u.Id = 10;
+                                u.UserName = userName;
+                                u.Password = Password;
+                                u.TypeId = type_User;
+                                u.FirstName = firstName;
+                                u.LastName = lastName;
+                                u.PhoneNumber = phoneNum;
+                                u.Email = Email;
+                                u.Gender = (byte)type_Gender;
+                                u.DateOfBirth = dmy;
+                               
+                            }
+
                         }
                     }
                 }
@@ -122,7 +172,7 @@ namespace GoninDigital.ViewModels
         }
         void CancelExecute()
         {
-            this.window.Close();
+               
         }
 
        
