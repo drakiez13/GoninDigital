@@ -53,7 +53,7 @@
             <Label 
                 Content="Username"
                 Grid.Column="0"
-                HorizontalAlignment="Right" 
+                HorizontalAlignment="Center" 
                 Margin="160,20,0,0" 
                 VerticalAlignment="Top" 
                 Height="40" 
@@ -74,14 +74,13 @@
 
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200*" />
-                <ColumnDefinition Width="157*" />
-                <ColumnDefinition Width="43*"/>
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Label 
             Content="Password" 
             Grid.Column="0"
-            HorizontalAlignment="Right" 
+            HorizontalAlignment="Center" 
             Margin="160,20,0,0"
             VerticalAlignment="Top" 
             Height="40" 
