@@ -17,12 +17,12 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid.Background>
+        <!--<Grid.Background>
             <LinearGradientBrush>
                 <GradientStop Color="#7be9f6" Offset="0.0"/>
                 <GradientStop Color="#f083da" Offset="1"/>
             </LinearGradientBrush>
-        </Grid.Background>
+        </Grid.Background>-->
 
         <TextBlock
             Grid.Row="0"
@@ -32,8 +32,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontSize="20"
-            Foreground="White"
-            Text="Login to use xvideos"
+            Text="Login to use GoninDigital"
             TextAlignment="Center"
             TextWrapping="Wrap" />
         <!--  OneTime binding: Text="{Binding Path=LoginToUse, Mode=OneTime}"  -->
@@ -46,6 +45,17 @@
            Margin="190,30,0,0"
            Target="{Binding ElementName=EmailTextBox}"/>-->
 
+        <Label 
+            Content="Username"
+            Grid.Row="2"
+            HorizontalAlignment="Left" 
+            Margin="160,20,0,0" 
+            VerticalAlignment="Top" 
+            Height="40" 
+            Width="100" 
+            FontSize="20" 
+            Grid.RowSpan="3" />
+        
         <TextBox
             x:Name="UserName"
             Grid.Row="2"
@@ -54,13 +64,21 @@
             Margin="275,20,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            BorderBrush="White"
             FontSize="18"
-            Foreground="Black"
             Text="{Binding UserName, Mode=TwoWay}"
             TextWrapping="Wrap">
-
         </TextBox>
+
+        <Label 
+            Content="Password" 
+            Grid.Row="4" 
+            HorizontalAlignment="Left" 
+            Margin="160,20,0,0"
+            VerticalAlignment="Top" 
+            Height="40" 
+            Width="100" 
+            FontSize="20" 
+            Grid.RowSpan="2" />
 
         <PasswordBox
             Name="Password"
@@ -70,11 +88,8 @@
             Margin="275,20,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            BorderBrush="White"
             FontSize="18"
-            Foreground="Black"
             PasswordChanged="Password_PasswordChanged">
-
         </PasswordBox>
 
         <Button
@@ -97,11 +112,9 @@
             VerticalAlignment="Center"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Background="Transparent"
             BorderThickness="0"
             Content="Forgot Password?"
-            FontSize="15"
-            Foreground="Black" />
+            FontSize="15"/>
 
         <Button
             x:Name="Register"
@@ -112,12 +125,9 @@
             VerticalAlignment="Center"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Background="Transparent"
             BorderThickness="0"
             Content="Don't have an account?&#10;Register here!"
-            FontSize="12"
-            Foreground="Black" />
-        <Label Content="Username" HorizontalAlignment="Left" Margin="162,17,0,0" Grid.Row="2" VerticalAlignment="Top" Height="46" Width="93" FontSize="20" Grid.RowSpan="3"/>
-        <Label Content="Password" HorizontalAlignment="Left" Margin="161,16,0,0" Grid.Row="4" VerticalAlignment="Top" Height="48" Width="94" FontSize="20" Grid.RowSpan="2"/>
+            FontSize="12"/>
+        
     </Grid>
 </UserControl>
