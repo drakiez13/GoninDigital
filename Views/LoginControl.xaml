@@ -45,52 +45,59 @@
            Margin="190,30,0,0"
            Target="{Binding ElementName=EmailTextBox}"/>-->
 
-        <Label 
-            Content="Username"
-            Grid.Row="2"
-            HorizontalAlignment="Left" 
-            Margin="160,20,0,0" 
-            VerticalAlignment="Top" 
-            Height="40" 
-            Width="100" 
-            FontSize="20" 
-            Grid.RowSpan="3" />
-        
-        <TextBox
-            x:Name="UserName"
-            Grid.Row="2"
-            Width="430"
-            Height="40"
-            Margin="275,20,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            FontSize="18"
-            Text="{Binding UserName, Mode=TwoWay}"
-            TextWrapping="Wrap">
-        </TextBox>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Label 
+                Content="Username"
+                Grid.Column="0"
+                HorizontalAlignment="Right" 
+                Margin="160,20,0,0" 
+                VerticalAlignment="Top" 
+                Height="40" 
+                Width="100" 
+                FontSize="20" 
+                Grid.RowSpan="3"/>
+            <TextBox
+                x:Name="UserName"
+                Width="250"
+                Height="40"
+                Margin="0,20,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="18"
+                Text="{Binding UserName, Mode=TwoWay}"
+                TextWrapping="Wrap" Grid.Column="2"/>
+        </Grid>
 
-        <Label 
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200*" />
+                <ColumnDefinition Width="157*" />
+                <ColumnDefinition Width="43*"/>
+            </Grid.ColumnDefinitions>
+            <Label 
             Content="Password" 
-            Grid.Row="4" 
-            HorizontalAlignment="Left" 
+            Grid.Column="0"
+            HorizontalAlignment="Right" 
             Margin="160,20,0,0"
             VerticalAlignment="Top" 
             Height="40" 
             Width="100" 
-            FontSize="20" 
-            Grid.RowSpan="2" />
+            FontSize="20" />
 
-        <PasswordBox
+            <PasswordBox
             Name="Password"
-            Grid.Row="4"
-            Width="430"
+            Width="250"
             Height="40"
-            Margin="275,20,0,0"
+            Margin="0,20,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             FontSize="18"
-            PasswordChanged="Password_PasswordChanged">
-        </PasswordBox>
+            PasswordChanged="Password_PasswordChanged" Grid.Column="1"/>
+        </Grid>
 
         <Button
             x:Name="Login"
@@ -128,6 +135,6 @@
             BorderThickness="0"
             Content="Don't have an account?&#10;Register here!"
             FontSize="12"/>
-        
+
     </Grid>
 </UserControl>
