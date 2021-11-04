@@ -28,11 +28,7 @@ namespace GoninDigital.ViewModels
         }
         public MainViewModel()
         {
-            foreach (var data in DataProvider.Instance.Db.UserTypes.ToList())
-            {
-                text += data.Name;
-            }
-            _ = MessageBox.Show("Hello world");
+            
         }
     }
 }
