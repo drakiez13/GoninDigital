@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows;
 using GoninDigital.Models;
-
+using GoninDigital.Views;
 namespace GoninDigital.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
@@ -33,6 +33,7 @@ namespace GoninDigital.ViewModels
                 text += data.Name;
             }
             _ = MessageBox.Show("Hello world");
+          
         }
     }
 }

@@ -12,22 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using GoninDigital.Views;
-namespace GoninDigital
+
+namespace GoninDigital.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Registerr.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Registerr : UserControl
     {
-        public MainWindow()
+        public Registerr()
         {
             InitializeComponent();
-            /*GoninDigitalDBContext db = new GoninDigitalDBContext();
-            db.Add(new ProductCategory { Id="unique", Name = "A" });
-            db.SaveChanges();*/
-
-
         }
     }
 }
