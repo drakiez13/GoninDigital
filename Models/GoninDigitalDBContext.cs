@@ -89,6 +89,12 @@ namespace GoninDigital.Models
 
                 entity.Property(e => e.ProductId).HasColumnName("product_id");
 
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.Favorites)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FAVORITE_PRODUCT");
+
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Favorites)
                     .HasForeignKey(d => d.UserId)
@@ -186,12 +192,9 @@ namespace GoninDigital.Models
 
                 entity.Property(e => e.Description)
                     .IsRequired()
-                    .HasColumnType("text")
                     .HasColumnName("description");
 
-                entity.Property(e => e.Detail)
-                    .HasColumnType("text")
-                    .HasColumnName("detail");
+                entity.Property(e => e.Detail).HasColumnName("detail");
 
                 entity.Property(e => e.DiscountRate).HasColumnName("discount_rate");
 
@@ -229,6 +232,12 @@ namespace GoninDigital.Models
                     .HasForeignKey(d => d.BrandId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PRODUCT_BRAND");
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.Products)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PRODUCT_PRODUCTCATEGORY");
 
                 entity.HasOne(d => d.Vendor)
                     .WithMany(p => p.Products)
@@ -355,13 +364,9 @@ namespace GoninDigital.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Address)
-                    .HasColumnType("text")
-                    .HasColumnName("address");
+                entity.Property(e => e.Address).HasColumnName("address");
 
-                entity.Property(e => e.Description)
-                    .HasColumnType("text")
-                    .HasColumnName("description");
+                entity.Property(e => e.Description).HasColumnName("description");
 
                 entity.Property(e => e.Name)
                     .IsRequired()

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GoninDigital.Models;
 
 namespace GoninDigital
 {
@@ -23,9 +24,6 @@ namespace GoninDigital
         public MainWindow()
         {
             InitializeComponent();
-            /*GoninDigitalDBContext db = new GoninDigitalDBContext();
-            db.Add(new ProductCategory { Id="unique", Name = "A" });
-            db.SaveChanges();*/
         }
     }
 }
