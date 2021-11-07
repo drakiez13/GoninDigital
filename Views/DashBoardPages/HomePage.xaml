@@ -10,8 +10,27 @@
       DataContext="{StaticResource HomePageVM}"
       Background="{DynamicResource AppBackgroundBrush}"
       Title="HomePage">
-    <ScrollViewer>
-        <TextBox Text="{Binding a.Brand.Name, Mode=TwoWay}"></TextBox>
+    <ScrollViewer
+        Margin="40 10 40 0">
+        <StackPanel
+            Orientation="Vertical">
+            <Label
+                Margin="0 0 0 10"
+                FontSize="22"
+                FontWeight="Bold">Home</Label>
+            <StackPanel
+                Orientation="Horizontal"
+                MaxWidth="1000"
+                Background="Snow">
+                <uc:ProductCard
+                    Margin="40 0 10 0"
+                    Title="Thang"
+                    ></uc:ProductCard>
+                <uc:ProductCard Margin="10 0 10 0"></uc:ProductCard>
+                <uc:ProductCard Margin="10 0 10 0"></uc:ProductCard>
+                <uc:ProductCard Margin="10 0 10 0"></uc:ProductCard>
+                <uc:ProductCard Margin="10 0 10 0"></uc:ProductCard>
+            </StackPanel>
+        </StackPanel>
     </ScrollViewer>
-
 </Page>

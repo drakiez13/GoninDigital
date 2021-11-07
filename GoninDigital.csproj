@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\BlankImage.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -22,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\BlankImage.jpg" />
+    <Resource Include="Resources\Images\BlankImage.jpg" />
   </ItemGroup>
 
 </Project>
