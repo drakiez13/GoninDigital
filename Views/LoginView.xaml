@@ -6,7 +6,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         DataContext="{StaticResource LoginVM}"
         xmlns:local="clr-namespace:GoninDigital.Views"
-        xmlns:components="clr-namespace:GoninDigital.SharedControl"
         mc:Ignorable="d"
         Name="LoginWindow"
         Title="LoginView" Height="450" Width="800">
@@ -97,25 +96,23 @@
                 Width="100" 
                 FontSize="20" />
 
-            <!--<PasswordBox
-                Name="Password"
+            <PasswordBox
+                x:Name="FloatingPasswordBox"
                 Width="250"
                 Height="40"
                 Margin="0,20,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 FontSize="18"
-                PasswordChanged="Password_PasswordChanged" Grid.Column="1"/>-->
+                Grid.Column="1">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PasswordChanged">
+                        <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
+                                               CommandParameter="{Binding ElementName=FloatingPasswordBox}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </PasswordBox>
 
-            <components:BindablePasswordBox
-                x:Name="passwordBox"
-                Width="250"
-                Height="40"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                FontSize="18"
-                Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                Grid.Column="1"/>
         </Grid>
 
         <Button
