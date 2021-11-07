@@ -24,7 +24,6 @@ namespace GoninDigital.Views
         public LoginView()
         {
             InitializeComponent();
-            DataContext = new LoginViewModel(this);
         }
     }
 }

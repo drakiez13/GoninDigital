@@ -10,26 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using GoninDigital.Models;
-using GoninDigital.ViewModels;
 
 namespace GoninDigital.Views
 {
     /// <summary>
-    /// Interaction logic for LoginControl.xaml
+    /// Interaction logic for RegisterView.xaml
     /// </summary>
-    public partial class LoginControl : UserControl
+    public partial class RegisterView : Window
     {
-        public LoginControl()
+        public RegisterView()
         {
             InitializeComponent();
-        }
-        private void Password_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (this.DataContext != null)
-            { ((dynamic)this.DataContext).Password = ((PasswordBox)sender).Password; }
         }
     }
 }
