@@ -6,77 +6,92 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.ComponentModel;
+using System.Windows.Controls;
 
 using GoninDigital.Models;
 using GoninDigital.Command;
-using System.Windows.Controls;
+using GoninDigital.Utils;
+using GoninDigital.Views;
 
 namespace GoninDigital.ViewModels
 {
     class LoginViewModel : INotifyPropertyChanged
     {
+        Window curWindow;
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         #region Properties
-        private Window window;
         public Action CloseAction { get; set; }
-        private string _usrname;
+        private string _Usrname;
         public string UserName
         {
-            get { return _usrname; }
+            get { return _Usrname; }
             set
             {
-                if (_usrname == value) { return; }
-                _usrname = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UserName"));
+                if (_Usrname == value) { return; }
+                _Usrname = value;
+                OnPropertyChanged(UserName);
             }
         }
-        private string _passwrd;
+        private string _Passwrd;
         public string Password
         {
-            get { return _passwrd; }
+            get { return _Passwrd; }
             set
             {
-                if (_passwrd == value) { return; }
-                _passwrd = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Password"));
+                if (_Passwrd == value) { return; }
+                _Passwrd = value;
+                OnPropertyChanged(Password);
             }
         }
-        public ICommand Passwordchangedcommand { get; set; }
         public ICommand LoginCommand { get; set; }
+        public ICommand RegisterCommand { get; set; }
+        public ICommand LoadedLoginCommand { get; set; }
         #endregion
 
         #region Constructor
-        public LoginViewModel(Window window)
+        public LoginViewModel()
         {
-            this.window = window;
-            LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginCommandExecute(); });
-            Passwordchangedcommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { _passwrd = p.Password; });
+            LoadedLoginCommand = new RelayCommand<Window>((p)=> { return true; }, (p)=> {
+                curWindow = p;
+                //p.Hide();
+                //Window ps = new();
+                //ps.ShowDialog();
+                //p.Show();
+            });
+            LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginCommandExecute(curWindow); });
+            //RegisterCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { RegisterCommandExcute(); });
         }
         #endregion
 
         #region Private Methods
-        private void LoginCommandExecute()
+        private void LoginCommandExecute(Window p)
         {
-            _usrname = UserName;
-            if (_usrname == null || _passwrd == null)
+            _Usrname = UserName;
+            if (_Usrname == null || _Passwrd == null)
             {
                 //MessageBox.Show("Both username and password should be filled in.");
-                return;
             }
-            int accCount = DataProvider.Instance.Db.Users.Where(x => x.UserName == _usrname && x.Password == _passwrd).Count();
+            int accCount = DataProvider.Instance.Db.Users.Where(x => x.UserName == _Usrname && x.Password == _Passwrd).Count();
             if (accCount > 0)
             {
-                this.window = new Window();
-                window.Show();
+                var homepageViewModel = new MainWindow();
+                homepageViewModel.Show();
+                curWindow.Close();
+
+                //WindowManager.ChangeWindowContent(p, homepageViewModel, "Homepage GoninDigital", "GoninDigital.Views.DashboardView");
             }
             else
             {
                 //MessageBox.Show("Invalid credentials.");
             }
         }
-        #endregion
-
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
+        private void RegisterCommandExcute()
+        {
+        }
         #endregion
     }
 }

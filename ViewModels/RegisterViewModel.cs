@@ -9,31 +9,63 @@ using GoninDigital.Command;
 using System.ComponentModel;
 using GoninDigital.Views;
 using GoninDigital.Models;
+
 namespace GoninDigital.ViewModels
 {
-    class RegisterViewModel: MainViewModel
+    class RegisterViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public List<String> LGender { get; } = new List<string>() { "Other", "Female", "Male" };
         public List<String> LTypeU { get; } = new List<string>() { "Admin", "Saler", "Customer" };
         private string _userName;
-        public string userName { get => _userName; set { _userName = value; OnPropertyChanged(nameof(userName)); 
-                OnPropertyChanged(nameof(CanRegister)); } }
+        public string userName
+        {
+            get => _userName; set
+            {
+                _userName = value; OnPropertyChanged(nameof(userName));
+                OnPropertyChanged(nameof(CanRegister));
+            }
+        }
         private string _passWord;
-        public string Password { get => _passWord; set { _passWord = value; OnPropertyChanged(nameof(Password));
+        public string Password
+        {
+            get => _passWord; set
+            {
+                _passWord = value; OnPropertyChanged(nameof(Password));
                 OnPropertyChanged(nameof(CanRegister));
-            } }
+            }
+        }
         private string _CpassWord;
-        public string CpassWord { get => _CpassWord; set { _CpassWord = value; OnPropertyChanged(nameof(CpassWord));
+        public string CpassWord
+        {
+            get => _CpassWord; set
+            {
+                _CpassWord = value; OnPropertyChanged(nameof(CpassWord));
                 OnPropertyChanged(nameof(CanRegister));
-            } }
+            }
+        }
         private string _firstName;
-        public string firstName { get => _firstName; set { _firstName = value; OnPropertyChanged(nameof(firstName));
+        public string firstName
+        {
+            get => _firstName; set
+            {
+                _firstName = value; OnPropertyChanged(nameof(firstName));
                 OnPropertyChanged(nameof(CanRegister));
-            } }
+            }
+        }
         private string _lastName;
-        public string lastName { get => _lastName; set { _lastName = value; OnPropertyChanged(nameof(lastName));
+        public string lastName
+        {
+            get => _lastName; set
+            {
+                _lastName = value; OnPropertyChanged(nameof(lastName));
                 OnPropertyChanged(nameof(CanRegister));
-            } }
+            }
+        }
         private string _Gender;
         public string Gender
         {
@@ -62,13 +94,23 @@ namespace GoninDigital.ViewModels
             }
         }
         private string _Email;
-        public string Email { get => _Email; set { _Email = value; OnPropertyChanged(nameof(Email));
+        public string Email
+        {
+            get => _Email; set
+            {
+                _Email = value; OnPropertyChanged(nameof(Email));
                 OnPropertyChanged(nameof(CanRegister));
-            } }
+            }
+        }
         private string _phoneNum;
-        public string phoneNum { get => _phoneNum; set { _phoneNum = value; OnPropertyChanged(nameof(phoneNum));
+        public string phoneNum
+        {
+            get => _phoneNum; set
+            {
+                _phoneNum = value; OnPropertyChanged(nameof(phoneNum));
                 OnPropertyChanged(nameof(CanRegister));
-            } }
+            }
+        }
         public bool CanRegister => !string.IsNullOrEmpty(Email) &&
             !string.IsNullOrEmpty(userName) &&
             !string.IsNullOrEmpty(firstName) &&
@@ -84,8 +126,8 @@ namespace GoninDigital.ViewModels
         public ICommand CancelCommand { get; set; }
         public RegisterViewModel()
         {
-            RegisterCommand = new RelayCommand(RegisterExecute);
-            CancelCommand = new RelayCommand(CancelExecute);
+            //RegisterCommand = new RelayCommand(RegisterExecute);
+            //CancelCommand = new RelayCommand(CancelExecute);
         }
         void RegisterExecute()
         {
@@ -93,18 +135,18 @@ namespace GoninDigital.ViewModels
                 MessageBox.Show("Chưa nhập đủ thông tin");
             else
             {
-                int a=0;
+                int a = 0;
                 if (phoneNum[0] == '0' & int.TryParse(phoneNum, out a))
                 {
                     string t = Email.Substring(Email.Length - 10, 10);
-                    if (t!="@gmail.com")
+                    if (t != "@gmail.com")
                     {
                         MessageBox.Show("Email không hợp lệ");
                     }
 
                     else
                     {
-                        if(Password!=CpassWord)
+                        if (Password != CpassWord)
                         {
                             MessageBox.Show("Password va Confirm Password không khớp");
                         }
@@ -119,7 +161,7 @@ namespace GoninDigital.ViewModels
                             else
                             {
                                 MessageBox.Show("Đăng kí thành công");
-                                switch(TypeUser)
+                                switch (TypeUser)
                                 {
                                     case "Admin":
                                         type_User = 1;
@@ -131,18 +173,18 @@ namespace GoninDigital.ViewModels
                                         type_User = 6;
                                         break;
                                 }
-                                    switch (Gender)
-                                    {
-                                        case "Female":
-                                            type_Gender = 0;
-                                            break;
-                                        case "Maler":
-                                            type_Gender = 1;
-                                            break;
-                                        case "Others":
-                                            type_Gender = 2;
-                                            break;
-                                    }
+                                switch (Gender)
+                                {
+                                    case "Female":
+                                        type_Gender = 0;
+                                        break;
+                                    case "Maler":
+                                        type_Gender = 1;
+                                        break;
+                                    case "Others":
+                                        type_Gender = 2;
+                                        break;
+                                }
                                 DateTime dmy;
                                 DateTime.TryParse(DoB, out dmy);
                                 User u = new User();
@@ -156,7 +198,7 @@ namespace GoninDigital.ViewModels
                                 u.Email = Email;
                                 u.Gender = (byte)type_Gender;
                                 u.DateOfBirth = dmy;
-                               
+
                             }
 
                         }
@@ -172,10 +214,7 @@ namespace GoninDigital.ViewModels
         }
         void CancelExecute()
         {
-               
-        }
 
-       
-        
+        }
     }
 }
