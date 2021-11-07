@@ -5,20 +5,14 @@ using System.Text;
 using System.Windows;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using GoninDigital.Command;
 using System.ComponentModel;
 using GoninDigital.Views;
 using GoninDigital.Models;
 
 namespace GoninDigital.ViewModels
 {
-    class RegisterViewModel : INotifyPropertyChanged
+    class RegisterViewModel : BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         public List<String> LGender { get; } = new List<string>() { "Other", "Female", "Male" };
         public List<String> LTypeU { get; } = new List<string>() { "Admin", "Saler", "Customer" };
         private string _userName;
