@@ -133,8 +133,8 @@ namespace GoninDigital.ViewModels
         public ICommand rePasswordChangedCommand { get; set; }
         public RegisterViewModel()
         {
-            //RegisterCommand = new RelayCommand(RegisterExecute);
-            //CancelCommand = new RelayCommand(CancelExecute);
+            RegisterCommand = new RelayCommand<Window>((p)=> { return true; }, (p)=> { RegisterExecute(); });
+            CancelCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { CancelExecute(); });
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
             rePasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { RePassword = p.Password; });
         }
@@ -152,7 +152,6 @@ namespace GoninDigital.ViewModels
                     {
                         MessageBox.Show("Email không hợp lệ");
                     }
-
                     else
                     {
                         if (_Password != _RePassword)
@@ -207,9 +206,7 @@ namespace GoninDigital.ViewModels
                                     Gender = (byte)type_Gender,
                                     DateOfBirth = dmy
                                 };
-
                             }
-
                         }
                     }
                 }
