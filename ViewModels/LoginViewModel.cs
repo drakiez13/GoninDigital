@@ -63,6 +63,7 @@ namespace GoninDigital.ViewModels
             if (_Usrname == null || _Passwrd == null)
             {
                 MessageBox.Show("Both username and password should be filled in.");
+                return;
             }
 
             string passEncode = Encode.MD5Hash(Encode.Base64Encode(_Passwrd));
