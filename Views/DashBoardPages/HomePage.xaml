@@ -7,41 +7,11 @@
       xmlns:uc="clr-namespace:GoninDigital.SharedControl"
       mc:Ignorable="d" 
       d:DesignWidth="1000"
+      DataContext="{StaticResource HomePageVM}"
       Background="{DynamicResource AppBackgroundBrush}"
       Title="HomePage">
     <ScrollViewer>
-        <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
-                <StackPanel.Resources>
-                    <Style TargetType="{x:Type uc:ProductCard}">
-                        <Setter Property="Margin" Value="30,0,0,0"/>
-                    </Style>
-                </StackPanel.Resources>
-                <uc:ProductCard></uc:ProductCard>
-                <uc:ProductCard></uc:ProductCard>
-                <uc:ProductCard></uc:ProductCard>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
-                <StackPanel.Resources>
-                    <Style TargetType="{x:Type uc:ProductCard}">
-                        <Setter Property="Margin" Value="30,0,0,0"/>
-                    </Style>
-                </StackPanel.Resources>
-                <uc:ProductCard></uc:ProductCard>
-                <uc:ProductCard></uc:ProductCard>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Margin="10,10,10,10">
-                <StackPanel.Resources>
-                    <Style TargetType="{x:Type uc:ProductCard}">
-                        <Setter Property="Margin" Value="30,0,0,0"/>
-                    </Style>
-                </StackPanel.Resources>
-                <uc:ProductCard></uc:ProductCard>
-                <uc:ProductCard></uc:ProductCard>
-            </StackPanel>
-        </StackPanel>
+        <TextBox Text="{Binding a.Brand.Name, Mode=TwoWay}"></TextBox>
     </ScrollViewer>
 
 </Page>

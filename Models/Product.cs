@@ -10,6 +10,7 @@ namespace GoninDigital.Models
         public Product()
         {
             Carts = new HashSet<Cart>();
+            Favorites = new HashSet<Favorite>();
             InvoiceDetails = new HashSet<InvoiceDetail>();
             Purchaseds = new HashSet<Purchased>();
         }
@@ -32,8 +33,10 @@ namespace GoninDigital.Models
         public byte[] Image { get; set; }
 
         public virtual Brand Brand { get; set; }
+        public virtual ProductCategory Category { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
+        public virtual ICollection<Favorite> Favorites { get; set; }
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
         public virtual ICollection<Purchased> Purchaseds { get; set; }
     }
