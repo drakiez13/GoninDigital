@@ -49,7 +49,7 @@ namespace GoninDigital.ViewModels
             LoadedLoginCommand = new RelayCommand<Window>((p)=> { return true; }, (p)=> {
                 curWindow = p;
             });
-            LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginCommandExecute(curWindow); });
+            LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginCommandExecute(); });
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
             RegisterCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { RegisterCommandExcute(); });
         }
@@ -57,22 +57,21 @@ namespace GoninDigital.ViewModels
 
         #region Private Methods
         
-        private void LoginCommandExecute(Window p)
+        private void LoginCommandExecute()
         {
-            _Usrname = UserName;
-            if (_Usrname == null || _Passwrd == null)
+            if (UserName == null || Password == null)
             {
                 MessageBox.Show("Both username and password should be filled in.");
                 return;
             }
 
-            string passEncode = Encode.MD5Hash(Encode.Base64Encode(_Passwrd));
-            int accCount = DataProvider.Instance.Db.Users.Where(x => x.UserName == _Usrname && x.Password == _Passwrd).Count();
+            string passEncode = Encode.MD5Hash(Encode.Base64Encode(Password));
+            int accCount = DataProvider.Instance.Db.Users.Where(x => x.UserName == UserName && x.Password == passEncode).Count();
             if (accCount > 0)
             {
                 var homepageViewModel = new MainWindow();
                 homepageViewModel.Show();
-                p.Close();
+                curWindow.Close();
             }
             else
             {
@@ -81,6 +80,12 @@ namespace GoninDigital.ViewModels
         }
         private void RegisterCommandExcute()
         {
+            var registerWindow = new RegisterViewModel(curWindow);
+            WindowManager.ChangeWindowContent(curWindow, registerWindow, "GoninDigital", "GoninDigital.Views.RegisterControl");
+            if (registerWindow.CloseAction == null)
+            {
+                registerWindow.CloseAction = () => curWindow.Close();
+            }
         }
         #endregion
     }

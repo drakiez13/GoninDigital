@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+             xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:local="clr-namespace:GoninDigital.Views" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -23,12 +24,12 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Grid.Background>
+        <!--<Grid.Background>
             <LinearGradientBrush>
                 <GradientStop Color="#7be9f6" Offset="0.0"/>
                 <GradientStop Color="#f083da" Offset="1"/>
             </LinearGradientBrush>
-        </Grid.Background>
+        </Grid.Background>-->
 
         <StackPanel Grid.Row="0" Grid.Column="0">
             <Label 
@@ -40,7 +41,7 @@
                 x:Name="tbFirstName" 
                 Width="200"
                 HorizontalAlignment="Center" 
-                Text="{Binding firstName, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="1">
@@ -53,7 +54,7 @@
                 x:Name="tbLastName" 
                 Width="200"
                 HorizontalAlignment="Center" 
-                Text="{Binding lastName, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="0">
@@ -65,10 +66,12 @@
             <ComboBox
                 x:Name="cbGender"
                 HorizontalAlignment="Center"
-                IsEditable="True"
-                ItemsSource="{Binding LGender}"
                 SelectedItem="{Binding Gender}"
-                SelectedIndex="2"/>
+                SelectedIndex="2">
+                <ComboBoxItem Content="Other"/>
+                <ComboBoxItem Content="Male"/>
+                <ComboBoxItem Content="Female"/>
+            </ComboBox>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="1">
@@ -106,7 +109,7 @@
                 x:Name="tbPhoneNum" 
                 Width="200"
                 HorizontalAlignment="Center" 
-                Text="{Binding phoneNum, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
 
         <StackPanel Grid.Row="3" Grid.Column="0">
@@ -118,10 +121,12 @@
             <ComboBox
                 x:Name="cbTypeUser"
                 HorizontalAlignment="Center"
-                IsEditable="True"
-                ItemsSource="{Binding LTypeU}"
                 SelectedItem="{Binding TypeUser}"
-                SelectedIndex="2"/>
+                SelectedIndex="2">
+                <ComboBoxItem Content="Admin"/>
+                <ComboBoxItem Content="Seller"/>
+                <ComboBoxItem Content="Customer"/>
+            </ComboBox>
         </StackPanel>
 
         <StackPanel Grid.Row="4" Grid.Column="0">
@@ -134,7 +139,8 @@
                 x:Name="tbUsername" 
                 Width="200"
                 HorizontalAlignment="Center"
-                Text="{Binding userName, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" >
+            </TextBox>
         </StackPanel>
 
         <StackPanel Grid.Row="5" Grid.Column="0">
