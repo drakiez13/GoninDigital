@@ -7,38 +7,33 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         mc:Ignorable="d"
         Height="auto"  Width="auto">
-    <Grid>
-        <ui:NavigationView x:Name="nvSample6"
+    <ui:NavigationView x:Name="nvSample6"
                            MinHeight="400"
                            SelectionChanged="NavigationView_SelectionChanged"
-                           PaneDisplayMode="Top" Grid.ColumnSpan="2">
-            <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Content="Home" Tag="HomePage" />
-                <ui:NavigationViewItem Content="My Shop" Tag="MyShopPage" />
-                <ui:NavigationViewItem Content="Hot Deal" Tag="HotDealPage" />
-                <ui:NavigationViewItem Content="Cart" Tag="CartPage" />
-            </ui:NavigationView.MenuItems>
-            <ui:NavigationView.AutoSuggestBox>
-                <ui:AutoSuggestBox QueryIcon="Find" 
-                                   AutomationProperties.Name="Search"
-                                   Width="150"/>
-            </ui:NavigationView.AutoSuggestBox>
-            <ui:NavigationView.PaneFooter>
-                <StackPanel Orientation="Horizontal">
-                    <ui:NavigationViewItem  Icon="Contact" 
+                           PaneDisplayMode="Auto">
+        <ui:NavigationView.MenuItems>
+            <ui:NavigationViewItem Content="Home" Tag="HomePage" Icon="Home"/>
+            <ui:NavigationViewItem Content="My Shop" Tag="MyShopPage" Icon="Manage" />
+            <ui:NavigationViewItem Content="Hot Deal" Tag="HotDealPage" Icon="Tag"/>
+            <ui:NavigationViewItem Content="Cart" Tag="CartPage" Icon="Shop"/>
+        </ui:NavigationView.MenuItems>
+        <ui:NavigationView.AutoSuggestBox>
+            <ui:AutoSuggestBox QueryIcon="Find" 
+                                   AutomationProperties.Name="Search"/>
+        </ui:NavigationView.AutoSuggestBox>
+        <ui:NavigationView.PaneFooter>
+            <StackPanel Orientation="Vertical">
+                <ui:NavigationViewItem  Icon="Contact" 
                                         ToolTipService.ToolTip="Account" 
-                                        Tag="AccountPage"
-                                        Width="40"/>
-                    <ui:NavigationViewItem  Icon="Message" 
+                                        Tag="AccountPage"/>
+                <ui:NavigationViewItem  Icon="Message" 
                                         ToolTipService.ToolTip="Message" 
-                                        Tag="MessagePage"
-                                        Width="40"/>
-                </StackPanel>
-                
-            </ui:NavigationView.PaneFooter>
-            <ui:NavigationView.Content>
-                <ui:Frame x:Name="contentFrame"/>
-            </ui:NavigationView.Content>
-        </ui:NavigationView>
-    </Grid>
+                                        Tag="MessagePage"/>
+            </StackPanel>
+
+        </ui:NavigationView.PaneFooter>
+        <ui:NavigationView.Content>
+            <ui:Frame x:Name="contentFrame"/>
+        </ui:NavigationView.Content>
+    </ui:NavigationView>
 </UserControl>
