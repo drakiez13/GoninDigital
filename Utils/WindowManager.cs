@@ -12,8 +12,8 @@ namespace GoninDigital.Utils
         public static Window ChangeWindowContent(Window window, object viewModel, string title, string controlPath)
         {
             window.Title = title;
-            window.Background = Brushes.White;
-            window.Foreground = Brushes.Black;
+            //window.Background = Brushes.White;
+            //window.Foreground = Brushes.Black;
             window.Height = 450;
             window.Width = 800;
             window.WindowState = WindowState.Normal;
