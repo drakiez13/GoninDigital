@@ -49,7 +49,7 @@ namespace GoninDigital.ViewModels
             LoadedLoginCommand = new RelayCommand<Window>((p)=> { return true; }, (p)=> {
                 curWindow = p;
             });
-            LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginCommandExecute(curWindow); });
+            LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginCommandExecute(); });
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
             RegisterCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { RegisterCommandExcute(); });
         }
@@ -57,7 +57,7 @@ namespace GoninDigital.ViewModels
 
         #region Private Methods
         
-        private void LoginCommandExecute(Window p)
+        private void LoginCommandExecute()
         {
             _Usrname = UserName;
             if (_Usrname == null || _Passwrd == null)
@@ -72,7 +72,7 @@ namespace GoninDigital.ViewModels
             {
                 var homepageViewModel = new MainWindow();
                 homepageViewModel.Show();
-                p.Close();
+                curWindow.Close();
             }
             else
             {
@@ -81,6 +81,12 @@ namespace GoninDigital.ViewModels
         }
         private void RegisterCommandExcute()
         {
+            var registerWindow = new RegisterViewModel(curWindow);
+            WindowManager.ChangeWindowContent(curWindow, registerWindow, "GoninDigital", "GoninDigital.Views.RegisterControl");
+            if (registerWindow.CloseAction == null)
+            {
+                registerWindow.CloseAction = () => curWindow.Close();
+            }
         }
         #endregion
     }

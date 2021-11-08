@@ -134,7 +134,8 @@
                 x:Name="tbUsername" 
                 Width="200"
                 HorizontalAlignment="Center"
-                Text="{Binding userName, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding userName, UpdateSourceTrigger=PropertyChanged}" >
+            </TextBox>
         </StackPanel>
 
         <StackPanel Grid.Row="5" Grid.Column="0">
