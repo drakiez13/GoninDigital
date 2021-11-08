@@ -23,12 +23,12 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Grid.Background>
+        <!--<Grid.Background>
             <LinearGradientBrush>
                 <GradientStop Color="#7be9f6" Offset="0.0"/>
                 <GradientStop Color="#f083da" Offset="1"/>
             </LinearGradientBrush>
-        </Grid.Background>
+        </Grid.Background>-->
 
         <StackPanel Grid.Row="0" Grid.Column="0">
             <Label 
