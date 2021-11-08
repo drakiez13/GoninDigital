@@ -5,129 +5,138 @@ using System.Text;
 using System.Windows;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using GoninDigital.Command;
 using System.ComponentModel;
 using GoninDigital.Views;
 using GoninDigital.Models;
+using System.Windows.Controls;
 
 namespace GoninDigital.ViewModels
 {
-    class RegisterViewModel : INotifyPropertyChanged
+    class RegisterViewModel : BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         public List<String> LGender { get; } = new List<string>() { "Other", "Female", "Male" };
         public List<String> LTypeU { get; } = new List<string>() { "Admin", "Saler", "Customer" };
-        private string _userName;
-        public string userName
+        private string _UserName;
+        public string UserName
         {
-            get => _userName; set
+            get => _UserName; 
+            set
             {
-                _userName = value; OnPropertyChanged(nameof(userName));
-                OnPropertyChanged(nameof(CanRegister));
+                _UserName = value;
+                OnPropertyChanged();
             }
         }
-        private string _passWord;
+        private string _Password;
         public string Password
         {
-            get => _passWord; set
+            get => _Password; 
+            set
             {
-                _passWord = value; OnPropertyChanged(nameof(Password));
-                OnPropertyChanged(nameof(CanRegister));
+                _Password = value;
+                OnPropertyChanged();
             }
         }
-        private string _CpassWord;
-        public string CpassWord
+        private string _RePassword;
+        public string RePassword
         {
-            get => _CpassWord; set
+            get => _RePassword;
+            set
             {
-                _CpassWord = value; OnPropertyChanged(nameof(CpassWord));
-                OnPropertyChanged(nameof(CanRegister));
+                _RePassword = value;
+                OnPropertyChanged();
             }
         }
-        private string _firstName;
-        public string firstName
+        private string _FirstName;
+        public string FirstName
         {
-            get => _firstName; set
+            get => _FirstName; 
+            set
             {
-                _firstName = value; OnPropertyChanged(nameof(firstName));
-                OnPropertyChanged(nameof(CanRegister));
+                _FirstName = value; 
+                OnPropertyChanged();
             }
         }
-        private string _lastName;
-        public string lastName
+        private string _LastName;
+        public string LastName
         {
-            get => _lastName; set
+            get => _LastName; 
+            set
             {
-                _lastName = value; OnPropertyChanged(nameof(lastName));
-                OnPropertyChanged(nameof(CanRegister));
+                _LastName = value;
+                OnPropertyChanged();
             }
         }
         private string _Gender;
         public string Gender
         {
-            get => _Gender; set
+            get => _Gender; 
+            set
             {
-                _Gender = value; OnPropertyChanged(nameof(Gender));
-                OnPropertyChanged(nameof(CanRegister));
+                _Gender = value;
+                OnPropertyChanged();
             }
         }
         private string _DoB;
         public string DoB
         {
-            get => _DoB; set
+            get => _DoB; 
+            set
             {
-                _DoB = value; OnPropertyChanged(nameof(DoB));
-                OnPropertyChanged(nameof(CanRegister));
+                _DoB = value;
+                OnPropertyChanged();
             }
         }
         private string _TypeUser;
         public string TypeUser
         {
-            get => _TypeUser; set
+            get => _TypeUser; 
+            set
             {
-                _TypeUser = value; OnPropertyChanged(nameof(TypeUser));
-                OnPropertyChanged(nameof(CanRegister));
+                _TypeUser = value;
+                OnPropertyChanged();
             }
         }
         private string _Email;
         public string Email
         {
-            get => _Email; set
+            get => _Email; 
+            set
             {
-                _Email = value; OnPropertyChanged(nameof(Email));
-                OnPropertyChanged(nameof(CanRegister));
+                _Email = value;
+                OnPropertyChanged();
             }
         }
-        private string _phoneNum;
-        public string phoneNum
+        private string _PhoneNumber;
+        public string PhoneNumer
         {
-            get => _phoneNum; set
+            get => _PhoneNumber; 
+            set
             {
-                _phoneNum = value; OnPropertyChanged(nameof(phoneNum));
-                OnPropertyChanged(nameof(CanRegister));
+                _PhoneNumber = value;
+                OnPropertyChanged();
             }
         }
-        public bool CanRegister => !string.IsNullOrEmpty(Email) &&
-            !string.IsNullOrEmpty(userName) &&
-            !string.IsNullOrEmpty(firstName) &&
-            !string.IsNullOrEmpty(lastName) &&
-            !string.IsNullOrEmpty(phoneNum) &&
-            !string.IsNullOrEmpty(DoB) &&
-            !string.IsNullOrEmpty(Password) &&
-            !string.IsNullOrEmpty(CpassWord);
+        public bool CanRegister => !string.IsNullOrEmpty(_Email) &&
+            !string.IsNullOrEmpty(_UserName) &&
+            !string.IsNullOrEmpty(_FirstName) &&
+            !string.IsNullOrEmpty(_LastName) &&
+            !string.IsNullOrEmpty(_PhoneNumber) &&
+            !string.IsNullOrEmpty(_DoB) &&
+            !string.IsNullOrEmpty(_Password) &&
+            !string.IsNullOrEmpty(_RePassword);
         private int type_User;
         private int type_Gender;
 
         public ICommand RegisterCommand { get; set; }
         public ICommand CancelCommand { get; set; }
+        public ICommand PasswordChangedCommand { get; set; }
+        public ICommand rePasswordChangedCommand { get; set; }
         public RegisterViewModel()
         {
-            //RegisterCommand = new RelayCommand(RegisterExecute);
-            //CancelCommand = new RelayCommand(CancelExecute);
+            RegisterCommand = new RelayCommand<Window>((p)=> { return true; }, (p)=> { RegisterExecute(); });
+            CancelCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { CancelExecute(); });
+            PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
+            rePasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { RePassword = p.Password; });
         }
         void RegisterExecute()
         {
@@ -136,28 +145,25 @@ namespace GoninDigital.ViewModels
             else
             {
                 int a = 0;
-                if (phoneNum[0] == '0' & int.TryParse(phoneNum, out a))
+                if (_PhoneNumber[0] == '0' & int.TryParse(_PhoneNumber, out a))
                 {
                     string t = Email.Substring(Email.Length - 10, 10);
                     if (t != "@gmail.com")
                     {
                         MessageBox.Show("Email không hợp lệ");
                     }
-
                     else
                     {
-                        if (Password != CpassWord)
+                        if (_Password != _RePassword)
                         {
                             MessageBox.Show("Password va Confirm Password không khớp");
                         }
                         else
                         {
-                            int checkUsername = DataProvider.Instance.Db.Users.Where(x => x.UserName == _userName).Count();
-                            int checkEmail = DataProvider.Instance.Db.Users.Where(x => x.Email == _Email).Count();
-                            if (checkUsername > 0)
-                                MessageBox.Show("Tài khoản đã tồn tại");
-                            else if (checkEmail > 0)
-                                MessageBox.Show("Email đã tồn tại");
+                            int checkUsername = DataProvider.Instance.Db.Users.Where(x => x.UserName == UserName).Count();
+                            int checkEmail = DataProvider.Instance.Db.Users.Where(x => x.Email == Email).Count();
+                            if (checkUsername > 0 || checkEmail > 0)
+                                MessageBox.Show("Tên tài khoản hoặc email đã tồn tại");
                             else
                             {
                                 MessageBox.Show("Đăng kí thành công");
@@ -187,20 +193,20 @@ namespace GoninDigital.ViewModels
                                 }
                                 DateTime dmy;
                                 DateTime.TryParse(DoB, out dmy);
-                                User u = new User();
-                                u.Id = 10;
-                                u.UserName = userName;
-                                u.Password = Password;
-                                u.TypeId = type_User;
-                                u.FirstName = firstName;
-                                u.LastName = lastName;
-                                u.PhoneNumber = phoneNum;
-                                u.Email = Email;
-                                u.Gender = (byte)type_Gender;
-                                u.DateOfBirth = dmy;
-
+                                User u = new()
+                                {
+                                    Id = 10,
+                                    UserName = _UserName,
+                                    Password = _Password,
+                                    TypeId = type_User,
+                                    FirstName = _FirstName,
+                                    LastName = _LastName,
+                                    PhoneNumber = _PhoneNumber,
+                                    Email = _Email,
+                                    Gender = (byte)type_Gender,
+                                    DateOfBirth = dmy
+                                };
                             }
-
                         }
                     }
                 }
@@ -208,13 +214,10 @@ namespace GoninDigital.ViewModels
                 {
                     MessageBox.Show("SDT không hợp lệ");
                 }
-
-
             }
         }
         void CancelExecute()
         {
-
         }
     }
 }
