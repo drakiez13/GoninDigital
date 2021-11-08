@@ -7,6 +7,8 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         DataContext="{StaticResource LoginVM}"
         xmlns:local="clr-namespace:GoninDigital.Views"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        ui:ThemeManager.IsThemeAware="True"
         mc:Ignorable="d"
         Name="LoginWindow"
         Title="LoginView" Height="450" Width="800">

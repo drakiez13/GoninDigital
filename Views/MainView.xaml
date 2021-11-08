@@ -12,6 +12,5 @@
         xmlns:vw="clr-namespace:GoninDigital.Views">
     <Grid VerticalAlignment="Top" >
         <vw:DashBoard></vw:DashBoard>
-        
     </Grid>
 </Window>
