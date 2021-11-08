@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using GoninDigital.Utils;
 
 namespace GoninDigital.ViewModels
 {

@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using GoninDigital.Models;
+using GoninDigital.Utils;
 
 namespace GoninDigital.ViewModels
 {
@@ -16,14 +17,14 @@ namespace GoninDigital.ViewModels
         public Action CloseAction { get; set; }
         enum LGender
         {
-            other = 0,
+            Other = 0,
             Female = 1,
             Male = 2
         };
         enum LTypeU
         {
             Admin = 1,
-            Saler = 2,
+            Seller = 2,
             Customer = 6
         }
         private string _UserName;
@@ -76,8 +77,8 @@ namespace GoninDigital.ViewModels
                 OnPropertyChanged();
             }
         }
-        private string _Gender;
-        public string Gender
+        private ComboBoxItem _Gender;
+        public ComboBoxItem Gender
         {
             get => _Gender;
             set
@@ -86,8 +87,8 @@ namespace GoninDigital.ViewModels
                 OnPropertyChanged();
             }
         }
-        private string _DoB;
-        public string DoB
+        private DateTime _DoB;
+        public DateTime DoB
         {
             get => _DoB;
             set
@@ -96,8 +97,8 @@ namespace GoninDigital.ViewModels
                 OnPropertyChanged();
             }
         }
-        private string _TypeUser;
-        public string TypeUser
+        private ComboBoxItem _TypeUser;
+        public ComboBoxItem TypeUser
         {
             get => _TypeUser;
             set
@@ -131,7 +132,6 @@ namespace GoninDigital.ViewModels
             !string.IsNullOrEmpty(FirstName) &&
             !string.IsNullOrEmpty(LastName) &&
             !string.IsNullOrEmpty(PhoneNumber) &&
-            !string.IsNullOrEmpty(DoB) &&
             !string.IsNullOrEmpty(Password) &&
             !string.IsNullOrEmpty(RePassword);
 
@@ -162,27 +162,38 @@ namespace GoninDigital.ViewModels
                     int checkUsername = DataProvider.Instance.Db.Users.Where(x => x.UserName == UserName).Count();
                     int checkEmail = DataProvider.Instance.Db.Users.Where(x => x.Email == Email).Count();
                     if (checkUsername > 0 || checkEmail > 0)
-                        MessageBox.Show("Tên tài khoản hoặc email đã tồn tại");
+                    {
+                        _ = MessageBox.Show("Tên tài khoản hoặc email đã tồn tại");
+                    }
                     else
                     {
-                        MessageBox.Show("Đăng kí thành công");
-                        _ = Enum.TryParse(TypeUser, out LTypeU _Usertype);
-                        _ = Enum.TryParse(Gender, out LGender _Gendertype);
-                        _ = DateTime.TryParse(DoB, out DateTime dmy);
-
-                        User u = new()
+                        try
                         {
-                            Id = 10,
-                            UserName = UserName,
-                            Password = Password,
-                            TypeId = (int)_Usertype,
-                            FirstName = FirstName,
-                            LastName = LastName,
-                            PhoneNumber = PhoneNumber,
-                            Email = Email,
-                            Gender = (byte)_Gendertype,
-                            DateOfBirth = dmy
-                        };
+                            _ = Enum.TryParse(TypeUser.Content.ToString(), out LTypeU _Usertype);
+                            _ = Enum.TryParse(Gender.Content.ToString(), out LGender _Gendertype);
+
+                            User new_user = new()
+                            {
+                                UserName = UserName,
+                                Password = Encode.MD5Hash(Encode.Base64Encode(Password)),
+                                TypeId = (int)_Usertype,
+                                FirstName = FirstName,
+                                LastName = LastName,
+                                PhoneNumber = PhoneNumber,
+                                Email = Email,
+                                Gender = (byte)_Gendertype,
+                                DateOfBirth = DoB
+                            };
+
+                            _ = DataProvider.Instance.Db.Users.Add(new_user);
+                            _ = DataProvider.Instance.Db.SaveChanges();
+
+                            _ = MessageBox.Show("Đăng kí thành công");
+                        }
+                        catch
+                        {
+                            _ = MessageBox.Show("Đăng kí không thành công!");
+                        }
                     }
                 }
             }
