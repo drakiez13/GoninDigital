@@ -65,7 +65,7 @@ namespace GoninDigital.ViewModels
                 return;
             }
 
-            string passEncode = Encode.MD5Hash(Encode.Base64Encode(_Passwrd));
+            string passEncode = Encode.MD5Hash(Encode.Base64Encode(Password));
             int accCount = DataProvider.Instance.Db.Users.Where(x => x.UserName == UserName && x.Password == passEncode).Count();
             if (accCount > 0)
             {
