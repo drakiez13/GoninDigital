@@ -10,7 +10,7 @@
         ui:WindowHelper.UseModernWindowStyle="True"
         ui:ThemeManager.IsThemeAware="True"
         xmlns:vw="clr-namespace:GoninDigital.Views">
-    <Grid VerticalAlignment="Top" >
-        <vw:DashBoard></vw:DashBoard>
+    <Grid>
+        <vw:AdminView></vw:AdminView>
     </Grid>
 </Window>
