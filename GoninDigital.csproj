@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\HomeBanner.jpg" />
+    <None Remove="Resources\Images\HomeBannerNight.jpg" />
+    <None Remove="Resources\Images\ProductListBackgroundFallback.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -19,6 +25,9 @@
 
   <ItemGroup>
     <Resource Include="Resources\Images\BlankImage.jpg" />
+    <Resource Include="Resources\Images\HomeBanner.jpg" />
+    <Resource Include="Resources\Images\HomeBannerNight.jpg" />
+    <Resource Include="Resources\Images\ProductListBackgroundFallback.jpg" />
   </ItemGroup>
 
 </Project>

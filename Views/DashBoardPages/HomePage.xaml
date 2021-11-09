@@ -10,27 +10,27 @@
       DataContext="{StaticResource HomePageVM}"
       Background="{DynamicResource AppBackgroundBrush}"
       Title="HomePage">
-    <ScrollViewer
-        Margin="40 10 40 0">
+    <ScrollViewer>
         <StackPanel
             Orientation="Vertical">
-            <Label
-                Margin="0 0 0 10"
+            <Grid Height="400">
+                <Grid.Background>
+                    <ImageBrush Stretch="UniformToFill"
+                                 
+                                ImageSource="/GoninDigital;component/Resources/Images/HomeBanner.jpg"></ImageBrush>
+                </Grid.Background>
+                <Label
+                Margin="20 20 0 20"
                 FontSize="22"
                 FontWeight="Bold">Home</Label>
-            <StackPanel
-                Orientation="Horizontal"
-                MaxWidth="1000"
-                Background="Snow">
-                <uc:ProductCard
-                    Margin="40 0 10 0"
-                    Title="Thang"
-                    ></uc:ProductCard>
-                <uc:ProductCard Margin="10 0 10 0"></uc:ProductCard>
-                <uc:ProductCard Margin="10 0 10 0"></uc:ProductCard>
-                <uc:ProductCard Margin="10 0 10 0"></uc:ProductCard>
-                <uc:ProductCard Margin="10 0 10 0"></uc:ProductCard>
-            </StackPanel>
+                
+            </Grid>
+            
+            <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
+            <uc:ProductCardGroup Margin="0 50 0 0"></uc:ProductCardGroup>
+            <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
+            <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
+            <uc:ProductCardGroup Margin="0 50 0 100"></uc:ProductCardGroup>
         </StackPanel>
     </ScrollViewer>
 </Page>
