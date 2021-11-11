@@ -5,17 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GoninDigital.SharedControl"
              xmlns:ui="http://schemas.modernwpf.com/2019"
-             mc:Ignorable="d" Height="230" Width="140"
+             mc:Ignorable="d"
+             Height="250" Width="150"
              Name="productCard"
-             Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
+             Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
+        
         <Image Grid.Row="0"
                HorizontalAlignment="Left"
-               Width="140" Height="140"
+               Width="150" Height="150"
                Margin="0,0,0,0"
                VerticalAlignment="Top" Source="{Binding Image, ElementName=productCard}"
                Stretch="fill"
@@ -26,7 +29,14 @@
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Margin="10,5,0,0" Grid.Row="0" Content="{Binding Title, ElementName=productCard}" FontSize="12" FontWeight="Bold"></Label>
+            <TextBlock Margin="10,5,10,0" Grid.Row="0"
+                   Text="{Binding Title, ElementName=productCard}"
+                   TextWrapping="WrapWithOverflow"
+                   MaxHeight="32"  
+                   FontSize="12"
+                   FontWeight="Bold"
+                   RibbonTwoLineText.HasTwoLines="True">
+            </TextBlock>
             <ui:RatingControl
                 HorizontalAlignment="Left"
                 Margin="10,0,0,0"
@@ -36,7 +46,7 @@
                 IsReadOnly="True"
                 >
                 <ui:RatingControl.LayoutTransform>
-                    <ScaleTransform ScaleX="0.65" ScaleY="0.65"></ScaleTransform>
+                    <ScaleTransform ScaleX="0.7" ScaleY="0.7"></ScaleTransform>
                 </ui:RatingControl.LayoutTransform>
             </ui:RatingControl>
             <Label VerticalAlignment="Bottom"

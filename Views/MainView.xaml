@@ -9,8 +9,9 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True"
         ui:ThemeManager.IsThemeAware="True"
+        ui:TitleBar.ExtendViewIntoTitleBar="True"
         xmlns:vw="clr-namespace:GoninDigital.Views">
-    <Grid>
-        <vw:AdminView></vw:AdminView>
+    <Grid Margin="0 -32 0 0">
+      <vw:DashBoard></vw:DashBoard>
     </Grid>
 </Window>

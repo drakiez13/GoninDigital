@@ -11,6 +11,7 @@
                 <ui:XamlControlsResources />
                 <ResourceDictionary Source="/Resources/MainRes.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="./Resources/ViewModelsRes.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="./Resources/ImagesRes.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
