@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\BlankImage.jpg" />
+    <None Remove="Resources\Images\HomeBanner.jpg" />
+    <None Remove="Resources\Images\HomeBannerNight.jpg" />
+    <None Remove="Resources\Images\ProductListBackgroundFallback.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\BlankImage.jpg" />
+    <Resource Include="Resources\Images\BlankImage.jpg" />
+    <Resource Include="Resources\Images\HomeBanner.jpg" />
+    <Resource Include="Resources\Images\HomeBannerNight.jpg" />
+    <Resource Include="Resources\Images\ProductListBackgroundFallback.jpg" />
   </ItemGroup>
 
 </Project>

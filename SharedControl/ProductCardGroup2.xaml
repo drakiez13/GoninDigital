@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="GoninDigital.SharedControl.ProductCardGroup2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:uc="clr-namespace:GoninDigital.SharedControl"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             mc:Ignorable="d" 
+             Name="productCardGroup2"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid MaxWidth="1000">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0"
+               Grid.Column="0"
+               Margin="40 10 0 20"
+               FontSize="20"
+               FontWeight="Bold"
+               Content="{Binding Title, ElementName=productCardGroup2}">
+        </Label>
+        <ui:HyperlinkButton
+            Grid.Row="0" Grid.Column="1"
+            HorizontalAlignment="Right"
+            Margin="0 10 50 0"
+            >
+            <Label>See all</Label>
+        </ui:HyperlinkButton>
+
+        <ItemsControl ItemsSource="{Binding ProductList, ElementName=productCardGroup2}"
+                          Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                          HorizontalAlignment="Center">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <uc:ProductCard
+                            Margin="20 0 20 0"
+                            Title="{Binding Path=Name}"
+                            Price="{Binding Path=Price}"
+                            ></uc:ProductCard>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        
+    </Grid>
+</UserControl>
