@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using GoninDigital.Models;
 using GoninDigital.Utils;
+using GoninDigital.Views;
 
 namespace GoninDigital.ViewModels
 {
@@ -39,16 +40,13 @@ namespace GoninDigital.ViewModels
         }
         public ICommand LoginCommand { get; set; }
         public ICommand RegisterCommand { get; set; }
-        public ICommand LoadedLoginCommand { get; set; }
         public ICommand PasswordChangedCommand { get; set; }
         #endregion
 
         #region Constructor
-        public LoginViewModel()
+        public LoginViewModel(Window window)
         {
-            LoadedLoginCommand = new RelayCommand<Window>((p)=> { return true; }, (p)=> {
-                curWindow = p;
-            });
+            curWindow = window;
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginCommandExecute(); });
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
             RegisterCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { RegisterCommandExcute(); });
@@ -66,12 +64,18 @@ namespace GoninDigital.ViewModels
             }
 
             string passEncode = Encode.MD5Hash(Encode.Base64Encode(Password));
-            int accCount = DataProvider.Instance.Db.Users.Where(x => x.UserName == UserName && x.Password == passEncode).Count();
-            if (accCount > 0)
+            var isExist = DataProvider.Instance.Db.Users.First(x => x.UserName == UserName && x.Password == passEncode);
+            if (isExist != null)
             {
-                var homepageViewModel = new MainWindow();
-                homepageViewModel.Show();
-                curWindow.Close();
+                var dashboardWindow = new DashBoard();
+                if (isExist.TypeId == 1) //admin
+                {
+                    WindowManager.ChangeWindowContent(curWindow, dashboardWindow, "", "GoninDigital.Views.AdminView");
+                }
+                else //user
+                {
+                    WindowManager.ChangeWindowContent(curWindow, dashboardWindow, "", "GoninDigital.Views.DashBoard");
+                }
             }
             else
             {
@@ -81,7 +85,7 @@ namespace GoninDigital.ViewModels
         private void RegisterCommandExcute()
         {
             var registerWindow = new RegisterViewModel(curWindow);
-            WindowManager.ChangeWindowContent(curWindow, registerWindow, "GoninDigital", "GoninDigital.Views.RegisterControl");
+            WindowManager.ChangeWindowContent(curWindow, registerWindow, "GoninDigital", "GoninDigital.Views.RegisterView");
             if (registerWindow.CloseAction == null)
             {
                 registerWindow.CloseAction = () => curWindow.Close();

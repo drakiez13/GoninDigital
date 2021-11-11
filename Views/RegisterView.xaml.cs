@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace GoninDigital.Views
 {
     /// <summary>
-    /// Interaction logic for RegisterControl.xaml
+    /// Interaction logic for RegisterView.xaml
     /// </summary>
-    public partial class RegisterControl : UserControl
+    public partial class RegisterView : UserControl
     {
-        public RegisterControl()
+        public RegisterView()
         {
             InitializeComponent();
         }
