@@ -5,17 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GoninDigital.SharedControl"
              xmlns:ui="http://schemas.modernwpf.com/2019"
-             mc:Ignorable="d" Height="230" Width="140"
+             mc:Ignorable="d"
+             Height="250" Width="150"
              Name="productCard"
              Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
+        
         <Image Grid.Row="0"
                HorizontalAlignment="Left"
-               Width="140" Height="140"
+               Width="150" Height="150"
                Margin="0,0,0,0"
                VerticalAlignment="Top" Source="{Binding Image, ElementName=productCard}"
                Stretch="fill"

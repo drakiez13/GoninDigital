@@ -10,6 +10,13 @@ namespace GoninDigital.ViewModels
 {
     class HomePageViewModel : BaseViewModel
     {
+        private string art;
+        public string Art
+        {
+            get { return art; }
+            set { art = value; OnPropertyChanged(); }
+        }
+
         private List<Product> recommnededByEditor;
         public List<Product> RecommendedByEditor
         {
@@ -23,6 +30,7 @@ namespace GoninDigital.ViewModels
 
         public HomePageViewModel()
         {
+            art = "/GoninDigital;component/Resources/Images/HomeBanner.jpg";
             GoninDigitalDBContext db = DataProvider.Instance.Db;
             recommnededByEditor = db.Products.ToList();
         }

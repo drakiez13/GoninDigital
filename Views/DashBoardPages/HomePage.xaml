@@ -13,11 +13,8 @@
     <ScrollViewer>
         <StackPanel
             Orientation="Vertical">
-            <Grid Height="400">
-                <Grid.Background>
-                    <ImageBrush Stretch="UniformToFill"
-                                ImageSource="/GoninDigital;component/Resources/Images/HomeBanner.jpg"></ImageBrush>
-                </Grid.Background>
+            <Grid>
+                <Image Source="{Binding Art}"></Image>
                 <Label
                 Margin="20 20 0 20"
                 FontSize="22"
