@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GoninDigital.Views;
 using GoninDigital.Models;
+using GoninDigital.ViewModels;
 
 namespace GoninDigital
 {

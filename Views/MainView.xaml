@@ -5,13 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoninDigital"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000"
+        Title="MainWindow" 
+        Height="600" Width="1000"
         xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True"
         ui:ThemeManager.IsThemeAware="True"
         ui:TitleBar.ExtendViewIntoTitleBar="True"
-        xmlns:vw="clr-namespace:GoninDigital.Views">
-    <Grid Margin="0 -32 0 0">
-      <vw:DashBoard></vw:DashBoard>
-    </Grid>
+        xmlns:vw="clr-namespace:GoninDigital.Views"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        DataContext="{StaticResource MainVM}"
+        Name="LoadedWindow">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedWidnowCommand}"
+                                CommandParameter="{Binding ElementName=LoadedWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
 </Window>

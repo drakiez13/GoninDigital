@@ -87,7 +87,7 @@ namespace GoninDigital.ViewModels
                 OnPropertyChanged();
             }
         }
-        private DateTime _DoB;
+        private DateTime _DoB = DateTime.Now;
         public DateTime DoB
         {
             get => _DoB;
@@ -200,7 +200,8 @@ namespace GoninDigital.ViewModels
         }
         void CancelExecute()
         {
-            curWindow.Close();
+            var loginWindow = new LoginViewModel(curWindow);
+            WindowManager.ChangeWindowContent(curWindow, loginWindow, "", "GoninDigital.Views.LoginView");
         }
     }
 }
