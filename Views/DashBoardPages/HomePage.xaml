@@ -16,18 +16,20 @@
             <Grid Height="400">
                 <Grid.Background>
                     <ImageBrush Stretch="UniformToFill"
-                                 
                                 ImageSource="/GoninDigital;component/Resources/Images/HomeBanner.jpg"></ImageBrush>
                 </Grid.Background>
                 <Label
                 Margin="20 20 0 20"
                 FontSize="22"
                 FontWeight="Bold">Home</Label>
-                
             </Grid>
             
             <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
-            <uc:ProductCardGroup Margin="0 50 0 0"></uc:ProductCardGroup>
+            <uc:ProductCardGroup 
+                Margin="0 50 0 0"
+                Title="Hot product this Winter"
+                Subtitle="Best price for you"
+                ProductList="{Binding RecommendedByEditor3}"></uc:ProductCardGroup>
             <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
             <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
             <uc:ProductCardGroup Margin="0 50 0 100"></uc:ProductCardGroup>

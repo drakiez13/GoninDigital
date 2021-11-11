@@ -7,7 +7,7 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d" Height="230" Width="140"
              Name="productCard"
-             Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}">
+             Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -26,7 +26,14 @@
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Margin="10,5,0,0" Grid.Row="0" Content="{Binding Title, ElementName=productCard}" FontSize="12" FontWeight="Bold"></Label>
+            <TextBlock Margin="10,5,10,0" Grid.Row="0"
+                   Text="{Binding Title, ElementName=productCard}"
+                   TextWrapping="WrapWithOverflow"
+                   MaxHeight="32"  
+                   FontSize="12"
+                   FontWeight="Bold"
+                   RibbonTwoLineText.HasTwoLines="True">
+            </TextBlock>
             <ui:RatingControl
                 HorizontalAlignment="Left"
                 Margin="10,0,0,0"
@@ -36,7 +43,7 @@
                 IsReadOnly="True"
                 >
                 <ui:RatingControl.LayoutTransform>
-                    <ScaleTransform ScaleX="0.65" ScaleY="0.65"></ScaleTransform>
+                    <ScaleTransform ScaleX="0.7" ScaleY="0.7"></ScaleTransform>
                 </ui:RatingControl.LayoutTransform>
             </ui:RatingControl>
             <Label VerticalAlignment="Bottom"

@@ -10,18 +10,21 @@ namespace GoninDigital.ViewModels
 {
     class HomePageViewModel : BaseViewModel
     {
-        public string k;
-        private Product _a;
-        public Product a
+        private List<Product> recommnededByEditor;
+        public List<Product> RecommendedByEditor
         {
-            get { return _a; }
-            set { _a = value; OnPropertyChanged(); }
+            get { return recommnededByEditor; }
+            set { recommnededByEditor = value; OnPropertyChanged(); }
         }
+        public List<Product> RecommendedByEditor3
+        {
+            get { return recommnededByEditor.GetRange(0, 3); }
+        }
+
         public HomePageViewModel()
         {
-            var db = DataProvider.Instance.Db;
-            _a = db.Products.First();
-            db.Brands.ToList();
+            GoninDigitalDBContext db = DataProvider.Instance.Db;
+            recommnededByEditor = db.Products.ToList();
         }
 
     }

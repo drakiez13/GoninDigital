@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:uc="clr-namespace:GoninDigital.SharedControl"
+             Name="productCardGroup"
              mc:Ignorable="d">
     <Grid
-        Background="DarkSeaGreen"
+        Background="{Binding GroupBackground, ElementName=productCardGroup}"
         MaxWidth="1200">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*">
@@ -25,15 +26,15 @@
                HorizontalAlignment="Center"
                VerticalAlignment="Bottom"
                 FontSize="22"
-                FontWeight="Bold">
-                Monthly best seller
+                FontWeight="Bold"
+                Content="{Binding Title, ElementName=productCardGroup}">
             </Label>
             <TextBlock
                HorizontalAlignment="Center"
                Margin="0 10 0 0"
                 MaxWidth="300" TextWrapping="WrapWithOverflow"
+                Text="{Binding Subtitle, ElementName=productCardGroup}"
                 >
-                Bestselling products with best price ever
             </TextBlock>
         </StackPanel>
         
@@ -41,25 +42,31 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 Margin="0 30 0 0"
-                Opacity="0.7"
-        >
+                Opacity="0.7">
             See all
         </Button>
-        
-        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
-                Orientation="Horizontal"
-                MaxWidth="1200"
-                Margin="20 40 20 40"
-                HorizontalAlignment="Right"
-                >
-            <StackPanel.Resources>
-                <Style TargetType="uc:ProductCard">
-                    <Setter Property="Margin" Value="10,0,10,0"></Setter>
-                </Style>
-            </StackPanel.Resources>
-            <uc:ProductCard></uc:ProductCard>
-            <uc:ProductCard></uc:ProductCard>
-            <uc:ProductCard></uc:ProductCard>
-        </StackPanel>
+
+
+        <ItemsControl ItemsSource="{Binding ProductList, ElementName=productCardGroup}"
+                        Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
+                        Margin="20 40 20 40"
+                        MaxWidth="1200"
+                        HorizontalAlignment="Right">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <uc:ProductCard
+                        Margin="10 0 10 0"
+                        Title="{Binding Path=Name}"
+                        Price="{Binding Path=Price}"
+                        ></uc:ProductCard>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
     </Grid>
 </UserControl>
