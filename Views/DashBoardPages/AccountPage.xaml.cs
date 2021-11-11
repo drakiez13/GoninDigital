@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace GoninDigital.Views.DashBoardPages
 {
     /// <summary>
-    /// Interaction logic for AccountPage.xaml
+    /// Interaction logic for SettingPage.xaml
     /// </summary>
     public partial class AccountPage : Page
     {
