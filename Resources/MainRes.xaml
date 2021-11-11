@@ -3,5 +3,7 @@
                     xmlns:viewmodel="clr-namespace:GoninDigital.ViewModels">
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
+    <viewmodel:UsersViewModel x:Key="UsersVM"></viewmodel:UsersViewModel>
+    <viewmodel:BrandsViewModel x:Key="BrandsVM"></viewmodel:BrandsViewModel>
 
 </ResourceDictionary>

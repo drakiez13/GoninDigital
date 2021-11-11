@@ -1,0 +1,107 @@
+﻿<ui:Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GoninDigital.Views.AdminPages"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      xmlns:Models="clr-namespace:GoninDigital.Models" x:Class="GoninDigital.Views.AdminPages.UserPage"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      DataContext="{StaticResource UsersVM}"
+      Title="UserPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <StackPanel Orientation="Horizontal">
+                <ui:AutoSuggestBox QueryIcon="Find" 
+                                   AutomationProperties.Name="Search"
+                                   Width="300"
+                                   HorizontalAlignment="Left"
+                                   Margin="20"/>
+                <Button Content="New User" 
+                        Margin="5"
+                        Command="{Binding AddCommand}"/>
+                <Button Content="Update" 
+                        Margin="5"
+                        Command="{Binding UpdateCommand}"/>
+                <Button Content="Delete" 
+                        Margin="5"
+                        Command="{Binding DeleteCommand}"/>
+            </StackPanel>
+        </Grid>
+        <DataGrid x:Name="dataGrid"
+                  ItemsSource="{Binding List}"
+                  SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}"
+                  Grid.Row="1"
+                  HorizontalScrollBarVisibility="Auto"
+                  VerticalScrollBarVisibility="Auto"
+                  HeadersVisibility="Column"
+                  GridLinesVisibility="All"
+                  RowDetailsVisibilityMode="Collapsed"
+                  VirtualizingPanel.VirtualizationMode="Recycling"
+                  VirtualizingPanel.IsVirtualizingWhenGrouping="True" 
+                  AutoGenerateColumns="False" 
+                  IsReadOnly="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Header="Id"
+                    MinWidth="40"
+                    Binding="{Binding Id}" 
+                    IsReadOnly="True"/>
+                <DataGridTextColumn
+                    Header="User Name"
+                    MinWidth="100"
+                    Binding="{Binding UserName}"
+                    IsReadOnly="True"/>
+                <DataGridTextColumn
+                    Header="First Name"
+                    MinWidth="100"
+                    Binding="{Binding FirstName}"/>
+                <DataGridTextColumn
+                    Header="Last Name"
+                    MinWidth="100"
+                    Binding="{Binding LastName}"/>
+                <DataGridTextColumn
+                    Header="Gender"
+                    MinWidth="70"
+                    Binding="{Binding Gender}"/>
+                <DataGridTextColumn
+                    Header="Date of Birth"
+                    MinWidth="100"
+                    Binding="{Binding Gender}"/>
+                <DataGridTextColumn
+                    Header="Phone Number"
+                    MinWidth="120"
+                    Binding="{Binding PhoneNumber}"/>
+                <DataGridTextColumn
+                    Header="Email"
+                    Width="*"
+                    MinWidth="200"
+                    Binding="{Binding Email, Mode=TwoWay}"/>
+                <DataGridTemplateColumn MinWidth="40">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button ToolTip="Save" >
+                                <ui:FontIcon Glyph="&#xE74E;"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn MinWidth="40">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button ToolTip="Remove" >
+                                <ui:FontIcon Glyph="&#xE711;"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</ui:Page>
