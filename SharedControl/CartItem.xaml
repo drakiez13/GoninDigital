@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="GoninDigital.SharedControl.CartItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GoninDigital.SharedControl"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             mc:Ignorable="d" 
+             Name="cartItem"
+             Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}"
+             Width="700" Height="130">
+    
+    <Grid  Background="{DynamicResource ResourceKeyBaseMediumLowBrush}"
+                  Margin="10,10,10,10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition  />
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <ui:SimpleStackPanel Width="40" HorizontalAlignment="Center"
+                                 VerticalAlignment="Center">
+                <CheckBox Margin="10"/>
+            </ui:SimpleStackPanel>
+            <Image Source="{Binding Image, ElementName=cartItem}"
+                   Stretch="Fill"
+                   Width="76"
+                   Height="80"
+                   VerticalAlignment="Center"/>
+            <Label Content="{Binding Title, ElementName=cartItem}" Margin="10,10,0,10" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <Label Grid.Column="1"
+                           Content="{Binding Price, ElementName=cartItem}"
+                           VerticalAlignment="Center"/>
+
+        <ui:NumberBox Grid.Column="2"  VerticalAlignment="Center"                  
+                        Value="1"
+                        Minimum="1"
+                        SpinButtonPlacementMode="Inline"
+                        SmallChange="1"
+                        LargeChange="100" />
+        
+        <Label Grid.Column="3" Padding="10" VerticalAlignment="Center"
+                           Content="{Binding TotalPrice, ElementName=cartItem}"/>
+
+        <ui:AppBarButton Grid.Column="4"
+                         IsCompact="True"
+                         HorizontalAlignment="Center" 
+                         VerticalAlignment="Center"
+                         Icon="Delete" />
+    </Grid>
+</UserControl>
