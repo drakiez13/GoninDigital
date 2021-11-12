@@ -83,24 +83,6 @@
                     Width="*"
                     MinWidth="200"
                     Binding="{Binding Email, Mode=TwoWay}"/>
-                <DataGridTemplateColumn MinWidth="40">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button ToolTip="Save" >
-                                <ui:FontIcon Glyph="&#xE74E;"/>
-                            </Button>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn MinWidth="40">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button ToolTip="Remove" >
-                                <ui:FontIcon Glyph="&#xE711;"/>
-                            </Button>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
