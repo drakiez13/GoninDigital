@@ -7,17 +7,27 @@
       xmlns:uc="clr-namespace:GoninDigital.SharedControl"
       xmlns:ui="http://schemas.modernwpf.com/2019"
       mc:Ignorable="d" 
-      d:DesignWidth="1000"
+     
       DataContext="{StaticResource HomePageVM}"
       Background="{DynamicResource AppBackgroundBrush}"
       Title="CartPage">
 
-
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
     <ScrollViewer >
         
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                
+                <Label Content="Cart" FontSize="22"
+                       Margin="20"/>
+            </StackPanel>
             <StackPanel Orientation="Vertical" >
-                <Grid  Margin="10 10 10 40"
+                
+                <Grid  Margin="10 10 10 40" Width="700"
                        Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
@@ -66,6 +76,25 @@
                              Price="100.000"
                              />
             </StackPanel>
+            
         </StackPanel>
-    </ScrollViewer>
+    </ScrollViewer >
+        <Grid Grid.Row="1"
+               Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}">
+            
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                
+                <Label Content="Total Price: " Margin="2"
+                   VerticalAlignment="Center"/>
+                <Label Content="5.000.000" Margin="2"
+                       FontWeight="Bold" FontSize="34"
+                   Foreground="{DynamicResource SystemControlForegroundAccentBrush}"
+                   VerticalAlignment="Center"/>
+                <ui:AppBarButton Margin="20"
+                         Icon="Shop" 
+                         Label="Purchase"
+                         />
+            </StackPanel>
+        </Grid>
+    </Grid>
 </Page>
