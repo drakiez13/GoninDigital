@@ -7,11 +7,10 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d" 
              Name="cartItem"
-             Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}"
+             Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
              Width="700" Height="130">
-    
-    <Grid  Background="{DynamicResource ResourceKeyBaseMediumLowBrush}"
-                  Margin="10,10,10,10">
+
+    <Grid Margin="10,10,10,10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition />
@@ -42,14 +41,13 @@
                         SpinButtonPlacementMode="Inline"
                         SmallChange="1"
                         LargeChange="100" />
-        
+
         <Label Grid.Column="3" Padding="10" VerticalAlignment="Center"
                            Content="{Binding TotalPrice, ElementName=cartItem}"/>
 
-        <ui:AppBarButton Grid.Column="4"
-                         IsCompact="True"
-                         HorizontalAlignment="Center" 
-                         VerticalAlignment="Center"
-                         Icon="Delete" />
+        <ui:AppBarButton Grid.Column="4" 
+                         Icon="Delete" 
+                         Label="Remove"
+                         HorizontalAlignment="Center" VerticalAlignment="Center" />
     </Grid>
 </UserControl>

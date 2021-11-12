@@ -5,122 +5,96 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GoninDigital.Views.DashBoardPages"
       xmlns:uc="clr-namespace:GoninDigital.SharedControl"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
       xmlns:ui="http://schemas.modernwpf.com/2019"
-      Title="CartPage"
+      mc:Ignorable="d" 
+     
+      DataContext="{StaticResource HomePageVM}"
       Background="{DynamicResource AppBackgroundBrush}"
-      >
+      Title="CartPage">
 
-
-    <ScrollViewer Background="Wheat"  >
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-            <Grid Width="550" Height="70" Background="White"
-                  Margin="10,10,10,10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="1.2*"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition  Width="40"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal">
-                    <ui:SimpleStackPanel Width="40" HorizontalAlignment="Center"
-                                         VerticalAlignment="Center">
-                        <CheckBox Margin="10"/>
-                    </ui:SimpleStackPanel>
-                    <TextBlock Text="Img in here" Margin="0,10,0,10" VerticalAlignment="Center"/>
-                    <TextBlock Text="Data from db" Margin="10,10,0,10" VerticalAlignment="Center"/>
-                </StackPanel>
-
-                <TextBlock Grid.Column="1"
-                           Text="Price from data"
-                            VerticalAlignment="Center"/>
-                <Button Grid.Column="2" Background="White">
-                    <ui:NumberBox                    
-                        Value="1"
-                        SpinButtonPlacementMode="Compact"
-                        SmallChange="1"
-                        LargeChange="100" Grid.ColumnSpan="2" />
-                </Button>
-
-                <TextBlock Grid.Column="3"  VerticalAlignment="Center"
-                           Text="total price"/>
-                <Button Grid.Column="4">
-                    <ui:AppBarButton HorizontalAlignment="Center" Icon="Delete" Margin="0,8,0,0" Width="58"/>
-                </Button>
-            </Grid>
-            <Grid Width="550" Height="70" Background="White"
-                  Margin="10,10,10,10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="1.2*"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition  Width="40"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal">
-                    <ui:SimpleStackPanel Width="40" HorizontalAlignment="Center"
-                                         VerticalAlignment="Center">
-                        <CheckBox Margin="10"/>
-                    </ui:SimpleStackPanel>
-                    <TextBlock Text="Img in here" Margin="0,10,0,10" VerticalAlignment="Center"/>
-                    <TextBlock Text="Data from db" Margin="10,10,0,10" VerticalAlignment="Center"/>
-                </StackPanel>
-
-                <TextBlock Grid.Column="1"
-                           Text="Price from data"
-                            VerticalAlignment="Center"/>
-                <Button Grid.Column="2" Background="White">
-                    <ui:NumberBox                    
-                        Value="1"
-                        SpinButtonPlacementMode="Compact"
-                        SmallChange="1"
-                        LargeChange="100" Grid.ColumnSpan="2" />
-                </Button>
-
-                <TextBlock Grid.Column="3"  VerticalAlignment="Center"
-                           Text="total price"/>
-                <Button Grid.Column="4">
-                    <ui:AppBarButton HorizontalAlignment="Center" Icon="Delete" Margin="0,8,0,0" Width="58"/>
-                </Button>
-            </Grid>
-            <Grid Width="550" Height="70" Background="White"
-                  Margin="10,10,10,10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="1.2*"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition  Width="40"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal">
-                    <ui:SimpleStackPanel Width="40" HorizontalAlignment="Center"
-                                         VerticalAlignment="Center">
-                        <CheckBox Margin="10"/>
-                    </ui:SimpleStackPanel>
-                    <TextBlock Text="Img in here" Margin="0,10,0,10" VerticalAlignment="Center"/>
-                    <TextBlock Text="Data from db" Margin="10,10,0,10" VerticalAlignment="Center"/>
-                </StackPanel>
-
-                <TextBlock Grid.Column="1"
-                           Text="Price from data"
-                            VerticalAlignment="Center"/>
-                <Button Grid.Column="2" Background="White">
-                    <ui:NumberBox                    
-                        Value="1"
-                        SpinButtonPlacementMode="Compact"
-                        SmallChange="1"
-                        LargeChange="100" Grid.ColumnSpan="2" />
-                </Button>
-
-                <TextBlock Grid.Column="3"  VerticalAlignment="Center"
-                           Text="total price"/>
-                <Button Grid.Column="4">
-                    <ui:AppBarButton HorizontalAlignment="Center" Icon="Delete" Margin="0,8,0,0" Width="58"/>
-                </Button>
-            </Grid>
-        </StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+    <ScrollViewer >
         
-    </ScrollViewer>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                
+                <Label Content="Cart" FontSize="22"
+                       Margin="20"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" >
+                
+                <Grid  Margin="10 10 10 40" Width="700"
+                       Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition  />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" Margin="10 0 0 0">
+                            <ui:SimpleStackPanel Width="40" HorizontalAlignment="Center"
+                                 VerticalAlignment="Center">
+                                <CheckBox Margin="10"/>
+                            </ui:SimpleStackPanel>
+                            <Label Content="Image" Margin="18"
+                                   VerticalAlignment="Center"
+                                   />
+                            <Label Content="Product"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Right"
+                                   />
+                        </StackPanel>
+                    <Label Grid.Column="1" Content="Price"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"/>
+                    <Label Grid.Column="2" Content="Quantity"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"/>
+                    <Label Grid.Column="3" Content="Total Price"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"/>
+                    <Label Grid.Column="4" Content="Remove"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
+                </Grid>
+
+                <uc:CartItem Title="Ram" Margin="10 20 10 0"
+                             TotalPrice="100.000"
+                             Price="100.000"
+                            />
+                <uc:CartItem Title="Ram" Margin="10 25 10 0"
+                             TotalPrice="100.000"
+                             Price="100.000"
+                             />
+                <uc:CartItem Title="Ram" Margin="10 25 10 0"
+                             TotalPrice="100.000"
+                             Price="100.000"
+                             />
+            </StackPanel>
+            
+        </StackPanel>
+    </ScrollViewer >
+        <Grid Grid.Row="1"
+               Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}">
+            
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                
+                <Label Content="Total Price: " Margin="2"
+                   VerticalAlignment="Center"/>
+                <Label Content="5.000.000" Margin="2"
+                       FontWeight="Bold" FontSize="34"
+                   Foreground="{DynamicResource SystemControlForegroundAccentBrush}"
+                   VerticalAlignment="Center"/>
+                <ui:AppBarButton Margin="20"
+                         Icon="Shop" 
+                         Label="Purchase"
+                         />
+            </StackPanel>
+        </Grid>
+    </Grid>
 </Page>

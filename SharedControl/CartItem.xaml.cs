@@ -31,6 +31,7 @@ namespace GoninDigital.SharedControl
             set => SetValue(ImageProperty, value);
         }
         
+
         public object Price
         {
             get => (object)GetValue(PriceProperty);
@@ -46,7 +47,8 @@ namespace GoninDigital.SharedControl
             DependencyProperty.Register("Title", typeof(object), typeof(CartItem), new PropertyMetadata("Unknown"));
         public static readonly DependencyProperty ImageProperty =
             DependencyProperty.Register("Image", typeof(object), typeof(CartItem),
-                new PropertyMetadata("/Resources/BlankImage.jpg"));
+                new PropertyMetadata("/Resources/Images/BlankImage.jpg"));
+      
         public static readonly DependencyProperty PriceProperty =
             DependencyProperty.Register("Price", typeof(object), typeof(CartItem), new PropertyMetadata(0));
         public static readonly DependencyProperty TotalPriceProperty =
