@@ -5,197 +5,193 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:GoninDigital.Views"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="1000" d:Background="White">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition Width="450"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.Background>
+                <ImageBrush ImageSource="{Binding Art}"></ImageBrush>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <TextBlock Text="GONINDIGITAL"
+                           HorizontalAlignment="Center"
+                           Foreground="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                           VerticalAlignment="Center"
+                           FontSize="24" 
+                           FontWeight="Bold"/>
+            </Grid>
+            <Grid Grid.Row="1"
+                  Margin="10 0 0 0">
+                <ui:HyperlinkButton x:Name="btnCancel"
+                                    Content="Have An Account"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Bottom"
+                                    FontSize="16"
+                                    Command="{Binding CancelCommand}"/>
+            </Grid>
 
-        <!--<Grid.Background>
-            <LinearGradientBrush>
-                <GradientStop Color="#7be9f6" Offset="0.0"/>
-                <GradientStop Color="#f083da" Offset="1"/>
-            </LinearGradientBrush>
-        </Grid.Background>-->
+        </Grid>
+        <Grid Grid.Column="1"
+              HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <TextBlock Text="REGISTER FORM"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource SystemAccentColorDark1Brush}"
+                           VerticalAlignment="Center"
+                           FontSize="24" 
+                           FontWeight="Bold"/>
+            </Grid>
+            <StackPanel Grid.Row="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+                <Label Content="Username" />
+                <TextBox x:Name="tbUsername" 
+                         Width="355"
+                         HorizontalAlignment="Center"
+                         Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0 0 50 0">
+                    <Label Content="First Name"/>
+                    <TextBox x:Name="tbFirstName" 
+                             Width="150"
+                             Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
 
-        <StackPanel Grid.Row="0" Grid.Column="0">
-            <Label 
-                x:Name="lbFirstName" 
-                Content="First Name"
-                HorizontalAlignment="Center"/>
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <Label Content="Last Name" />
+                    <TextBox x:Name="tbLastName" 
+                             Width="150"
+                             Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
 
-            <TextBox 
-                x:Name="tbFirstName" 
-                Width="200"
-                HorizontalAlignment="Center" 
-                Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="3"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+                <Label Content="Phone Number" />
+                <TextBox x:Name="tbPhoneNum" 
+                         Width="355"
+                         Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>   
+            <StackPanel Grid.Row="4"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+                <Label Content="Email"/>
+                <TextBox x:Name="tbEmail" 
+                         Width="355"
+                         Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+            <StackPanel Grid.Row="5" 
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0 0 50 0">
+                    <Label Content="Gender:" />
+                    <ComboBox x:Name="cbGender"
+                              SelectedItem="{Binding Gender}"
+                              SelectedIndex="2"
+                              Width="150">
+                        <ComboBoxItem Content="Other"/>
+                        <ComboBoxItem Content="Male"/>
+                        <ComboBoxItem Content="Female"/>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Date of Birth" />
+                    <DatePicker x:Name="dpDoB"
+                                Width="150"
+                                SelectedDate="{Binding DoB, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </StackPanel>
 
-        <StackPanel Grid.Row="0" Grid.Column="1">
-            <Label 
-                x:Name="lbLastName" 
-                Content="Last Name" 
-                HorizontalAlignment="Center"/>
+            <StackPanel Grid.Row="6"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+                <Label Content="Type User" />
+                <ComboBox x:Name="cbTypeUser"
+                          SelectedItem="{Binding TypeUser}"
+                          Width="355"
+                          SelectedIndex="2">
+                    <ComboBoxItem Content="Admin"/>
+                    <ComboBoxItem Content="Seller"/>
+                    <ComboBoxItem Content="Customer"/>
+                </ComboBox>
+            </StackPanel>
 
-            <TextBox 
-                x:Name="tbLastName" 
-                Width="200"
-                HorizontalAlignment="Center" 
-                Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
+            
 
-        <StackPanel Grid.Row="1" Grid.Column="0">
-            <Label 
-                x:Name="lbGender" 
-                Content="Gender:" 
-                HorizontalAlignment="Center"/>
-
-            <ComboBox
-                x:Name="cbGender"
-                HorizontalAlignment="Center"
-                SelectedItem="{Binding Gender}"
-                SelectedIndex="2">
-                <ComboBoxItem Content="Other"/>
-                <ComboBoxItem Content="Male"/>
-                <ComboBoxItem Content="Female"/>
-            </ComboBox>
-        </StackPanel>
-
-        <StackPanel Grid.Row="1" Grid.Column="1">
-            <Label 
-                x:Name="lbDoB" 
-                Content="Date of Birth" 
-                HorizontalAlignment="Center"/>
-
-            <DatePicker
-                x:Name="dpDoB"
-                HorizontalAlignment="Center"
-                SelectedDate="{Binding DoB, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
-
-        <StackPanel Grid.Row="2" Grid.Column="0">
-            <Label 
-                x:Name="lbEmail"
-                Content="Email" 
-                HorizontalAlignment="Center"/>
-
-            <TextBox 
-                x:Name="tbEmail" 
-                Width="200"
-                HorizontalAlignment="Center" 
-                Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
-
-        <StackPanel Grid.Row="2" Grid.Column="1">
-            <Label 
-                x:Name="lbPhoneNum" 
-                Content="Phone Number" 
-                HorizontalAlignment="Center"/>
-
-            <TextBox 
-                x:Name="tbPhoneNum" 
-                Width="200"
-                HorizontalAlignment="Center" 
-                Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
-
-        <StackPanel Grid.Row="3" Grid.Column="0">
-            <Label 
-                x:Name="lbTypeUser" 
-                Content="Type User" 
-                HorizontalAlignment="Center"/>
-
-            <ComboBox
-                x:Name="cbTypeUser"
-                HorizontalAlignment="Center"
-                SelectedItem="{Binding TypeUser}"
-                SelectedIndex="2">
-                <ComboBoxItem Content="Admin"/>
-                <ComboBoxItem Content="Seller"/>
-                <ComboBoxItem Content="Customer"/>
-            </ComboBox>
-        </StackPanel>
-
-        <StackPanel Grid.Row="4" Grid.Column="0">
-            <Label 
-                x:Name="lbUserName" 
-                Content="Username" 
-                HorizontalAlignment="Center"/>
-
-            <TextBox 
-                x:Name="tbUsername" 
-                Width="200"
-                HorizontalAlignment="Center"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" >
-            </TextBox>
-        </StackPanel>
-
-        <StackPanel Grid.Row="5" Grid.Column="0">
-            <Label 
-                x:Name="lbPassword"
-                Content="Password"
-                HorizontalAlignment="Center"/>
-
-            <PasswordBox
-                x:Name="FloatingPasswordBox"
-                Width="200"
-                HorizontalAlignment="Center"
-                FontSize="18">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PasswordChanged">
-                        <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
+            <StackPanel Grid.Row="7"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0 0 50 0">
+                    <Label Content="Password"/>
+                    <PasswordBox x:Name="FloatingPasswordBox"
+                                 Width="150">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PasswordChanged">
+                                <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
                                                CommandParameter="{Binding ElementName=FloatingPasswordBox}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </PasswordBox>
-        </StackPanel>
-
-        <StackPanel Grid.Row="5" Grid.Column="1">
-            <Label 
-                x:Name="lbrePassword"
-                Content="Confirm Password" 
-                HorizontalAlignment="Center"/>
-
-            <PasswordBox
-                x:Name="FloatingrePasswordBox"
-                Width="200"
-                HorizontalAlignment="Center"
-                FontSize="18" >
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PasswordChanged">
-                        <i:InvokeCommandAction Command="{Binding rePasswordChangedCommand}"
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </PasswordBox>
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Confirm Password" />
+                    <PasswordBox x:Name="FloatingrePasswordBox"
+                                 Width="150">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PasswordChanged">
+                                <i:InvokeCommandAction Command="{Binding rePasswordChangedCommand}"
                                                    CommandParameter="{Binding ElementName=FloatingrePasswordBox}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </PasswordBox>
-        </StackPanel>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </PasswordBox>
+                </StackPanel>
+            </StackPanel>
 
-        <Button 
-            x:Name="btnSubmit" 
-            Content="Submit"
-            HorizontalAlignment="Right"
-            Command="{Binding RegisterCommand}"
-            Grid.Row="6"
-            Grid.Column="0"/>
 
-        <Button 
-            x:Name="btnCancel" 
-            Content="Cancel"
-            HorizontalAlignment="Left"
-            Command="{Binding CancelCommand}" 
-            Grid.Row="6"
-            Grid.Column="1"/>
+
+            <Button x:Name="btnSubmit" 
+                    Grid.Row="8"
+                    Width="250"
+                    Content="Register"
+                    Foreground="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                    Background="{DynamicResource SystemAccentColorDark1Brush}"
+                    HorizontalAlignment="Center"
+                    Command="{Binding RegisterCommand}"/>
+        </Grid>
+        
     </Grid>
 </UserControl>

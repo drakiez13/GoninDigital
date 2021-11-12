@@ -17,6 +17,12 @@ namespace GoninDigital.ViewModels
     {
         #region Properties
         Window curWindow;
+        private string art;
+        public string Art
+        {
+            get { return art; }
+            set { art = value; OnPropertyChanged(); }
+        }
         public Action CloseAction { get; set; }
         private string _Usrname;
         public string UserName
@@ -46,6 +52,7 @@ namespace GoninDigital.ViewModels
         #region Constructor
         public LoginViewModel(Window window)
         {
+            art = "/GoninDigital;component/Resources/Images/LoginImage.jpg";
             curWindow = window;
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginCommandExecute(); });
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
