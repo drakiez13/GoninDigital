@@ -5,5 +5,20 @@
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:UsersViewModel x:Key="UsersVM"></viewmodel:UsersViewModel>
     <viewmodel:BrandsViewModel x:Key="BrandsVM"></viewmodel:BrandsViewModel>
+    <viewmodel:UserSettingViewModel x:Key="UserSettingVM"></viewmodel:UserSettingViewModel>
+    <Style x:Key="OptionsPanelStyle" TargetType="ui:SimpleStackPanel">
+        <Setter Property="Spacing" Value="12" />
+        <Style.Resources>
+            <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                <Setter Property="MinWidth" Value="200" />
+            </Style>
+            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="MinWidth" Value="200" />
+            </Style>
+            <Style TargetType="DatePicker" BasedOn="{StaticResource {x:Type DatePicker}}">
+                <Setter Property="MinWidth" Value="200" />
+            </Style>
+        </Style.Resources>
+    </Style>
 
 </ResourceDictionary>
