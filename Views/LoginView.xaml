@@ -7,10 +7,10 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:local="clr-namespace:GoninDigital.Views"
              mc:Ignorable="d" 
-             Height="500"
-             Width="900"
-             d:DesignHeight="500" d:DesignWidth="900" d:Background="White">
-    <Grid>
+             Height="600"
+             Width="1000"
+             d:DesignHeight="600" d:DesignWidth="1000" d:Background="White">
+    <Grid Margin="0 -1 0 0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -23,14 +23,15 @@
                 <RowDefinition Height="70" />
                 <RowDefinition Height="100" />
                 <RowDefinition Height="60" />
-                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       FontSize="24"
-                       Text="GoninDigital"
-                       TextAlignment="Center" FontFamily="Segoe Script" FontWeight="Bold" />   
+            <Grid Grid.Row="0">
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="24"
+                           Text="GoninDigital"
+                           TextAlignment="Center" FontFamily="Segoe Script" FontWeight="Bold" />
+            </Grid>
+             
             <!--  OneTime binding: Text="{Binding Path=LoginToUse, Mode=OneTime}"  -->
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Center"
@@ -43,15 +44,15 @@
                         Margin="5">
                 <Label Content="UserName"/>
                 <TextBox x:Name="UserName"
-                     Text="{Binding UserName, Mode=TwoWay}"
-                     Width="200"/>
+                         Text="{Binding UserName, Mode=TwoWay}"
+                         Width="200"/>
             </StackPanel>
             <StackPanel Grid.Row="3"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
                 <Label Content="Password"/>
                 <PasswordBox x:Name="FloatingPasswordBox"                         
-                         Width="200">
+                             Width="200">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PasswordChanged">
                             <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
@@ -61,15 +62,16 @@
                 </PasswordBox>
             </StackPanel>
             <StackPanel Grid.Row="4"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
                 <Button x:Name="Login"
-                    Margin="20"
-                    Command="{Binding LoginCommand}"
-                    Content="Login"
-                    Width="150"
-                    FontSize="18" Background="{DynamicResource SystemAccentColorDark1Brush}" />
+                        Margin="20"
+                        Command="{Binding LoginCommand}"
+                        Content="Login"
+                        Width="150"
+                        FontSize="18" 
+                        Background="{DynamicResource SystemAccentColorDark1Brush}" />
                 <Button x:Name="Register"
                         Margin="20"
                         Width="150"
@@ -79,14 +81,19 @@
                         Background="{DynamicResource SystemAccentColorDark1Brush}"/>
 
             </StackPanel>
-            <ui:HyperlinkButton x:Name="ForgotPassword"
-                            Content="Forgot Password?"
-                            Grid.Row="5"
-                            HorizontalAlignment="Right"
-                            FontSize="16"/>
+            <Grid Grid.Row="5"
+                  Margin="0 0 20 0">
+                <ui:HyperlinkButton x:Name="ForgotPassword"
+                                    Content="Forgot Password?"
+                                
+                                    HorizontalAlignment="Right"
+                                    FontSize="16"/>
+            </Grid>
+            
         </Grid>
         
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1"
+              Background="{DynamicResource SystemAccentColorDark1Brush}">
             <Image Source="{Binding Art}"></Image>
         </Grid>
      </Grid>
