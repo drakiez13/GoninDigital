@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using GoninDigital.Models;
 using GoninDigital.Utils;
+using ModernWpf.Controls;
 
 namespace GoninDigital.ViewModels
 {
@@ -157,12 +158,22 @@ namespace GoninDigital.ViewModels
         void RegisterExecute()
         {
             if (!CanRegister)
-                MessageBox.Show("Chưa nhập đủ thông tin");
+            {
+                var content = new ContentDialog();
+                content.Title = "Warning";
+                content.Content = "Miss Information";
+                content.PrimaryButtonText = "Ok";
+                content.ShowAsync();
+            }
             else
             {
                 if (Password != RePassword)
                 {
-                    MessageBox.Show("Password va Confirm Password không khớp");
+                    var content = new ContentDialog();
+                    content.Title = "Warning";
+                    content.Content = "Your Password not match, Pleace try again!";
+                    content.PrimaryButtonText = "Ok";
+                    content.ShowAsync();
                 }
                 else
                 {
@@ -170,7 +181,11 @@ namespace GoninDigital.ViewModels
                     int checkEmail = DataProvider.Instance.Db.Users.Where(x => x.Email == Email).Count();
                     if (checkUsername > 0 || checkEmail > 0)
                     {
-                        _ = MessageBox.Show("Tên tài khoản hoặc email đã tồn tại");
+                        var content = new ContentDialog();
+                        content.Title = "Warning";
+                        content.Content = "Your username is exist";
+                        content.PrimaryButtonText = "Ok";
+                        content.ShowAsync();
                     }
                     else
                     {
@@ -195,11 +210,19 @@ namespace GoninDigital.ViewModels
                             _ = DataProvider.Instance.Db.Users.Add(new_user);
                             _ = DataProvider.Instance.Db.SaveChanges();
 
-                            _ = MessageBox.Show("Đăng kí thành công");
+                            var content = new ContentDialog();
+                            content.Title = "Success";
+                            content.Content = "Sign up succuss";
+                            content.PrimaryButtonText = "Ok";
+                            content.ShowAsync();
                         }
                         catch
                         {
-                            _ = MessageBox.Show("Đăng kí không thành công!");
+                            var content = new ContentDialog();
+                            content.Title = "Failed";
+                            content.Content = "Sign up failed";
+                            content.PrimaryButtonText = "Ok";
+                            content.ShowAsync();
                         }
                     }
                 }

@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using GoninDigital.Models;
 using GoninDigital.Utils;
 using GoninDigital.Views;
+using ModernWpf.Controls;
 
 namespace GoninDigital.ViewModels
 {
@@ -66,7 +67,11 @@ namespace GoninDigital.ViewModels
         {
             if (UserName == null || Password == null)
             {
-                MessageBox.Show("Both username and password should be filled in.");
+                var content = new ContentDialog();
+                content.Title = "Warning";
+                content.Content = "Both username and password should be filled in.";
+                content.PrimaryButtonText = "Ok";
+                content.ShowAsync();
                 return;
             }
 
@@ -86,7 +91,11 @@ namespace GoninDigital.ViewModels
             }
             else
             {
-                MessageBox.Show("Invalid credentials.");
+                var content = new ContentDialog();
+                content.Title = "Warning";
+                content.Content = "Invalid credentials.";
+                content.PrimaryButtonText = "Ok";
+                content.ShowAsync();
             }
         }
         private void RegisterCommandExcute()
