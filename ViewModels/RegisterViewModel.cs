@@ -14,6 +14,12 @@ namespace GoninDigital.ViewModels
     class RegisterViewModel : BaseViewModel
     {
         Window curWindow;
+        private string art;
+        public string Art
+        {
+            get { return art; }
+            set { art = value; OnPropertyChanged(); }
+        }
         public Action CloseAction { get; set; }
         enum LGender
         {
@@ -141,6 +147,7 @@ namespace GoninDigital.ViewModels
         public ICommand rePasswordChangedCommand { get; set; }
         public RegisterViewModel(Window p)
         {
+            art = "/GoninDigital;component/Resources/Images/LoginImage.jpg";
             curWindow = p;
             RegisterCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { RegisterExecute(); });
             CancelCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { CancelExecute(); });

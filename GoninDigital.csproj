@@ -9,6 +9,7 @@
   <ItemGroup>
     <None Remove="Resources\Images\HomeBanner.jpg" />
     <None Remove="Resources\Images\HomeBannerNight.jpg" />
+    <None Remove="Resources\Images\LoginImage.jpg" />
     <None Remove="Resources\Images\ProductListBackgroundFallback.jpg" />
   </ItemGroup>
 
@@ -27,6 +28,7 @@
     <Resource Include="Resources\Images\BlankImage.jpg" />
     <Resource Include="Resources\Images\HomeBanner.jpg" />
     <Resource Include="Resources\Images\HomeBannerNight.jpg" />
+    <Resource Include="Resources\Images\LoginImage.jpg" />
     <Resource Include="Resources\Images\ProductListBackgroundFallback.jpg" />
   </ItemGroup>
 
