@@ -25,23 +25,22 @@
                 <RowDefinition Height="60" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <TextBlock
-            Grid.Row="0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            FontSize="24"
-            Text="GoninDigital"
-            TextAlignment="Center" FontFamily="Segoe Script" FontWeight="Bold"/>
+            <TextBlock Grid.Row="0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="24"
+                       Text="GoninDigital"
+                       TextAlignment="Center" FontFamily="Segoe Script" FontWeight="Bold" />   
             <!--  OneTime binding: Text="{Binding Path=LoginToUse, Mode=OneTime}"  -->
             <TextBlock Grid.Row="1"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="20"
-                   Text="Welcome To GoninDigital" FontFamily="Arial" FontStyle="Normal"/>
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       Text="Welcome To GoninDigital" FontFamily="Arial" FontStyle="Normal"/>
             <StackPanel Grid.Row="2"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Margin="5">
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="5">
                 <Label Content="UserName"/>
                 <TextBox x:Name="UserName"
                      Text="{Binding UserName, Mode=TwoWay}"
@@ -70,13 +69,14 @@
                     Command="{Binding LoginCommand}"
                     Content="Login"
                     Width="150"
-                    FontSize="18" />
+                    FontSize="18" Background="{DynamicResource SystemAccentColorDark1Brush}" />
                 <Button x:Name="Register"
-                    Margin="20"
-                    Width="150"
-                    Command="{Binding RegisterCommand}"
-                    Content="Create Account"
-                    FontSize="18"/>
+                        Margin="20"
+                        Width="150"
+                        Command="{Binding RegisterCommand}"
+                        Content="Create Account"
+                        FontSize="18"
+                        Background="{DynamicResource SystemAccentColorDark1Brush}"/>
 
             </StackPanel>
             <ui:HyperlinkButton x:Name="ForgotPassword"

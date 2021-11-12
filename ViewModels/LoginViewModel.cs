@@ -52,7 +52,7 @@ namespace GoninDigital.ViewModels
         #region Constructor
         public LoginViewModel(Window window)
         {
-            art = "/GoninDigital;component/Resources/Images/LoginImage.jpg";
+            art = "/GoninDigital;component/Resources/Images/HomeBannerNight.jpg";
             curWindow = window;
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginCommandExecute(); });
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
