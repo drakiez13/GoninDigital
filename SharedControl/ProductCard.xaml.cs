@@ -29,7 +29,7 @@ namespace GoninDigital.SharedControl
         public object Image
         {
             get => (object)GetValue(ImageProperty);
-            set => SetValue(ImageProperty, value);
+            set => SetValue(RatingValueProperty, value);
         }
         public object RatingValue
         {
@@ -51,7 +51,7 @@ namespace GoninDigital.SharedControl
             DependencyProperty.Register("Title", typeof(object), typeof(ProductCard), new PropertyMetadata("Unknown"));
         public static readonly DependencyProperty ImageProperty =
             DependencyProperty.Register("Image", typeof(object), typeof(ProductCard),
-                new PropertyMetadata("/Resources/Images/BlankImage.jpg") );
+                new PropertyMetadata("/Resources/Images/BlankImage.jpg"), new ValidateValueCallback((object value) => { return value != null; }));
         public static readonly DependencyProperty RatingValueProperty =
             DependencyProperty.Register("RatingValue", typeof(object), typeof(ProductCard), new PropertyMetadata("2.5"));
         public static readonly DependencyProperty RatingCaptionProperty =
