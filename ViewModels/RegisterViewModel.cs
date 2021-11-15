@@ -9,6 +9,7 @@ using System.Windows.Input;
 using GoninDigital.Models;
 using GoninDigital.Utils;
 using ModernWpf.Controls;
+using GoninDigital.Properties;
 
 namespace GoninDigital.ViewModels
 {
@@ -159,32 +160,36 @@ namespace GoninDigital.ViewModels
         {
             if (!CanRegister)
             {
-                var content = new ContentDialog();
-                content.Title = "Warning";
-                content.Content = "Miss Information";
-                content.PrimaryButtonText = "Ok";
+                ContentDialog content = new()
+                {
+                    Title = "Warning",
+                    Content = "Miss Information",
+                    PrimaryButtonText = "Ok"
+                };
                 content.ShowAsync();
             }
             else
             {
                 if (Password != RePassword)
                 {
-                    var content = new ContentDialog();
-                    content.Title = "Warning";
-                    content.Content = "Your Password not match, Pleace try again!";
-                    content.PrimaryButtonText = "Ok";
+                    ContentDialog content = new()
+                    {
+                        Title = "Warning",
+                        Content = "Your Password not match, Pleace try again!",
+                        PrimaryButtonText = "Ok"
+                    };
                     content.ShowAsync();
                 }
                 else
                 {
-                    int checkUsername = DataProvider.Instance.Db.Users.Where(x => x.UserName == UserName).Count();
-                    int checkEmail = DataProvider.Instance.Db.Users.Where(x => x.Email == Email).Count();
-                    if (checkUsername > 0 || checkEmail > 0)
+                    if (AccountManager.AccountExists(Email, UserName))
                     {
-                        var content = new ContentDialog();
-                        content.Title = "Warning";
-                        content.Content = "Your username is exist";
-                        content.PrimaryButtonText = "Ok";
+                        ContentDialog content = new()
+                        {
+                            Title = "Warning",
+                            Content = "Your username is exist",
+                            PrimaryButtonText = "Ok"
+                        };
                         content.ShowAsync();
                     }
                     else
@@ -197,7 +202,7 @@ namespace GoninDigital.ViewModels
                             User new_user = new()
                             {
                                 UserName = UserName,
-                                Password = Encode.MD5Hash(Encode.Base64Encode(Password)),
+                                Password = Cryptography.MD5Hash(Cryptography.Base64Encode(Password)),
                                 TypeId = (int)_Usertype,
                                 FirstName = FirstName,
                                 LastName = LastName,
@@ -207,21 +212,24 @@ namespace GoninDigital.ViewModels
                                 DateOfBirth = DoB
                             };
 
-                            _ = DataProvider.Instance.Db.Users.Add(new_user);
-                            _ = DataProvider.Instance.Db.SaveChanges();
+                            AccountManager.RegisterAccount(new_user);
 
-                            var content = new ContentDialog();
-                            content.Title = "Success";
-                            content.Content = "Sign up succuss";
-                            content.PrimaryButtonText = "Ok";
+                            ContentDialog content = new()
+                            {
+                                Title = "Success",
+                                Content = "Sign up succuss",
+                                PrimaryButtonText = "Ok"
+                            };
                             content.ShowAsync();
                         }
                         catch
                         {
-                            var content = new ContentDialog();
-                            content.Title = "Failed";
-                            content.Content = "Sign up failed";
-                            content.PrimaryButtonText = "Ok";
+                            ContentDialog content = new()
+                            {
+                                Title = "Failed",
+                                Content = "Sign up failed",
+                                PrimaryButtonText = "Ok"
+                            };
                             content.ShowAsync();
                         }
                     }
@@ -231,7 +239,7 @@ namespace GoninDigital.ViewModels
         void CancelExecute()
         {
             var loginWindow = new LoginViewModel(curWindow);
-            WindowManager.ChangeWindowContent(curWindow, loginWindow, "", "GoninDigital.Views.LoginView");
+            WindowManager.ChangeWindowContent(curWindow, loginWindow, Resources.LoginWindowTitle, Resources.LoginControlPath);
         }
     }
 }

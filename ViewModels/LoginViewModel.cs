@@ -11,6 +11,7 @@ using GoninDigital.Models;
 using GoninDigital.Utils;
 using GoninDigital.Views;
 using ModernWpf.Controls;
+using GoninDigital.Properties;
 
 namespace GoninDigital.ViewModels
 {
@@ -48,6 +49,7 @@ namespace GoninDigital.ViewModels
         public ICommand LoginCommand { get; set; }
         public ICommand RegisterCommand { get; set; }
         public ICommand PasswordChangedCommand { get; set; }
+        public ICommand ResetCommand { get; set; }
         #endregion
 
         #region Constructor
@@ -58,6 +60,7 @@ namespace GoninDigital.ViewModels
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginCommandExecute(); });
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
             RegisterCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { RegisterCommandExcute(); });
+            ResetCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ResetCommandExcute(); });
         }
         #endregion
 
@@ -75,7 +78,7 @@ namespace GoninDigital.ViewModels
                 return;
             }
 
-            string passEncode = Encode.MD5Hash(Encode.Base64Encode(Password));
+            string passEncode = Cryptography.MD5Hash(Cryptography.Base64Encode(Password));
             var isExist = DataProvider.Instance.Db.Users.First(x => x.UserName == UserName && x.Password == passEncode);
             if (isExist != null)
             {
@@ -101,10 +104,20 @@ namespace GoninDigital.ViewModels
         private void RegisterCommandExcute()
         {
             var registerWindow = new RegisterViewModel(curWindow);
-            WindowManager.ChangeWindowContent(curWindow, registerWindow, "GoninDigital", "GoninDigital.Views.RegisterView");
+            WindowManager.ChangeWindowContent(curWindow, registerWindow, Resources.RegisterAccountWindowTitle, Resources.RegisterAccountControlPath);
             if (registerWindow.CloseAction == null)
             {
                 registerWindow.CloseAction = () => curWindow.Close();
+            }
+        }
+
+        private void ResetCommandExcute()
+        {
+            var forgotpasswordWindow = new ForgotPasswordViewModel(curWindow);
+            WindowManager.ChangeWindowContent(curWindow, forgotpasswordWindow, Resources.ForgotPasswordWindowTitle, Resources.ForgotPasswordControlPath);
+            if (forgotpasswordWindow.CloseAction == null)
+            {
+                forgotpasswordWindow.CloseAction = () => curWindow.Close();
             }
         }
         #endregion
