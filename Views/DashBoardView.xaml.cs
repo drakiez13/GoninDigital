@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using GoninDigital.Views.DashBoardPages;
 using ModernWpf.Controls;
 using ModernWpf.Navigation;
+using Frame = System.Windows.Controls.Frame;
 
 namespace GoninDigital.Views
 {
@@ -23,11 +24,18 @@ namespace GoninDigital.Views
     /// </summary>
     public partial class DashBoard : UserControl
     {
+        private static Frame rootFrame;
+        public static Frame RootFrame
+        {
+            get => rootFrame;
+        }
+
         public DashBoard()
         {
             InitializeComponent();
-            contentFrame.Navigate(typeof(HomePage));
+            rootFrame = contentFrame;
         }
+
         private void NavigationView_SelectionChanged(ModernWpf.Controls.NavigationView sender, ModernWpf.Controls.NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
@@ -49,6 +57,19 @@ namespace GoninDigital.Views
                 }
             }
                 
+        }
+
+        private void navigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            contentFrame.GoBack();
+        }
+
+        private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            if (contentFrame.CanGoBack)
+                navigationView.IsBackEnabled = true;
+            else
+                navigationView.IsBackEnabled = false;
         }
     }
 }

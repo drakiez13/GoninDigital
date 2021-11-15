@@ -21,6 +21,11 @@ namespace GoninDigital.SharedControl
     /// </summary>
     public partial class ProductCard : UserControl
     {
+        public object Id
+        {
+            get => (object)GetValue(IdProperty);
+            set => SetValue(IdProperty, value);
+        }
         public object Title
         {
             get => (object)GetValue(TitleProperty);
@@ -47,6 +52,8 @@ namespace GoninDigital.SharedControl
             set => SetValue(PriceProperty, value);
         }
 
+        public static readonly DependencyProperty IdProperty =
+            DependencyProperty.Register("Id", typeof(object), typeof(ProductCard), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register("Title", typeof(object), typeof(ProductCard), new PropertyMetadata("Unknown"));
         public static readonly DependencyProperty ImageProperty =
@@ -67,7 +74,10 @@ namespace GoninDigital.SharedControl
 
         private void OnClick(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("Ok");
+            if (Id != null)
+            {
+                MessageBox.Show("Navigate to product page");
+            }
         }
     }
 }
