@@ -8,14 +8,26 @@
              mc:Ignorable="d"
              Height="250" Width="150"
              Name="productCard"
-             Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
-
+             MouseLeftButtonUp="OnClick"
+             >
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Border}" x:Key="BorderMouseOver">
+            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+            <Setter Property="BorderThickness" Value="2"></Setter>
+            <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" Value="True">
+                    <Setter Property="BorderBrush" Value="{DynamicResource SystemControlBackgroundAccentBrush}"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Border Style="{DynamicResource BorderMouseOver}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        
         <Image Grid.Row="0"
                HorizontalAlignment="Left"
                Width="150" Height="150"
@@ -58,4 +70,5 @@
 
         </Grid>
     </Grid>
+    </Border>
 </UserControl>
