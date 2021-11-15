@@ -51,12 +51,12 @@ namespace GoninDigital.ViewModels.Validator
             }
             try
             {
-                MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                MailMessage mail = new();
                 mail.From = new MailAddress("minhcuto6996@gmail.com");
                 mail.To.Add(email);
                 mail.Subject = emailSubject;
                 mail.Body = emailContent;
+                SmtpClient SmtpServer = new("smtp.gmail.com");
                 SmtpServer.Port = 587;
                 SmtpServer.Credentials = new System.Net.NetworkCredential("minhcuto6996@gmail.com", "minhdeeptry18cm");
                 SmtpServer.EnableSsl = true;

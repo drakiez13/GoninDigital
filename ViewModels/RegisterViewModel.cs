@@ -55,16 +55,6 @@ namespace GoninDigital.ViewModels
                 OnPropertyChanged();
             }
         }
-        private string _RePassword;
-        public string RePassword
-        {
-            get => _RePassword;
-            set
-            {
-                _RePassword = value;
-                OnPropertyChanged();
-            }
-        }
         private string _FirstName;
         public string FirstName
         {
@@ -140,13 +130,11 @@ namespace GoninDigital.ViewModels
             !string.IsNullOrEmpty(FirstName) &&
             !string.IsNullOrEmpty(LastName) &&
             !string.IsNullOrEmpty(PhoneNumber) &&
-            !string.IsNullOrEmpty(Password) &&
-            !string.IsNullOrEmpty(RePassword);
+            !string.IsNullOrEmpty(Password);
 
         public ICommand RegisterCommand { get; set; }
         public ICommand CancelCommand { get; set; }
         public ICommand PasswordChangedCommand { get; set; }
-        public ICommand rePasswordChangedCommand { get; set; }
         public RegisterViewModel(Window p)
         {
             art = "/GoninDigital;component/Resources/Images/LoginImage.jpg";
@@ -154,7 +142,6 @@ namespace GoninDigital.ViewModels
             RegisterCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { RegisterExecute(); });
             CancelCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { CancelExecute(); });
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
-            rePasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { RePassword = p.Password; });
         }
         void RegisterExecute()
         {
@@ -170,68 +157,55 @@ namespace GoninDigital.ViewModels
             }
             else
             {
-                if (Password != RePassword)
+                if (AccountManager.AccountExists(Email, UserName))
                 {
                     ContentDialog content = new()
                     {
                         Title = "Warning",
-                        Content = "Your Password not match, Pleace try again!",
+                        Content = "Your username is exist",
                         PrimaryButtonText = "Ok"
                     };
                     content.ShowAsync();
                 }
                 else
                 {
-                    if (AccountManager.AccountExists(Email, UserName))
+                    try
                     {
+                        _ = Enum.TryParse(TypeUser.Content.ToString(), out LTypeU _Usertype);
+                        _ = Enum.TryParse(Gender.Content.ToString(), out LGender _Gendertype);
+
+                        User new_user = new()
+                        {
+                            UserName = UserName,
+                            Password = Cryptography.MD5Hash(Cryptography.Base64Encode(Password)),
+                            TypeId = (int)_Usertype,
+                            FirstName = FirstName,
+                            LastName = LastName,
+                            PhoneNumber = PhoneNumber,
+                            Email = Email,
+                            Gender = (byte)_Gendertype,
+                            DateOfBirth = DoB
+                        };
+
+                        AccountManager.RegisterAccount(new_user);
+
                         ContentDialog content = new()
                         {
-                            Title = "Warning",
-                            Content = "Your username is exist",
+                            Title = "Success",
+                            Content = "Sign up succuss",
                             PrimaryButtonText = "Ok"
                         };
                         content.ShowAsync();
                     }
-                    else
+                    catch
                     {
-                        try
+                        ContentDialog content = new()
                         {
-                            _ = Enum.TryParse(TypeUser.Content.ToString(), out LTypeU _Usertype);
-                            _ = Enum.TryParse(Gender.Content.ToString(), out LGender _Gendertype);
-
-                            User new_user = new()
-                            {
-                                UserName = UserName,
-                                Password = Cryptography.MD5Hash(Cryptography.Base64Encode(Password)),
-                                TypeId = (int)_Usertype,
-                                FirstName = FirstName,
-                                LastName = LastName,
-                                PhoneNumber = PhoneNumber,
-                                Email = Email,
-                                Gender = (byte)_Gendertype,
-                                DateOfBirth = DoB
-                            };
-
-                            AccountManager.RegisterAccount(new_user);
-
-                            ContentDialog content = new()
-                            {
-                                Title = "Success",
-                                Content = "Sign up succuss",
-                                PrimaryButtonText = "Ok"
-                            };
-                            content.ShowAsync();
-                        }
-                        catch
-                        {
-                            ContentDialog content = new()
-                            {
-                                Title = "Failed",
-                                Content = "Sign up failed",
-                                PrimaryButtonText = "Ok"
-                            };
-                            content.ShowAsync();
-                        }
+                            Title = "Failed",
+                            Content = "Sign up failed",
+                            PrimaryButtonText = "Ok"
+                        };
+                        content.ShowAsync();
                     }
                 }
             }
