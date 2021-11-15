@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GoninDigital.Utils
 {
-    class Encode
+    class Cryptography
     {
         public static string Base64Encode(string plainText)
         {
