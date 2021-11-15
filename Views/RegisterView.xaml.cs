@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModernWpf.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,21 @@ namespace GoninDigital.Views
         public RegisterView()
         {
             InitializeComponent();
+        }
+        private void btnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            if (FloatingPasswordBox.Password != FloatingrePasswordBox.Password)
+            {
+                FloatingPasswordBox.Password = null;
+                FloatingrePasswordBox.Password = null;
+                ContentDialog content = new()
+                {
+                    Title = "Warning",
+                    Content = "Your Password not match, Pleace try again!",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
+            }
         }
     }
 }
