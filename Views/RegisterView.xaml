@@ -171,12 +171,6 @@
                     <Label Content="Confirm Password" />
                     <PasswordBox x:Name="FloatingrePasswordBox"
                                  Width="150">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PasswordChanged">
-                                <i:InvokeCommandAction Command="{Binding rePasswordChangedCommand}"
-                                                   CommandParameter="{Binding ElementName=FloatingrePasswordBox}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
                     </PasswordBox>
                 </StackPanel>
             </StackPanel>
@@ -190,6 +184,7 @@
                     Foreground="{DynamicResource SystemControlBackgroundAltHighBrush}"
                     Background="{DynamicResource SystemAccentColorDark1Brush}"
                     HorizontalAlignment="Center"
+                    Click="btnSubmit_Click"
                     Command="{Binding RegisterCommand}"/>
         </Grid>
         
