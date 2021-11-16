@@ -121,8 +121,8 @@
                               SelectedIndex="2"
                               Width="150">
                         <ComboBoxItem Content="Other"/>
-                        <ComboBoxItem Content="Male"/>
                         <ComboBoxItem Content="Female"/>
+                        <ComboBoxItem Content="Male"/>
                     </ComboBox>
                 </StackPanel>
                 <StackPanel>

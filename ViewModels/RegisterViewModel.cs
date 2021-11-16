@@ -173,7 +173,7 @@ namespace GoninDigital.ViewModels
                     {
                         _ = Enum.TryParse(TypeUser.Content.ToString(), out LTypeU _Usertype);
                         _ = Enum.TryParse(Gender.Content.ToString(), out LGender _Gendertype);
-
+                        
                         User new_user = new()
                         {
                             UserName = UserName,
