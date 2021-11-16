@@ -42,9 +42,9 @@ namespace GoninDigital.SharedControl
         };
 
         public static readonly DependencyProperty ProductListProperty =
-            DependencyProperty.Register("ProductList", typeof(object), typeof(ProductCardGroup2), new PropertyMetadata(metaProducts));
+            DependencyProperty.Register("ProductList", typeof(object), typeof(CartItemGroup), new PropertyMetadata(metaProducts));
         public static readonly DependencyProperty GroupBackgroundProperty =
-            DependencyProperty.Register("GroupBackground", typeof(object), typeof(ProductCardGroup2), new PropertyMetadata("DarkSeaGreen"));
+            DependencyProperty.Register("GroupBackground", typeof(object), typeof(CartItemGroup), new PropertyMetadata("DarkSeaGreen"));
         public CartItemGroup()
         {
             InitializeComponent();

@@ -14,13 +14,13 @@
                           HorizontalAlignment="Center">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"></StackPanel>
+                    <StackPanel Orientation="Vertical"></StackPanel>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <uc:CartItem
-                            Margin="20 0 20 0"
+                            Margin="0 0 0 5"
                             Title="{Binding Path=Name}"
                             Price="{Binding Path=Price}"
                             TotalPrice="{Binding Path=Price}"
