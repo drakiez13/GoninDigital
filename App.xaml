@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:GoninDigital"
              Exit="OnExit"
              xmlns:ui="http://schemas.modernwpf.com/2019"
-             StartupUri="/Views/MainView.xaml">
+             StartupUri="/Views/DashBoardView.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
