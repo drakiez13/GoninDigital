@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GoninDigital.Views;
+using GoninDigital.Views.SharedPages;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -76,7 +78,7 @@ namespace GoninDigital.SharedControl
         {
             if (Id != null)
             {
-                MessageBox.Show("Navigate to product page");
+                DashBoard.RootFrame.Navigate(new ProductPage((int)Id));
             }
         }
     }
