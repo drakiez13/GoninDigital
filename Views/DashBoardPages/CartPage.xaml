@@ -84,7 +84,7 @@
                 <ui:AppBarButton Margin="20"
                          Icon="Shop" 
                          Label="Purchase"
-                         Command=""
+                         Command="{Binding PurchaseCommand}"
                          />
             </StackPanel>
         </Grid>

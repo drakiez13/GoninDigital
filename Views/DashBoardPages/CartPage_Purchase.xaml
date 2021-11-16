@@ -9,6 +9,32 @@
       Title="CartPage_Purchase">
 
     <Grid>
-           
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Margin="5">
+            <Label Content="SHIPPING ADDRESS"
+                   FontSize="20"></Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <Label Content="First name:"/>
+                    <TextBox ></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Vertical"
+                            Grid.Column="1" Margin="5">
+                    <Label Content="Last name:"/>
+                    <TextBox></TextBox>
+                </StackPanel>
+            </Grid>
+            <StackPanel Margin="5">
+                <Label Content="Delivery address:"/>
+                <TextBox ></TextBox>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>
