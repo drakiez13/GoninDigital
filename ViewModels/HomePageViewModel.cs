@@ -28,9 +28,23 @@ namespace GoninDigital.ViewModels
             get { return recommnededByEditor.GetRange(0, 3); }
         }
 
+        private string artGroup1;
+        public string ArtGroup1
+        {
+            get => artGroup1;
+        }
+
+        private string artGroup2;
+        public string ArtGroup2
+        {
+            get => artGroup2;
+        }
+
         public HomePageViewModel()
         {
-            art = "/GoninDigital;component/Resources/Images/HomeBanner.jpg";
+            art = "/Resources/Images/HomeBanner.jpg";
+            artGroup1 = "/Resources/Images/HomeProductCardGroupBackground.png";
+            artGroup2 = "/Resources/Images/HomeProductCardGroupBackground2.jpg";
             GoninDigitalDBContext db = DataProvider.Instance.Db;
             recommnededByEditor = db.Products.ToList();
         }

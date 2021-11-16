@@ -21,6 +21,11 @@ namespace GoninDigital.SharedControl
     /// </summary>
     public partial class ProductCard : UserControl
     {
+        public object Id
+        {
+            get => (object)GetValue(IdProperty);
+            set => SetValue(IdProperty, value);
+        }
         public object Title
         {
             get => (object)GetValue(TitleProperty);
@@ -29,7 +34,7 @@ namespace GoninDigital.SharedControl
         public object Image
         {
             get => (object)GetValue(ImageProperty);
-            set => SetValue(ImageProperty, value);
+            set => SetValue(RatingValueProperty, value);
         }
         public object RatingValue
         {
@@ -47,11 +52,13 @@ namespace GoninDigital.SharedControl
             set => SetValue(PriceProperty, value);
         }
 
+        public static readonly DependencyProperty IdProperty =
+            DependencyProperty.Register("Id", typeof(object), typeof(ProductCard), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register("Title", typeof(object), typeof(ProductCard), new PropertyMetadata("Unknown"));
         public static readonly DependencyProperty ImageProperty =
             DependencyProperty.Register("Image", typeof(object), typeof(ProductCard),
-                new PropertyMetadata("/Resources/Images/BlankImage.jpg") );
+                new PropertyMetadata("/Resources/Images/BlankImage.jpg"), new ValidateValueCallback((object value) => { return value != null; }));
         public static readonly DependencyProperty RatingValueProperty =
             DependencyProperty.Register("RatingValue", typeof(object), typeof(ProductCard), new PropertyMetadata("2.5"));
         public static readonly DependencyProperty RatingCaptionProperty =
@@ -65,9 +72,12 @@ namespace GoninDigital.SharedControl
             InitializeComponent();
         }
 
-        private void productCard_MouseDown(object sender, MouseButtonEventArgs e)
+        private void OnClick(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("Ok");
+            if (Id != null)
+            {
+                MessageBox.Show("Navigate to product page");
+            }
         }
     }
 }
