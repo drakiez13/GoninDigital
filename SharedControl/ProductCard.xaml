@@ -33,7 +33,7 @@
                Width="150" Height="150"
                Margin="0,0,0,0"
                VerticalAlignment="Top" Source="{Binding Image, ElementName=productCard}"
-               Stretch="fill"
+               Stretch="UniformToFill"
                />
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
