@@ -3,8 +3,11 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:GoninDigital.Views"
+      xmlns:local="clr-namespace:GoninDigital.Views.DashBoardPages"
+      xmlns:uc="clr-namespace:GoninDigital.SharedControl"
+      xmlns:ui="http://schemas.modernwpf.com/2019"
       mc:Ignorable="d" 
+      DataContext="{StaticResource CartPageVM}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CartPage_Purchase">
 
@@ -16,25 +19,33 @@
         <StackPanel Grid.Row="0" Margin="5">
             <Label Content="SHIPPING ADDRESS"
                    FontSize="20"></Label>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Vertical" Margin="5">
-                    <Label Content="First name:"/>
-                    <TextBox ></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Vertical"
-                            Grid.Column="1" Margin="5">
-                    <Label Content="Last name:"/>
-                    <TextBox></TextBox>
-                </StackPanel>
-            </Grid>
-            <StackPanel Margin="5">
+            
+            <StackPanel Orientation="Vertical"
+                        Grid.Column="1" Margin="5">
+                <Label Content="Name:"/>
+                <TextBox
+                    Margin="0 0 0 5"></TextBox>
                 <Label Content="Delivery address:"/>
                 <TextBox ></TextBox>
             </StackPanel>
+            <Label Content="CONTACT DETAILS"
+                   FontSize="20"></Label>
+            <StackPanel Orientation="Vertical"
+                        Grid.Column="1" Margin="5">
+                <Label Content="Mail:"/>
+                <TextBox
+                    Margin="0 0 0 5"></TextBox>
+                <Label Content="Phone Number:"/>
+                <TextBox ></TextBox>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="5">
+            <Label Content="ORDER SUMMARY"/>
+            
+            <uc:CartItemGroup
+                Margin="0 10 0 20"
+                ProductList="{Binding RecommendedByEditor3}"/>
+ 
         </StackPanel>
     </Grid>
 </Page>
