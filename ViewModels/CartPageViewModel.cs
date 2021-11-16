@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using GoninDigital.Models;
+using GoninDigital.Views;
 
 namespace GoninDigital.ViewModels
 {
@@ -21,12 +23,15 @@ namespace GoninDigital.ViewModels
         {
             get { return recommnededByEditor.GetRange(0, 3); }
         }
+        public ICommand PurchaseCommand { get; set; }
 
         public CartPageViewModel()
         {
   
             GoninDigitalDBContext db = DataProvider.Instance.Db;
             recommnededByEditor = db.Products.ToList();
+
+            PurchaseCommand = new RelayCommand<object>((p) => { return true; },(p)=> { DashBoard.RootFrame})
         }
     }
 }
