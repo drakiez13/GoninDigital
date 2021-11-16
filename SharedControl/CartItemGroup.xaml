@@ -6,9 +6,7 @@
              xmlns:uc="clr-namespace:GoninDigital.SharedControl"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d" 
-             Name="cartItemGroup"
-             
-             mc:Ignorable="d" 
+             Name="cartItemGroup" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ItemsControl ItemsSource="{Binding ProductList, ElementName=cartItemGroup}"
