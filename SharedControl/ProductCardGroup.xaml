@@ -6,9 +6,12 @@
              xmlns:uc="clr-namespace:GoninDigital.SharedControl"
              Name="productCardGroup"
              mc:Ignorable="d">
-    <Grid
-        Background="{Binding GroupBackground, ElementName=productCardGroup}"
-        MaxWidth="1200">
+    <Grid MaxWidth="1200">
+        <Grid.Background>
+            <ImageBrush ImageSource="{Binding GroupBackground, ElementName=productCardGroup}"
+                        Stretch="UniformToFill"
+            ></ImageBrush>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*">
             </ColumnDefinition>
@@ -23,29 +26,37 @@
             Grid.Column="0"
             VerticalAlignment="Bottom">
             <Label
-               HorizontalAlignment="Center"
-               VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
                 FontSize="22"
                 FontWeight="Bold"
+                Foreground="White"
                 Content="{Binding Title, ElementName=productCardGroup}">
             </Label>
             <TextBlock
-               HorizontalAlignment="Center"
-               Margin="0 10 0 0"
-                MaxWidth="300" TextWrapping="WrapWithOverflow"
+                HorizontalAlignment="Center"
+                Margin="0 10 0 0"
+                MaxWidth="250" TextWrapping="Wrap"
+                Foreground="White"
+                TextAlignment="Center"
                 Text="{Binding Subtitle, ElementName=productCardGroup}"
                 >
             </TextBlock>
         </StackPanel>
-        
-        <Button Grid.Row="2" Grid.Column="0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Margin="0 30 0 0"
-                Opacity="0.7">
-            See all
-        </Button>
 
+        <Grid
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Margin="0 30 0 0"
+            Grid.Row="1"
+            Grid.Column="0"
+            Background="{DynamicResource SystemControlBackgroundAccentBrush}"
+            >
+           
+        <Button>
+            See more
+        </Button>
+        </Grid>
 
         <ItemsControl ItemsSource="{Binding ProductList, ElementName=productCardGroup}"
                         Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
@@ -61,8 +72,11 @@
                 <DataTemplate>
                     <uc:ProductCard
                         Margin="10 0 10 0"
+                        Id="{Binding Path=Id}"
                         Title="{Binding Path=Name}"
                         Price="{Binding Path=Price}"
+                        Image="{Binding Path=Image}"
+                        RatingValue="{Binding Path=Rating}"
                         ></uc:ProductCard>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

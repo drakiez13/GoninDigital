@@ -8,12 +8,14 @@
         mc:Ignorable="d"
         Height="auto"  Width="auto">
     <Grid Margin="0 -1 0 0">
-        <ui:NavigationView x:Name="nvSample6"
+        <ui:NavigationView x:Name="navigationView"
                            MinHeight="400"
                            SelectionChanged="NavigationView_SelectionChanged"
-                           PaneDisplayMode="Auto">
+                           PaneDisplayMode="Auto"
+                           BackRequested="navigationView_BackRequested"
+                           IsBackEnabled="False">
             <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Content="Home" Tag="HomePage" Icon="Home"/>
+                <ui:NavigationViewItem Content="Home" Tag="HomePage" Icon="Home" IsSelected="True"/>
                 <ui:NavigationViewItem Content="My Shop" Tag="MyShopPage" Icon="Manage" />
                 <ui:NavigationViewItem Content="Hot Deal" Tag="HotDealPage" Icon="Tag"/>
                 <ui:NavigationViewItem Content="Cart" Tag="CartPage" Icon="Shop"/>
@@ -34,7 +36,9 @@
 
             </ui:NavigationView.PaneFooter>
             <ui:NavigationView.Content>
-                <ui:Frame x:Name="contentFrame"/>
+                <ui:Frame
+                    x:Name="contentFrame"
+                    Navigated="ContentFrame_Navigated"/>
             </ui:NavigationView.Content>
         </ui:NavigationView>
     </Grid>
