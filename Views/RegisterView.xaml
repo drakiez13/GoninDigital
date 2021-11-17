@@ -8,7 +8,7 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1000" d:Background="White">
-    <Grid>
+    <Grid x:Name="sample_grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="450"/>
             <ColumnDefinition />
@@ -117,8 +117,7 @@
                             Margin="0 0 50 0">
                     <Label Content="Gender:" />
                     <ComboBox x:Name="cbGender"
-                              SelectedItem="{Binding Gender}"
-                              SelectedIndex="2"
+                              SelectedIndex="{Binding Gender}"
                               Width="150">
                         <ComboBoxItem Content="Other"/>
                         <ComboBoxItem Content="Female"/>
@@ -132,22 +131,6 @@
                                 SelectedDate="{Binding DoB, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
             </StackPanel>
-
-            <StackPanel Grid.Row="6"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center">
-                <Label Content="Type User" />
-                <ComboBox x:Name="cbTypeUser"
-                          SelectedItem="{Binding TypeUser}"
-                          Width="355"
-                          SelectedIndex="2">
-                    <ComboBoxItem Content="Admin"/>
-                    <ComboBoxItem Content="Seller"/>
-                    <ComboBoxItem Content="Customer"/>
-                </ComboBox>
-            </StackPanel>
-
-            
 
             <StackPanel Grid.Row="7"
                         Orientation="Horizontal"
@@ -174,8 +157,6 @@
                     </PasswordBox>
                 </StackPanel>
             </StackPanel>
-
-
 
             <Button x:Name="btnSubmit" 
                     Grid.Row="8"
