@@ -1,0 +1,79 @@
+﻿<Page x:Class="GoninDigital.Views.CartPage_Purchase"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GoninDigital.Views.DashBoardPages"
+      xmlns:uc="clr-namespace:GoninDigital.SharedControl"
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      mc:Ignorable="d" 
+      Name="purchaseItem"
+      DataContext="{StaticResource PurchasePageVM}"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CartPage_Purchase">
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Margin="5">
+            <Label Content="SHIPPING ADDRESS"
+                   FontSize="20"></Label>
+            
+            <StackPanel Orientation="Vertical"
+                        Grid.Column="1" Margin="5">
+                <Label Content="Name:"/>
+                <TextBox
+                    Margin="0 0 0 5"></TextBox>
+                <Label Content="Delivery address:"/>
+                <TextBox ></TextBox>
+            </StackPanel>
+            <Label Content="CONTACT DETAILS"
+                   FontSize="20"></Label>
+            <StackPanel Orientation="Vertical"
+                        Grid.Column="1" Margin="5">
+                <Label Content="Mail:"/>
+                <TextBox
+                    Margin="0 0 0 5"></TextBox>
+                <Label Content="Phone Number:"/>
+                <TextBox ></TextBox>
+            </StackPanel>
+        </StackPanel>
+        <ScrollViewer Grid.Column="1" Margin="5" >
+            <StackPanel>
+                <Label Content="ORDER SUMMARY" FontSize="20"/>
+
+                <ItemsControl ItemsSource="{Binding RecommendedByEditor3} " Margin="10"
+                          Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                          HorizontalAlignment="Center">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"></StackPanel>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <uc:PurchaseItem
+                            Margin="0 0 0 5"
+                            Title="{Binding Path=Name}"
+                            Price="{Binding Path=Price}"
+                            TotalPrice="{Binding Path=Price}"
+                            ></uc:PurchaseItem>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right"
+                            Margin="0 40 30 0">
+                    <Label Content="Total Price: "  VerticalAlignment="Center"/>
+                    <Label Content="500.000"  
+                           Margin="0 0 15 0" VerticalAlignment="Center"/>
+                    <ui:AppBarButton 
+                        Icon="Shop" 
+                        Label="Order"
+                        VerticalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

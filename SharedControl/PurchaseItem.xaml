@@ -9,8 +9,8 @@
              Name="purchaseItem"
              Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
              
-             d:DesignHeight="100" d:DesignWidth="700">
-    <Grid>
+             d:DesignHeight="120" d:DesignWidth="300">
+    <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition/>
@@ -18,10 +18,23 @@
         <Label Content="Name Brand"/>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="100"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            
+            <StackPanel Orientation="Vertical">
+                <Label Content="Name Product"/>
+                <Label Content="Quantity" />
+                <Label Content="Delivery"/>
+                <Label Content="Total" Margin="0 8 0 0"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" 
+                        Grid.Column="1">
+                <Label Content="{Binding Title, ElementName=purchaseItem}" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+                <Label Content="1" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+                <Label  Content="{Binding Delivery, ElementName=purchaseItem}" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+                <Label Content="{Binding TotalPrice, ElementName=purchaseItem}"
+                       HorizontalAlignment="Right" Margin="0 8 10 0"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>
