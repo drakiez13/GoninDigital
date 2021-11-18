@@ -9,6 +9,12 @@ namespace GoninDigital.ViewModels
 {
     class ProductPageViewModel : BaseViewModel
     {
+        private string image;
+        public string Image
+        {
+            get { return image; }
+            set { image = value; OnPropertyChanged(); }
+        }
         private int productId;
         public int ProductId
         {
@@ -26,6 +32,18 @@ namespace GoninDigital.ViewModels
         {
             get => nameP;
             set { nameP = value; OnPropertyChanged(); }
+        }
+        private int ratingValue;
+        public int RatingValue
+        {
+            get => ratingValue;
+            set { ratingValue = value; OnPropertyChanged(); }
+        }
+        private int ratingCap;
+        public int RatingCap
+        {
+            get => ratingCap;
+            set { ratingCap = value; OnPropertyChanged(); }
         }
         private string descP;
         public string DescP
@@ -79,6 +97,9 @@ namespace GoninDigital.ViewModels
         Product product = new Product();
         public ProductPageViewModel()
         {
+            ratingValue = 5;
+            ratingCap = 100;
+            image = "/Resources/Images/BlankImage.jpg";
             product = DataProvider.Instance.Db.Products.Where(x => x.Id == 3).First();
             NameP = product.Name;
             NameV = DataProvider.Instance.Db.Vendors.Where(x => x.Id == product.VendorId).First().Name.ToString();
@@ -91,7 +112,7 @@ namespace GoninDigital.ViewModels
             float price = float.Parse(PriceP) * (1- float.Parse(product.DiscountRate.ToString()) /100);
             PriceP_now = price.ToString()+" VND";
             if (discP != "0")
-                PriceP_origin = "(" + priceP + ")";
+                PriceP_origin = priceP;
             else
                 PriceP_origin = "";
         }
