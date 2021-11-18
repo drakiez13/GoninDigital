@@ -27,6 +27,7 @@ namespace GoninDigital.Views
         }
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
+
             if (tbUsername.Text=="" || tbEmail.Text=="" || tbFirstName.Text=="" || tbLastName.Text=="" || tbPhoneNum.Text=="")
             {
                 ContentDialog content = new()

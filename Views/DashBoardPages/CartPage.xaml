@@ -7,8 +7,7 @@
       xmlns:uc="clr-namespace:GoninDigital.SharedControl"
       xmlns:ui="http://schemas.modernwpf.com/2019"
       mc:Ignorable="d" 
-     
-      DataContext="{StaticResource HomePageVM}"
+      DataContext="{StaticResource CartPageVM}"
       Background="{DynamicResource AppBackgroundBrush}"
       Title="CartPage">
 
@@ -62,20 +61,12 @@
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"/>
                 </Grid>
+                    <uc:CartItemGroup
+                        Margin="0 10 0 20"
+                     ProductList="{Binding RecommendedByEditor3}"/>
 
-                <uc:CartItem Title="Ram" Margin="10 20 10 0"
-                             TotalPrice="100.000"
-                             Price="100.000"
-                            />
-                <uc:CartItem Title="Ram" Margin="10 25 10 0"
-                             TotalPrice="100.000"
-                             Price="100.000"
-                             />
-                <uc:CartItem Title="Ram" Margin="10 25 10 0"
-                             TotalPrice="100.000"
-                             Price="100.000"
-                             />
-            </StackPanel>
+
+                </StackPanel>
             
         </StackPanel>
     </ScrollViewer >
@@ -93,6 +84,7 @@
                 <ui:AppBarButton Margin="20"
                          Icon="Shop" 
                          Label="Purchase"
+                         Command="{Binding PurchaseCommand}"
                          />
             </StackPanel>
         </Grid>

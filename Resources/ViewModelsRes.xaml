@@ -2,5 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewmodel="clr-namespace:GoninDigital.ViewModels">
     <viewmodel:HomePageViewModel x:Key="HomePageVM"></viewmodel:HomePageViewModel>
-    
+    <viewmodel:CartPageViewModel x:Key="CartPageVM"></viewmodel:CartPageViewModel>
+    <viewmodel:PurchasePageViewModel x:Key="PurchasePageVM"></viewmodel:PurchasePageViewModel>
 </ResourceDictionary>

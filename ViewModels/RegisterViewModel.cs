@@ -134,6 +134,7 @@ namespace GoninDigital.ViewModels
                 ContentDialog content = new()
                 {
                     Title = "Warning",
+
                     Content = "Your username or email already exists",
                     PrimaryButtonText = "Ok"
                 };
@@ -181,6 +182,7 @@ namespace GoninDigital.ViewModels
                     };
                     content.ShowAsync();
                     return;
+
                 }
                 //catch () // error database
                 //{
