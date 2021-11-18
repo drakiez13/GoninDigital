@@ -79,8 +79,8 @@ namespace GoninDigital.ViewModels
             }
 
             string passEncode = Cryptography.MD5Hash(Cryptography.Base64Encode(Password));
-            var isExist = DataProvider.Instance.Db.Users.First(x => x.UserName == UserName && x.Password == passEncode);
-            if (isExist != null)
+            var isExist = DataProvider.Instance.Db.Users.FirstOrDefault(x => x.UserName == UserName && x.Password == passEncode);
+            if (isExist != default)
             {
                 var dashboardWindow = new DashBoard();
                 if (isExist.TypeId == 1) //admin

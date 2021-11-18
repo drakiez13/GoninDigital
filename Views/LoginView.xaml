@@ -67,6 +67,7 @@
                         Orientation="Horizontal">
                 <Button x:Name="Login"
                         Margin="20"
+                        IsDefault="True"
                         Command="{Binding LoginCommand}"
                         Content="Login"
                         Width="150"
