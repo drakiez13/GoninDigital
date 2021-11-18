@@ -7,50 +7,150 @@
       xmlns:local="clr-namespace:GoninDigital.Views.SharedPages"
       mc:Ignorable="d" 
       DataContext="{StaticResource ProductPageVM}"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="1000"
+      d:Background="White"
       Title="ProductPage">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"></ColumnDefinition>
-            <ColumnDefinition Width="500"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Image Grid.Column="0" Source="{Binding Image, ElementName=ProductCard}"></Image>
-        <ui:SimpleStackPanel Grid.Column="1" Margin="0,50,0,0">
-            <Label x:Name="lb_nameP"  Content="{Binding NameP }" Height="50" FontWeight="Bold"></Label>
-            <StackPanel x:Name="sp_typeP" Orientation="Horizontal">
-                <Label Content="Type" Width="165"></Label>
-                <Label x:Name="lb_typeP"  Content="{Binding TypeP }" Height="50"></Label>
-            </StackPanel>
-            <StackPanel x:Name="sp_DescP" Orientation="Horizontal">
-                <Label Content="Description" Width="165"></Label>
-                <Label x:Name="lb_DescP"  Content="{Binding DescP }" Height="50"></Label>
-            </StackPanel>
-            <StackPanel x:Name="sp_BrandP" Orientation="Horizontal">
-                <Label Content="Brand" Width="165"></Label>
-                <Label x:Name="lb_BrandP"  Content="{Binding NameB }" Height="50"></Label>
-            </StackPanel>
-            <StackPanel x:Name="sp_NameV" Orientation="Horizontal">
-            <Label Content="Vendor" Width="165"></Label>
-                <Label x:Name="lb_NameV"  Content="{Binding NameV }" Height="50"></Label>
-            </StackPanel>
-            <StackPanel x:Name="sp_AddrV" Orientation="Horizontal">
-                <Label Content="Address" Width="165"></Label>
-                <Label x:Name="lb_AddrV"  Content="{Binding AddrV }" Height="50"></Label>
-            </StackPanel>
-            <StackPanel x:Name="sp_discP" Orientation="Horizontal">
-                <Label Content="Discount" Width="165"></Label>
-                <Label x:Name="lb_discP"  Content="{Binding DiscP}" Height="50"></Label>
-            </StackPanel>
-            <StackPanel x:Name="sp_Price" Orientation="Horizontal">
-                <Label Content="Price" Width="165"></Label>
-                <Label Content="{Binding PriceP_now}" Width="100"></Label>
-                <Label>
-                    <TextBlock>
-                    <Run TextDecorations="Strikethrough" Text="{Binding PriceP_origin}"></Run>
-                    </TextBlock>
-                </Label>
-            </StackPanel>
-        </ui:SimpleStackPanel>
-    </Grid>
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="300"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
+                  Margin="10 30 10 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Grid Margin="20 20 0 40">
+                    <Image Source="{Binding Image}"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Left"/> 
+                </Grid>
+                <Grid Grid.Column="1"
+                  Margin="0 20 0 40 ">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel>
+                        <Label Content="{Binding NameP }" 
+                               FontSize="22"
+                               FontWeight="Bold"/>
+                        <Label Content="{Binding NameB }"/>
+                    </StackPanel>
+                    <Grid Grid.Row="1">
+                        <ui:RatingControl HorizontalAlignment="Left"
+                                          Value="{Binding RatingValue}"
+                                          Caption="{Binding RatingCap}"
+                                          IsReadOnly="True">
+                            <ui:RatingControl.LayoutTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1"></ScaleTransform>
+                            </ui:RatingControl.LayoutTransform>
+                        </ui:RatingControl>
+                    </Grid>
+                    <StackPanel Grid.Row="2"
+                                Orientation="Vertical">
+                        <Label Content="{Binding PriceP_now}" 
+                           FontSize="20"
+                           FontWeight="Bold"/>
+                        <Label>
+                            <TextBlock>
+                            <Run TextDecorations="Strikethrough" Text="{Binding PriceP_origin}"></Run>
+                            </TextBlock>
+                        </Label>
+                    </StackPanel>
+
+
+                </Grid>
+                <StackPanel Grid.Column="2">
+                    <Button x:Name="buy"
+                        Content="Buy"
+                        Width="150"
+                        Margin="0 30 30 0"
+                        Background="{DynamicResource SystemAccentColorDark1Brush}"
+                        HorizontalAlignment="Right"/>
+                    <Button x:Name="addCart"
+                        Content="Add To Cart"
+                        Width="150"
+                        Margin="0 30 30 0"
+                        Background="{DynamicResource SystemAccentColorDark1Brush}"
+                        HorizontalAlignment="Right"/>
+
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1"
+                  Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
+                  Margin="10 0 10 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="400"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0"
+                      Margin="20 10 0 0">
+                    <Label Content="Description" 
+                           FontSize="22"
+                           FontWeight="Bold"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0"
+                      Margin="20 0 0 0">
+                    <StackPanel>
+                        <TextBlock TextWrapping="Wrap" Text="Ram tự động ép xung giúp nó lên tần số cao nhất khi được công bố, lên đến 2666MHz, nhằm cung cấp hiệu năng cao nhất cho các bo mạch chủ có chipset 100 Series và x99 của Intel. Tăng hiệu suất tối đa cho các vi xử lý 2, 4, 6, 8-core của Intel giúp các tác vụ chỉnh sửa video, dựng phim 3D, chơi game... xử lý nhanh chóng. Thiết kế bộ tản nhiệt độc đáo có độ cao thấp mạnh mẽ giúp tương thích với nhiều loại case có kích thước nhỏ cho hệ thống của bạn thêm chuyên nghiệp."/>
+                        <Image Source="{Binding Image}"
+                               MaxWidth="400"
+                               HorizontalAlignment="Left"/>
+                        <TextBlock TextWrapping="Wrap" Text="Ram tự động ép xung giúp nó lên tần số cao nhất khi được công bố, lên đến 2666MHz, nhằm cung cấp hiệu năng cao nhất cho các bo mạch chủ có chipset 100 Series và x99 của Intel. Tăng hiệu suất tối đa cho các vi xử lý 2, 4, 6, 8-core của Intel giúp các tác vụ chỉnh sửa video, dựng phim 3D, chơi game... xử lý nhanh chóng. Thiết kế bộ tản nhiệt độc đáo có độ cao thấp mạnh mẽ giúp tương thích với nhiều loại case có kích thước nhỏ cho hệ thống của bạn thêm chuyên nghiệp."/>
+                        <Image Source="{Binding Image}"
+                               MaxWidth="400"
+                               HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1"
+                      Margin="20 10 0 0">
+                    <Label Content="Specifications"
+                           FontSize="22"
+                           FontWeight="Bold"/>
+                </Grid>
+                <StackPanel Margin="20,0,0,0"
+                            Grid.Column="1"
+                            Grid.Row="1">
+                    <StackPanel Orientation="Horizontal"
+                                Height="30">
+                        <Label Content="Brand" 
+                               Width="150"/>
+                        <Label Content="{Binding NameB}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Height="30">
+                        <Label Content="Type"
+                               Width="150"/>
+                        <Label Content="{Binding TypeP }"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Height="30"
+                                >
+                        <Label Content="Description"
+                               Width="150"/>
+                        <Label Content="{Binding DescP}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal"
+                                Height="30">
+                        <Label Content="Vendor" 
+                               Width="150"/>
+                        <Label Content="{Binding NameV }"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+    </ScrollViewer>
+    
 </Page>
