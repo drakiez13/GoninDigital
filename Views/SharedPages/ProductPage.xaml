@@ -37,9 +37,10 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel>
-                        <Label Content="{Binding NameP }" 
-                               FontSize="22"
-                               FontWeight="Bold"/>
+                        <TextBlock Text="{Binding NameP }"
+                                   TextWrapping="Wrap"
+                                   FontSize="22"
+                                   FontWeight="Bold"/>
                         <Label Content="{Binding NameB }"/>
                     </StackPanel>
                     <Grid Grid.Row="1">
