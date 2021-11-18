@@ -44,7 +44,7 @@
             <StackPanel>
                 <Label Content="ORDER SUMMARY" FontSize="20"/>
 
-                <ItemsControl ItemsSource="{Binding RecommendedByEditor3} " Margin="10"
+                <ItemsControl ItemsSource="{Binding RecommendedByEditor3}" Margin="10"
                           Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                           HorizontalAlignment="Center">
                     <ItemsControl.ItemsPanel>
