@@ -14,36 +14,30 @@
 
     <ScrollViewer>
         <StackPanel Orientation="Vertical" Margin="0 0 0 50 ">
-            <Grid Height="500">
-                <Image Source=" https://br.atsit.in/vi/wp-content/uploads/2021/05/apple-co-ke-hoach-mo-them-apple-store-vi-covid-anh-huong-den-ban-le-tren-toan-the-gioi.jpg"
-                       Stretch="UniformToFill"></Image>
-                <Label
-                            Margin="20 20 0 20"
-                            FontSize="22"
-                            FontWeight="Bold">My Shop</Label>
-            </Grid>
-            <Grid Margin="20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.8*"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal">
-                   
-                    
-                    <ui:PersonPicture
-                        DisplayName="Betsy Sherman"
-                        ProfilePicture="https://c4.wallpaperflare.com/wallpaper/471/516/832/apple-logo-white-background-wallpaper-preview.jpg"
-                        Initials="Shop" 
-                        Margin="15"/>
-                    <Label Margin="0 20 0 0"
-                           Content="CellPhone S" Foreground="Black"
-                           FontSize="22" FontWeight="Bold"/>
+            <Grid VerticalAlignment="Top">
+                <Grid Height="450" VerticalAlignment="Top">
+                    <Image Source=" https://br.atsit.in/vi/wp-content/uploads/2021/05/apple-co-ke-hoach-mo-them-apple-store-vi-covid-anh-huong-den-ban-le-tren-toan-the-gioi.jpg"
+                           Stretch="UniformToFill"></Image>
+                    <Label
+                                Margin="20 20 0 20"
+                                FontSize="22"
+                                FontWeight="Bold">My Shop</Label>
+                </Grid>
+                <Grid Margin="0 405 0 0">
+                <StackPanel Orientation="Vertical" >
+                    <ui:PersonPicture 
+                            DisplayName="Betsy Sherman"
+                            ProfilePicture="https://c4.wallpaperflare.com/wallpaper/471/516/832/apple-logo-white-background-wallpaper-preview.jpg"
+                            Initials="Shop" 
+                            />
+                    <Label 
+                            Content="Apple" Foreground="Black"
+                            FontSize="22" FontWeight="Bold"
+                            HorizontalAlignment="Center"/>
                 </StackPanel>
-                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="30 0 0 0">
-                    <Label Content="+ Products: 132" Margin="0 5 0 5"/>
-                    <Label Content="+ Sold: 264" Margin="0 5 0 5"/>
-                </StackPanel>
+                </Grid>
             </Grid>
+
             <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
             <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
             <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
