@@ -3,12 +3,50 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:local="clr-namespace:GoninDigital.Views.DashBoardPages"
+      xmlns:uc="clr-namespace:GoninDigital.SharedControl"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="MyShopPage">
+      d:DesignWidth="1000"
+      DataContext="{StaticResource HomePageVM}"
+      Background="{DynamicResource AppBackgroundBrush}"
+      Title="MyShop">
 
-    <Grid>
-        <TextBlock Text="My Shop Page"/>
-    </Grid>
+    <ScrollViewer>
+        <StackPanel Orientation="Vertical" Margin="0 0 0 50 ">
+            <Grid Height="500">
+                <Image Source=" https://br.atsit.in/vi/wp-content/uploads/2021/05/apple-co-ke-hoach-mo-them-apple-store-vi-covid-anh-huong-den-ban-le-tren-toan-the-gioi.jpg"
+                       Stretch="UniformToFill"></Image>
+                <Label
+                            Margin="20 20 0 20"
+                            FontSize="22"
+                            FontWeight="Bold">My Shop</Label>
+            </Grid>
+            <Grid Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                   
+                    
+                    <ui:PersonPicture
+                        DisplayName="Betsy Sherman"
+                        ProfilePicture="https://c4.wallpaperflare.com/wallpaper/471/516/832/apple-logo-white-background-wallpaper-preview.jpg"
+                        Initials="Shop" 
+                        Margin="15"/>
+                    <Label Margin="0 20 0 0"
+                           Content="CellPhone S" Foreground="Black"
+                           FontSize="22" FontWeight="Bold"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="30 0 0 0">
+                    <Label Content="+ Products: 132" Margin="0 5 0 5"/>
+                    <Label Content="+ Sold: 264" Margin="0 5 0 5"/>
+                </StackPanel>
+            </Grid>
+            <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
+            <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
+            <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
+        </StackPanel>
+    </ScrollViewer>
 </Page>
