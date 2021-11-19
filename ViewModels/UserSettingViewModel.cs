@@ -89,20 +89,6 @@ namespace GoninDigital.ViewModels
             }
         }
 
-        private string _usn = "chinh";
-        public string usn
-        {
-            get
-            {
-                return _usn;
-            }
-            set
-            {
-                _usn = value;
-                OnPropertyChanged("usn");
-            }
-
-        }
         private string _id;
         public string Id
         {
@@ -258,7 +244,7 @@ namespace GoninDigital.ViewModels
         }
         private void load_page()
         {
-           user = DataProvider.Instance.Db.Users.Where(x => x.UserName == usn).First();
+           user = DataProvider.Instance.Db.Users.Where(x => x.UserName == Settings.Default.usrname).First();
             Id = user.Id.ToString();
             userType = user.TypeId.ToString();
             switch (userType)
@@ -313,7 +299,7 @@ namespace GoninDigital.ViewModels
         }
         void UpdateInfo()
         {
-            var t = DataProvider.Instance.Db.Users.Where(x => x.UserName == usn).First();
+            var t = DataProvider.Instance.Db.Users.Where(x => x.UserName == Settings.Default.usrname).First();
             t.Gender = byte.Parse(Gender);
             t.FirstName = FirstName;
             t.LastName=LastName;
