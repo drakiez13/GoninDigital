@@ -50,10 +50,10 @@ namespace GoninDigital.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"Server=tcp:gonin-digital.database.windows.net,1433;Initial Catalog=GoninDigitalD" +
-            "B;Persist Security Info=False;User ID=gonin-admin;Password=5nin-digital;Multiple" +
-            "ActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Time" +
-            "out=30;\"")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=tcp:gonin-digital.database.windows.net,1433;Initial Catalog=GoninDigitalDB" +
+            ";Persist Security Info=False;User ID=gonin-admin;Password=5nin-digital;MultipleA" +
+            "ctiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeo" +
+            "ut=30;")]
         public string DBconnstr {
             get {
                 return ((string)(this["DBconnstr"]));
