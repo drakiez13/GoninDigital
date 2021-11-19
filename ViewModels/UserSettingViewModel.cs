@@ -16,197 +16,94 @@ namespace GoninDigital.ViewModels
 {
     class UserSettingViewModel : BaseViewModel
     {
+        #region Properties
         private bool _flag;
         public bool flag
         {
-            get
-            {
-                return _flag;
-            }
-            set
-            {
-                _flag = value;
-                OnPropertyChanged("flag");
-            }
-
+            get { return _flag; }
+            set { _flag = value; OnPropertyChanged("flag"); }
         }
         private string _flag1;
         public string flag1
         {
-            get
-            {
-                return _flag1;
-            }
-            set
-            {
-                _flag1 = value;
-                OnPropertyChanged("flag1");
-            }
-
+            get { return _flag1; }
+            set { _flag1 = value; OnPropertyChanged("flag1"); }
         }
         private string _flag2;
         public string flag2
         {
-            get
-            {
-                return _flag2;
-            }
-            set
-            {
-                _flag2 = value;
-                OnPropertyChanged("flag2");
-            }
-
+            get { return _flag2; }
+            set { _flag2 = value; OnPropertyChanged("flag2"); }
         }
         private bool _flag3;
         public bool flag3
         {
-            get
-            {
-                return _flag3;
-            }
-            set
-            {
-                _flag3 = value;
-                OnPropertyChanged("flag3");
-            }
-
+            get { return _flag3; }
+            set { _flag3 = value; OnPropertyChanged("flag3"); }
         }
         private List<String> _lGender;
         public List<String> lGender
         {
-            get
-            {
-                return new List<string>() { "Other", "Female", "Male" };
-            }
+            get { return new List<string>() { "Other", "Female", "Male" }; }
         }
         private List<String> _lUserType;
         public List<String> lUserType
         {
-            get
-            {
-                return new List<string>() { "Admin", "Seller", "Customer" };
-            }
+            get { return new List<string>() { "Admin", "Vendor", "Customer" }; }
         }
-
         private string _id;
         public string Id
         {
-            get
-            {
-                return _id;
-            }
-            set
-            {
-                _id = value;
-                OnPropertyChanged("Id");
-            }
-
+            get { return _id; }
+            set { _id = value; OnPropertyChanged("Id"); }
         }
         private string _gender;
         public string Gender
         {
-            get
-            {
-                return _gender;
-            }
-            set
-            {
-                _gender = value;
-                OnPropertyChanged("Gender");
-            }
-
+            get { return _gender; }
+            set { _gender = value; OnPropertyChanged("Gender"); }
         }
         private string _UserType_index;
         public string UserType_index
         {
-            get
-            {
-                return _UserType_index;
-            }
-            set
-            {
-                _UserType_index = value;
-                OnPropertyChanged("UserType_index");
-            }
+            get { return _UserType_index; }
+            set { _UserType_index = value; OnPropertyChanged("UserType_index"); }
         }
         private string _userType;
         public string userType
         {
-            get
-            {
-                return _userType;
-            }
-            set
-            {
-                _userType = value;
-                OnPropertyChanged("userType");
-            }
+            get { return _userType; }
+            set { _userType = value; OnPropertyChanged("userType"); }
         }
         private string _firstName;
         public string FirstName
         {
-            get
-            {
-                return _firstName;
-            }
-            set
-            {
-                _firstName = value;
-                OnPropertyChanged("FirstName");
-            }
+            get { return _firstName; }
+            set { _firstName = value; OnPropertyChanged("FirstName"); }
         }
         private string _lastName;
         public string LastName
         {
-            get
-            {
-                return _lastName;
-            }
-            set
-            {
-                _lastName = value;
-                OnPropertyChanged("LastName");
-            }
+            get { return _lastName; }
+            set { _lastName = value; OnPropertyChanged("LastName"); }
         }
         private string _phoneNum;
         public string PhoneNum
         {
-            get
-            {
-                return _phoneNum;
-            }
-            set
-            {
-                _phoneNum = value;
-                OnPropertyChanged("PhoneNum");
-            }
+            get { return _phoneNum; }
+            set { _phoneNum = value; OnPropertyChanged("PhoneNum"); }
         }
         private string _email;
         public string Email
         {
-            get
-            {
-                return _email;
-            }
-            set
-            {
-                _email = value;
-                OnPropertyChanged("Email");
-            }
+            get { return _email; }
+            set { _email = value; OnPropertyChanged("Email"); }
         }
         private DateTime _dob;
         public DateTime DoB
         {
-            get
-            {
-                return _dob;
-            }
-            set
-            {
-                _dob = value;
-                OnPropertyChanged("DoB");
-            }
+            get { return _dob; }
+            set { _dob = value; OnPropertyChanged("DoB"); }
         }
         public bool CanSave => !string.IsNullOrEmpty(Email) &&
             !string.IsNullOrEmpty(FirstName) &&
@@ -218,19 +115,21 @@ namespace GoninDigital.ViewModels
         public ICommand EditPCommand { get; set; }
         public ICommand ResetPCommand { get; set; }
         public ICommand SavePCommand { get; set; }
+        #endregion
+        #region Constructor
         public UserSettingViewModel()
         {
-
             flag = true;
             flag1 = "Hidden";
             flag2 = "Visible";
             flag3 = false;
             load_page();
-
             EditPCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { EditPExecute(); });
             ResetPCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ResetPExecute(); });
             SavePCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { SavePExecute(); });
         }
+        #endregion
+        #region Private Methods
         void EditPExecute()
         {
             flag = false;
@@ -309,5 +208,6 @@ namespace GoninDigital.ViewModels
             _ = DataProvider.Instance.Db.SaveChanges();
             load_page();
         }
+        #endregion
     }
 }
