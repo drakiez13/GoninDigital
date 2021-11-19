@@ -9,11 +9,17 @@ namespace GoninDigital.ViewModels
 {
     class ProductPageViewModel : BaseViewModel
     {
-        private string image;
-        public string Image
+        private string productImage;
+        public string ProductImage
         {
-            get { return image; }
-            set { image = value; OnPropertyChanged(); }
+            get { return productImage; }
+            set { productImage = value; OnPropertyChanged(); }
+        }
+        private string vendorAvatar;
+        public string VendorAvatar
+        {
+            get { return vendorAvatar; }
+            set { vendorAvatar = value; OnPropertyChanged(); }
         }
         private int productId;
         public int ProductId
@@ -21,17 +27,17 @@ namespace GoninDigital.ViewModels
             get => productId;
             set { productId = value; OnPropertyChanged(); }
         }
-        private string typeP;
-        public string TypeP
+        private string productType;
+        public string ProductType
         {
-            get => typeP;
-            set { typeP = value; OnPropertyChanged(); }
+            get => productType;
+            set { productType = value; OnPropertyChanged(); }
         }
-        private string nameP;
-        public string NameP
+        private string productName;
+        public string ProductName
         {
-            get => nameP;
-            set { nameP = value; OnPropertyChanged(); }
+            get => productName;
+            set { productName = value; OnPropertyChanged(); }
         }
         private int ratingValue;
         public int RatingValue
@@ -39,82 +45,83 @@ namespace GoninDigital.ViewModels
             get => ratingValue;
             set { ratingValue = value; OnPropertyChanged(); }
         }
-        private int ratingCap;
-        public int RatingCap
+        private string ratingCap;
+        public string RatingCap
         {
             get => ratingCap;
             set { ratingCap = value; OnPropertyChanged(); }
         }
-        private string descP;
-        public string DescP
+        private string productDescription;
+        public string ProductDescription
         {
-            get => descP;
-            set { descP = value; OnPropertyChanged(); }
+            get => productDescription;
+            set { productDescription = value; OnPropertyChanged(); }
         }
-        private string nameV;
-        public string NameV
+        private string vendorName;
+        public string VendorName
         {
-            get => nameV;
-            set { nameV = value; OnPropertyChanged(); }
+            get => vendorName;
+            set { vendorName = value; OnPropertyChanged(); }
         }
-        private string priceP;
-        public string PriceP
+        private string productPrice;
+        public string ProductPrice
         {
-            get => priceP;
-            set { priceP = value; OnPropertyChanged(); }
+            get => productPrice;
+            set { productPrice = value; OnPropertyChanged(); }
         }
-        private string addrV;
-        public string AddrV
+        private string vendorAddress;
+        public string VendorAddress
         {
-            get => addrV;
-            set { addrV = value; OnPropertyChanged(); }
+            get => vendorAddress;
+            set { vendorAddress = value; OnPropertyChanged(); }
         }
-        private string nameB;
-        public string NameB
+        private string vendorRating;
+        public string VendorRating
         {
-            get => nameB;
-            set { nameB = value; OnPropertyChanged(); }
+            get => vendorRating;
+            set { vendorRating = value; OnPropertyChanged(); }
         }
-        private string discP;
-        public string DiscP
+        private string vendorProducts;
+        public string VendorProducts
         {
-            get => discP;
-            set { discP = value; OnPropertyChanged(); }
+            get => vendorProducts;
+            set { vendorProducts = value; OnPropertyChanged(); }
         }
-        private string priceP_now;
-        public string PriceP_now
+        private string brandName;
+        public string BrandName
         {
-            get => priceP_now;
-            set { priceP_now = value; OnPropertyChanged(); }
+            get => brandName;
+            set { brandName = value; OnPropertyChanged(); }
         }
-        private string priceP_origin;
-        public string PriceP_origin
+        private string productDiscount;
+        public string ProductDiscount
         {
-            get => priceP_origin;
-            set { priceP_origin = value; OnPropertyChanged(); }
+            get => productDiscount;
+            set { productDiscount = value; OnPropertyChanged(); }
+        }
+        private string productDiscountPrice;
+        public string ProductDiscountPrice
+        {
+            get => productDiscountPrice;
+            set { productDiscountPrice = value; OnPropertyChanged(); }
         }
 
-        Product product = new Product();
         public ProductPageViewModel()
         {
             ratingValue = 5;
-            ratingCap = 100;
-            image = "/Resources/Images/BlankImage.jpg";
-            product = DataProvider.Instance.Db.Products.Where(x => x.Id == 3).First();
-            NameP = product.Name;
-            NameV = DataProvider.Instance.Db.Vendors.Where(x => x.Id == product.VendorId).First().Name.ToString();
-            TypeP= DataProvider.Instance.Db.ProductCategories.Where(x => x.Id == product.CategoryId).First().Name;
-            PriceP = product.Price.ToString();
-            DescP = product.Description;
-            AddrV= DataProvider.Instance.Db.Vendors.Where(x => x.Id == product.VendorId).First().Address.ToString();
-            NameB= DataProvider.Instance.Db.Brands.Where(x => x.Id == product.BrandId).First().Name.ToString();
-            DiscP = product.DiscountRate.ToString()+"%";
-            float price = float.Parse(PriceP) * (1- float.Parse(product.DiscountRate.ToString()) /100);
-            PriceP_now = price.ToString()+" VND";
-            if (discP != "0")
-                PriceP_origin = priceP;
-            else
-                PriceP_origin = "";
+            ratingCap = "100";
+            productImage = "/Resources/Images/BlankImage.jpg";
+            vendorAvatar = "/Resources/Images/LoginImage.jpg";
+            productName = "Màn hình HP 24'' 1JS08A4 (1920 x 1200/IPS/60Hz/5 ms)";
+            vendorName = "Ngoc Huy Store";
+            productType = "Vang 999";
+            productPrice = "1300000";
+            productDescription = "Ram tự động ép xung giúp nó lên tần số cao nhất khi được công bố, lên đến 2666MHz, nhằm cung cấp hiệu năng cao nhất cho các bo mạch chủ có chipset 100 Series và x99 của Intel. Tăng hiệu suất tối đa cho các vi xử lý 2, 4, 6, 8-core của Intel giúp các tác vụ chỉnh sửa video, dựng phim 3D, chơi game... xử lý nhanh chóng. Thiết kế bộ tản nhiệt độc đáo có độ cao thấp mạnh mẽ giúp tương thích với nhiều loại case có kích thước nhỏ cho hệ thống của bạn thêm chuyên nghiệp.";
+            vendorAddress= "Ho Chi Minh";
+            brandName= "MSI";
+            productDiscountPrice = "1200000 VND";
+            vendorRating = "4.3";
+            vendorProducts = "2000";
         }
     }
 }
