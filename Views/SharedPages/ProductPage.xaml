@@ -15,35 +15,37 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="300"/>
+                <RowDefinition Height="70"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
-                  Margin="10 30 10 10">
+                  Margin="10 30 10 5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="300"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
                 <Grid Margin="20 20 0 40">
-                    <Image Source="{Binding Image}"
+                    <Image Source="{Binding ProductImage}"
                            VerticalAlignment="Top"
                            HorizontalAlignment="Left"/> 
                 </Grid>
                 <Grid Grid.Column="1"
                   Margin="0 20 0 40 ">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <StackPanel>
-                        <TextBlock Text="{Binding NameP }"
+                    <StackPanel Margin="0 0 0 20">
+                        <TextBlock Text="{Binding ProductName }"
                                    TextWrapping="Wrap"
                                    FontSize="22"
                                    FontWeight="Bold"/>
-                        <Label Content="{Binding NameB }"/>
+                        <Label Content="{Binding BrandName }"/>
                     </StackPanel>
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="1"
+                          Margin="0 0 0 10">
                         <ui:RatingControl HorizontalAlignment="Left"
                                           Value="{Binding RatingValue}"
                                           Caption="{Binding RatingCap}"
@@ -55,12 +57,12 @@
                     </Grid>
                     <StackPanel Grid.Row="2"
                                 Orientation="Vertical">
-                        <Label Content="{Binding PriceP_now}" 
+                        <Label Content="{Binding ProductDiscountPrice}" 
                            FontSize="20"
                            FontWeight="Bold"/>
                         <Label>
                             <TextBlock>
-                            <Run TextDecorations="Strikethrough" Text="{Binding PriceP_origin}"></Run>
+                            <Run TextDecorations="Strikethrough" Text="{Binding ProductPrice}"></Run>
                             </TextBlock>
                         </Label>
                     </StackPanel>
@@ -85,10 +87,45 @@
             </Grid>
             <Grid Grid.Row="1"
                   Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
+                  Margin="10 0 10 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Margin="5">
+                    <Image Source="{Binding VendorAvatar}"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Left"/>
+                </Grid>
+                <StackPanel Grid.Column="1">
+                    <Label Content="{Binding VendorName}"
+                           FontWeight="Bold"/>
+                    <Label Content="{Binding VendorAddress}"
+                           FontSize="12"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0 0 40 0">
+                        <Label Content="Rating: "/>
+                        <Label Content="{Binding VendorRating}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Products: "/>
+                        <Label Content="{Binding VendorProducts}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="2"
+                  Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
                   Margin="10 0 10 10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="400"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"
+                                      MaxWidth="400"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
@@ -103,12 +140,8 @@
                 <Grid Grid.Row="1" Grid.Column="0"
                       Margin="20 0 0 0">
                     <StackPanel>
-                        <TextBlock TextWrapping="Wrap" Text="Ram tự động ép xung giúp nó lên tần số cao nhất khi được công bố, lên đến 2666MHz, nhằm cung cấp hiệu năng cao nhất cho các bo mạch chủ có chipset 100 Series và x99 của Intel. Tăng hiệu suất tối đa cho các vi xử lý 2, 4, 6, 8-core của Intel giúp các tác vụ chỉnh sửa video, dựng phim 3D, chơi game... xử lý nhanh chóng. Thiết kế bộ tản nhiệt độc đáo có độ cao thấp mạnh mẽ giúp tương thích với nhiều loại case có kích thước nhỏ cho hệ thống của bạn thêm chuyên nghiệp."/>
-                        <Image Source="{Binding Image}"
-                               MaxWidth="400"
-                               HorizontalAlignment="Left"/>
-                        <TextBlock TextWrapping="Wrap" Text="Ram tự động ép xung giúp nó lên tần số cao nhất khi được công bố, lên đến 2666MHz, nhằm cung cấp hiệu năng cao nhất cho các bo mạch chủ có chipset 100 Series và x99 của Intel. Tăng hiệu suất tối đa cho các vi xử lý 2, 4, 6, 8-core của Intel giúp các tác vụ chỉnh sửa video, dựng phim 3D, chơi game... xử lý nhanh chóng. Thiết kế bộ tản nhiệt độc đáo có độ cao thấp mạnh mẽ giúp tương thích với nhiều loại case có kích thước nhỏ cho hệ thống của bạn thêm chuyên nghiệp."/>
-                        <Image Source="{Binding Image}"
+                        <TextBlock TextWrapping="Wrap" Text="{Binding ProductDescription}"/>
+                        <Image Source="{Binding ProductImage}"
                                MaxWidth="400"
                                HorizontalAlignment="Left"/>
                     </StackPanel>
@@ -126,22 +159,14 @@
                                 Height="30">
                         <Label Content="Brand" 
                                Width="150"/>
-                        <Label Content="{Binding NameB}"/>
+                        <Label Content="{Binding BrandName}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"
                                 Height="30">
                         <Label Content="Type"
                                Width="150"/>
-                        <Label Content="{Binding TypeP }"/>
+                        <Label Content="{Binding ProductType }"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                Height="30"
-                                >
-                        <Label Content="Description"
-                               Width="150"/>
-                        <Label Content="{Binding DescP}"/>
-                    </StackPanel>
-
                     <StackPanel Orientation="Horizontal"
                                 Height="30">
                         <Label Content="Vendor" 

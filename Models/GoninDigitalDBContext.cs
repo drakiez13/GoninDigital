@@ -216,11 +216,6 @@ namespace GoninDigital.Models
 
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
-                entity.Property(e => e.Unit)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .HasColumnName("unit");
-
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at");
