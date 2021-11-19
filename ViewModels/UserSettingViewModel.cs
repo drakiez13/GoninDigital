@@ -328,6 +328,10 @@ namespace GoninDigital.ViewModels
 
         void LogOutExcute()
         {
+            // clear
+            Settings.Default.usrname = "";
+            Settings.Default.passwod = "";
+
             var loginWindow = new LoginViewModel(Application.Current.MainWindow);
             WindowManager.ChangeWindowContent(Application.Current.MainWindow, loginWindow, Resources.LoginWindowTitle, Resources.LoginControlPath);
         }
