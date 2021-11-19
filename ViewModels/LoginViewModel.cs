@@ -85,11 +85,16 @@ namespace GoninDigital.ViewModels
                 var dashboardWindow = new DashBoard();
                 if (isExist.TypeId == 1) //admin
                 {
-                    WindowManager.ChangeWindowContent(curWindow, dashboardWindow, "", "GoninDigital.Views.AdminView");
+                    // Admin not save under resource setting
+                    WindowManager.ChangeWindowContent(curWindow, dashboardWindow, Resources.AdminpageWindowTitle, Resources.AdminpageControlPath);
                 }
                 else //user
                 {
-                    WindowManager.ChangeWindowContent(curWindow, dashboardWindow, "", "GoninDigital.Views.DashBoard");
+                    // save user under setting resource
+                    Settings.Default.usrname = UserName;
+                    Settings.Default.passwod = Password;
+
+                    WindowManager.ChangeWindowContent(curWindow, dashboardWindow, Resources.HomepageWindowTitle, Resources.HomepageControlPath);
                 }
             }
             else

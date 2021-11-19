@@ -66,6 +66,10 @@
                                                     NavigateUri="https://github.com/drakiez92/IT008-VisualProgramming"/>
                             </TextBlock>
                         </StackPanel>
+                        <Button
+                            Content="Log out"
+                            Command="{Binding LogOutCommand}">
+                        </Button>
                     </StackPanel>
                 </Grid>
             </Grid>
