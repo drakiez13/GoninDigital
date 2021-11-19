@@ -14,7 +14,12 @@ namespace GoninDigital.ViewModels
     internal class ForgotPasswordViewModel : EmailNotification, INotifyPropertyChanged
     {
         #region Properties
-
+        private string art;
+        public string Art
+        {
+            get { return art; }
+            set { art = value;}
+        }
         public Action CloseAction { get; set; }
         public ICommand SendCommand { get; set; }
         public ICommand LoginCommand { get; set; }
@@ -38,6 +43,7 @@ namespace GoninDigital.ViewModels
         #region Constructor
         public ForgotPasswordViewModel(Window window)
         {
+            art = "/GoninDigital;component/Resources/Images/ForgotPassword.png";
             this.window = window;
             SendCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { SendCommandExecute(); });
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginCommandExecute(); });

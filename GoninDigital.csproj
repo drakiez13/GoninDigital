@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\ForgotPassword.png" />
+    <None Remove="Resources\Images\ForgotPassword2.png" />
     <None Remove="Resources\Images\HomeBanner.jpg" />
     <None Remove="Resources\Images\HomeBannerNight.jpg" />
     <None Remove="Resources\Images\HomeProductCardGroupBackground.png" />
@@ -28,6 +30,8 @@
 
   <ItemGroup>
     <Resource Include="Resources\Images\BlankImage.jpg" />
+    <Resource Include="Resources\Images\ForgotPassword.png" />
+    <Resource Include="Resources\Images\ForgotPassword2.png" />
     <Resource Include="Resources\Images\HomeBanner.jpg" />
     <Resource Include="Resources\Images\HomeBannerNight.jpg" />
     <Resource Include="Resources\Images\HomeProductCardGroupBackground.png" />
