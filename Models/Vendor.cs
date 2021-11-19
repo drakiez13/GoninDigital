@@ -18,6 +18,9 @@ namespace GoninDigital.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
+        public string Avatar { get; set; }
+        public string Phone { get; set; }
+        public byte ApprovalStatus { get; set; }
 
         public virtual User Owner { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
