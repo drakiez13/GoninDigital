@@ -232,7 +232,6 @@ namespace GoninDigital.ViewModels
         public ICommand EditPCommand { get; set; }
         public ICommand ResetPCommand { get; set; }
         public ICommand SavePCommand { get; set; }
-        public ICommand LogOutCommand { get; set; }
         public UserSettingViewModel()
         {
 
@@ -245,7 +244,6 @@ namespace GoninDigital.ViewModels
             EditPCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { EditPExecute(); });
             ResetPCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ResetPExecute(); });
             SavePCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { SavePExecute(); });
-            LogOutCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LogOutExcute(); });
         }
         void EditPExecute()
         {
@@ -324,16 +322,6 @@ namespace GoninDigital.ViewModels
             t.DateOfBirth = DoB;
             _ = DataProvider.Instance.Db.SaveChanges();
             load_page();
-        }
-
-        void LogOutExcute()
-        {
-            // clear
-            Settings.Default.usrname = "";
-            Settings.Default.passwod = "";
-
-            var loginWindow = new LoginViewModel(Application.Current.MainWindow);
-            WindowManager.ChangeWindowContent(Application.Current.MainWindow, loginWindow, Resources.LoginWindowTitle, Resources.LoginControlPath);
         }
     }
 }
