@@ -120,6 +120,12 @@
   <data name="AccountRecoveryEmailSubject" xml:space="preserve">
     <value>Recover your account</value>
   </data>
+  <data name="AdminpageControlPath" xml:space="preserve">
+    <value>GoninDigital.Views.AdminView</value>
+  </data>
+  <data name="AdminpageWindowTitle" xml:space="preserve">
+    <value>Admin Dashboard</value>
+  </data>
   <data name="ConfirmationCodeControlPath" xml:space="preserve">
     <value>GoninDigital.Views.ConfirmationCodeView</value>
   </data>
