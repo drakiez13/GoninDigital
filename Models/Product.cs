@@ -21,7 +21,6 @@ namespace GoninDigital.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string Detail { get; set; }
-        public string Unit { get; set; }
         public string Origin { get; set; }
         public int Quantity { get; set; }
         public long Price { get; set; }
