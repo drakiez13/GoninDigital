@@ -93,6 +93,18 @@ namespace GoninDigital.ViewModels
             get => brandName;
             set { brandName = value; OnPropertyChanged(); }
         }
+        private string productStatus;
+        public string ProductStatus
+        {
+            get => productStatus;
+            set { productStatus = value; OnPropertyChanged(); }
+        }
+        private string productAvailable;
+        public string ProductAvailable
+        {
+            get => productAvailable;
+            set { productAvailable = value; OnPropertyChanged(); }
+        }
         private string productDiscount;
         public string ProductDiscount
         {
@@ -122,6 +134,8 @@ namespace GoninDigital.ViewModels
             productDiscountPrice = "1200000 VND";
             vendorRating = "4.3";
             vendorProducts = "2000";
+            productStatus = "100%";
+            productAvailable = "123";
         }
     }
 }
