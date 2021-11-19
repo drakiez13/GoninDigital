@@ -34,7 +34,7 @@ namespace GoninDigital.ViewModels
         {
             Admin = 1,
             Seller = 2,
-            Customer = 6
+            Customer = 3
         }
         private string _UserName;
         public string UserName
