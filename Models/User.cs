@@ -12,7 +12,7 @@ namespace GoninDigital.Models
             Carts = new HashSet<Cart>();
             Favorites = new HashSet<Favorite>();
             Invoices = new HashSet<Invoice>();
-            Purchaseds = new HashSet<Purchased>();
+            Ratings = new HashSet<Rating>();
             Vendors = new HashSet<Vendor>();
         }
 
@@ -26,12 +26,13 @@ namespace GoninDigital.Models
         public string Email { get; set; }
         public byte? Gender { get; set; }
         public DateTime? DateOfBirth { get; set; }
+        public string Avatar { get; set; }
 
         public virtual UserType Type { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<Favorite> Favorites { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
-        public virtual ICollection<Purchased> Purchaseds { get; set; }
+        public virtual ICollection<Rating> Ratings { get; set; }
         public virtual ICollection<Vendor> Vendors { get; set; }
     }
 }
