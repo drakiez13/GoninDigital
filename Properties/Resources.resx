@@ -142,7 +142,7 @@
     <value>We received a request to confirm your account. Your account confirmation code is: </value>
   </data>
   <data name="HomepageControlPath" xml:space="preserve">
-    <value>GoninDigital.Views.DashBoardView</value>
+    <value>GoninDigital.Views.DashBoard</value>
   </data>
   <data name="HomepageWindowTitle" xml:space="preserve">
     <value>Homepage GoninDigital</value>
