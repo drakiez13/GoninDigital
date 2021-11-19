@@ -133,7 +133,7 @@ namespace GoninDigital.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GoninDigital.Views.DashBoardView.
+        ///   Looks up a localized string similar to GoninDigital.Views.DashBoard.
         /// </summary>
         internal static string HomepageControlPath {
             get {
