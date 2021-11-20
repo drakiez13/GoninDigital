@@ -48,6 +48,5 @@ namespace GoninDigital.ViewModels
             GoninDigitalDBContext db = DataProvider.Instance.Db;
             recommnededByEditor = db.Products.ToList();
         }
-
     }
 }
