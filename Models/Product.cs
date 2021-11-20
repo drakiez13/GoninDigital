@@ -34,7 +34,6 @@ namespace GoninDigital.Models
         public byte Rating { get; set; }
         public int NRating { get; set; }
         public int Available { get; set; }
-        public string Cover { get; set; }
         public byte? New { get; set; }
 
         public virtual Brand Brand { get; set; }

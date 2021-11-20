@@ -248,8 +248,6 @@ namespace GoninDigital.Models
 
                 entity.Property(e => e.CategoryId).HasColumnName("category_id");
 
-                entity.Property(e => e.Cover).HasColumnName("cover");
-
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at");
@@ -490,6 +488,8 @@ namespace GoninDigital.Models
                 entity.Property(e => e.ApprovalStatus).HasColumnName("approval_status");
 
                 entity.Property(e => e.Avatar).HasColumnName("avatar");
+
+                entity.Property(e => e.Cover).HasColumnName("cover");
 
                 entity.Property(e => e.Description).HasColumnName("description");
 

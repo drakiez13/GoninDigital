@@ -21,6 +21,7 @@ namespace GoninDigital.Models
         public string Avatar { get; set; }
         public string Phone { get; set; }
         public byte ApprovalStatus { get; set; }
+        public string Cover { get; set; }
 
         public virtual User Owner { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
