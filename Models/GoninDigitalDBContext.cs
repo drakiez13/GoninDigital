@@ -248,6 +248,8 @@ namespace GoninDigital.Models
 
                 entity.Property(e => e.CategoryId).HasColumnName("category_id");
 
+                entity.Property(e => e.Cover).HasColumnName("cover");
+
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at");
@@ -263,8 +265,6 @@ namespace GoninDigital.Models
                 entity.Property(e => e.Image)
                     .IsRequired()
                     .HasColumnName("image");
-
-                entity.Property(e => e.ImagesId).HasColumnName("images_id");
 
                 entity.Property(e => e.NRating).HasColumnName("n_rating");
 
@@ -301,11 +301,6 @@ namespace GoninDigital.Models
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PRODUCT_PRODUCTCATEGORY");
-
-                entity.HasOne(d => d.Images)
-                    .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.ImagesId)
-                    .HasConstraintName("FK_PRODUCT_PRODUCTIMAGE");
 
                 entity.HasOne(d => d.Vendor)
                     .WithMany(p => p.Products)
