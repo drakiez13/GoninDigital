@@ -16,30 +16,92 @@ namespace GoninDigital.ViewModels
             get { return avatar; }
             set { avatar = value; OnPropertyChanged(); }
         }
-        private string avatarBehind;
-        public string AvatarBehind
+        private string cover;
+        public string Cover
         {
-            get { return avatarBehind; }
-            set { avatarBehind = value; OnPropertyChanged(); }
+            get { return cover; }
+            set { cover = value; OnPropertyChanged(); }
+        }
+        private string mail;
+        public string Mail
+        {
+            get { return mail; }
+            set { mail = value; OnPropertyChanged(); }
+        }
+        private string phone;
+        public string Phone
+        {
+            get { return phone; }
+            set { phone = value; OnPropertyChanged(); }
+        }
+        private string address;
+        public string Address
+        {
+            get { return address; }
+            set { address = value; OnPropertyChanged(); }
+        }
+        private string description;
+        public string Description
+        {
+            get { return description; }
+            set { description = value; OnPropertyChanged(); }
+        }
+        private List<Product> productList;
+        public List<Product> ProductList
+        {
+            get { return productList; }
+            set { productList = value; OnPropertyChanged(); }
+        }
+        private string avatar;
+        public string Avatar
+        {
+            get { return avatar; }
+            set { avatar = value; OnPropertyChanged(); }
+        }
+        private string cover;
+        public string Cover
+        {
+            get { return cover; }
+            set { cover = value; OnPropertyChanged(); }
+        }
+        private string mail;
+        public string Mail
+        {
+            get { return mail; }
+            set { mail = value; OnPropertyChanged(); }
+        }
+        private string phone;
+        public string Phone
+        {
+            get { return phone; }
+            set { phone = value; OnPropertyChanged(); }
+        }
+        private string address;
+        public string Address
+        {
+            get { return address; }
+            set { address = value; OnPropertyChanged(); }
+        }
+        private string description;
+        public string Description
+        {
+            get { return description; }
+            set { description = value; OnPropertyChanged(); }
+        }
+        private List<Product> productList;
+        public List<Product> ProductList
+        {
+            get { return productList; }
+            set { productList = value; OnPropertyChanged(); }
         }
 
-        private List<Product> recommnededByEditor;
-        public List<Product> RecommendedByEditor
-        {
-            get { return recommnededByEditor; }
-            set { recommnededByEditor = value; OnPropertyChanged(); }
-        }
-        public List<Product> RecommendedByEditor3
-        {
-            get { return recommnededByEditor.GetRange(0, 3); }
-        }
 
-        
 
         public MyShopViewModel()
         {
             GoninDigitalDBContext db = DataProvider.Instance.Db;
-            recommnededByEditor = db.Products.ToList();
+            productList = db.Products.ToList();
+            
         }
     }
 }
