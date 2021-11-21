@@ -28,7 +28,7 @@
                 <Grid Margin="20 20 0 40">
                     <Image Source="{Binding ProductImage}"
                            VerticalAlignment="Top"
-                           HorizontalAlignment="Left"/> 
+                           HorizontalAlignment="Left"/>
                 </Grid>
                 <Grid Grid.Column="1"
                   Margin="0 20 0 40 ">
@@ -62,10 +62,9 @@
                            FontSize="20"
                            FontWeight="Bold"/>
                         <Label>
-                            <TextBlock Visibility="{Binding IsDisc}">
-                                <Run TextDecorations="Strikethrough" Text="{Binding ProductPrice}"></Run>
+                            <TextBlock>
+                            <Run TextDecorations="Strikethrough" Text="{Binding ProductPrice}"></Run>
                             </TextBlock>
-                            
                         </Label>
                     </StackPanel>
                     <StackPanel Grid.Row="3" Orientation="Horizontal">
@@ -78,7 +77,7 @@
                             <Label Content="Status: "/>
                             <Label Content="{Binding ProductStatus}"/>
                         </StackPanel>
-                        
+
                     </StackPanel>
 
 
@@ -115,8 +114,8 @@
                 <StackPanel Grid.Column="1" Margin="10,0,0,0">
                     <Label Content="{Binding VendorName}"
                            FontWeight="Bold"/>
-                    <Label Content="{Binding VendorAddress}" HorizontalAlignment="Left"
-                           FontSize="12" Width="250"/>
+                    <Label Content="{Binding VendorAddress}"
+                           FontSize="12"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2"
                             HorizontalAlignment="Center"
@@ -153,11 +152,11 @@
                 </Grid>
                 <Grid Grid.Row="1" Grid.Column="0"
                       Margin="20 0 0 0">
-                    <StackPanel >
+                    <StackPanel>
                         <TextBlock TextWrapping="Wrap" Text="{Binding ProductDescription}"/>
                         <Image Source="{Binding ProductImage}"
                                MaxWidth="400"
-                               MaxHeight="180"
+                               MaxHeight="200"
                                HorizontalAlignment="Left"/>
                     </StackPanel>
                 </Grid>
@@ -186,12 +185,12 @@
                                 Height="30">
                         <Label Content="Vendor" 
                                Width="150"/>
-                        <Label Content="{Binding VendorName }"/>
+                        <Label Content="{Binding NameV }"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
 
         </Grid>
     </ScrollViewer>
-    
+
 </Page>
