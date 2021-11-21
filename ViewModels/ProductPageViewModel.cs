@@ -5,10 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using GoninDigital.Models;
+using GoninDigital.Views.SharedPages;
 namespace GoninDigital.ViewModels
 {
     class ProductPageViewModel : BaseViewModel
     {
+        private string isDisc;
+        public string IsDisc
+        {
+            get { return isDisc; }
+            set { isDisc = value; OnPropertyChanged(); }
+        }
         private string productImage;
         public string ProductImage
         {
@@ -63,8 +70,8 @@ namespace GoninDigital.ViewModels
             get => vendorName;
             set { vendorName = value; OnPropertyChanged(); }
         }
-        private string productPrice;
-        public string ProductPrice
+        private long productPrice;
+        public long ProductPrice
         {
             get => productPrice;
             set { productPrice = value; OnPropertyChanged(); }
@@ -81,8 +88,8 @@ namespace GoninDigital.ViewModels
             get => vendorRating;
             set { vendorRating = value; OnPropertyChanged(); }
         }
-        private string vendorProducts;
-        public string VendorProducts
+        private int vendorProducts;
+        public int VendorProducts
         {
             get => vendorProducts;
             set { vendorProducts = value; OnPropertyChanged(); }
@@ -99,8 +106,8 @@ namespace GoninDigital.ViewModels
             get => productStatus;
             set { productStatus = value; OnPropertyChanged(); }
         }
-        private string productAvailable;
-        public string ProductAvailable
+        private int productAvailable;
+        public int ProductAvailable
         {
             get => productAvailable;
             set { productAvailable = value; OnPropertyChanged(); }
@@ -117,25 +124,33 @@ namespace GoninDigital.ViewModels
             get => productDiscountPrice;
             set { productDiscountPrice = value; OnPropertyChanged(); }
         }
+        Product product = new Product();
 
         public ProductPageViewModel()
         {
-            ratingValue = 5;
-            ratingCap = "100";
-            productImage = "/Resources/Images/BlankImage.jpg";
-            vendorAvatar = "/Resources/Images/LoginImage.jpg";
-            productName = "Màn hình HP 24'' 1JS08A4 (1920 x 1200/IPS/60Hz/5 ms)";
-            vendorName = "Ngoc Huy Store";
-            productType = "Vang 999";
-            productPrice = "1300000";
-            productDescription = "Ram tự động ép xung giúp nó lên tần số cao nhất khi được công bố, lên đến 2666MHz, nhằm cung cấp hiệu năng cao nhất cho các bo mạch chủ có chipset 100 Series và x99 của Intel. Tăng hiệu suất tối đa cho các vi xử lý 2, 4, 6, 8-core của Intel giúp các tác vụ chỉnh sửa video, dựng phim 3D, chơi game... xử lý nhanh chóng. Thiết kế bộ tản nhiệt độc đáo có độ cao thấp mạnh mẽ giúp tương thích với nhiều loại case có kích thước nhỏ cho hệ thống của bạn thêm chuyên nghiệp.";
-            vendorAddress= "Ho Chi Minh";
-            brandName= "MSI";
-            productDiscountPrice = "1200000 VND";
+            product = DataProvider.Instance.Db.Products.Where(x => x.Id == 2).First();
+            ratingValue = product.NRating;
+            ratingCap = (product.NRating*20).ToString();
+            productImage = product.Image;
+            vendorAvatar = DataProvider.Instance.Db.Vendors.Where(x => x.Id == product.VendorId).First().Avatar;
+            productName = product.Name;
+            VendorName = DataProvider.Instance.Db.Vendors.Where(x=>x.Id==product.VendorId).First().Name;
+            productType = DataProvider.Instance.Db.ProductCategories.Where(x=>x.Id==product.CategoryId).First().Name;
+            ProductPrice = product.Price;
+            if (product.DiscountRate == 0)
+                IsDisc = "Hidden";
+            else
+                IsDisc = "Visible";
+            productDescription = product.Description;
+            vendorAddress= DataProvider.Instance.Db.Vendors.Where(x => x.Id == product.VendorId).First().Address;
+            brandName= DataProvider.Instance.Db.Brands.Where(x=>x.Id==product.BrandId).First().Name;
+            double discountPrice=Convert.ToDouble(product.Price)*(1- Convert.ToDouble(product.DiscountRate)/ 100);
+            ProductDiscountPrice = discountPrice.ToString();
             vendorRating = "4.3";
-            vendorProducts = "2000";
-            productStatus = "100%";
-            productAvailable = "123";
+            vendorProducts = DataProvider.Instance.Db.Vendors.Where(x => x.Id == product.VendorId).Count();
+            byte? @new = product.New;
+            productStatus = @new.ToString()+"%";
+            productAvailable = product.Available;
         }
     }
 }
