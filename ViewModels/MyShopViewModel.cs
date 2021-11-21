@@ -59,8 +59,50 @@ namespace GoninDigital.ViewModels
         public MyShopViewModel()
         {
             GoninDigitalDBContext db = DataProvider.Instance.Db;
-            productList = db.Products.ToList();
-            
+            productList = from pro in Product
+                          where pro.vendorid
+
+        }
+        private string mail;
+        public string Mail
+        {
+            get { return mail; }
+            set { mail = value; OnPropertyChanged(); }
+        }
+        private string phone;
+        public string Phone
+        {
+            get { return phone; }
+            set { phone = value; OnPropertyChanged(); }
+        }
+        private string address;
+        public string Address
+        {
+            get { return address; }
+            set { address = value; OnPropertyChanged(); }
+        }
+        private string description;
+        public string Description
+        {
+            get { return description; }
+            set { description = value; OnPropertyChanged(); }
+        }
+        private List<Product> productList;
+        public List<Product> ProductList
+        {
+            get { return productList; }
+            set { productList = value; OnPropertyChanged(); }
+        }
+
+
+
+
+        public MyShopViewModel()
+        {
+            GoninDigitalDBContext db = DataProvider.Instance.Db;
+            productList = from pro in Product
+                          where pro.vendorid
+
         }
     }
 }

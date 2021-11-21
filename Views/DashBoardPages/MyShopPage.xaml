@@ -8,7 +8,7 @@
       xmlns:uc="clr-namespace:GoninDigital.SharedControl"
       mc:Ignorable="d" 
       d:DesignWidth="1000"
-      DataContext="{StaticResource HomePageVM}"
+      DataContext="{StaticResource MyShopPageVM}"
       Background="{DynamicResource AppBackgroundBrush}"
       Title="MyShop">
 
