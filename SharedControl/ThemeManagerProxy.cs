@@ -1,4 +1,5 @@
 ﻿using ModernWpf;
+using GoninDigital.Properties;
 using System.ComponentModel;
 using System.Windows.Media;
 
@@ -8,6 +9,10 @@ namespace GoninDigital.SharedControl
     {
         private ThemeManagerProxy()
         {
+            if(Settings.Default.accentColor != "")
+            {
+                AccentColor = (Color)ColorConverter.ConvertFromString(Settings.Default.accentColor);
+            }
             DispatcherHelper.RunOnMainThread(() =>
             {
                 DependencyPropertyDescriptor.FromProperty(ThemeManager.ApplicationThemeProperty, typeof(ThemeManager))
@@ -107,6 +112,10 @@ namespace GoninDigital.SharedControl
         private void UpdateAccentColor()
         {
             _updatingAccentColor = true;
+            if(ThemeManager.Current.AccentColor.ToString() != Settings.Default.accentColor)
+            {
+                Settings.Default.accentColor = ThemeManager.Current.AccentColor.ToString();
+            }
             AccentColor = ThemeManager.Current.AccentColor;
             _updatingAccentColor = false;
         }
