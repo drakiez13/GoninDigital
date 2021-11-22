@@ -79,11 +79,11 @@
                     Visibility="{Binding flag2, UpdateSourceTrigger=PropertyChanged}"/>
 
             <ui:AppBarButton Icon="Edit" Margin="288,-288,0,0" Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}"/>
-            <ui:AppBarButton Icon="Edit" Margin="-122,-101,0,0" Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}"/>
-            <ui:AppBarButton Icon="Edit" Margin="-122,-46,0,0" Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}"/>
-            <ui:AppBarButton Icon="Edit" Margin="-123,-2,0,0"   Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}"/>
-            <ui:AppBarButton Icon="Edit" Margin="205,-252,0,0"   Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}"/>
-            <ui:AppBarButton Icon="Edit" Margin="-251,-287,0,0"   Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}"/>
+            <ui:AppBarButton Icon="Edit" Margin="-122,-101,0,0" Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="False"/>
+            <ui:AppBarButton Icon="Edit" Margin="-122,-46,0,0" Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="False"/>
+            <ui:AppBarButton Icon="Edit" Margin="-123,-2,0,0"   Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="False"/>
+            <ui:AppBarButton Icon="Edit" Margin="205,-252,0,0"   Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="False"/>
+            <ui:AppBarButton Icon="Edit" Margin="-251,-287,0,0"   Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="False"/>
             <ui:AppBarButton x:Name="Btn_Save" Icon="Save" Label="Save" 
                              Margin="0,-173,0,0" Width="141" Height="66" FontSize="16"
                              Command="{Binding SavePCommand}"
