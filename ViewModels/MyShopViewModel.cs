@@ -59,9 +59,12 @@ namespace GoninDigital.ViewModels
         public MyShopViewModel()
         {
             GoninDigitalDBContext db = DataProvider.Instance.Db;
-            productList = from pro in Product
-                          where pro.vendorid
-
+            var products = new List<Product>();
+            var vendors = new List<Vendor>();
+            var ketqua = from product in products
+                         join vendor in vendors on product.VendorId equals vendor.Id
+                         select product;
+            productList = ketqua.ToList();
         }
 
     }
