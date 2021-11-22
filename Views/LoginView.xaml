@@ -72,6 +72,7 @@
                         Content="Login"
                         Width="150"
                         FontSize="18" 
+                        Foreground="{DynamicResource SystemControlBackgroundAltHighBrush}"
                         Background="{DynamicResource SystemAccentColorDark1Brush}" />
                 <Button x:Name="Register"
                         Margin="20"
@@ -79,6 +80,7 @@
                         Command="{Binding RegisterCommand}"
                         Content="Create Account"
                         FontSize="18"
+                        Foreground="{DynamicResource SystemControlBackgroundAltHighBrush}"
                         Background="{DynamicResource SystemAccentColorDark1Brush}"/>
 
             </StackPanel>

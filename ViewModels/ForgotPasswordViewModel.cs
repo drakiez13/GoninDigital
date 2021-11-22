@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GoninDigital.Properties;
+using GoninDigital.SharedControl;
 
 namespace GoninDigital.ViewModels
 {
@@ -43,7 +44,7 @@ namespace GoninDigital.ViewModels
         #region Constructor
         public ForgotPasswordViewModel(Window window)
         {
-            art = "/GoninDigital;component/Resources/Images/ForgotPassword.png";
+            art = "/GoninDigital;component/Resources/Images/ForgotPass.jpg";
             this.window = window;
             SendCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { SendCommandExecute(); });
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginCommandExecute(); });
