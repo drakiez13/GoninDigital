@@ -17,6 +17,12 @@ namespace GoninDigital.ViewModels
         public Action CloseAction { get; set; }
 
         private Window window;
+        private string art;
+        public string Art
+        {
+            get { return art; }
+            set { art = value; }
+        }
 
         public ICommand ResetCommand { get; set; }
         public ICommand NewPasswordCommand { get; set; }        
@@ -47,6 +53,7 @@ namespace GoninDigital.ViewModels
         #region Constructor
         public ResetPasswordViewModel(Window window, string email)
         {
+            art = "/GoninDigital;component/Resources/Images/ResetPass.jpg";
             this.window = window;
             this.usr_mail = email;
             ResetCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ResetCommandExecute(); });

@@ -1,4 +1,5 @@
 ﻿using ModernWpf;
+using GoninDigital.Properties;
 using System.ComponentModel;
 using System.Windows.Media;
 
@@ -8,6 +9,21 @@ namespace GoninDigital.SharedControl
     {
         private ThemeManagerProxy()
         {
+            if (Settings.Default.accentColor != "")
+            {
+                AccentColor = (Color)ColorConverter.ConvertFromString(Settings.Default.accentColor);
+            }
+            if (!Settings.Default.systemTheme)
+            {
+                if (Settings.Default.theme)
+                {
+                    ApplicationTheme = ModernWpf.ApplicationTheme.Light;
+                }
+                else
+                {
+                    ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
+                }
+            }
             DispatcherHelper.RunOnMainThread(() =>
             {
                 DependencyPropertyDescriptor.FromProperty(ThemeManager.ApplicationThemeProperty, typeof(ThemeManager))
@@ -56,6 +72,22 @@ namespace GoninDigital.SharedControl
         private void UpdateApplicationTheme()
         {
             _updatingApplicationTheme = true;
+            if(ThemeManager.Current.ApplicationTheme != null)
+            {
+                if(ThemeManager.Current.ApplicationTheme == ModernWpf.ApplicationTheme.Light)
+                {
+                    Settings.Default.theme = true;
+                }
+                else
+                {
+                    Settings.Default.theme = false;
+                }
+                Settings.Default.systemTheme = false;
+            }
+            else
+            {
+                Settings.Default.systemTheme = true;
+            }
             ApplicationTheme = ThemeManager.Current.ApplicationTheme;
             _updatingApplicationTheme = false;
         }
@@ -107,6 +139,10 @@ namespace GoninDigital.SharedControl
         private void UpdateAccentColor()
         {
             _updatingAccentColor = true;
+            if(ThemeManager.Current.AccentColor.ToString() != Settings.Default.accentColor)
+            {
+                Settings.Default.accentColor = ThemeManager.Current.AccentColor.ToString();
+            }
             AccentColor = ThemeManager.Current.AccentColor;
             _updatingAccentColor = false;
         }

@@ -5,6 +5,7 @@
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:UsersViewModel x:Key="UsersVM"></viewmodel:UsersViewModel>
     <viewmodel:BrandsViewModel x:Key="BrandsVM"></viewmodel:BrandsViewModel>
+    <viewmodel:ProductPageViewModel x:Key="ProductPageVM"></viewmodel:ProductPageViewModel>
     <viewmodel:UserSettingViewModel x:Key="UserSettingVM"></viewmodel:UserSettingViewModel>
     <Style x:Key="OptionsPanelStyle" TargetType="ui:SimpleStackPanel">
         <Setter Property="Spacing" Value="12" />
