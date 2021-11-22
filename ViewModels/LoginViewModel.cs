@@ -91,8 +91,8 @@ namespace GoninDigital.ViewModels
                 else //user
                 {
                     // save user under setting resource
-                    Settings.Default.usrname = UserName;
-                    Settings.Default.passwod = Password;
+                    Settings.Default.usrname = UserName.ToString();
+                    Settings.Default.passwod = passEncode;
 
                     WindowManager.ChangeWindowContent(curWindow, dashboardWindow, Resources.HomepageWindowTitle, Resources.HomepageControlPath);
                 }

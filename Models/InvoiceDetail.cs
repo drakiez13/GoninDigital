@@ -10,10 +10,7 @@ namespace GoninDigital.Models
         public int InvoiceId { get; set; }
         public int ProductId { get; set; }
         public int Quantity { get; set; }
-        public decimal Value { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime? DeliveriedAt { get; set; }
-        public DateTime? ReceivedAt { get; set; }
+        public decimal Cost { get; set; }
 
         public virtual Invoice Invoice { get; set; }
         public virtual Product Product { get; set; }

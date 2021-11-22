@@ -9,10 +9,12 @@ namespace GoninDigital.Models
     {
         public Product()
         {
+            AdDetails = new HashSet<AdDetail>();
             Carts = new HashSet<Cart>();
             Favorites = new HashSet<Favorite>();
             InvoiceDetails = new HashSet<InvoiceDetail>();
-            Purchaseds = new HashSet<Purchased>();
+            ProductSpecDetails = new HashSet<ProductSpecDetail>();
+            Ratings = new HashSet<Rating>();
         }
 
         public int Id { get; set; }
@@ -22,21 +24,26 @@ namespace GoninDigital.Models
         public string Description { get; set; }
         public string Detail { get; set; }
         public string Origin { get; set; }
-        public int Quantity { get; set; }
         public long Price { get; set; }
         public byte? DiscountRate { get; set; }
         public bool ApprovalStatus { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public int BrandId { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
+        public byte Rating { get; set; }
+        public int NRating { get; set; }
+        public int Available { get; set; }
+        public byte? New { get; set; }
 
         public virtual Brand Brand { get; set; }
         public virtual ProductCategory Category { get; set; }
         public virtual Vendor Vendor { get; set; }
+        public virtual ICollection<AdDetail> AdDetails { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<Favorite> Favorites { get; set; }
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
-        public virtual ICollection<Purchased> Purchaseds { get; set; }
+        public virtual ICollection<ProductSpecDetail> ProductSpecDetails { get; set; }
+        public virtual ICollection<Rating> Ratings { get; set; }
     }
 }
