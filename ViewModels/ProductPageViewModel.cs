@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using GoninDigital.Models;
+using System.Windows.Input;
 using GoninDigital.Views.SharedPages;
+using GoninDigital.Properties;
+
 namespace GoninDigital.ViewModels
 {
     class ProductPageViewModel : BaseViewModel
@@ -124,6 +127,7 @@ namespace GoninDigital.ViewModels
             get => productDiscountPrice;
             set { productDiscountPrice = value; OnPropertyChanged(); }
         }
+        public ICommand AddtoCartCommand { get; set; }
         Product product = new Product();
 
         public ProductPageViewModel()
@@ -151,6 +155,16 @@ namespace GoninDigital.ViewModels
             byte? @new = product.New;
             productStatus = @new.ToString()+"%";
             productAvailable = product.Available;
+            AddtoCartCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddtoCartExecute(); });
+        }
+        void AddtoCartExecute()
+        {
+            Cart cart = new Cart();
+            cart.UserId = DataProvider.Instance.Db.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
+            cart.ProductId = 1;
+            cart.Quantity = 1;
+            DataProvider.Instance.Db.Carts.Add(cart);
+            DataProvider.Instance.Db.SaveChanges();
         }
     }
 }
