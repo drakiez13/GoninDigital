@@ -74,13 +74,25 @@ namespace GoninDigital.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public byte theme {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool theme {
             get {
-                return ((byte)(this["theme"]));
+                return ((bool)(this["theme"]));
             }
             set {
                 this["theme"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool systemTheme {
+            get {
+                return ((bool)(this["systemTheme"]));
+            }
+            set {
+                this["systemTheme"] = value;
             }
         }
     }

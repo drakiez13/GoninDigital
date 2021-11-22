@@ -9,9 +9,20 @@ namespace GoninDigital.SharedControl
     {
         private ThemeManagerProxy()
         {
-            if(Settings.Default.accentColor != "")
+            if (Settings.Default.accentColor != "")
             {
                 AccentColor = (Color)ColorConverter.ConvertFromString(Settings.Default.accentColor);
+            }
+            if (!Settings.Default.systemTheme)
+            {
+                if (Settings.Default.theme)
+                {
+                    ApplicationTheme = ModernWpf.ApplicationTheme.Light;
+                }
+                else
+                {
+                    ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
+                }
             }
             DispatcherHelper.RunOnMainThread(() =>
             {
@@ -61,6 +72,22 @@ namespace GoninDigital.SharedControl
         private void UpdateApplicationTheme()
         {
             _updatingApplicationTheme = true;
+            if(ThemeManager.Current.ApplicationTheme != null)
+            {
+                if(ThemeManager.Current.ApplicationTheme == ModernWpf.ApplicationTheme.Light)
+                {
+                    Settings.Default.theme = true;
+                }
+                else
+                {
+                    Settings.Default.theme = false;
+                }
+                Settings.Default.systemTheme = false;
+            }
+            else
+            {
+                Settings.Default.systemTheme = true;
+            }
             ApplicationTheme = ThemeManager.Current.ApplicationTheme;
             _updatingApplicationTheme = false;
         }

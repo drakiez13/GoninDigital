@@ -18,8 +18,11 @@
     <Setting Name="accentColor" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="theme" Type="System.Byte" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="theme" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="systemTheme" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>
