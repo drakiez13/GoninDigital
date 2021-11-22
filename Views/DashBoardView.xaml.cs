@@ -1,21 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using GoninDigital.Views.DashBoardPages;
 using ModernWpf.Controls;
-using ModernWpf.Navigation;
 using Frame = System.Windows.Controls.Frame;
+using Page = System.Windows.Controls.Page;
 
 namespace GoninDigital.Views
 {
@@ -30,10 +20,13 @@ namespace GoninDigital.Views
             get => rootFrame;
         }
 
+        Dictionary<string, Page> pages;
+
         public DashBoard()
         {
             InitializeComponent();
             rootFrame = contentFrame;
+            pages = new Dictionary<string, Page>();
         }
 
         private void NavigationView_SelectionChanged(ModernWpf.Controls.NavigationView sender, ModernWpf.Controls.NavigationViewSelectionChangedEventArgs args)
@@ -41,22 +34,26 @@ namespace GoninDigital.Views
             if (args.IsSettingsSelected)
             {
                 contentFrame.Navigate(typeof(SettingPage));
+                return;
+            }
+            var selectedItem = (ModernWpf.Controls.NavigationViewItem)args.SelectedItem;
+            if (selectedItem != null)
+            {
+                string selectedItemTag = (string)selectedItem.Tag;
+                string pageName = "GoninDigital.Views.DashBoardPages." + selectedItemTag;
+                Page togo;
+                if (!pages.TryGetValue(pageName, out togo))
+                {
+                    Type pageType = typeof(HomePage).Assembly.GetType(pageName);
+                    togo = (Page)Activator.CreateInstance(pageType);
+                    pages.Add(pageName, togo);
+                }
+                contentFrame.Navigate(togo);
             }
             else
             {
-                var selectedItem = (ModernWpf.Controls.NavigationViewItem)args.SelectedItem;
-                if (selectedItem != null) {
-                    string selectedItemTag = (string)selectedItem.Tag;
-                    string pageName = "GoninDigital.Views.DashBoardPages." + selectedItemTag;
-                    Type pageType = typeof(HomePage).Assembly.GetType(pageName);
-                    contentFrame.Navigate(pageType);
-                }
-                else
-                {
-                    contentFrame.Navigate(typeof(HomePage));
-                }
+                contentFrame.Navigate(typeof(HomePage));
             }
-                
         }
 
         private void navigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
@@ -70,6 +67,29 @@ namespace GoninDigital.Views
                 navigationView.IsBackEnabled = true;
             else
                 navigationView.IsBackEnabled = false;
+
+            var desType = contentFrame.SourcePageType;
+            if (desType == typeof(HomePage))
+            {
+                homeItem.IsSelected = true;
+            }
+            else if (desType == typeof(CartPage))
+            {
+                cartItem.IsSelected = true;
+            }
+            else if (desType == typeof(SettingPage))
+            {
+                ((NavigationViewItem)navigationView.SettingsItem).IsSelected = true;
+            }
+            else if (desType == typeof(HotDealPage))
+            {
+                hotDealItem.IsSelected = true;
+            }
+            else if (desType == typeof(MyShopPage))
+            {
+                myShopItem.IsSelected = true;
+            }
+            
         }
     }
 }

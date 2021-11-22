@@ -15,10 +15,10 @@
                            BackRequested="navigationView_BackRequested"
                            IsBackEnabled="False">
             <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Content="Home" Tag="HomePage" Icon="Home" IsSelected="True"/>
-                <ui:NavigationViewItem Content="My Shop" Tag="MyShopPage" Icon="Manage" />
-                <ui:NavigationViewItem Content="Hot Deal" Tag="HotDealPage" Icon="Tag"/>
-                <ui:NavigationViewItem Content="Cart" Tag="CartPage" Icon="Shop"/>
+                <ui:NavigationViewItem x:Name="homeItem" Tag="HomePage" Icon="Home" IsSelected="True"/>
+                <ui:NavigationViewItem x:Name="myShopItem" Tag="MyShopPage" Icon="Manage" />
+                <ui:NavigationViewItem x:Name="hotDealItem" Tag="HotDealPage" Icon="Tag"/>
+                <ui:NavigationViewItem x:Name="cartItem" Tag="CartPage" Icon="Shop"/>
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.AutoSuggestBox>
                 <ui:AutoSuggestBox QueryIcon="Find" 
