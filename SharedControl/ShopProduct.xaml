@@ -5,9 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:uc="clr-namespace:GoninDigital.SharedControl"
              Name="shopProduct"
-             
-             d:DesignHeight="450" d:DesignWidth="800">
-    <ScrollViewer>
+             >
+    <Grid>
         <StackPanel Margin="20 0">
             <ItemsControl ItemsSource="{Binding ProductList,ElementName=shopProduct}">
                 <ItemsControl.ItemTemplate>
@@ -29,5 +28,5 @@
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
         </StackPanel>
-    </ScrollViewer>
+    </Grid>
 </UserControl>

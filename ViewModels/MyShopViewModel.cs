@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using GoninDigital.Models;
+using GoninDigital.Properties;
 
 namespace GoninDigital.ViewModels
 {
@@ -58,11 +59,71 @@ namespace GoninDigital.ViewModels
 
         public MyShopViewModel()
         {
+            
             GoninDigitalDBContext db = DataProvider.Instance.Db;
-            var products = new List<Product>();
-            var vendors = new List<Vendor>();
+            var usrname = Settings.Default.usrname;
+            var users = db.Users;
+            var vendors = db.Vendors;
+            var products = db.Products;
+
+            var usrId=from usr in users
+                      where usr.UserName == usrname
+                      select usr.Id;
+            var vendorId = from usr in users
+                           join vendor in vendors on usr.Id equals vendor.OwnerId
+                           select vendor.Id;
+            /*var vendorId = from vendor in vendors
+                        where vendor.OwnerId == usrId
+                        select vendor.Id;*/
+
+
             var ketqua = from product in products
-                         join vendor in vendors on product.VendorId equals vendor.Id
+                         join vendor in vendors on product.Id equals vendor.Id
+                         where vendor.Id == vendor
+                         select product;
+            productList = ketqua.ToList();
+            GoninDigitalDBContext db = DataProvider.Instance.Db;
+            var usrname = Settings.Default.usrname;
+            var users = db.Users;
+            var vendors = db.Vendors;
+            var products = db.Products;
+
+            var usrId = from usr in users
+                        where usr.UserName == usrname
+                        select usr.Id;
+            var vendorId = from usr in users
+                           join vendor in vendors on usr.Id equals vendor.OwnerId
+                           select vendor.Id;
+            /*var vendorId = from vendor in vendors
+                        where vendor.OwnerId == usrId
+                        select vendor.Id;*/
+
+
+            var ketqua = from product in products
+                         join vendor in vendors on product.Id equals vendor.Id
+                         where vendor.Id == vendor
+                         select product;
+            productList = ketqua.ToList();
+            GoninDigitalDBContext db = DataProvider.Instance.Db;
+            var usrname = Settings.Default.usrname;
+            var users = db.Users;
+            var vendors = db.Vendors;
+            var products = db.Products;
+
+            var usrId = from usr in users
+                        where usr.UserName == usrname
+                        select usr.Id;
+            var vendorId = from usr in users
+                           join vendor in vendors on usr.Id equals vendor.OwnerId
+                           select vendor.Id;
+            /*var vendorId = from vendor in vendors
+                        where vendor.OwnerId == usrId
+                        select vendor.Id;*/
+
+
+            var ketqua = from product in products
+                         join vendor in vendors on product.Id equals vendor.Id
+                         where vendor.Id == vendor
                          select product;
             productList = ketqua.ToList();
         }

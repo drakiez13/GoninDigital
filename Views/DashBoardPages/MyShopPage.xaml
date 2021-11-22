@@ -38,7 +38,7 @@
                 </Grid>
             </Grid>
 
-            <uc:ShopProduct Margin="0 50 0 0" ProductList="{Biding prodictList}"></uc:ShopProduct>
+            <uc:ShopProduct Margin="0 50 0 0" ProductList="{Binding ProductList}"></uc:ShopProduct>
            
         </StackPanel>
     </ScrollViewer>
