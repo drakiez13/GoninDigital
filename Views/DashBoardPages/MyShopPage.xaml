@@ -38,9 +38,8 @@
                 </Grid>
             </Grid>
 
-            <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
-            <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
-            <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
+            <uc:ShopProduct Margin="0 50 0 0" ProductList="{Biding prodictList}"></uc:ShopProduct>
+           
         </StackPanel>
     </ScrollViewer>
 </Page>
