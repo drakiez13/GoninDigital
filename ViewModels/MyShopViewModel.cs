@@ -62,11 +62,11 @@ namespace GoninDigital.ViewModels
             
             GoninDigitalDBContext db = DataProvider.Instance.Db;
             var usrname = Settings.Default.usrname;
-            var users = db.Users;
-            var vendors = db.Vendors;
-            var products = db.Products;
+            var usr = db.Users.Single(p => p.UserName == usrname);
 
-            
+            var vendor = db.Vendors.Single(p => p.OwnerId == usr.Id);
+            var product = db.Products.Where(p => p.VendorId == vendor.Id).ToList();
+            productList = product;
         }
 
     }
