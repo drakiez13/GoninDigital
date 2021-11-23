@@ -26,7 +26,7 @@ namespace GoninDigital.ViewModels
         }
         public List<Product> RecommendedByEditor3
         {
-            get { return recommendedByEditor != null ? recommendedByEditor.GetRange(0, 3) : null; }
+            get { return recommendedByEditor.Count > 3 ? recommendedByEditor.GetRange(0, 3) : null; }
             set { recommendedByEditor = value; OnPropertyChanged(); }
         }
 
