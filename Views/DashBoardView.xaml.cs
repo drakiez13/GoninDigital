@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using GoninDigital.Views.DashBoardPages;
 using ModernWpf.Controls;
+using ModernWpf.Controls.Primitives;
 using Frame = System.Windows.Controls.Frame;
 using Page = System.Windows.Controls.Page;
 
@@ -90,6 +92,11 @@ namespace GoninDigital.Views
                 myShopItem.IsSelected = true;
             }
             
+        }
+
+        private void NavigationViewItem_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
     }
 }
