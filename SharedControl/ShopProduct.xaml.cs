@@ -35,7 +35,7 @@ namespace GoninDigital.SharedControl
         };
 
         public static readonly DependencyProperty ProductListProperty =
-            DependencyProperty.Register("ProductList", typeof(object), typeof(ShopProduct), new PropertyMetadata(metaProducts),);
+            DependencyProperty.Register("ProductList", typeof(object), typeof(ShopProduct), new PropertyMetadata(metaProducts),(object o) => { return o != null;});
         public ShopProduct()
         {
             InitializeComponent();

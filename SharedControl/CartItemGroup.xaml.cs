@@ -27,11 +27,6 @@ namespace GoninDigital.SharedControl
             get => (object)GetValue(ProductListProperty);
             set => SetValue(ProductListProperty, value);
         }
-        public object GroupBackground
-        {
-            get => (object)GetValue(GroupBackgroundProperty);
-            set => SetValue(GroupBackgroundProperty, value);
-        }
 
         private static List<Product> metaProducts = new List<Product> {
             new Product { Name="Product 1", Price=100000},
@@ -43,8 +38,7 @@ namespace GoninDigital.SharedControl
 
         public static readonly DependencyProperty ProductListProperty =
             DependencyProperty.Register("ProductList", typeof(object), typeof(CartItemGroup), new PropertyMetadata(metaProducts));
-        public static readonly DependencyProperty GroupBackgroundProperty =
-            DependencyProperty.Register("GroupBackground", typeof(object), typeof(CartItemGroup), new PropertyMetadata("DarkSeaGreen"));
+
         public CartItemGroup()
         {
             InitializeComponent();

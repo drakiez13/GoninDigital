@@ -12,7 +12,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <uc:ProductCard
-                        Margin="10 0 10 0"
+                        Margin="10 10 10 10"
                         Id="{Binding Path=Id}"
                         Title="{Binding Path=Name}"
                         Price="{Binding Path=Price}"

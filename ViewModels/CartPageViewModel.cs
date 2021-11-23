@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using GoninDigital.Models;
 using GoninDigital.Views;
+using ModernWpf.Controls;
 
 namespace GoninDigital.ViewModels
 {
     class CartPageViewModel :BaseViewModel
     {
         
+       
 
         private List<Product> recommnededByEditor;
         public List<Product> RecommendedByEditor
@@ -24,7 +26,7 @@ namespace GoninDigital.ViewModels
             get { return recommnededByEditor.GetRange(0, 3); }
         }
         public ICommand PurchaseCommand { get; set; }
-
+        public ICommand RemoveCartItem { get; set; }
         public CartPageViewModel()
         {
   
@@ -32,6 +34,11 @@ namespace GoninDigital.ViewModels
             recommnededByEditor = db.Products.ToList();
 
             PurchaseCommand = new RelayCommand<object>((p) => { return true; }, (p) => { DashBoard.RootFrame.Navigate(new CartPage_Purchase()); });
+            RemoveCartItem = new RelayCommand<object>((p) => { return true; }, RemoveCartItemExe);
+        }
+        public void RemoveCartItemExe(object o)
+        {
+            
         }
     }
 }

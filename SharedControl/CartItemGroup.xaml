@@ -7,6 +7,7 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d" 
              Name="cartItemGroup" 
+             
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ItemsControl ItemsSource="{Binding ProductList, ElementName=cartItemGroup}"
@@ -21,6 +22,7 @@
                 <DataTemplate>
                     <uc:CartItem
                             Margin="0 0 0 5"
+                            Image="{Binding Path=Image}"
                             Title="{Binding Path=Name}"
                             Price="{Binding Path=Price}"
                             TotalPrice="{Binding Path=Price}"

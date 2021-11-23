@@ -11,6 +11,12 @@ namespace GoninDigital.ViewModels
 {
     class MyShopViewModel:BaseViewModel
     {
+        private string nameShop;
+        public string NameShop
+        {
+            get { return nameShop; }
+            set { nameShop = value; OnPropertyChanged(); }
+        }
         private string avatar;
         public string Avatar
         {
@@ -56,17 +62,25 @@ namespace GoninDigital.ViewModels
 
 
         
-
         public MyShopViewModel()
         {
-            
+
             GoninDigitalDBContext db = DataProvider.Instance.Db;
             var usrname = Settings.Default.usrname;
+            
             var usr = db.Users.Single(p => p.UserName == usrname);
 
             var vendor = db.Vendors.Single(p => p.OwnerId == usr.Id);
             var product = db.Products.Where(p => p.VendorId == vendor.Id).ToList();
             productList = product;
+
+            cover = vendor.Cover;
+            nameShop = vendor.Name;
+            avatar = vendor.Avatar;
+            address = vendor.Address;
+            phone = vendor.Phone;
+            
+            description = vendor.Description;
         }
 
     }
