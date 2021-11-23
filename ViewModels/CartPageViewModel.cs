@@ -15,23 +15,20 @@ namespace GoninDigital.ViewModels
         
        
 
-        private List<Product> recommnededByEditor;
-        public List<Product> RecommendedByEditor
+        private List<Product> products;
+        public List<Product> Products
         {
-            get { return recommnededByEditor; }
-            set { recommnededByEditor = value; OnPropertyChanged(); }
+            get { return products; }
+            set { products = value; OnPropertyChanged(); }
         }
-        public List<Product> RecommendedByEditor3
-        {
-            get { return recommnededByEditor.GetRange(0, 3); }
-        }
+        
         public ICommand PurchaseCommand { get; set; }
         public ICommand RemoveCartItem { get; set; }
         public CartPageViewModel()
         {
   
             GoninDigitalDBContext db = DataProvider.Instance.Db;
-            recommnededByEditor = db.Products.ToList();
+            products = db.Products.ToList();
 
             PurchaseCommand = new RelayCommand<object>((p) => { return true; }, (p) => { DashBoard.RootFrame.Navigate(new CartPage_Purchase()); });
             RemoveCartItem = new RelayCommand<object>((p) => { return true; }, RemoveCartItemExe);

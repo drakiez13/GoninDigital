@@ -21,7 +21,8 @@ namespace GoninDigital.SharedControl
     /// </summary>
     public partial class CartItemGroup : UserControl
     {
-        
+
+       
         public object ProductList
         {
             get => (object)GetValue(ProductListProperty);

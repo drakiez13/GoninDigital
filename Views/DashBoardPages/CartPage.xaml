@@ -63,7 +63,7 @@
                 </Grid>
                     <uc:CartItemGroup
                         Margin="0 10 0 20"
-                     ProductList="{Binding RecommendedByEditor3}"/>
+                         ProductList="{Binding Products}"/>
 
 
                 </StackPanel>

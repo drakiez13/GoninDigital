@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GoninDigital.Models;
+using GoninDigital.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,6 +44,7 @@ namespace GoninDigital.SharedControl
             get => (object)GetValue(TotalPriceProperty);
             set => SetValue(TotalPriceProperty, value);
         }
+        public ICommand RemoveCartItem;
 
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register("Title", typeof(object), typeof(CartItem), new PropertyMetadata("Unknown"));
@@ -56,6 +59,13 @@ namespace GoninDigital.SharedControl
         public CartItem()
         {
             InitializeComponent();
+            RemoveCartItem = new RelayCommand<object>((p) => { return true; }, (p) => { RemoveCartItemExe(); });
+        }
+
+        public void RemoveCartItemExe()
+        {
+            GoninDigitalDBContext db = DataProvider.Instance.Db;
+            var cart = db.Carts.Remove();
         }
     }
 }
