@@ -25,9 +25,10 @@ namespace GoninDigital.Views
         public LoginView()
         {
             InitializeComponent();
+            DataContext = ViewModel;
         }
 
-        public ThreadedUIPageViewModel ViewModel { get; } = new ThreadedUIPageViewModel();
+        public LoginViewModel ViewModel { get; } = new(Application.Current.MainWindow);
 
         private void ProgressControlHost_ChildChanged(object sender, EventArgs e)
         {
@@ -40,22 +41,6 @@ namespace GoninDigital.Views
             {
                 progressRing.SetBinding(ThreadedProgressRing.IsActiveProperty, new Binding(nameof(ViewModel.IsBusy)) { Source = ViewModel });
             }
-        }
-    }
-    public class ThreadedUIPageViewModel : BaseViewModel
-    {
-        private bool _isBusy = true;
-        public bool IsBusy
-        {
-            get => _isBusy;
-            set => Set(ref _isBusy, value);
-        }
-
-        private bool _isVisbile = true;
-        public bool IsVisible
-        {
-            get => _isVisbile;
-            set => Set(ref _isVisbile, value);
         }
     }
 }
