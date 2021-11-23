@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using GoninDigital.Models;
@@ -26,6 +27,7 @@ namespace GoninDigital.ViewModels
         public List<Product> RecommendedByEditor3
         {
             get { return recommnededByEditor.GetRange(0, 3); }
+            set { recommnededByEditor = value; OnPropertyChanged(); }
         }
 
         private string artGroup1;
@@ -40,13 +42,22 @@ namespace GoninDigital.ViewModels
             get => artGroup2;
         }
 
+        private void Init()
+        {
+            GoninDigitalDBContext db = DataProvider.Instance.Db;
+            RecommendedByEditor = db.Products.ToList();
+            RecommendedByEditor3 = recommnededByEditor;
+        }
+
+
         public HomePageViewModel()
         {
             art = "/Resources/Images/HomeBanner.jpg";
             artGroup1 = "/Resources/Images/HomeProductCardGroupBackground.png";
             artGroup2 = "/Resources/Images/HomeProductCardGroupBackground2.jpg";
-            GoninDigitalDBContext db = DataProvider.Instance.Db;
-            recommnededByEditor = db.Products.ToList();
+            recommnededByEditor = new List<Product>();
+            Thread thread = new Thread(Init);
+            thread.Start();
         }
     }
 }
