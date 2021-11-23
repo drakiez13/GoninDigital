@@ -7,6 +7,7 @@ using System.Windows;
 using GoninDigital.Models;
 using GoninDigital.Properties;
 using GoninDigital.ViewModels;
+using ModernWpf.Controls;
 
 namespace GoninDigital.Utils
 {
@@ -14,41 +15,54 @@ namespace GoninDigital.Utils
     {
         public static bool EmailExists(string email)
         {
-            return DataProvider.Instance.Db.Users.Find(email) != null;
+            GoninDigitalDBContext context = new();
+            return context.Users.FirstOrDefault(b => b.Email == email) != default;
         }
 
         public static void RegisterAccount(User new_usr)
         {
-            _ = DataProvider.Instance.Db.Users.Add(new_usr);
-            _ = DataProvider.Instance.Db.SaveChanges();
+            GoninDigitalDBContext context = new();
+            context.Users.Add(new_usr);
+            context.SaveChanges();
         }
 
         public static bool AccountExists(string usrname, string email)
         {
-            int checkUsername = DataProvider.Instance.Db.Users.Where(x => x.UserName == usrname).Count();
-            int checkEmail = DataProvider.Instance.Db.Users.Where(x => x.Email == email).Count();
-            return checkUsername > 0 || checkUsername > 0;
+            GoninDigitalDBContext context = new();
+            return context.Users.FirstOrDefault(b => b.Email==email || b.UserName==usrname) != default;
         }
 
         public static void ChangePassword(Window window, string email, string newPassword)
         {
             try
             {
-                User user = DataProvider.Instance.Db.Users.Find(email);
-                if (user != null)
+                GoninDigitalDBContext context = new();
+                User user = context.Users.FirstOrDefault(b=>b.Email==email);
+                if (user != default)
                 {
                     user.Password = newPassword;
-                    DataProvider.Instance.Db.SaveChanges();
+                    context.SaveChanges();
                 }
-
-                MessageBox.Show("Password successfully changed");
+                var content = new ContentDialog
+                {
+                    Title = "Congratz",
+                    Content = "Password successfully changed.",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
             }
             catch
             {
-                MessageBox.Show("Password unsuccessfully changed");
+                var content = new ContentDialog
+                {
+                    Title = "Warning",
+                    Content = "Password unsuccessfully changed.",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
             }
 
-            var loginViewModel = new LoginViewModel(window);
+            LoginViewModel loginViewModel = new(window);
             WindowManager.ChangeWindowContent(window, loginViewModel, Resources.LoginWindowTitle, Resources.LoginControlPath);
             if (loginViewModel.CloseAction == null)
             {
