@@ -18,16 +18,16 @@ namespace GoninDigital.ViewModels
             set { art = value; OnPropertyChanged(); }
         }
 
-        private List<Product> recommnededByEditor;
+        private List<Product> recommendedByEditor;
         public List<Product> RecommendedByEditor
         {
-            get { return recommnededByEditor; }
-            set { recommnededByEditor = value; OnPropertyChanged(); }
+            get { return recommendedByEditor; }
+            set { recommendedByEditor = value; OnPropertyChanged(); }
         }
         public List<Product> RecommendedByEditor3
         {
-            get { return recommnededByEditor.GetRange(0, 3); }
-            set { recommnededByEditor = value; OnPropertyChanged(); }
+            get { return recommendedByEditor != null ? recommendedByEditor.GetRange(0, 3) : null; }
+            set { recommendedByEditor = value; OnPropertyChanged(); }
         }
 
         private string artGroup1;
@@ -46,7 +46,7 @@ namespace GoninDigital.ViewModels
         {
             GoninDigitalDBContext db = DataProvider.Instance.Db;
             RecommendedByEditor = db.Products.ToList();
-            RecommendedByEditor3 = recommnededByEditor;
+            RecommendedByEditor3 = recommendedByEditor;
         }
 
 
@@ -55,7 +55,7 @@ namespace GoninDigital.ViewModels
             art = "/Resources/Images/HomeBanner.jpg";
             artGroup1 = "/Resources/Images/HomeProductCardGroupBackground.png";
             artGroup2 = "/Resources/Images/HomeProductCardGroupBackground2.jpg";
-            recommnededByEditor = new List<Product>();
+            recommendedByEditor = new List<Product>();
             Thread thread = new Thread(Init);
             thread.Start();
         }
