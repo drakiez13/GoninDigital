@@ -27,76 +27,45 @@ namespace GoninDigital.SharedControl
             get => (object)GetValue(TitleProperty);
             set => SetValue(TitleProperty, value);
         }
-        private string nameShop;
-        public string NameShop
+        public object Image
         {
-            get { return nameShop; }
-            set { nameShop = value; OnPropertyChanged(); }
+            get => (object)GetValue(ImageProperty);
+            set => SetValue(ImageProperty, value);
         }
-        private string avatar;
-        public string Avatar
+        
+
+        public object Price
         {
-            get { return avatar; }
-            set { avatar = value; OnPropertyChanged(); }
+            get => (object)GetValue(PriceProperty);
+            set => SetValue(PriceProperty, value);
         }
-        private string cover;
-        public string Cover
+        public object TotalPrice
         {
-            get { return cover; }
-            set { cover = value; OnPropertyChanged(); }
+            get => (object)GetValue(TotalPriceProperty);
+            set => SetValue(TotalPriceProperty, value);
         }
-        private string mail;
-        public string Mail
+        public ICommand RemoveCartItem;
+
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register("Title", typeof(object), typeof(CartItem), new PropertyMetadata("Unknown"));
+        public static readonly DependencyProperty ImageProperty =
+            DependencyProperty.Register("Image", typeof(object), typeof(CartItem),
+                new PropertyMetadata("/Resources/Images/BlankImage.jpg"));
+      
+        public static readonly DependencyProperty PriceProperty =
+            DependencyProperty.Register("Price", typeof(object), typeof(CartItem), new PropertyMetadata(0));
+        public static readonly DependencyProperty TotalPriceProperty =
+            DependencyProperty.Register("TotalPrice", typeof(object), typeof(CartItem), new PropertyMetadata(0));
+        public CartItem()
         {
-            get { return mail; }
-            set { mail = value; OnPropertyChanged(); }
-        }
-        private string phone;
-        public string Phone
-        {
-            get { return phone; }
-            set { phone = value; OnPropertyChanged(); }
-        }
-        private string address;
-        public string Address
-        {
-            get { return address; }
-            set { address = value; OnPropertyChanged(); }
-        }
-        private string description;
-        public string Description
-        {
-            get { return description; }
-            set { description = value; OnPropertyChanged(); }
-        }
-        private List<Product> productList;
-        public List<Product> ProductList
-        {
-            get { return productList; }
-            set { productList = value; OnPropertyChanged(); }
+            InitializeComponent();
+            RemoveCartItem = new RelayCommand<object>((p) => { return true; }, (p) => { RemoveCartItemExe(); });
         }
 
-
-
-        public MyShopViewModel()
+        public void RemoveCartItemExe()
         {
-
             GoninDigitalDBContext db = DataProvider.Instance.Db;
-            var usrname = Settings.Default.usrname;
-
-            var usr = db.Users.Single(p => p.UserName == usrname);
-
-            var vendor = db.Vendors.Single(p => p.OwnerId == usr.Id);
-            var product = db.Products.Where(p => p.VendorId == vendor.Id).ToList();
-            productList = product;
-
-            cover = vendor.Cover;
-            nameShop = vendor.Name;
-            avatar = vendor.Avatar;
-            address = vendor.Address;
-            phone = vendor.Phone;
-
-            description = vendor.Description;
+            
         }
 
     }
