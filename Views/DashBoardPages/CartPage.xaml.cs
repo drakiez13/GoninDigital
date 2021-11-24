@@ -24,7 +24,7 @@ namespace GoninDigital.Views.DashBoardPages
         public CartPage()
         {
             InitializeComponent();
-            DataContext = new CartPageViewModel();
+            
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)

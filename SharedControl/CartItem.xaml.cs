@@ -59,10 +59,8 @@ namespace GoninDigital.SharedControl
         public CartItem()
         {
             InitializeComponent();
-            
-        }
 
-        
+        }
 
     }
 }

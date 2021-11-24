@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GoninDigital.Models;
+using GoninDigital.ViewModels;
 
 namespace GoninDigital.SharedControl
 {
@@ -43,7 +44,7 @@ namespace GoninDigital.SharedControl
         public CartItemGroup()
         {
             InitializeComponent();
-            
+
         }
     }
 }

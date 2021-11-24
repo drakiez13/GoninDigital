@@ -50,6 +50,6 @@
                          Icon="Delete" 
                          Label="Remove"
                          HorizontalAlignment="Center" VerticalAlignment="Center"
-                         Command="{Binding RemoveCartItemCommand}"/>
+                         Command="{Binding RemoveCartItem}"/>
     </Grid>
 </UserControl>

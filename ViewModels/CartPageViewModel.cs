@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GoninDigital.Models;
+using GoninDigital.SharedControl;
 using GoninDigital.Views;
 using ModernWpf.Controls;
 
@@ -32,11 +33,12 @@ namespace GoninDigital.ViewModels
             products = db.Products.ToList();
 
             PurchaseCommand = new RelayCommand<object>((p) => { return true; }, (p) => { DashBoard.RootFrame.Navigate(new CartPage_Purchase()); });
-            RemoveCartItem = new RelayCommand<object>((p) => { return true; }, (p) => { RemoveCartItemExe(p) ; });
+            RemoveCartItem = new RelayCommand<object>((p) => { return true; }, (p) => { RemoveCartItemExe(p); });
         }
         public void RemoveCartItemExe(object o)
         {
-            MessageBox.Show(o.ToString());
+            /*MessageBox.Show(o.ToString());*/
+            MessageBox.Show("dasda");
         }
 
     }
