@@ -12,8 +12,6 @@ using GoninDigital.Utils;
 using GoninDigital.Properties;
 using GoninDigital.SharedControl;
 using System.Windows.Media;
-using System.Reflection;
-using System.Windows.Controls;
 
 namespace GoninDigital.ViewModels
 {
@@ -46,14 +44,8 @@ namespace GoninDigital.ViewModels
                 else //login
                 {
                     //var loginWindow = new LoginViewModel(p);
-                    //WindowManager.ChangeWindowContent(p, loginWindow, Resources.LoginWindowTitle, Resources.LoginControlPath);
-                    var controlAssembly = Assembly.Load("GoninDigital");
-                    var controlType = controlAssembly.GetType(Resources.LoginControlPath);
-                    var newControl = Activator.CreateInstance(controlType) as UserControl;
-
-                    p.Content = newControl;
+                    WindowManager.ChangeWindowContent(p, Resources.LoginWindowTitle, Resources.LoginControlPath);
                 }
-
             }); 
         }
     }
