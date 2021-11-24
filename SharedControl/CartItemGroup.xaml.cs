@@ -43,6 +43,7 @@ namespace GoninDigital.SharedControl
         public CartItemGroup()
         {
             InitializeComponent();
+            
         }
     }
 }

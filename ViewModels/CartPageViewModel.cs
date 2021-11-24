@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using GoninDigital.Models;
 using GoninDigital.Views;
@@ -31,11 +32,8 @@ namespace GoninDigital.ViewModels
             products = db.Products.ToList();
 
             PurchaseCommand = new RelayCommand<object>((p) => { return true; }, (p) => { DashBoard.RootFrame.Navigate(new CartPage_Purchase()); });
-            RemoveCartItem = new RelayCommand<object>((p) => { return true; }, RemoveCartItemExe);
+
         }
-        public void RemoveCartItemExe(object o)
-        {
-            
-        }
+
     }
 }

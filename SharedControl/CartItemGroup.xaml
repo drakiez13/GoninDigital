@@ -10,14 +10,15 @@
              
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ItemsControl ItemsSource="{Binding ProductList, ElementName=cartItemGroup}"
+        <ListBox ItemsSource="{Binding ProductList, ElementName=cartItemGroup}"
                           Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                          HorizontalAlignment="Center">
-            <ItemsControl.ItemsPanel>
+                          HorizontalAlignment="Center"
+                          Name="lbCartItemGroup">
+            <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Vertical"></StackPanel>
                 </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+            </ListBox.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <uc:CartItem
@@ -29,6 +30,6 @@
                             ></uc:CartItem>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        </ListBox>
     </Grid>
 </UserControl>
