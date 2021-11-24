@@ -11,7 +11,7 @@ namespace GoninDigital.ViewModels
 {
     class CartItemViewModel:BaseViewModel
     {
-        private object _Title;
+        /*private object _Title;
         public object Title
         {
             get { return _Title; }
@@ -36,10 +36,10 @@ namespace GoninDigital.ViewModels
             get { return _TotalPrice; }
             set { _TotalPrice = value; OnPropertyChanged(); }
         }
-
+*/
 
        
-        public ICommand RemoveCartItem;
+        
         public CartItemViewModel()
         {
             RemoveCartItem = new RelayCommand<object>((p) => { return true; }, (p) =>
