@@ -65,7 +65,8 @@ namespace GoninDigital.SharedControl
         public void RemoveCartItemExe()
         {
             GoninDigitalDBContext db = DataProvider.Instance.Db;
-            
+            TabDocumentContainerItem a;
+            ItemContainerGenerator.ItemFromContainer()
         }
 
     }
