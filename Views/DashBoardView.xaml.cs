@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using GoninDigital.Models;
 using GoninDigital.Views.DashBoardPages;
 using ModernWpf.Controls;
 using ModernWpf.Controls.Primitives;
+using System.Linq;
 using Frame = System.Windows.Controls.Frame;
 using Page = System.Windows.Controls.Page;
 
 namespace GoninDigital.Views
 {
-    /// <summary>
-    /// Interaction logic for DashBoard.xaml
-    /// </summary>
+    struct SearchItem
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
+    }
     public partial class DashBoard : UserControl
     {
         private static Frame rootFrame;
@@ -97,6 +102,45 @@ namespace GoninDigital.Views
         private void NavigationViewItem_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+        }
+
+        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                var content = sender.Text;
+                using (var context = new GoninDigitalDBContext())
+                {
+                    var result = context.Products.Where(product => product.Name.Contains(content))
+                        .Select(product => new SearchItem{ Name=product.Name, Description=product.Description, Image=product.Image })
+                        .ToList();
+                    var result2 = context.Vendors.Where(vendor => vendor.Name.Contains(content))
+                        .Select(vendor => new SearchItem { Name = vendor.Name, Description = vendor.Description, Image = vendor.Avatar })
+                        .ToList();
+
+
+                    var combined = result2.Concat(result);
+                    if (combined.Any())
+                        sender.ItemsSource = combined;
+                    else
+                        sender.ItemsSource = new List<SearchItem>() 
+                        { new SearchItem { Name = "No Results Found", Image = null, Description = null } };
+                }
+            }
+        }
+
+        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            if (args.ChosenSuggestion != null)
+            {
+                // User selected an item from the suggestion list, take an action on it here.
+                MessageBox.Show((string)args.ChosenSuggestion);
+            }
+            else
+            {
+                // Use args.QueryText to determine what to do.
+                MessageBox.Show((string)args.QueryText);
+            }
         }
     }
 }
