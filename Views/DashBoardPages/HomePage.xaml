@@ -21,22 +21,26 @@
                 FontWeight="Bold">Home</Label>
             </Grid>
             
-            <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
+            <uc:ProductCardGroup2 
+                Title="OK"
+                ProductList="{Binding RecommendedByEditor}"
+                Margin="0 50 0 0"></uc:ProductCardGroup2>
             <uc:ProductCardGroup 
                 Margin="0 50 0 0"
                 Title="Hot product this Winter"
                 Subtitle="Best price for you"
                 ProductList="{Binding RecommendedByEditor}"
                 GroupBackground="{Binding ArtGroup1}"></uc:ProductCardGroup>
-            <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
+            <uc:ProductCardGroup2
+                
+                Margin="0 50 0 0"></uc:ProductCardGroup2>
             <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
             <uc:ProductCardGroup
                 Margin="0 50 0 100"
                 Title="From Intel with love"
                 Subtitle="The best powerful and reliable processor for your system"
-                ProductList="{Binding RecommendedByEditor3}"
+                ProductList="{Binding RecommendedByEditor}"
                 GroupBackground="{Binding ArtGroup2}">
-                
             </uc:ProductCardGroup>
         </StackPanel>
     </ScrollViewer>

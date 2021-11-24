@@ -18,7 +18,7 @@ namespace GoninDigital.ViewModels
             set { art = value; OnPropertyChanged(); }
         }
 
-        private List<Product> recommendedByEditor;
+        private List<Product> recommendedByEditor = null;
         public List<Product> RecommendedByEditor
         {
             get { return recommendedByEditor; }
@@ -45,13 +45,11 @@ namespace GoninDigital.ViewModels
             }
         }
 
-
         public HomePageViewModel()
         {
             art = "/Resources/Images/HomeBanner.jpg";
             artGroup1 = "/Resources/Images/HomeProductCardGroupBackground.png";
             artGroup2 = "/Resources/Images/HomeProductCardGroupBackground2.jpg";
-            recommendedByEditor = new List<Product>();
             Thread thread = new Thread(Init);
             thread.Start();
         }
