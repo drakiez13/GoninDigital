@@ -129,12 +129,13 @@ namespace GoninDigital.ViewModels
             set { productDiscountPrice = value; OnPropertyChanged(); }
         }
         Product product = new Product();
+        GoninDigitalDBContext context = new();
         public ICommand AddtoCartCommand { get; set; }
         #endregion
         #region Constructor
         public ProductPageViewModel()
         {
-            product = DataProvider.Instance.Db.Products.Where(x => x.Id == 2).First(); //Id mặc định
+            product = context.Products.Where(x => x.Id == 2).First(); //ID mặc định
             loadInfo();
             AddtoCartCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddtoCartExecute(); });
         }
@@ -145,46 +146,46 @@ namespace GoninDigital.ViewModels
             ratingValue = product.Rating;
             ratingCap = (product.Rating).ToString();
             productImage = product.Image;
-            vendorAvatar = DataProvider.Instance.Db.Vendors.Where(x => x.Id == product.VendorId).First().Avatar;
+            vendorAvatar = context.Vendors.Where(x => x.Id == product.VendorId).First().Avatar;
             productName = product.Name;
-            VendorName = DataProvider.Instance.Db.Vendors.Where(x => x.Id == product.VendorId).First().Name;
-            productType = DataProvider.Instance.Db.ProductCategories.Where(x => x.Id == product.CategoryId).First().Name;
+            VendorName = context.Vendors.Where(x => x.Id == product.VendorId).First().Name;
+            productType = context.ProductCategories.Where(x => x.Id == product.CategoryId).First().Name;
             ProductPrice = product.Price;
             if (product.DiscountRate == 0)
                 IsDisc = "Hidden";
             else
                 IsDisc = "Visible";
             productDescription = product.Description;
-            vendorAddress = DataProvider.Instance.Db.Vendors.Where(x => x.Id == product.VendorId).First().Address;
-            brandName = DataProvider.Instance.Db.Brands.Where(x => x.Id == product.BrandId).First().Name;
+            vendorAddress = context.Vendors.Where(x => x.Id == product.VendorId).First().Address;
+            brandName = context.Brands.Where(x => x.Id == product.BrandId).First().Name;
             ProductDiscountPrice = Convert.ToDouble(product.Price) * (1 - Convert.ToDouble(product.DiscountRate) / 100);
-            var Products_of_Vendor = DataProvider.Instance.Db.Products.Where(x => x.VendorId == product.VendorId).ToList();
+            var Products_of_Vendor = context.Products.Where(x => x.VendorId == product.VendorId).ToList();
             vendorRating = 0;
             for (int i = 0; i < Products_of_Vendor.Count(); i++)
             {
                 vendorRating += Products_of_Vendor[i].Rating;
             }
             vendorRating /= Products_of_Vendor.Count();
-            vendorProducts = DataProvider.Instance.Db.Vendors.Where(x => x.Id == product.VendorId).Count();
+            vendorProducts = context.Vendors.Where(x => x.Id == product.VendorId).Count();
             productStatus = ((byte?)product.New).ToString() + "%";
             productAvailable = product.Available;
         }
         void AddtoCartExecute()
         {
-            int userID = DataProvider.Instance.Db.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
-            if (DataProvider.Instance.Db.Carts.Where(x => x.UserId==userID & x.ProductId == 2).Count() == 0) //Id mặc định
+            int userID = context.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
+            if (context.Carts.Where(x => x.UserId==userID & x.ProductId == 2).Count() == 0) //Id mặc định
             {
                 Cart cart = new Cart();
                 cart.UserId = userID;
                 cart.ProductId = 2; //Id mặc định
                 cart.Quantity = 1;
-                DataProvider.Instance.Db.Carts.Add(cart);
-                DataProvider.Instance.Db.SaveChanges();
+                context.Carts.Add(cart);
+                context.SaveChanges();
             }
             else
             {
-                DataProvider.Instance.Db.Carts.Where(x => x.UserId == userID & x.ProductId == 2).First().Quantity += 1; //Id mặc định
-                DataProvider.Instance.Db.SaveChanges();
+                context.Carts.Where(x => x.UserId == userID & x.ProductId == 2).First().Quantity += 1; //Id mặc định
+                context.SaveChanges();
             }
             MessageBox.Show("This product has been added to your cart");
         }
