@@ -7,7 +7,7 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d" 
              Name="cartItem"
-             
+             DataContext="CartItemVM"
              Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
              Width="700" Height="130">
 
@@ -50,6 +50,6 @@
                          Icon="Delete" 
                          Label="Remove"
                          HorizontalAlignment="Center" VerticalAlignment="Center"
-                         Command="{Binding RemoveCartItem}"/>
+                         Command="{Binding RemoveCartItem }"/>
     </Grid>
 </UserControl>

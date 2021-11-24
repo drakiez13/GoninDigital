@@ -22,7 +22,7 @@ namespace GoninDigital.SharedControl
     /// </summary>
     public partial class CartItem : UserControl
     {
-        public object Title
+        /*public object Title
         {
             get => (object)GetValue(TitleProperty);
             set => SetValue(TitleProperty, value);
@@ -44,7 +44,7 @@ namespace GoninDigital.SharedControl
             get => (object)GetValue(TotalPriceProperty);
             set => SetValue(TotalPriceProperty, value);
         }
-        public ICommand RemoveCartItem;
+        
 
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register("Title", typeof(object), typeof(CartItem), new PropertyMetadata("Unknown"));
@@ -55,7 +55,7 @@ namespace GoninDigital.SharedControl
         public static readonly DependencyProperty PriceProperty =
             DependencyProperty.Register("Price", typeof(object), typeof(CartItem), new PropertyMetadata(0));
         public static readonly DependencyProperty TotalPriceProperty =
-            DependencyProperty.Register("TotalPrice", typeof(object), typeof(CartItem), new PropertyMetadata(0));
+            DependencyProperty.Register("TotalPrice", typeof(object), typeof(CartItem), new PropertyMetadata(0));*/
         public CartItem()
         {
             InitializeComponent();

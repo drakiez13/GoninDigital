@@ -13,7 +13,8 @@
         <ListBox ItemsSource="{Binding ProductList, ElementName=cartItemGroup}"
                           Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                           HorizontalAlignment="Center"
-                          Name="lbCartItemGroup">
+                          Name="lbCartItemGroup"
+                          SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Vertical"></StackPanel>
