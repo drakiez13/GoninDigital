@@ -62,7 +62,7 @@
                            FontSize="20"
                            FontWeight="Bold"/>
                         <Label>
-                            <TextBlock>
+                            <TextBlock Visibility="{Binding IsDisc}">
                             <Run TextDecorations="Strikethrough" Text="{Binding ProductPrice}"></Run>
                             </TextBlock>
                         </Label>
@@ -193,5 +193,4 @@
 
         </Grid>
     </ScrollViewer>
-
 </Page>
