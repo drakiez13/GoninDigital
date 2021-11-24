@@ -7,31 +7,46 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         mc:Ignorable="d"
         Height="auto"  Width="auto">
+    <UserControl.Resources>
+        <ui:Flyout x:Key="flyoutUser" Placement="TopEdgeAlignedLeft">
+            <StackPanel Orientation="Vertical">
+                <ui:PersonPicture></ui:PersonPicture>
+                <TextBlock>Override here like windows 10 store</TextBlock>
+                <TextBlock>Logout button here too</TextBlock>
+            </StackPanel>
+        </ui:Flyout>
+        <ui:Flyout x:Key="flyout" Placement="TopEdgeAlignedLeft">
+            <ui:PersonPicture></ui:PersonPicture>
+        </ui:Flyout>
+    </UserControl.Resources>
     <Grid Margin="0 -1 0 0">
         <ui:NavigationView x:Name="navigationView"
                            MinHeight="400"
                            SelectionChanged="NavigationView_SelectionChanged"
                            PaneDisplayMode="Auto"
                            BackRequested="navigationView_BackRequested"
-                           IsBackEnabled="False">
+                           IsBackEnabled="False"
+                           PaneTitle="Gonin Digital">
             <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Content="Home" Tag="HomePage" Icon="Home" IsSelected="True"/>
-                <ui:NavigationViewItem Content="My Shop" Tag="MyShopPage" Icon="Manage" />
-                <ui:NavigationViewItem Content="Hot Deal" Tag="HotDealPage" Icon="Tag"/>
-                <ui:NavigationViewItem Content="Cart" Tag="CartPage" Icon="Shop"/>
+                <ui:NavigationViewItem x:Name="homeItem" Content="Home" Tag="HomePage" Icon="Home" IsSelected="True"/>
+                <ui:NavigationViewItem x:Name="myShopItem" Content="My Shop" Tag="MyShopPage" Icon="Manage" />
+                <ui:NavigationViewItem x:Name="hotDealItem" Content="Hot Deal" Tag="HotDealPage" Icon="Tag"/>
+                <ui:NavigationViewItem x:Name="cartItem" Content="Cart" Tag="CartPage" Icon="Shop"/>
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.AutoSuggestBox>
                 <ui:AutoSuggestBox QueryIcon="Find" 
-                                   AutomationProperties.Name="Search"/>
+                                   AutomationProperties.Name="Search"
+                                   />
             </ui:NavigationView.AutoSuggestBox>
             <ui:NavigationView.PaneFooter>
                 <StackPanel Orientation="Vertical">
                     <ui:NavigationViewItem  Icon="Contact" 
-                                        ToolTipService.ToolTip="Account" 
-                                        Tag="AccountPage"/>
-                    <ui:NavigationViewItem  Icon="Message" 
-                                        ToolTipService.ToolTip="Message" 
-                                        Tag="MessagePage"/>
+                                            Content="User"
+                                            ToolTipService.ToolTip="Account" 
+                                            Tag="AccountPage"
+                                            MouseUp="NavigationViewItem_MouseUp"
+                                            ui:FlyoutBase.AttachedFlyout="{StaticResource flyoutUser}">
+                    </ui:NavigationViewItem>
                 </StackPanel>
 
             </ui:NavigationView.PaneFooter>

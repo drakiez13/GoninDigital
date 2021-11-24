@@ -8,13 +8,19 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GoninDigital.Properties;
+using GoninDigital.SharedControl;
 
 namespace GoninDigital.ViewModels
 {
     internal class ForgotPasswordViewModel : EmailNotification, INotifyPropertyChanged
     {
         #region Properties
-
+        private string art;
+        public string Art
+        {
+            get { return art; }
+            set { art = value;}
+        }
         public Action CloseAction { get; set; }
         public ICommand SendCommand { get; set; }
         public ICommand LoginCommand { get; set; }
@@ -38,6 +44,7 @@ namespace GoninDigital.ViewModels
         #region Constructor
         public ForgotPasswordViewModel(Window window)
         {
+            art = "/GoninDigital;component/Resources/Images/ForgotPass.jpg";
             this.window = window;
             SendCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { SendCommandExecute(); });
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginCommandExecute(); });
@@ -49,12 +56,12 @@ namespace GoninDigital.ViewModels
 
         private void LoginCommandExecute()
         {
-            var loginViewModel = new LoginViewModel(window);
-            WindowManager.ChangeWindowContent(window, loginViewModel, Resources.LoginWindowTitle, Resources.LoginControlPath);
-            if (loginViewModel.CloseAction == null)
-            {
-                loginViewModel.CloseAction = () => window.Close();
-            }
+            //var loginViewModel = new LoginViewModel(window);
+            WindowManager.ChangeWindowContent(window, Resources.LoginWindowTitle, Resources.LoginControlPath);
+            //if (loginViewModel.CloseAction == null)
+            //{
+            //    loginViewModel.CloseAction = () => window.Close();
+            //}
         }
 
         private void SendCommandExecute()

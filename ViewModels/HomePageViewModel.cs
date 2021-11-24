@@ -26,7 +26,8 @@ namespace GoninDigital.ViewModels
         }
         public List<Product> RecommendedByEditor3
         {
-            get { return recommendedByEditor.Count()>3 ? recommendedByEditor.GetRange(0, 3) : null; }
+
+            get { return recommendedByEditor.Count > 3 ? recommendedByEditor.GetRange(0, 3) : null; }
             set { recommendedByEditor = value; OnPropertyChanged(); }
         }
 
@@ -44,9 +45,11 @@ namespace GoninDigital.ViewModels
 
         private void Init()
         {
-            GoninDigitalDBContext db = DataProvider.Instance.Db;
-            RecommendedByEditor = db.Products.ToList();
-            RecommendedByEditor3 = recommendedByEditor;
+            using (var db = new GoninDigitalDBContext())
+            {
+                RecommendedByEditor = db.Products.ToList();
+                RecommendedByEditor3 = recommendedByEditor;
+            }
         }
 
 
