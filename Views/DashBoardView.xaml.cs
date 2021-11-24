@@ -10,15 +10,30 @@ using ModernWpf.Controls.Primitives;
 using System.Linq;
 using Frame = System.Windows.Controls.Frame;
 using Page = System.Windows.Controls.Page;
+using GoninDigital.Views.SharedPages;
 
 namespace GoninDigital.Views
 {
-    struct SearchItem
+    class SearchItem
     {
+        public enum ItemType
+        {
+            VENDOR, PRODUCT
+        }
+        public int Id { get; set; }
+
         public string Name { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+        public ItemType Type { get; set; }
+        public override string ToString()
+        {
+            return Name;
+        }
+
     }
+
+    
     public partial class DashBoard : UserControl
     {
         private static Frame rootFrame;
@@ -28,6 +43,7 @@ namespace GoninDigital.Views
         }
 
         Dictionary<string, Page> pages;
+        public string content;
 
         public DashBoard()
         {
@@ -111,15 +127,27 @@ namespace GoninDigital.Views
                 var content = sender.Text;
                 using (var context = new GoninDigitalDBContext())
                 {
-                    var result = context.Products.Where(product => product.Name.Contains(content))
-                        .Select(product => new SearchItem{ Name=product.Name, Description=product.Description, Image=product.Image })
+                    var productResult = context.Products.Where(product => product.Name.Contains(content))
+                        .Select(product => new SearchItem {
+                            Id = product.Id,
+                            Name = product.Name,
+                            Description = product.Description,
+                            Image = product.Image,
+                            Type = SearchItem.ItemType.PRODUCT
+                        })
                         .ToList();
-                    var result2 = context.Vendors.Where(vendor => vendor.Name.Contains(content))
-                        .Select(vendor => new SearchItem { Name = vendor.Name, Description = vendor.Description, Image = vendor.Avatar })
+                    var vendorResult = context.Vendors.Where(vendor => vendor.Name.Contains(content))
+                        .Select(vendor => new SearchItem {
+                            Id=vendor.Id,
+                            Name = vendor.Name,
+                            Description = vendor.Description,
+                            Image = vendor.Avatar,
+                            Type=SearchItem.ItemType.VENDOR
+                        })
                         .ToList();
 
 
-                    var combined = result2.Concat(result);
+                    var combined = vendorResult.Concat(productResult);
                     if (combined.Any())
                         sender.ItemsSource = combined;
                     else
@@ -133,14 +161,25 @@ namespace GoninDigital.Views
         {
             if (args.ChosenSuggestion != null)
             {
-                // User selected an item from the suggestion list, take an action on it here.
-                MessageBox.Show((string)args.ChosenSuggestion);
+                SearchItem searchItem = (SearchItem)args.ChosenSuggestion;
+
+                if (searchItem.Type == SearchItem.ItemType.PRODUCT)
+                {
+                    RootFrame.Navigate(new ProductPage(searchItem.Id));
+                    
+                }
+                else if (searchItem.Type == SearchItem.ItemType.VENDOR)
+                {
+                    // implement navigate to vendor
+                }
+                navigationView.IsPaneOpen = false;
             }
             else
             {
                 // Use args.QueryText to determine what to do.
-                MessageBox.Show((string)args.QueryText);
+                //MessageBox.Show((string)args.QueryText);
             }
+            
         }
     }
 }

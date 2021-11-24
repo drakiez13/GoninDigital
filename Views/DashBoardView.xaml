@@ -34,7 +34,8 @@
                 <ui:NavigationViewItem x:Name="cartItem" Content="Cart" Tag="CartPage" Icon="Shop"/>
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.AutoSuggestBox>
-                <ui:AutoSuggestBox QueryIcon="Find" 
+                <ui:AutoSuggestBox 
+                                   QueryIcon="Find" 
                                    AutomationProperties.Name="Search"
                                    TextChanged="AutoSuggestBox_TextChanged"
                                    QuerySubmitted="AutoSuggestBox_QuerySubmitted"
