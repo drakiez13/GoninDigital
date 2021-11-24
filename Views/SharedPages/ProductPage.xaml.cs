@@ -24,7 +24,8 @@ namespace GoninDigital.Views.SharedPages
         public ProductPage(int productId)
         {
             InitializeComponent();
-            DataContext = new ProductPageViewModel(productId);
+            if (productId != 0)
+                DataContext = new ProductPageViewModel(productId);
         }
     }
 }

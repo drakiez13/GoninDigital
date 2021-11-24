@@ -5,6 +5,7 @@
       xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GoninDigital.Views.SharedPages"
+      DataContext="{StaticResource ProductPageVM}"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="1000"
       d:Background="White"
@@ -185,7 +186,7 @@
                                 Height="30">
                         <Label Content="Vendor" 
                                Width="150"/>
-                        <Label Content="{Binding NameV }"/>
+                        <Label Content="{Binding VendorName }"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
