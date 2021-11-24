@@ -59,16 +59,10 @@ namespace GoninDigital.SharedControl
         public CartItem()
         {
             InitializeComponent();
-            RemoveCartItem = new RelayCommand<object>((p) => { return true; }, (p) => { RemoveCartItemExe(); });
             
         }
 
-        public void RemoveCartItemExe()
-        {
-            GoninDigitalDBContext db = DataProvider.Instance.Db;
-            CartItemGroup cartItemGroup = new CartItemGroup();
-            MessageBox.Show(cartItemGroup.lbCartItemGroup.ToString());
-        }
+        
 
     }
 }

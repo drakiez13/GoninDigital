@@ -32,7 +32,11 @@ namespace GoninDigital.ViewModels
             products = db.Products.ToList();
 
             PurchaseCommand = new RelayCommand<object>((p) => { return true; }, (p) => { DashBoard.RootFrame.Navigate(new CartPage_Purchase()); });
-
+            RemoveCartItem = new RelayCommand<object>((p) => { return true; }, (p) => { RemoveCartItemExe(p) ; });
+        }
+        public void RemoveCartItemExe(object o)
+        {
+            MessageBox.Show(o.ToString());
         }
 
     }

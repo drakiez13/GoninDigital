@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoninDigital.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace GoninDigital.Views.DashBoardPages
         public CartPage()
         {
             InitializeComponent();
+            DataContext = new CartPageViewModel();
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
