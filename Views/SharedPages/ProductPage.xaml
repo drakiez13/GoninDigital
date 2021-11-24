@@ -62,7 +62,7 @@
                            FontSize="20"
                            FontWeight="Bold"/>
                         <Label>
-                            <TextBlock>
+                            <TextBlock Visibility="{Binding IsDisc}">
                             <Run TextDecorations="Strikethrough" Text="{Binding ProductPrice}"></Run>
                             </TextBlock>
                         </Label>
@@ -94,7 +94,8 @@
                         Width="150"
                         Margin="0 30 30 0"
                         Background="{DynamicResource SystemAccentColorDark1Brush}"
-                        HorizontalAlignment="Right"/>
+                        HorizontalAlignment="Right"
+                        Command="{Binding AddtoCartCommand}"/>
 
                 </StackPanel>
             </Grid>
@@ -192,5 +193,4 @@
 
         </Grid>
     </ScrollViewer>
-
 </Page>
