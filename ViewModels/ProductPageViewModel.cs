@@ -85,8 +85,8 @@ namespace GoninDigital.ViewModels
             get => vendorAddress;
             set { vendorAddress = value; OnPropertyChanged(); }
         }
-        private string vendorRating;
-        public string VendorRating
+        private float vendorRating;
+        public float VendorRating
         {
             get => vendorRating;
             set { vendorRating = value; OnPropertyChanged(); }
@@ -133,8 +133,8 @@ namespace GoninDigital.ViewModels
         public ProductPageViewModel()
         {
             product = DataProvider.Instance.Db.Products.Where(x => x.Id == 2).First();
-            ratingValue = product.NRating;
-            ratingCap = (product.NRating*20).ToString();
+            ratingValue = product.Rating;
+            ratingCap = (product.Rating).ToString();
             productImage = product.Image;
             vendorAvatar = DataProvider.Instance.Db.Vendors.Where(x => x.Id == product.VendorId).First().Avatar;
             productName = product.Name;
@@ -150,7 +150,13 @@ namespace GoninDigital.ViewModels
             brandName= DataProvider.Instance.Db.Brands.Where(x=>x.Id==product.BrandId).First().Name;
             double discountPrice=Convert.ToDouble(product.Price)*(1- Convert.ToDouble(product.DiscountRate)/ 100);
             ProductDiscountPrice = discountPrice.ToString();
-            vendorRating = "4.3";
+            var Products_of_Vendor= DataProvider.Instance.Db.Products.Where(x => x.VendorId==product.VendorId).ToList();
+            vendorRating = 0;
+            for(int i=0;i< Products_of_Vendor.Count();i++)
+            {
+                vendorRating += Products_of_Vendor[i].Rating;
+            }
+            vendorRating /= Products_of_Vendor.Count();
             vendorProducts = DataProvider.Instance.Db.Vendors.Where(x => x.Id == product.VendorId).Count();
             byte? @new = product.New;
             productStatus = @new.ToString()+"%";
@@ -159,12 +165,22 @@ namespace GoninDigital.ViewModels
         }
         void AddtoCartExecute()
         {
-            Cart cart = new Cart();
-            cart.UserId = DataProvider.Instance.Db.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
-            cart.ProductId = 1;
-            cart.Quantity = 1;
-            DataProvider.Instance.Db.Carts.Add(cart);
-            DataProvider.Instance.Db.SaveChanges();
+            int userID = DataProvider.Instance.Db.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
+            if (DataProvider.Instance.Db.Carts.Where(x => x.UserId==userID & x.ProductId == 2).Count() == 0)
+            {
+                Cart cart = new Cart();
+                cart.UserId = userID;
+                cart.ProductId = 2;
+                cart.Quantity = 1;
+                DataProvider.Instance.Db.Carts.Add(cart);
+                DataProvider.Instance.Db.SaveChanges();
+            }
+            else
+            {
+                DataProvider.Instance.Db.Carts.Where(x => x.UserId == userID & x.ProductId == 2).First().Quantity += 1;
+                DataProvider.Instance.Db.SaveChanges();
+            }
+            MessageBox.Show("This product has been added to your cart");
         }
     }
 }

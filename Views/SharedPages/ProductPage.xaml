@@ -94,7 +94,8 @@
                         Width="150"
                         Margin="0 30 30 0"
                         Background="{DynamicResource SystemAccentColorDark1Brush}"
-                        HorizontalAlignment="Right"/>
+                        HorizontalAlignment="Right"
+                        Command="{Binding AddtoCartCommand}"/>
 
                 </StackPanel>
             </Grid>
