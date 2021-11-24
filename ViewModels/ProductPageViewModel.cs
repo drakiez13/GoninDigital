@@ -14,19 +14,19 @@ namespace GoninDigital.ViewModels
     class ProductPageViewModel : BaseViewModel
     {
         #region Properties
-        private string isDisc;
+        private string isDisc = "";
         public string IsDisc
         {
             get { return isDisc; }
             set { isDisc = value; OnPropertyChanged(); }
         }
-        private string productImage;
+        private string productImage = "";
         public string ProductImage
         {
             get { return productImage; }
             set { productImage = value; OnPropertyChanged(); }
         }
-        private string vendorAvatar;
+        private string vendorAvatar = "";
         public string VendorAvatar
         {
             get { return vendorAvatar; }
@@ -38,13 +38,13 @@ namespace GoninDigital.ViewModels
             get => productId;
             set { productId = value; OnPropertyChanged(); }
         }
-        private string productType;
+        private string productType = "";
         public string ProductType
         {
             get => productType;
             set { productType = value; OnPropertyChanged(); }
         }
-        private string productName;
+        private string productName = "";
         public string ProductName
         {
             get => productName;
@@ -56,19 +56,19 @@ namespace GoninDigital.ViewModels
             get => ratingValue;
             set { ratingValue = value; OnPropertyChanged(); }
         }
-        private string ratingCap;
+        private string ratingCap = "";
         public string RatingCap
         {
             get => ratingCap;
             set { ratingCap = value; OnPropertyChanged(); }
         }
-        private string productDescription;
+        private string productDescription = "";
         public string ProductDescription
         {
             get => productDescription;
             set { productDescription = value; OnPropertyChanged(); }
         }
-        private string vendorName;
+        private string vendorName = "";
         public string VendorName
         {
             get => vendorName;
@@ -80,7 +80,7 @@ namespace GoninDigital.ViewModels
             get => productPrice;
             set { productPrice = value; OnPropertyChanged(); }
         }
-        private string vendorAddress;
+        private string vendorAddress = "";
         public string VendorAddress
         {
             get => vendorAddress;
@@ -116,7 +116,7 @@ namespace GoninDigital.ViewModels
             get => productAvailable;
             set { productAvailable = value; OnPropertyChanged(); }
         }
-        private string productDiscount;
+        private string productDiscount = "";
         public string ProductDiscount
         {
             get => productDiscount;
@@ -133,14 +133,18 @@ namespace GoninDigital.ViewModels
         public ICommand AddtoCartCommand { get; set; }
         #endregion
         #region Constructor
-        public ProductPageViewModel()
+        public ProductPageViewModel(int id)
         {
-            product = context.Products.Where(x => x.Id == 2).First(); //ID mặc định
+            product = context.Products.Where(x => x.Id == id).First(); //ID mặc định
             loadInfo();
             AddtoCartCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddtoCartExecute(); });
         }
         #endregion
         #region Private Methods
+        public void Init()
+        {
+            
+        }
         void loadInfo()
         {
             ratingValue = product.Rating;
