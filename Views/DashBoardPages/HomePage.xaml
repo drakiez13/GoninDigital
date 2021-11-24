@@ -26,7 +26,7 @@
                 Margin="0 50 0 0"
                 Title="Hot product this Winter"
                 Subtitle="Best price for you"
-                ProductList="{Binding RecommendedByEditor3}"
+                ProductList="{Binding RecommendedByEditor}"
                 GroupBackground="{Binding ArtGroup1}"></uc:ProductCardGroup>
             <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
             <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
