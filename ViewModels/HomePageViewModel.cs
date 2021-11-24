@@ -44,9 +44,11 @@ namespace GoninDigital.ViewModels
 
         private void Init()
         {
-            GoninDigitalDBContext db = DataProvider.Instance.Db;
-            RecommendedByEditor = db.Products.ToList();
-            RecommendedByEditor3 = recommendedByEditor;
+            using (var db = new GoninDigitalDBContext())
+            {
+                RecommendedByEditor = db.Products.ToList();
+                RecommendedByEditor3 = recommendedByEditor;
+            }
         }
 
 
