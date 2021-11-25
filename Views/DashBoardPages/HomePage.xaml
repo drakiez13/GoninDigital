@@ -20,28 +20,39 @@
                 FontSize="22"
                 FontWeight="Bold">Home</Label>
             </Grid>
-            
             <uc:ProductCardGroup2 
-                Title="OK"
-                ProductList="{Binding RecommendedByEditor}"
-                Margin="0 50 0 0"></uc:ProductCardGroup2>
+                Title="Best seller this week"
+                ProductList="{Binding TopProducts}"
+                Margin="0 50 0 0">
+            </uc:ProductCardGroup2>
             <uc:ProductCardGroup 
                 Margin="0 50 0 0"
-                Title="Hot product this Winter"
-                Subtitle="Best price for you"
-                ProductList="{Binding RecommendedByEditor}"
-                GroupBackground="{Binding ArtGroup1}"></uc:ProductCardGroup>
+                Title="{Binding Ads[0].Title}"
+                Subtitle="{Binding Ads[0].Subtitle}"
+                ProductList="{Binding AdProducts[0]}"
+                GroupBackground="{Binding Ads[0].Cover}"></uc:ProductCardGroup>
+            <uc:ProductCardGroup 
+                Margin="0 50 0 0"
+                Title="{Binding Ads[1].Title}"
+                Subtitle="{Binding Ads[1].Subtitle}"
+                ProductList="{Binding AdProducts[1]}"
+                GroupBackground="{Binding Ads[1].Cover}"></uc:ProductCardGroup>
             <uc:ProductCardGroup2
-                
-                Margin="0 50 0 0"></uc:ProductCardGroup2>
-            <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
-            <uc:ProductCardGroup
+                Title="Maybe you like"
+                Margin="0 50 0 0"
+                ProductList="{Binding RecommendedProducts}">
+            </uc:ProductCardGroup2>
+            <uc:ProductCardGroup2
+                Title="New top deals"
+                Margin="0 50 0 0"
+                ProductList="{Binding DiscountProducts}">
+            </uc:ProductCardGroup2>
+            <uc:ProductCardGroup 
                 Margin="0 50 0 100"
-                Title="From Intel with love"
-                Subtitle="The best powerful and reliable processor for your system"
-                ProductList="{Binding RecommendedByEditor}"
-                GroupBackground="{Binding ArtGroup2}">
-            </uc:ProductCardGroup>
+                Title="{Binding Ads[2].Title}"
+                Subtitle="{Binding Ads[2].Subtitle}"
+                ProductList="{Binding AdProducts[2]}"
+                GroupBackground="{Binding Ads[2].Cover}"></uc:ProductCardGroup>
         </StackPanel>
     </ScrollViewer>
 </Page>
