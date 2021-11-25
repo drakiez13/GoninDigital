@@ -5,8 +5,8 @@
       xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GoninDigital.Views.SharedPages"
-      mc:Ignorable="d" 
       DataContext="{StaticResource ProductPageVM}"
+      mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="1000"
       d:Background="White"
       Title="ProductPage">
@@ -62,7 +62,7 @@
                            FontSize="20"
                            FontWeight="Bold"/>
                         <Label>
-                            <TextBlock>
+                            <TextBlock Visibility="{Binding IsDisc}">
                             <Run TextDecorations="Strikethrough" Text="{Binding ProductPrice}"></Run>
                             </TextBlock>
                         </Label>
@@ -94,7 +94,8 @@
                         Width="150"
                         Margin="0 30 30 0"
                         Background="{DynamicResource SystemAccentColorDark1Brush}"
-                        HorizontalAlignment="Right"/>
+                        HorizontalAlignment="Right"
+                        Command="{Binding AddtoCartCommand}"/>
 
                 </StackPanel>
             </Grid>
@@ -185,12 +186,11 @@
                                 Height="30">
                         <Label Content="Vendor" 
                                Width="150"/>
-                        <Label Content="{Binding NameV }"/>
+                        <Label Content="{Binding VendorName }"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
 
         </Grid>
     </ScrollViewer>
-
 </Page>

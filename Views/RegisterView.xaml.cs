@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,6 +39,16 @@ namespace GoninDigital.Views
                 };
                 content.ShowAsync();
                 return;
+            }
+            else if (!Regex.IsMatch(tbEmail.Text, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"))
+            {
+                ContentDialog content = new()
+                {
+                    Title = "Warning",
+                    Content = "Enter a valid email.",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
             }
 
             if (FloatingPasswordBox.Password != FloatingrePasswordBox.Password)
