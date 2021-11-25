@@ -56,12 +56,12 @@ namespace GoninDigital.ViewModels
         #region Private Methods
         private void LoginCommandExecute()
         {
-            var loginViewModel = new LoginViewModel(window);
-            WindowManager.ChangeWindowContent(window, loginViewModel, Resources.LoginWindowTitle, Resources.LoginControlPath);
-            if (loginViewModel.CloseAction == null)
-            {
-                loginViewModel.CloseAction = () => window.Close();
-            }
+            //var loginViewModel = new LoginViewModel(window);
+            WindowManager.ChangeWindowContent(window, Resources.LoginWindowTitle, Resources.LoginControlPath);
+            //if (loginViewModel.CloseAction == null)
+            //{
+            //    loginViewModel.CloseAction = () => window.Close();
+            //}
         }
 
         private void ContinueCommandExecute()

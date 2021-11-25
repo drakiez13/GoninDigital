@@ -15,10 +15,23 @@ using GoninDigital.Properties;
 
 namespace GoninDigital.ViewModels
 {
-    class LoginViewModel : BaseViewModel
+    public class LoginViewModel : BaseViewModel
     {
         #region Properties
         Window curWindow;
+        private bool _isBusy = false;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set => Set(ref _isBusy, value);
+        }
+
+        private bool _isVisbile = true;
+        public bool IsVisible
+        {
+            get => _isVisbile;
+            set => Set(ref _isVisbile, value);
+        }
         private string art;
         public string Art
         {
@@ -68,6 +81,7 @@ namespace GoninDigital.ViewModels
         
         private void LoginCommandExecute()
         {
+            IsBusy = true;
             if (UserName == null || Password == null)
             {
                 var content = new ContentDialog();
@@ -78,8 +92,9 @@ namespace GoninDigital.ViewModels
                 return;
             }
 
+            GoninDigitalDBContext context = new();
             string passEncode = Cryptography.MD5Hash(Cryptography.Base64Encode(Password));
-            var isExist = DataProvider.Instance.Db.Users.FirstOrDefault(x => x.UserName == UserName && x.Password == passEncode);
+            var isExist = context.Users.FirstOrDefault(x => x.UserName == UserName && x.Password == passEncode);
             if (isExist != default)
             {
                 var dashboardWindow = new DashBoard();
@@ -99,12 +114,15 @@ namespace GoninDigital.ViewModels
             }
             else
             {
-                var content = new ContentDialog();
-                content.Title = "Warning";
-                content.Content = "Invalid credentials.";
-                content.PrimaryButtonText = "Ok";
+                var content = new ContentDialog
+                {
+                    Title = "Warning",
+                    Content = "Invalid credentials.",
+                    PrimaryButtonText = "Ok"
+                };
                 content.ShowAsync();
             }
+            IsBusy = false;
         }
         private void RegisterCommandExcute()
         {

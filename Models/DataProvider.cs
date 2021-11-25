@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GoninDigital.Models
 {
+    [Obsolete("Not used any more, use 'using context' instead", false)]
     public class DataProvider
     {
         private static DataProvider instance;
