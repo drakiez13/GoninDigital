@@ -133,9 +133,16 @@ namespace GoninDigital.ViewModels
         public ICommand AddtoCartCommand { get; set; }
         #endregion
         #region Constructor
+        public ProductPageViewModel(int id)
+        {
+            product = context.Products.Where(x => x.Id == id).First(); //ID mặc định
+            loadInfo();
+            AddtoCartCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddtoCartExecute(); });
+        }
+
         public ProductPageViewModel()
         {
-            product = context.Products.Where(x => x.Id == 2).First(); //ID mặc định
+            product = context.Products.Where(x => x.Id == 2).First();
             loadInfo();
             AddtoCartCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddtoCartExecute(); });
         }
@@ -173,7 +180,7 @@ namespace GoninDigital.ViewModels
         void AddtoCartExecute()
         {
             int userID = context.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
-            if (context.Carts.Where(x => x.UserId==userID & x.ProductId == 2).Count() == 0) //Id mặc định
+            if (context.Carts.Where(x => x.UserId == userID & x.ProductId == 2).Count() == 0) //Id mặc định
             {
                 Cart cart = new Cart();
                 cart.UserId = userID;

@@ -34,9 +34,27 @@
                 <ui:NavigationViewItem x:Name="cartItem" Content="Cart" Tag="CartPage" Icon="Shop"/>
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.AutoSuggestBox>
-                <ui:AutoSuggestBox QueryIcon="Find" 
+                <ui:AutoSuggestBox 
+                                   QueryIcon="Find" 
                                    AutomationProperties.Name="Search"
-                                   />
+                                   TextChanged="AutoSuggestBox_TextChanged"
+                                   QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+                                   >
+                    <ui:AutoSuggestBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image
+                                    Source="{Binding Image}"
+                                    Width="64" Height="64" Stretch="UniformToFill"></Image>
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10 0 0 0">
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold"></TextBlock>
+                                    <TextBlock Text="{Binding Description}"></TextBlock>
+                                </StackPanel>
+                                
+                            </StackPanel>
+                        </DataTemplate>
+                    </ui:AutoSuggestBox.ItemTemplate>
+                </ui:AutoSuggestBox>
             </ui:NavigationView.AutoSuggestBox>
             <ui:NavigationView.PaneFooter>
                 <StackPanel Orientation="Vertical">
