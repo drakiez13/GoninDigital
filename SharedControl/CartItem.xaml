@@ -51,7 +51,7 @@
                          Label="Remove"
                          HorizontalAlignment="Center" VerticalAlignment="Center"
                          Command="{Binding RemoveCartItem }"
-                         
+                         CommandParameter="{Binding}"
                          />
     </Grid>
 </UserControl>

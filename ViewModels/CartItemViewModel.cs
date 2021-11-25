@@ -14,10 +14,7 @@ namespace GoninDigital.ViewModels
             
         public CartItemViewModel()
         {
-           /* RemoveCartItem = new RelayCommand<object>((p) => { return true; }, (p) =>
-             {
-                 MessageBox.Show("adsad");
-             });*/
+           
         }
     }
 }

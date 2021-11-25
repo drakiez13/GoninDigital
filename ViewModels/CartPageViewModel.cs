@@ -28,7 +28,7 @@ namespace GoninDigital.ViewModels
         public CartItem SelectedItem { get { return selectedItem; } set { selectedItem = value; OnPropertyChanged(); } }
 
         public ICommand PurchaseCommand { get; set; }
-        /*public ICommand RemoveCartItem { get; set; }*/
+        public ICommand RemoveCartItem { get; set; }
         public CartPageViewModel()
         {
   
@@ -36,7 +36,7 @@ namespace GoninDigital.ViewModels
             products = db.Products.ToList();
 
             PurchaseCommand = new RelayCommand<object>((p) => { return true; }, (p) => { DashBoard.RootFrame.Navigate(new CartPage_Purchase()); });
-           /* RemoveCartItem = new RelayCommand<object>((p) => { return true; }, (p) => { RemoveCartItemExe(p); });*/
+            RemoveCartItem = new RelayCommand<object>((p) => { return true; }, (p) => { RemoveCartItemExe(p); });
         }
         public void RemoveCartItemExe(object o)
         {
