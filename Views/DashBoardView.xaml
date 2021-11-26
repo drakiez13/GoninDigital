@@ -8,6 +8,40 @@
         mc:Ignorable="d"
         Name="dashboard"
         Height="auto"  Width="auto">
+    <UserControl.Resources>
+        <ui:ListView
+            x:Key="ok"
+            Margin="0 12 0 0"
+            IsSelectionEnabled="False"
+            VerticalAlignment="Stretch"
+            ItemClick="ListView_ItemClick"                
+            IsItemClickEnabled="True">
+            <ui:ListViewItem Name="accountInfo">
+                <StackPanel
+                    Orientation="Horizontal"
+                    Margin="2,0,0,0"
+                    >
+                    <ui:SymbolIcon Symbol="Account" />
+                    <TextBlock
+                        Text="Account Info"
+                        Margin="24,0,0,0"
+                        VerticalAlignment="Center"/>
+                </StackPanel>
+            </ui:ListViewItem>
+            <ui:ListViewItem Name="logout">
+                <StackPanel
+                    Orientation="Horizontal"
+                    Margin="2,0,0,0"
+                    >
+                    <ui:SymbolIcon Symbol="Back" />
+                    <TextBlock
+                        Text="Logout"
+                        Margin="24,0,0,0"
+                        VerticalAlignment="Center"/>
+                </StackPanel>
+            </ui:ListViewItem>
+        </ui:ListView>
+    </UserControl.Resources>
     <Grid>
         <ui:NavigationView x:Name="navigationView"
                            Grid.Row="1"
@@ -53,6 +87,7 @@
                                             Content="User"
                                             ToolTipService.ToolTip="Account" 
                                             MouseUp="NavigationViewItem_MouseUp"
+                                            x:Name="userNavItem"
                                             >
                         <ui:FlyoutBase.AttachedFlyout>
                             <ui:Flyout Placement="TopEdgeAlignedLeft" x:Name="flyout"/>

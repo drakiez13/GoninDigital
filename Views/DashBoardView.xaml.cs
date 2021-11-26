@@ -13,6 +13,8 @@ using Page = System.Windows.Controls.Page;
 using GoninDigital.Views.SharedPages;
 using GoninDigital.Properties;
 using System.Windows.Media.Imaging;
+using ListViewItem = ModernWpf.Controls.ListViewItem;
+using GoninDigital.Utils;
 
 namespace GoninDigital.Views
 {
@@ -45,7 +47,11 @@ namespace GoninDigital.Views
 
         Dictionary<string, Page> pages;
         public User currentUser = null;
-        public string test;
+
+        // Flyout currently not support binding data
+        // Use behind code to generate UI instead
+        public StackPanel userFlyoutContent = null;
+        
         public DashBoard()
         {
             InitializeComponent();
@@ -125,27 +131,35 @@ namespace GoninDigital.Views
                 {
                     currentUser = db.Users.FirstOrDefault(o => o.UserName == Settings.Default.usrname);
                 }
+                userFlyoutContent = new StackPanel()
+                {
+                    Orientation = Orientation.Vertical,
+                };
+                var avatar = new PersonPicture()
+                {
+                    DisplayName = currentUser.FirstName + " " + currentUser.LastName,
+                    ProfilePicture = currentUser.Avatar != null ? new BitmapImage(new Uri(currentUser.Avatar, UriKind.Absolute)) : null,
+                    Margin = new Thickness(20, 10, 20, 5),
+                };
+                var name = new Label()
+                {
+                    Content = currentUser.FirstName + " " + currentUser.LastName,
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 18,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                };
+                var username = new Label()
+                {
+                    Content = "@" + currentUser.UserName,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                };
+                userFlyoutContent.Children.Add(avatar);
+                userFlyoutContent.Children.Add(name);
+                userFlyoutContent.Children.Add(username);
+                userFlyoutContent.Children.Add((UIElement)Resources["ok"]);
+                flyout.Content = userFlyoutContent;
             }
-            var content = new StackPanel() { Orientation = Orientation.Vertical };
-            var avatar = new PersonPicture() {
-                DisplayName = currentUser.FirstName + " " + currentUser.LastName,
-                ProfilePicture = currentUser.Avatar != null ? new BitmapImage(new Uri(currentUser.Avatar, UriKind.Absolute)) : null,
-            };
-            var name = new Label() { 
-                Content = currentUser.FirstName + " " + currentUser.LastName,
-                FontWeight = FontWeights.Bold,
-                FontSize = 15,
-                HorizontalAlignment = HorizontalAlignment.Center,
-            };
-            var username = new Label()
-            {
-                Content = "@"+currentUser.UserName,
-                HorizontalAlignment = HorizontalAlignment.Center,
-            };
-            content.Children.Add(avatar);
-            content.Children.Add(name);
-            content.Children.Add(username); 
-            flyout.Content = content;
+            
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
 
@@ -209,6 +223,24 @@ namespace GoninDigital.Views
                 //MessageBox.Show((string)args.QueryText);
             }
             
+        }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var selection = (e.ClickedItem as ListViewItem).Name;
+            if (selection == "accountInfo")
+            {
+                RootFrame.Navigate(new UserPage());
+            }
+            else if (selection == "logout")
+            {
+                // clear
+                Settings.Default.usrname = "";
+                Settings.Default.passwod = "";
+
+                //var loginWindow = new LoginViewModel(Application.Current.MainWindow);
+                WindowManager.ChangeWindowContent(Application.Current.MainWindow, Properties.Resources.LoginWindowTitle, Properties.Resources.LoginControlPath);
+            }
         }
     }
 }
