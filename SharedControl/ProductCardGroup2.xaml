@@ -33,7 +33,7 @@
             <Label>See all</Label>
         </ui:HyperlinkButton>
 
-        <ItemsControl ItemsSource="{Binding ProductList, ElementName=productCardGroup2}"
+        <ItemsControl ItemsSource="{Binding ProductList, Converter={StaticResource ItemsLimiter}, ConverterParameter=5, ElementName=productCardGroup2}"
                           Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                           HorizontalAlignment="Center">
             <ItemsControl.ItemsPanel>

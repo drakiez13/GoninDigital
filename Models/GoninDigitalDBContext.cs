@@ -52,9 +52,11 @@ namespace GoninDigital.Models
             {
                 entity.ToTable("Ad");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Cover)
+                    .IsRequired()
+                    .HasColumnName("cover");
 
                 entity.Property(e => e.Subtitle)
                     .IsRequired()
@@ -93,6 +95,9 @@ namespace GoninDigital.Models
             modelBuilder.Entity<Brand>(entity =>
             {
                 entity.ToTable("Brand");
+
+                entity.HasIndex(e => e.Name, "UN_Brand")
+                    .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -341,13 +346,20 @@ namespace GoninDigital.Models
             {
                 entity.ToTable("ProductSpec");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CategoryId).HasColumnName("category_id");
 
                 entity.Property(e => e.Name)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("name");
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.ProductSpecs)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ProductSpec_ProductCategory");
             });
 
             modelBuilder.Entity<ProductSpecDetail>(entity =>
