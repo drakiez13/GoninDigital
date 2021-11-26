@@ -6,26 +6,17 @@
         xmlns:local="clr-namespace:GoninDigital.Views"
         xmlns:ui="http://schemas.modernwpf.com/2019"
         mc:Ignorable="d"
+        Name="dashboard"
         Height="auto"  Width="auto">
-    <UserControl.Resources>
-        <ui:Flyout x:Key="flyoutUser" Placement="TopEdgeAlignedLeft">
-            <StackPanel Orientation="Vertical">
-                <ui:PersonPicture></ui:PersonPicture>
-                <TextBlock>Override here like windows 10 store</TextBlock>
-                <TextBlock>Logout button here too</TextBlock>
-            </StackPanel>
-        </ui:Flyout>
-        <ui:Flyout x:Key="flyout" Placement="TopEdgeAlignedLeft">
-            <ui:PersonPicture></ui:PersonPicture>
-        </ui:Flyout>
-    </UserControl.Resources>
-    <Grid Margin="0 -1 0 0">
+    <Grid>
         <ui:NavigationView x:Name="navigationView"
+                           Grid.Row="1"
                            MinHeight="400"
                            SelectionChanged="NavigationView_SelectionChanged"
                            PaneDisplayMode="Auto"
                            BackRequested="navigationView_BackRequested"
                            IsBackEnabled="False"
+                           IsTitleBarAutoPaddingEnabled="False"
                            PaneTitle="Gonin Digital">
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem x:Name="homeItem" Content="Home" Tag="HomePage" Icon="Home" IsSelected="True"/>
@@ -50,7 +41,7 @@
                                     <TextBlock Text="{Binding Name}" FontWeight="Bold"></TextBlock>
                                     <TextBlock Text="{Binding Description}"></TextBlock>
                                 </StackPanel>
-                                
+
                             </StackPanel>
                         </DataTemplate>
                     </ui:AutoSuggestBox.ItemTemplate>
@@ -61,9 +52,11 @@
                     <ui:NavigationViewItem  Icon="Contact" 
                                             Content="User"
                                             ToolTipService.ToolTip="Account" 
-                                            Tag="AccountPage"
                                             MouseUp="NavigationViewItem_MouseUp"
-                                            ui:FlyoutBase.AttachedFlyout="{StaticResource flyoutUser}">
+                                            >
+                        <ui:FlyoutBase.AttachedFlyout>
+                            <ui:Flyout Placement="TopEdgeAlignedLeft" x:Name="flyout"/>
+                        </ui:FlyoutBase.AttachedFlyout>
                     </ui:NavigationViewItem>
                 </StackPanel>
 

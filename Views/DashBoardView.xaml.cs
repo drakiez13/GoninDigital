@@ -11,6 +11,8 @@ using System.Linq;
 using Frame = System.Windows.Controls.Frame;
 using Page = System.Windows.Controls.Page;
 using GoninDigital.Views.SharedPages;
+using GoninDigital.Properties;
+using System.Windows.Media.Imaging;
 
 namespace GoninDigital.Views
 {
@@ -30,7 +32,6 @@ namespace GoninDigital.Views
         {
             return Name;
         }
-
     }
 
     
@@ -43,11 +44,12 @@ namespace GoninDigital.Views
         }
 
         Dictionary<string, Page> pages;
-        public string content;
-
+        public User currentUser = null;
+        public string test;
         public DashBoard()
         {
             InitializeComponent();
+            DataContext = this;
             rootFrame = contentFrame;
             pages = new Dictionary<string, Page>();
         }
@@ -117,6 +119,33 @@ namespace GoninDigital.Views
 
         private void NavigationViewItem_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            if (currentUser == null)
+            {
+                using (var db = new GoninDigitalDBContext())
+                {
+                    currentUser = db.Users.FirstOrDefault(o => o.UserName == Settings.Default.usrname);
+                }
+            }
+            var content = new StackPanel() { Orientation = Orientation.Vertical };
+            var avatar = new PersonPicture() {
+                DisplayName = currentUser.FirstName + " " + currentUser.LastName,
+                ProfilePicture = currentUser.Avatar != null ? new BitmapImage(new Uri(currentUser.Avatar, UriKind.Absolute)) : null,
+            };
+            var name = new Label() { 
+                Content = currentUser.FirstName + " " + currentUser.LastName,
+                FontWeight = FontWeights.Bold,
+                FontSize = 15,
+                HorizontalAlignment = HorizontalAlignment.Center,
+            };
+            var username = new Label()
+            {
+                Content = "@"+currentUser.UserName,
+                HorizontalAlignment = HorizontalAlignment.Center,
+            };
+            content.Children.Add(avatar);
+            content.Children.Add(name);
+            content.Children.Add(username); 
+            flyout.Content = content;
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
 
