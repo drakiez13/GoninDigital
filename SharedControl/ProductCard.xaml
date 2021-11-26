@@ -22,8 +22,12 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Border Style="{DynamicResource BorderMouseOver}">
-    <Grid>
+    <Border  Style="{DynamicResource BorderMouseOver}">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.2" Color="Black" />
+        </Border.Effect>
+
+        <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
