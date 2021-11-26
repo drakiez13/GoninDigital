@@ -15,6 +15,7 @@ using GoninDigital.Properties;
 using System.Windows.Media.Imaging;
 using ListViewItem = ModernWpf.Controls.ListViewItem;
 using GoninDigital.Utils;
+using GoninDigital.ViewModels;
 
 namespace GoninDigital.Views
 {
@@ -238,8 +239,8 @@ namespace GoninDigital.Views
                 Settings.Default.usrname = "";
                 Settings.Default.passwod = "";
 
-                //var loginWindow = new LoginViewModel(Application.Current.MainWindow);
-                WindowManager.ChangeWindowContent(Application.Current.MainWindow, Properties.Resources.LoginWindowTitle, Properties.Resources.LoginControlPath);
+                var loginWindow = new LoginViewModel(Application.Current.MainWindow);
+                WindowManager.ChangeWindowContent(Application.Current.MainWindow, loginWindow, Properties.Resources.LoginWindowTitle, Properties.Resources.LoginControlPath);
             }
         }
     }
