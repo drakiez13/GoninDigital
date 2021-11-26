@@ -40,7 +40,7 @@ namespace GoninDigital.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=tcp:gonin-digital.database.windows.net,1433;Initial Catalog=GoninDigitalDB;Persist Security Info=False;User ID=gonin-admin;Password=5nin-digital;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                optionsBuilder.UseSqlServer("Server=tcp:minhdeeptry.ddns.net,1433;Initial Catalog=GoninDigitalDB;Persist Security Info=False;User ID=gonindigital;Password=gonindigital;MultipleActiveResultSets=False;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 
@@ -52,9 +52,11 @@ namespace GoninDigital.Models
             {
                 entity.ToTable("Ad");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Cover)
+                    .IsRequired()
+                    .HasColumnName("cover");
 
                 entity.Property(e => e.Subtitle)
                     .IsRequired()
@@ -93,6 +95,9 @@ namespace GoninDigital.Models
             modelBuilder.Entity<Brand>(entity =>
             {
                 entity.ToTable("Brand");
+
+                entity.HasIndex(e => e.Name, "UN_Brand")
+                    .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -341,13 +346,20 @@ namespace GoninDigital.Models
             {
                 entity.ToTable("ProductSpec");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CategoryId).HasColumnName("category_id");
 
                 entity.Property(e => e.Name)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("name");
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.ProductSpecs)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ProductSpec_ProductCategory");
             });
 
             modelBuilder.Entity<ProductSpecDetail>(entity =>

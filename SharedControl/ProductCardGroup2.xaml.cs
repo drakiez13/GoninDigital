@@ -48,11 +48,11 @@ namespace GoninDigital.SharedControl
         }
 
         private static List<Product> metaProducts = new List<Product> {
-            new Product { Name="Product 1", Price=100000},
-            new Product { Name="Product 2", Price=200000},
-            new Product { Name="Product 3", Price=300000},
-            new Product { Name="Product 4", Price=400000},
-            new Product { Name="Product 5", Price=400000}
+            new Product { Name="Loading...", Price=100000},
+            new Product { Name="Loading...", Price=200000},
+            new Product { Name="Loading...", Price=300000},
+            new Product { Name="Loading...", Price=400000},
+            new Product { Name="Loading...", Price=500000}
         };
 
         public static readonly DependencyProperty TitleProperty =
@@ -62,7 +62,7 @@ namespace GoninDigital.SharedControl
         public static readonly DependencyProperty OnSeeAllClickProperty =
             DependencyProperty.Register("OnSeeAllClick", typeof(object), typeof(ProductCardGroup2), new PropertyMetadata(null));
         public static readonly DependencyProperty ProductListProperty =
-            DependencyProperty.Register("ProductList", typeof(object), typeof(ProductCardGroup2), new PropertyMetadata(metaProducts));
+            DependencyProperty.Register("ProductList", typeof(object), typeof(ProductCardGroup2), new PropertyMetadata(metaProducts), (object o) => { return o != null; });
         public static readonly DependencyProperty GroupBackgroundProperty =
             DependencyProperty.Register("GroupBackground", typeof(object), typeof(ProductCardGroup2), new PropertyMetadata("DarkSeaGreen"));
         public ProductCardGroup2()

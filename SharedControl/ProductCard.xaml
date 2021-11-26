@@ -22,8 +22,12 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Border Style="{DynamicResource BorderMouseOver}">
-    <Grid>
+    <Border  Style="{DynamicResource BorderMouseOver}">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.2" Color="Black" />
+        </Border.Effect>
+
+        <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -61,12 +65,12 @@
                     <ScaleTransform ScaleX="0.7" ScaleY="0.7"></ScaleTransform>
                 </ui:RatingControl.LayoutTransform>
             </ui:RatingControl>
-            <Label VerticalAlignment="Bottom"
+            <TextBlock VerticalAlignment="Bottom"
                    Margin="10,0,0,5" Grid.Row="2"
-                   Content="{Binding Price, ElementName=productCard}" FontSize="14"
+                   Text="{Binding Price, StringFormat=C, ConverterCulture=vi-VN, ElementName=productCard}" FontSize="14"
                    FontWeight="Bold"
                    Foreground="{DynamicResource SystemControlForegroundAccentBrush}"
-            ></Label>
+            ></TextBlock>
 
         </Grid>
     </Grid>

@@ -58,7 +58,7 @@
         </Button>
         </Grid>
 
-        <ItemsControl ItemsSource="{Binding ProductList, ElementName=productCardGroup}"
+        <ItemsControl ItemsSource="{Binding ProductList, Converter={StaticResource ItemsLimiter}, ConverterParameter=3, ElementName=productCardGroup}"
                         Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
                         Margin="20 40 20 40"
                         MaxWidth="1200"

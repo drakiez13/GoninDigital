@@ -18,49 +18,86 @@ namespace GoninDigital.ViewModels
             set { art = value; OnPropertyChanged(); }
         }
 
-        private List<Product> recommendedByEditor;
+        private List<Product> recommendedByEditor = null;
         public List<Product> RecommendedByEditor
         {
             get { return recommendedByEditor; }
             set { recommendedByEditor = value; OnPropertyChanged(); }
         }
-        public List<Product> RecommendedByEditor3
-        {
 
-            get { return recommendedByEditor.Count > 3 ? recommendedByEditor.GetRange(0, 3) : null; }
-            set { recommendedByEditor = value; OnPropertyChanged(); }
+        List<Ad> ads = null;
+        public List<Ad> Ads
+        {
+            get { return ads; }
+            set { ads = value; OnPropertyChanged(); }
         }
 
-        private string artGroup1;
-        public string ArtGroup1
+        private List<List<Product>> adProducts = null;
+        public List<List<Product>> AdProducts
         {
-            get => artGroup1;
+            get { return adProducts; }
+            set { adProducts = value; OnPropertyChanged(); }
         }
 
-        private string artGroup2;
-        public string ArtGroup2
+        private List<Product> topProducts = null;
+        public List<Product> TopProducts
         {
-            get => artGroup2;
+            get { return topProducts; }
+            set { topProducts = value; OnPropertyChanged(); }
         }
 
-        private void Init()
+        private List<Product> recommendedProducts = null;
+        public List<Product> RecommendedProducts
+        {
+            get { return recommendedProducts; }
+            set { recommendedProducts = value; OnPropertyChanged(); }
+        }
+
+        private List<Product> discountProducts = null;
+        public List<Product> DiscountProducts
+        {
+            get { return discountProducts; }
+            set { discountProducts = value; OnPropertyChanged(); }
+        }
+
+        private void InitAds()
         {
             using (var db = new GoninDigitalDBContext())
             {
-                RecommendedByEditor = db.Products.ToList();
-                RecommendedByEditor3 = recommendedByEditor;
+                Ads = db.Ads.OrderBy(o => Guid.NewGuid()).Take(3).ToList();
+                List<List<Product>> _adProducts = new List<List<Product>>(3);
+                for (int i = 0; i < 3; i++)
+                {
+                    _adProducts.Add(db.AdDetails.Where(o => o.AdId == Ads[i].Id).Select(ob => ob.Product).ToList());
+
+                }
+                AdProducts = _adProducts;
             }
         }
 
+        private void InitProducts()
+        {
+            using (var db = new GoninDigitalDBContext())
+            {
+                // Selection algorithm goes here
+                TopProducts = db.Products.OrderBy(o => Guid.NewGuid()).Take(6).ToList();
+
+                RecommendedProducts = db.Products.OrderBy(o => Guid.NewGuid()).Take(6).ToList();
+
+                DiscountProducts = db.Products.OrderBy(o => Guid.NewGuid()).Take(6).ToList();
+            }
+        }
 
         public HomePageViewModel()
         {
             art = "/Resources/Images/HomeBanner.jpg";
-            artGroup1 = "/Resources/Images/HomeProductCardGroupBackground.png";
-            artGroup2 = "/Resources/Images/HomeProductCardGroupBackground2.jpg";
-            recommendedByEditor = new List<Product>();
-            Thread thread = new Thread(Init);
-            thread.Start();
+
+            ads = new List<Ad>(3);
+            adProducts = new List<List<Product>>(3);
+            Thread thread1 = new Thread(InitAds);
+            thread1.Start();
+            Thread thread2 = new Thread(InitProducts);
+            thread2.Start();
         }
     }
 }
