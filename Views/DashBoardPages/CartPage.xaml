@@ -81,7 +81,7 @@
                                             Title="{Binding Path=Name}"
                                             Price="{Binding Path=Price}"
                                             TotalPrice="{Binding Path=Price}"
-                                            
+                                            RemoveCartItem="{Binding RemoveCartItem, RelativeSource={RelativeSource Mode=Self}}"
                                             ></uc:CartItem> 
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
