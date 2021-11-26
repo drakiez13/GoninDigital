@@ -24,8 +24,8 @@ namespace GoninDigital.ViewModels
             Settings.Default.usrname = "";
             Settings.Default.passwod = "";
 
-            //var loginWindow = new LoginViewModel(Application.Current.MainWindow);
-            WindowManager.ChangeWindowContent(Application.Current.MainWindow, Resources.LoginWindowTitle, Resources.LoginControlPath);
+            var loginWindow = new LoginViewModel(Application.Current.MainWindow);
+            WindowManager.ChangeWindowContent(Application.Current.MainWindow, loginWindow, Resources.LoginWindowTitle, Resources.LoginControlPath);
         }
     }
 }
