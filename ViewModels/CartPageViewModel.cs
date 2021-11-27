@@ -3,35 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using GoninDigital.Models;
+using GoninDigital.SharedControl;
 using GoninDigital.Views;
+using ModernWpf.Controls;
 
 namespace GoninDigital.ViewModels
 {
     class CartPageViewModel :BaseViewModel
     {
         
+       
 
-        private List<Product> recommnededByEditor;
-        public List<Product> RecommendedByEditor
+        private List<Product> products;
+        public List<Product> Products
         {
-            get { return recommnededByEditor; }
-            set { recommnededByEditor = value; OnPropertyChanged(); }
+            get { return products; }
+            set { products = value; OnPropertyChanged(); }
         }
-        public List<Product> RecommendedByEditor3
-        {
-            get { return recommnededByEditor.GetRange(0, 3); }
-        }
+
+        private CartItem selectedItem;
+        public CartItem SelectedItem { get { return selectedItem; } set { selectedItem = value; OnPropertyChanged(); } }
+
         public ICommand PurchaseCommand { get; set; }
-
+        public ICommand RemoveCartItem { get; set; }
         public CartPageViewModel()
         {
   
             GoninDigitalDBContext db = DataProvider.Instance.Db;
-            recommnededByEditor = db.Products.ToList();
+            products = db.Products.ToList();
 
             PurchaseCommand = new RelayCommand<object>((p) => { return true; }, (p) => { DashBoard.RootFrame.Navigate(new CartPage_Purchase()); });
+            RemoveCartItem = new RelayCommand<object>((p) => { return true; }, (p) => { RemoveCartItemExe(p); });
         }
+        public void RemoveCartItemExe(object o)
+        {
+            /*MessageBox.Show(o.ToString());*/
+            MessageBox.Show("dasda");
+        }
+
     }
 }

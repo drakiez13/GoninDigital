@@ -7,6 +7,7 @@
       xmlns:uc="clr-namespace:GoninDigital.SharedControl"
       xmlns:ui="http://schemas.modernwpf.com/2019"
       mc:Ignorable="d" 
+      Name="cartPage"
       DataContext="{StaticResource CartPageVM}"
       Background="{DynamicResource AppBackgroundBrush}"
       Title="CartPage">
@@ -61,9 +62,31 @@
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"/>
                 </Grid>
-                    <uc:CartItemGroup
-                        Margin="0 10 0 20"
-                     ProductList="{Binding RecommendedByEditor3}"/>
+                    <Grid>
+                        <ListBox ItemsSource="{Binding Products}"
+                          Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                          HorizontalAlignment="Center"
+                          Name="lbCartItemGroup"
+                          SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"></StackPanel>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <uc:CartItem
+                                            Margin="0 0 0 5"
+                                            Image="{Binding Path=Image}"
+                                            Title="{Binding Path=Name}"
+                                            Price="{Binding Path=Price}"
+                                            TotalPrice="{Binding Path=Price}"
+                                            RemoveCartItem="{Binding RemoveCartItem, RelativeSource={RelativeSource Mode=Self}}"
+                                            ></uc:CartItem> 
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ListBox>
+                    </Grid>
 
 
                 </StackPanel>

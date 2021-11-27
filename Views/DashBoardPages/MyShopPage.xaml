@@ -8,7 +8,7 @@
       xmlns:uc="clr-namespace:GoninDigital.SharedControl"
       mc:Ignorable="d" 
       d:DesignWidth="1000"
-      DataContext="{StaticResource HomePageVM}"
+      DataContext="{StaticResource MyShopPageVM}"
       Background="{DynamicResource AppBackgroundBrush}"
       Title="MyShop">
 
@@ -16,7 +16,7 @@
         <StackPanel Orientation="Vertical" Margin="0 0 0 50 ">
             <Grid VerticalAlignment="Top">
                 <Grid Height="450" VerticalAlignment="Top">
-                    <Image Source=" https://br.atsit.in/vi/wp-content/uploads/2021/05/apple-co-ke-hoach-mo-them-apple-store-vi-covid-anh-huong-den-ban-le-tren-toan-the-gioi.jpg"
+                    <Image Source="{Binding Cover}"
                            Stretch="UniformToFill"></Image>
                     <Label
                                 Margin="20 20 0 20"
@@ -27,20 +27,19 @@
                 <StackPanel Orientation="Vertical" >
                     <ui:PersonPicture 
                             DisplayName="Betsy Sherman"
-                            ProfilePicture="https://c4.wallpaperflare.com/wallpaper/471/516/832/apple-logo-white-background-wallpaper-preview.jpg"
+                            ProfilePicture="{Binding Avatar}"
                             Initials="Shop" 
                             />
                     <Label 
-                            Content="Apple" Foreground="Black"
+                            Content="{Binding NameShop}" Foreground="Black"
                             FontSize="22" FontWeight="Bold"
                             HorizontalAlignment="Center"/>
                 </StackPanel>
                 </Grid>
             </Grid>
-
-            <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
-            <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
-            <uc:ProductCardGroup2 Margin="0 50 0 0"></uc:ProductCardGroup2>
+            
+            <uc:ShopProduct Margin="0 50 0 0" ProductList="{Binding ProductList}"></uc:ShopProduct>
+           
         </StackPanel>
     </ScrollViewer>
 </Page>

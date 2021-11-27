@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GoninDigital.Models;
+using GoninDigital.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +32,7 @@ namespace GoninDigital.SharedControl
             get => (object)GetValue(ImageProperty);
             set => SetValue(ImageProperty, value);
         }
-        
+
 
         public object Price
         {
@@ -42,20 +44,29 @@ namespace GoninDigital.SharedControl
             get => (object)GetValue(TotalPriceProperty);
             set => SetValue(TotalPriceProperty, value);
         }
+        public ICommand RemoveCartItem
+        {
+            get => (ICommand)GetValue(RemoveCartItemProperty);
+            set => SetValue(RemoveCartItemProperty, value);
+        }
 
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register("Title", typeof(object), typeof(CartItem), new PropertyMetadata("Unknown"));
         public static readonly DependencyProperty ImageProperty =
             DependencyProperty.Register("Image", typeof(object), typeof(CartItem),
                 new PropertyMetadata("/Resources/Images/BlankImage.jpg"));
-      
+
         public static readonly DependencyProperty PriceProperty =
             DependencyProperty.Register("Price", typeof(object), typeof(CartItem), new PropertyMetadata(0));
         public static readonly DependencyProperty TotalPriceProperty =
             DependencyProperty.Register("TotalPrice", typeof(object), typeof(CartItem), new PropertyMetadata(0));
+        public static readonly DependencyProperty RemoveCartItemProperty =
+            DependencyProperty.Register("RemoveCartItem", typeof(ICommand), typeof(CartItem), new PropertyMetadata(null));
         public CartItem()
         {
             InitializeComponent();
+            
         }
+
     }
 }
