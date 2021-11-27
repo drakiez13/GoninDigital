@@ -11,6 +11,7 @@ using GoninDigital.Models;
 using GoninDigital.Utils;
 using GoninDigital.Views.DashBoardPages;
 using GoninDigital.Properties;
+using ModernWpf.Controls;
 
 namespace GoninDigital.ViewModels
 {
@@ -51,11 +52,18 @@ namespace GoninDigital.ViewModels
         {
             get { return new List<string>() { "Admin", "Vendor", "Customer" }; }
         }
+        private static string[] userTypes = new string[3] { "Admin", "Vendor", "Customer" };
         private string id;
         public string Id
         {
             get { return id; }
             set { id = value; OnPropertyChanged("Id"); }
+        }
+        private string avatar;
+        public string Avatar
+        {
+            get { return avatar; }
+            set { avatar = value; OnPropertyChanged("Avatar"); }
         }
         private string gender;
         public string Gender
@@ -63,8 +71,8 @@ namespace GoninDigital.ViewModels
             get { return gender; }
             set { gender = value; OnPropertyChanged("Gender"); }
         }
-        private string userType_index;
-        public string UserType_index
+        private int userType_index;
+        public int UserType_index
         {
             get { return userType_index; }
             set { userType_index = value; OnPropertyChanged("UserType_index"); }
@@ -79,7 +87,13 @@ namespace GoninDigital.ViewModels
         public string FirstName
         {
             get { return firstName; }
-            set { firstName = value; OnPropertyChanged("FirstName"); }
+            set { firstName = value; FullName = value + " " + lastName; OnPropertyChanged("FirstName"); }
+        }
+        private string lastName;
+        public string LastName
+        {
+            get { return lastName; }
+            set { lastName = value; FullName = firstName + " " + value; OnPropertyChanged("LastName"); }
         }
         private string fullName;
         public string FullName
@@ -93,12 +107,7 @@ namespace GoninDigital.ViewModels
             get { return userName; }
             set { userName = value; OnPropertyChanged("UserName"); }
         }
-        private string lastName;
-        public string LastName
-        {
-            get { return lastName; }
-            set { lastName = value; OnPropertyChanged("LastName"); }
-        }
+        
         private string phoneNum;
         public string PhoneNum
         {
@@ -127,27 +136,36 @@ namespace GoninDigital.ViewModels
         public ICommand EditPCommand { get; set; }
         public ICommand ResetPCommand { get; set; }
         public ICommand SavePCommand { get; set; }
+        public ICommand CancelPCommand { get; set; }
         #endregion
         #region Constructor
         public UserSettingViewModel()
         {
-            flag = true;
-            flag1 = "Hidden";
-            flag2 = "Visible";
-            flag3 = false;
+            Flag = true;
+            Flag1 = "Hidden";
+            Flag2 = "Visible";
+            Flag3 = false;
             load_page();
             EditPCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { EditPExecute(); });
             ResetPCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ResetPExecute(); });
             SavePCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { SavePExecute(); });
+            CancelPCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { CancelPExecute(); });
         }
         #endregion
         #region Private Methods
         void EditPExecute()
         {
-            flag = false;
-            flag1 = "Visible";
-            flag2 = "Hidden";
-            flag3 = true;
+            Flag = false;
+            Flag1 = "Visible";
+            Flag2 = "Hidden";
+            Flag3 = true;
+        }
+        void CancelPExecute()
+        {
+            Flag = true;
+            Flag1 = "Hidden";
+            Flag2 = "Visible";
+            Flag3 = false;
         }
         void ResetPExecute()
         {
@@ -161,40 +179,58 @@ namespace GoninDigital.ViewModels
             }
             
             Id = user.Id.ToString();
-            userType = user.TypeId.ToString();
-            switch (userType)
+            UserType_index = user.TypeId;
+            switch (UserType_index)
             {
-                case "1":
-                    UserType_index = "0";
+                case 1:
+                    UserType_index = 0;
                     break;
-                case "2":
-                    UserType_index = "1";
+                case 2:
+                    UserType_index = 1;
                     break;
-                case "6":
-                    UserType_index = "2";
+                case 6:
+                    UserType_index = 2;
                     break;
             }
             FirstName = user.FirstName.ToString();
             LastName = user.LastName.ToString();
-            FullName = FirstName + " " + LastName;
             PhoneNum =user.PhoneNumber.ToString();
             Email = user.Email.ToString();
             Gender = user.Gender.ToString();
             DoB =(DateTime) user.DateOfBirth;
             UserName = user.UserName.ToString();
+            UserType = userTypes[UserType_index-1];
+            if(user.Avatar != null)
+                Avatar = user.Avatar.ToString();
+
+
         }
         void SavePExecute()
         {
             if (!CanSave)
             {
-                MessageBox.Show("Please enter full information");
+                ContentDialog content = new()
+                {
+                    Title = "Warning",
+
+                    Content = "Please enter full information",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
             }
             else
             {
                 int t;
                 if (!int.TryParse(PhoneNum, out t) | PhoneNum[0] != '0')
                 {
-                    MessageBox.Show("Invalid phone number");
+                    ContentDialog content = new()
+                    {
+                        Title = "Warning",
+
+                        Content = "Invalid phone number",
+                        PrimaryButtonText = "Ok"
+                    };
+                    content.ShowAsync();
                 }
                 else
                 {
@@ -205,16 +241,30 @@ namespace GoninDigital.ViewModels
                     }
                     if (Email != user.Email.ToString() & isEmail)
                     {
-                        MessageBox.Show("Email already exists");
+                        ContentDialog content = new()
+                        {
+                            Title = "Warning",
+
+                            Content = "Email already exists",
+                            PrimaryButtonText = "Ok"
+                        };
+                        content.ShowAsync();
                     }
                     else
                     {
                         UpdateInfo();
-                        MessageBox.Show("Updated Successfully");
-                        flag = true;
-                        flag1 = "Hidden";
-                        flag2 = "Visible";
-                        flag3 = false;
+                        ContentDialog content = new()
+                        {
+                            Title = "Complete",
+
+                            Content = "Updated Successfully",
+                            PrimaryButtonText = "Ok"
+                        };
+                        content.ShowAsync();
+                        Flag = true;
+                        Flag1 = "Hidden";
+                        Flag2 = "Visible";
+                        Flag3 = false;
                     }
                 }
             }
@@ -232,7 +282,6 @@ namespace GoninDigital.ViewModels
                 t.DateOfBirth = DoB;
                 _ = db.SaveChanges();
             }
-            
             load_page();
         }
         #endregion

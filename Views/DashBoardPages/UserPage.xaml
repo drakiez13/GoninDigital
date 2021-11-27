@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:GoninDigital.Views.DashBoardPages"
       mc:Ignorable="d" 
       xmlns:ui="http://schemas.modernwpf.com/2019"
-      d:DesignHeight="600" d:DesignWidth="1000"
+      d:DesignHeight="600" d:DesignWidth="950"
       d:Background="White"
       Title="UserPage">
 
@@ -34,16 +34,17 @@
                     <RowDefinition Height="200"/>
                 </Grid.RowDefinitions>
                 <StackPanel Background="{StaticResource SystemControlBackgroundChromeMediumBrush}">
-                    <ui:PersonPicture DisplayName="{Binding FullName}"
+                    <ui:PersonPicture DisplayName="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"
                                       VerticalAlignment="Top"
                                       Margin="0 50 0 0"
+                                      ProfilePicture="{Binding Avatar}"
                                       Height="200"/>
-                    <Label Content="{Binding FullName}"
+                    <Label Content="{Binding FullName,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                            FontWeight="Bold"
                            FontSize="18"
                            Margin="0 10 0 0"
                            HorizontalAlignment="Center"/>
-                    <Label Content="{Binding Email}"
+                    <Label Content="{Binding Email, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
                            HorizontalAlignment="Center"/>
                     <Button Content="Edit Avatar"
                             HorizontalAlignment="Center"
@@ -64,27 +65,32 @@
                                    Margin="0 0 20 0"/>
                         </Grid>
                         <Grid Margin="0 20 0 0">
-                            <Label Content="Account"
+                            <Label Content="Account Type"
                                    FontSize="18"
                                    FontWeight="DemiBold"/>
-                            <Label Content="User"
+                            <Label Content="{Binding UserType}"
                                    HorizontalAlignment="Right"
                                    FontSize="18"
                                    Margin="0 0 20 0"/>
                         </Grid>
                     </StackPanel>
-                    
+                    <Button Content="Update Account To Vendor"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Margin="0 0 0 15"/>
                 </Grid>
                 
             </Grid>
             <Grid Grid.Column="1"
-                  Margin="20 0 20 20"
-                  Width="580"
+                  Width="570"
+                  Margin="20 0 0 0"
+                  MaxWidth="600"
                   Height="500"
                   VerticalAlignment="Top"
                   HorizontalAlignment="Left"
                   Background="{StaticResource SystemControlBackgroundChromeMediumBrush}">
-                <StackPanel Margin="20 20 0 0">
+                <StackPanel Margin="0 20 0 0"
+                            HorizontalAlignment="Center">
                     
                     <StackPanel Orientation="Horizontal"
                                 Margin="0 10 0 0">
@@ -144,16 +150,21 @@
                         <ui:AppBarButton x:Name="Btn_Save" Icon="Save" Label="Save"
                                          Command="{Binding SavePCommand}"
                                          Visibility="{Binding Flag1, UpdateSourceTrigger=PropertyChanged}"/>
-                        <ui:AppBarToggleButton Icon="Refresh" Label="Reset" 
-                                               Margin="0 0 20 0"
+                        <ui:AppBarButton Icon="Refresh" Label="Reset" 
                                                Command="{Binding ResetPCommand}"
                                                Visibility="{Binding Flag1, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Button x:Name="Btn_EditPrf"
-                                Content="Edit Profile"  
-                                Margin="50 20 0 0"
-                                Command="{Binding EditPCommand}"
-                                Visibility="{Binding Flag2, UpdateSourceTrigger=PropertyChanged}"/>
+                        <ui:AppBarButton Icon="Cancel" Label="Cancel" 
+                                               Margin="0 0 20 0"
+                                               Command="{Binding CancelPCommand}"
+                                               Visibility="{Binding Flag1, UpdateSourceTrigger=PropertyChanged}"/>
+                        
                     </StackPanel>
+                    <Button x:Name="Btn_EditPrf"
+                            Content="Edit Profile"  
+                            HorizontalAlignment="Center"
+                            Margin="0 20 0 0"
+                            Command="{Binding EditPCommand}"
+                            Visibility="{Binding Flag2, UpdateSourceTrigger=PropertyChanged}"/>
                     
                     <!--<ui:AppBarButton Icon="Edit" Margin="288,-288,0,0" Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}"/>
                 <ui:AppBarButton Icon="Edit" Margin="-122,-101,0,0" Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="False"/>
