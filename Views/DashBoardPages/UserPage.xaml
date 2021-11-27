@@ -6,19 +6,18 @@
       xmlns:local="clr-namespace:GoninDigital.Views.DashBoardPages"
       mc:Ignorable="d" 
       xmlns:ui="http://schemas.modernwpf.com/2019"
-      DataContext="{StaticResource UserSettingVM}"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="1000"
+      d:Background="White"
       Title="UserPage">
 
-    <Grid Margin="-83,0,46,0" RenderTransformOrigin="0.498,0.512">
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="277"/>
-            <ColumnDefinition Width="123"/>
-            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Profile"
-                   Grid.Column="0" FontSize="20" Margin="10,10,177,408"/>
-        <ui:SimpleStackPanel Grid.Column="0" Style="{StaticResource OptionsPanelStyle}" Margin="-12,42,84,-85" Grid.ColumnSpan="2">
+        <TextBlock Text="Profile"/>
+        <ui:SimpleStackPanel Grid.Column="0" Style="{StaticResource OptionsPanelStyle}">
             <TextBox
 
                             ui:ControlHelper.Header="ID"
@@ -34,9 +33,7 @@
                 x:Name="cbGender"
                 ItemsSource="{Binding lGender}"
                 SelectedIndex="{Binding Gender}"
-                 Margin="0,-7,0,0" 
-                 IsHitTestVisible="{Binding flag3,UpdateSourceTrigger=PropertyChanged}"
-                />
+                IsHitTestVisible="{Binding flag3,UpdateSourceTrigger=PropertyChanged}"/>
             <TextBox
                             ui:ControlHelper.Header="First Name"
                             Text="{Binding FirstName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -49,14 +46,14 @@
                             ui:ControlHelper.Header="Phone Number"
                             Text="{Binding PhoneNum, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                             IsReadOnly="{Binding flag,UpdateSourceTrigger=PropertyChanged }"/>
-            <ui:AppBarButton  Grid.Column="1" Icon="Edit" Margin="333,-190,0,0" />
+            <ui:AppBarButton  Grid.Column="1" Icon="Edit"/>
 
         </ui:SimpleStackPanel>
-        <ui:SimpleStackPanel Grid.Column="2" Style="{StaticResource OptionsPanelStyle}" Margin="25,42,9,-57">
+        <ui:SimpleStackPanel Grid.Column="2" Style="{StaticResource OptionsPanelStyle}" >
             <TextBox
                             ui:ControlHelper.Header="Email"
                             Text="{Binding Email, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                            IsReadOnly="{Binding flag,UpdateSourceTrigger=PropertyChanged }" Margin="0,0,68,0"/>
+                            IsReadOnly="{Binding flag,UpdateSourceTrigger=PropertyChanged }"/>
             <TextBlock Text="User Type" FontSize="14"></TextBlock>
             <ComboBox
                 x:Name="cbUserType"
@@ -89,7 +86,6 @@
                              Command="{Binding SavePCommand}"
                              Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}"/>
             <ui:AppBarToggleButton Icon="Refresh" Label="Reset" 
-                                   Margin="183,-185,0,0"
                                    Command="{Binding ResetPCommand}"
                                    Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}"/>
         </ui:SimpleStackPanel>
