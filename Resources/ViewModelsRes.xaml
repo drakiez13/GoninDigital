@@ -5,5 +5,4 @@
     <viewmodel:CartPageViewModel x:Key="CartPageVM"></viewmodel:CartPageViewModel>
     <viewmodel:PurchasePageViewModel x:Key="PurchasePageVM"></viewmodel:PurchasePageViewModel>
     <viewmodel:MyShopViewModel x:Key="MyShopPageVM"></viewmodel:MyShopViewModel>
-    <viewmodel:CartItemViewModel x:Key="CartItemVM"></viewmodel:CartItemViewModel>
 </ResourceDictionary>

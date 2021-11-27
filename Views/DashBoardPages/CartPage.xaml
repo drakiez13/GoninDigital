@@ -66,8 +66,7 @@
                         <ListBox ItemsSource="{Binding Products}"
                           Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                           HorizontalAlignment="Center"
-                          Name="lbCartItemGroup"
-                          SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
+                          Name="lbCartItemGroup">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Vertical"></StackPanel>
@@ -107,7 +106,6 @@
                 <ui:AppBarButton Margin="20"
                          Icon="Shop" 
                          Label="Purchase"
-                         Command="{Binding PurchaseCommand}"
                          />
             </StackPanel>
         </Grid>
