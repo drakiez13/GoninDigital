@@ -15,10 +15,10 @@ using ModernWpf.Controls;
 
 namespace GoninDigital.ViewModels
 {
-    class CartPageViewModel :BaseViewModel
+    class CartPageViewModel : BaseViewModel
     {
-        private List<Product> products;
-        public List<Product> Products
+        private List<Cart> products;
+        public List<Cart> Products
         {
             get { return products; }
             set { products = value; OnPropertyChanged(); }
@@ -30,8 +30,8 @@ namespace GoninDigital.ViewModels
             {
                 Products = db.Carts.Include(x => x.User)
                                 .Include(x => x.Product)
+                                .Include(x => x.Product.Vendor)
                                 .Where(o => o.User.UserName == Settings.Default.usrname)
-                                .Select(o => o.Product)
                                 .ToList();
             }
         }
