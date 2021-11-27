@@ -17,6 +17,15 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <Grid Grid.ZIndex="1"
+              Grid.Column="0"> 
+            <threadedUi:ThreadedVisualHost HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           x:Name="ProgressControlHost"
+                                           Visibility="Visible"
+                                           ChildType="{x:Type threadedUi:ThreadedProgressRing}"
+                                           ChildChanged="ProgressControlHost_ChildChanged"/>
+        </Grid>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="200" />
@@ -24,7 +33,6 @@
                 <RowDefinition Height="70" />
                 <RowDefinition Height="70" />
                 <RowDefinition Height="100" />
-                <RowDefinition Height="auto" />
                 <RowDefinition Height="60" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
@@ -34,7 +42,7 @@
                            Text="GoninDigital"
                            TextAlignment="Center" FontFamily="Segoe Script" FontWeight="Bold" />
             </Grid>
-             
+
             <!--  OneTime binding: Text="{Binding Path=LoginToUse, Mode=OneTime}"  -->
             <!--<TextBlock Grid.Row="1"
                        HorizontalAlignment="Center"
@@ -64,14 +72,8 @@
                     </i:Interaction.Triggers>
                 </PasswordBox>
             </StackPanel>
-            <threadedUi:ThreadedVisualHost Grid.Row="4"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           x:Name="ProgressControlHost"
-                                           Visibility="Visible"
-                                           ChildType="{x:Type threadedUi:ThreadedProgressRing}"
-                                           ChildChanged="ProgressControlHost_ChildChanged"/>
-            <StackPanel Grid.Row="5"
+
+            <StackPanel Grid.Row="4"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
@@ -94,7 +96,7 @@
                         Background="{DynamicResource SystemAccentColorDark1Brush}"/>
 
             </StackPanel>
-            <Grid Grid.Row="6"
+            <Grid Grid.Row="5"
                   Margin="0 0 20 0">
                 <ui:HyperlinkButton x:Name="ForgotPassword"
                                     Content="Forgot Password?"
@@ -102,9 +104,7 @@
                                     FontSize="16"
                                     Command="{Binding ResetCommand}"/>
             </Grid>
-            
         </Grid>
-
         <Grid Grid.Column="1">
             <Grid.Background>
                 <ImageBrush ImageSource="{Binding Art}"></ImageBrush>
