@@ -19,13 +19,6 @@ namespace GoninDigital.ViewModels
             set { art = value; OnPropertyChanged(); }
         }
 
-        private List<Product> recommendedByEditor = null;
-        public List<Product> RecommendedByEditor
-        {
-            get { return recommendedByEditor; }
-            set { recommendedByEditor = value; OnPropertyChanged(); }
-        }
-
         List<Ad> ads = null;
         public List<Ad> Ads
         {
