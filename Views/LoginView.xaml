@@ -70,13 +70,7 @@
                     </i:Interaction.Triggers>
                 </PasswordBox>
             </StackPanel>
-            <threadedUi:ThreadedVisualHost Grid.Row="4"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           x:Name="ProgressControlHost"
-                                           Visibility="Visible"
-                                           ChildType="{x:Type threadedUi:ThreadedProgressRing}"
-                                           ChildChanged="ProgressControlHost_ChildChanged"/>
+
             <StackPanel Grid.Row="5"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
