@@ -20,11 +20,11 @@ namespace GoninDigital.SharedControl
     /// </summary>
     public partial class OrderCard : UserControl
     {
-     /*   public object Image
+        public object Image
         {
             get => (object)GetValue(ImageProperty);
             set => SetValue(ImageProperty, value);
-        }*/
+        }
         public object VendorName
         {
             get => (object)GetValue(VendorNameProperty);
@@ -65,8 +65,9 @@ namespace GoninDigital.SharedControl
             get => (object)GetValue(StatusProperty);
             set => SetValue(StatusProperty, value);
         }
-       /* public static readonly DependencyProperty ImageProperty =
-            DependencyProperty.Register("Image", typeof(object), typeof(CartItem), new PropertyMetadata("Unknown"));*/
+        public static readonly DependencyProperty ImageProperty =
+            DependencyProperty.Register("Image", typeof(object), typeof(OrderCard),
+                new PropertyMetadata("/Resources/Images/BlankImage.jpg"));
         public static readonly DependencyProperty VendorNameProperty =
             DependencyProperty.Register("VendorName", typeof(object), typeof(OrderCard), new PropertyMetadata("Unknown"));
         public static readonly DependencyProperty ProductNameProperty =

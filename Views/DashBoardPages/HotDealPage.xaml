@@ -32,6 +32,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <uc:OrderCard
+                            Image="{Binding Path=Image}"
                             VendorName="{Binding Path=VendorName}"
                             ProductName="{Binding Path=ProductName}"
                             BrandName="{Binding Path=BrandName}"

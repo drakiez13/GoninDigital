@@ -17,17 +17,23 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition/>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 
-                <Image Grid.Row="1" Source="{Binding VendorName, ElementName = orderCard}"
-                           VerticalAlignment="Top"
-                           HorizontalAlignment="Left"/>
+                <Label Grid.Row="0" Content="{Binding VendorName, ElementName = orderCard}"
+                           VerticalAlignment="Center"
+                       Margin="20,0,0,0"/>
+                <Image Grid.Row="1" Source="{Binding Image, ElementName=orderCard}"
+                   Stretch="Fill"
+                   Width="150"
+                   Height="120"
+                   VerticalAlignment="Center"
+                       Margin="-70,-20,0,0"/>
                 <StackPanel Grid.Row="2"
                                 Orientation="Horizontal">
-                    <Label Content="Total Price: "/>
+                    <Label Content="Total Price: " Margin="15,0,0,0"/>
                     <TextBlock Text="{Binding TotalPrice, ElementName=orderCard}" 
                                    Width="150"/>
                 </StackPanel>
@@ -64,10 +70,6 @@
                             <Run TextDecorations="Strikethrough" Text="{Binding PriceOrg,ElementName=orderCard}" FontSize="20"></Run>
                     </TextBlock>
                 </StackPanel>
-            </Grid>
-            <Grid Grid.Row="1"
-                          Margin="0 0 0 10">
-                <TextBlock Text="{Binding VendorName,ElementName=orderCard}"></TextBlock>
             </Grid>
             <StackPanel Grid.Column="2" Margin="0 30 30 0" >
                 <StackPanel Orientation="Horizontal">

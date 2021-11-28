@@ -51,6 +51,7 @@ namespace GoninDigital.ViewModels
                 {
                     Order order = new Order();
                     Product product = db.Products.Where(x => x.Id == invoicedt.ProductId).First();
+                    order.Image = product.Image;
                     order.VendorName = db.Vendors.Where(x => x.Id == product.VendorId).First().Name;
                     order.ProductName = product.Name;
                     order.BrandName = db.Brands.Where(x => x.Id == product.BrandId).First().Name;
