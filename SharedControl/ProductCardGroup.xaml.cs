@@ -60,9 +60,9 @@ namespace GoninDigital.SharedControl
         public static readonly DependencyProperty OnSeeAllClickProperty =
             DependencyProperty.Register("OnSeeAllClick", typeof(object), typeof(ProductCardGroup), new PropertyMetadata(null));
         public static readonly DependencyProperty ProductListProperty =
-            DependencyProperty.Register("ProductList", typeof(object), typeof(ProductCardGroup), new PropertyMetadata(metaProducts), (object o) => { return o != null; });
+            DependencyProperty.Register("ProductList", typeof(object), typeof(ProductCardGroup), new PropertyMetadata(metaProducts), o => o != null);
         public static readonly DependencyProperty GroupBackgroundProperty =
-            DependencyProperty.Register("GroupBackground", typeof(object), typeof(ProductCardGroup), new PropertyMetadata("DarkSeaGreen"));
+            DependencyProperty.Register("GroupBackground", typeof(object), typeof(ProductCardGroup), new PropertyMetadata("/Resources/Images/HomeProductCardGroupBackground.png"), o => o != null);
 
         public ProductCardGroup()
         {

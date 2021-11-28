@@ -1,48 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GoninDigital.Models;
+using GoninDigital.Properties;
 using GoninDigital.SharedControl;
 using GoninDigital.Views;
+using Microsoft.EntityFrameworkCore;
 using ModernWpf.Controls;
 
 namespace GoninDigital.ViewModels
 {
-    class CartPageViewModel :BaseViewModel
+    class CartPageViewModel : BaseViewModel
     {
-        
-       
-
-        private List<Product> products;
-        public List<Product> Products
+        private ObservableCollection<Cart> products;
+        public ObservableCollection<Cart> Products
         {
             get { return products; }
             set { products = value; OnPropertyChanged(); }
         }
 
-        private CartItem selectedItem;
-        public CartItem SelectedItem { get { return selectedItem; } set { selectedItem = value; OnPropertyChanged(); } }
+        private void Init()
+        {
+            using (var db = new GoninDigitalDBContext())
+            {
+                Products = new ObservableCollection<Cart>(db.Carts.Include(x => x.User)
+                                .Include(x => x.Product)
+                                .Include(x => x.Product.Vendor)
+                                .Where(o => o.User.UserName == Settings.Default.usrname)
+                                .ToList());
+            }
+        }
 
-        public ICommand PurchaseCommand { get; set; }
-        public ICommand RemoveCartItem { get; set; }
+        public void OnNavigatedTo()
+        {
+            Thread thread = new Thread(Init);
+            thread.Start();
+        }
+
         public CartPageViewModel()
         {
-  
-            GoninDigitalDBContext db = DataProvider.Instance.Db;
-            products = db.Products.ToList();
 
-            PurchaseCommand = new RelayCommand<object>((p) => { return true; }, (p) => { DashBoard.RootFrame.Navigate(new CartPage_Purchase()); });
-            RemoveCartItem = new RelayCommand<object>((p) => { return true; }, (p) => { RemoveCartItemExe(p); });
         }
-        public void RemoveCartItemExe(object o)
-        {
-            /*MessageBox.Show(o.ToString());*/
-            MessageBox.Show("dasda");
-        }
-
     }
 }
