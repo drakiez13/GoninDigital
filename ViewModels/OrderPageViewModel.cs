@@ -47,19 +47,22 @@ namespace GoninDigital.ViewModels
            foreach(Invoice invoice in L_Invoice)
             {
                 L_Invoice_Detail = db.InvoiceDetails.Where(x => x.InvoiceId == invoice.Id).ToList();
-                foreach(InvoiceDetail invoicedt in L_Invoice_Detail)
+                foreach (InvoiceDetail invoicedt in L_Invoice_Detail)
                 {
+                    Order order = new Order();
                     Product product = db.Products.Where(x => x.Id == invoicedt.ProductId).First();
-                    string Image = product.Image;
-                    string VendorName = db.Vendors.Where(x => x.Id == product.VendorId).First().Name;
-                    string ProductName = product.Name;
-                    string BrandName = db.Brands.Where(x => x.Id == product.BrandId).First().Name;
-                    int Quantity = invoicedt.Quantity;
-                    long PriceOrg = product.Price;
-                    double PriceDisc = Convert.ToDouble(PriceOrg) * (1-Convert.ToDouble(product.DiscountRate) / 100);
-                    long TotalPrice = (long)invoicedt.Cost;
-                    string Status = db.InvoiceStatuses.Where(x => x.Id == invoice.StatusId).First().Name;
-                    L_Order.Add(new Order(VendorName, ProductName, BrandName, Quantity, PriceDisc, PriceOrg, TotalPrice, Status));
+                    order.VendorName = db.Vendors.Where(x => x.Id == product.VendorId).First().Name;
+                    order.ProductName = product.Name;
+                    order.BrandName = db.Brands.Where(x => x.Id == product.BrandId).First().Name;
+                    order.Quantity = invoicedt.Quantity;
+                    if (product.DiscountRate != 0)
+                        order.PriceOrg = product.Price.ToString();
+                    else
+                        order.PriceOrg = "";
+                    order.TotalPrice =(long)invoicedt.Cost;
+                    order.PriceDisc = order.TotalPrice / order.Quantity;
+                    order.Status = db.InvoiceStatuses.Where(x => x.Id == invoice.StatusId).First().Name;
+                    l_Order.Add(order);
                 }
             }
 
