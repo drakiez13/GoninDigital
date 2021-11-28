@@ -39,8 +39,8 @@ namespace GoninDigital.SharedControl
             get { return quantity; }
             set { quantity = value; OnPropertyChanged(); }
         }
-        private long priceDisc;
-        public long PriceDisc
+        private string priceDisc;
+        public string PriceDisc
         {
             get { return priceDisc; }
             set { priceDisc = value; OnPropertyChanged(); }
@@ -51,8 +51,8 @@ namespace GoninDigital.SharedControl
             get { return priceOrg; }
             set { priceOrg = value; OnPropertyChanged(); }
         }
-        private long totalPrice;
-        public long TotalPrice
+        private string totalPrice;
+        public string TotalPrice
         {
             get { return totalPrice; }
             set { totalPrice = value; OnPropertyChanged(); }

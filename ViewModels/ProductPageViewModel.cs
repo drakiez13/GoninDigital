@@ -14,11 +14,11 @@ namespace GoninDigital.ViewModels
     class ProductPageViewModel : BaseViewModel
     {
         #region Properties
-        private int productID;
-        public int ProductID
+        private int productId;
+        public int ProductId
         {
-            get { return productID; }
-            set { productID = value; OnPropertyChanged(); }
+            get => productId;
+            set { productId = value; OnPropertyChanged(); }
         }
         private string isDisc;
         public string IsDisc
@@ -37,12 +37,6 @@ namespace GoninDigital.ViewModels
         {
             get { return vendorAvatar; }
             set { vendorAvatar = value; OnPropertyChanged(); }
-        }
-        private int productId;
-        public int ProductId
-        {
-            get => productId;
-            set { productId = value; OnPropertyChanged(); }
         }
         private string productType;
         public string ProductType
@@ -80,8 +74,8 @@ namespace GoninDigital.ViewModels
             get => vendorName;
             set { vendorName = value; OnPropertyChanged(); }
         }
-        private long productPrice;
-        public long ProductPrice
+        private string productPrice;
+        public string ProductPrice
         {
             get => productPrice;
             set { productPrice = value; OnPropertyChanged(); }
@@ -128,8 +122,8 @@ namespace GoninDigital.ViewModels
             get => productDiscount;
             set { productDiscount = value; OnPropertyChanged(); }
         }
-        private double productDiscountPrice;
-        public double ProductDiscountPrice
+        private string productDiscountPrice;
+        public string ProductDiscountPrice
         {
             get => productDiscountPrice;
             set { productDiscountPrice = value; OnPropertyChanged(); }
@@ -141,8 +135,15 @@ namespace GoninDigital.ViewModels
         #region Constructor
         public ProductPageViewModel(int id)
         {
-            ProductID = id;
-            product = context.Products.Where(x => x.Id == id).First(); 
+            ProductId = id;
+            product = context.Products.Where(x => x.Id == ProductId).First(); //ID mặc định
+            loadInfo();
+            AddtoCartCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddtoCartExecute(); });
+        }
+
+        public ProductPageViewModel()
+        {
+            product = context.Products.Where(x => x.Id == 2).First();
             loadInfo();
             AddtoCartCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddtoCartExecute(); });
         }
@@ -157,7 +158,7 @@ namespace GoninDigital.ViewModels
             productName = product.Name;
             VendorName = context.Vendors.Where(x => x.Id == product.VendorId).First().Name;
             productType = context.ProductCategories.Where(x => x.Id == product.CategoryId).First().Name;
-            ProductPrice = product.Price;
+            ProductPrice = String.Format("{0:0,0 vnđ}", product.Price);
             if (product.DiscountRate == 0)
                 IsDisc = "Hidden";
             else
@@ -165,7 +166,7 @@ namespace GoninDigital.ViewModels
             productDescription = product.Description;
             vendorAddress = context.Vendors.Where(x => x.Id == product.VendorId).First().Address;
             brandName = context.Brands.Where(x => x.Id == product.BrandId).First().Name;
-            ProductDiscountPrice = Convert.ToDouble(product.Price) * (1 - Convert.ToDouble(product.DiscountRate) / 100);
+            ProductDiscountPrice = string.Format("{0:0,0 vnđ}", (Convert.ToDouble(product.Price) * (1 - Convert.ToDouble(product.DiscountRate) / 100)));
             var Products_of_Vendor = context.Products.Where(x => x.VendorId == product.VendorId).ToList();
             vendorRating = 0;
             for (int i = 0; i < Products_of_Vendor.Count(); i++)
@@ -180,18 +181,18 @@ namespace GoninDigital.ViewModels
         void AddtoCartExecute()
         {
             int userID = context.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
-            if (context.Carts.Where(x => x.UserId == userID & x.ProductId == ProductID).Count() == 0) 
+            if (context.Carts.Where(x => x.UserId == userID & x.ProductId == ProductId).Count() == 0) //Id mặc định
             {
                 Cart cart = new Cart();
                 cart.UserId = userID;
-                cart.ProductId = ProductID; 
+                cart.ProductId = ProductId; //Id mặc định
                 cart.Quantity = 1;
                 context.Carts.Add(cart);
                 context.SaveChanges();
             }
             else
             {
-                context.Carts.Where(x => x.UserId == userID & x.ProductId == ProductID).First().Quantity += 1; 
+                context.Carts.Where(x => x.UserId == userID & x.ProductId == ProductId).First().Quantity += 1; //Id mặc định
                 context.SaveChanges();
             }
             MessageBox.Show("This product has been added to your cart");

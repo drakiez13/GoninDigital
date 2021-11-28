@@ -40,9 +40,9 @@ namespace GoninDigital.ViewModels
         public OrderPageViewModel()
         {
             GoninDigitalDBContext db = DataProvider.Instance.Db;
-            //    int userID = db.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
             L_Order = new List<Order>();
-            int userID = 4;
+            //int userID = db.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
+            int userID = 4; //id mặc định do chưa có data
             L_Invoice = db.Invoices.Where(x => x.CustomerId == userID).ToList();
            foreach(Invoice invoice in L_Invoice)
             {
@@ -56,17 +56,16 @@ namespace GoninDigital.ViewModels
                     order.ProductName = product.Name;
                     order.BrandName = db.Brands.Where(x => x.Id == product.BrandId).First().Name;
                     order.Quantity = invoicedt.Quantity;
-                    if (product.DiscountRate != 0)
-                        order.PriceOrg = product.Price.ToString();
-                    else
+                     if (product.DiscountRate != 0)
+                        order.PriceOrg = $"{ (product.Price):0,0 đ}";
+                     else
                         order.PriceOrg = "";
-                    order.TotalPrice =(long)invoicedt.Cost;
-                    order.PriceDisc = order.TotalPrice / order.Quantity;
+                    order.TotalPrice = $"{(invoicedt.Cost):0,0 đ}";
+                    order.PriceDisc = $"{((long)invoicedt.Cost / order.Quantity):0,0 đ}"; 
                     order.Status = db.InvoiceStatuses.Where(x => x.Id == invoice.StatusId).First().Name;
                     l_Order.Add(order);
                 }
             }
-
         }
     }
 }
