@@ -45,7 +45,7 @@ namespace GoninDigital.ViewModels
 
         public CartPageViewModel()
         {
-
+            
         }
     }
 }
