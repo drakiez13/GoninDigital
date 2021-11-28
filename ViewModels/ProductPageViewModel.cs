@@ -18,7 +18,7 @@ namespace GoninDigital.ViewModels
         public int ProductID
         {
             get { return productID; }
-            set { productIDc = value; OnPropertyChanged(); }
+            set { productID = value; OnPropertyChanged(); }
         }
         private string isDisc;
         public string IsDisc
