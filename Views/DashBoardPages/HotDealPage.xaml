@@ -10,80 +10,18 @@
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{StaticResource OrderPageVM}"
       Title="HotDealPage">
-
     <Grid>
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="230"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
-            <Grid Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
-                  Margin="10 30 10 5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="300"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="200"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="Tên cửa hàng" Margin="20,0,0,0"></Label>
-                    <Image Source="{Binding ProductImage}"
-                           VerticalAlignment="Top"
-                           HorizontalAlignment="Left"/>
-                </Grid>
-                <Grid Grid.Column="1"
-                  Margin="0 20 0 40 ">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Margin="0 0 0 20">
-                        <TextBlock Text="Tên sản phẩm"
-                                   TextWrapping="Wrap"
-                                   FontSize="22"
-                                   FontWeight="Bold"/>
-                        <Label Content="Nhãn hiệu"/>
-                    </StackPanel>
-                    <Grid Grid.Row="1"
-                          Margin="0 0 0 10">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Số lượng: "></Label>
-                            <TextBlock Text="0"></TextBlock>
-                        </StackPanel>
-                    </Grid>
-                    <StackPanel Grid.Row="2"
-                                Orientation="Horizontal">
-                        <TextBlock Text="100000" 
-                           FontSize="20"
-                           FontWeight="Bold"
-                                   Width="100"/>
-                        <TextBlock >
-                            <Run TextDecorations="Strikethrough" Text="200000" FontSize="20"></Run>
-                        </TextBlock>
-                    </StackPanel>
-                </Grid>
-                <StackPanel Grid.Column="2">
-                    <Label Content="Tình trạng" Margin="20,0,0,0"></Label>
-                    <Button x:Name="buy"
-                        Content="Buy Again"
-                        Width="150"
-                        Margin="0 30 30 0"
-                        Background="{DynamicResource SystemAccentColorDark1Brush}"
-                        HorizontalAlignment="Right"/>
-                    <Button x:Name="addCart"
-                        Content="Add To Cart"
-                        Width="150"
-                        Margin="0 30 30 0"
-                        Background="{DynamicResource SystemAccentColorDark1Brush}"
-                        HorizontalAlignment="Right"
-                        Command="{Binding AddtoCartCommand}"/>
-                </StackPanel>
-            </Grid>
+        </Grid>
+        <Label Grid.Row="0" Content="Purchase History" FontSize="22"></Label>
+        <Grid Grid.Row="1">
+            <ListBoxItem>
+            </ListBoxItem>
         </Grid>
     </Grid>
 </Page>

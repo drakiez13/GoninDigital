@@ -18,6 +18,7 @@
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
+                    <RowDefinition Height="100"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Vertical">
@@ -25,6 +26,12 @@
                     <Image Source="{Binding Image, ElementName = orderCard}"
                            VerticalAlignment="Top"
                            HorizontalAlignment="Left"/>
+                </StackPanel>
+                <StackPanel Grid.Row="3"
+                                Orientation="Horizontal">
+                    <Label Content="Tổng giá: "/>
+                    <TextBlock Text="{Binding TotalPrice, ElementName=orderCard}" 
+                                   Width="150"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="1"
@@ -51,7 +58,7 @@
                 </Grid>
                 <StackPanel Grid.Row="2"
                                 Orientation="Horizontal">
-                    <TextBlock Text="{Binding PriceDisc,ElementName=orderCard}" 
+                    <TextBlock Text="cc" 
                            FontSize="20"
                            FontWeight="Bold"
                                    Width="100"/>
@@ -60,6 +67,13 @@
                     </TextBlock>
                 </StackPanel>
             </Grid>
+                            <Grid Grid.Row="1"
+                          Margin="0 0 0 10">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Số lượng: "></Label>
+                        <TextBlock Text="{Binding Quantity,ElementName=orderCard}"></TextBlock>
+                    </StackPanel>
+                </Grid>
             <StackPanel Grid.Column="2">
                 <Label Content="{Binding Status,ElementName=orderCard}" Margin="20,0,0,0"></Label>
                 <Button x:Name="buy"

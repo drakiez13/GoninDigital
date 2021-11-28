@@ -55,6 +55,11 @@ namespace GoninDigital.SharedControl
             get => (object)GetValue(PriceOrgProperty);
             set => SetValue(PriceOrgProperty, value);
         }
+        public object TotalPrice
+        {
+            get => (object)GetValue(TotalPriceProperty);
+            set => SetValue(TotalPriceProperty, value);
+        }
         public object Status
         {
             get => (object)GetValue(StatusProperty);
@@ -63,19 +68,21 @@ namespace GoninDigital.SharedControl
         public static readonly DependencyProperty ImageProperty =
             DependencyProperty.Register("Image", typeof(object), typeof(CartItem), new PropertyMetadata("/Resources/Images/BlankImage.jpg"));
         public static readonly DependencyProperty VendorNameProperty =
-            DependencyProperty.Register("VendorName", typeof(object), typeof(OrderCard), new PropertyMetadata(Unknown));
+            DependencyProperty.Register("VendorName", typeof(object), typeof(OrderCard), new PropertyMetadata("Unknown"));
         public static readonly DependencyProperty ProductNameProperty =
-            DependencyProperty.Register("ProductName", typeof(object), typeof(OrderCard), new PropertyMetadata(Unknown));
+            DependencyProperty.Register("ProductName", typeof(object), typeof(OrderCard), new PropertyMetadata("Unknown"));
         public static readonly DependencyProperty BrandNameProperty =
-            DependencyProperty.Register("BrandName", typeof(object), typeof(OrderCard), new PropertyMetadata(Unknown));
+            DependencyProperty.Register("BrandName", typeof(object), typeof(OrderCard), new PropertyMetadata("Unknown"));
         public static readonly DependencyProperty QuantityProperty =
             DependencyProperty.Register("Quantity", typeof(object), typeof(OrderCard), new PropertyMetadata(0));
         public static readonly DependencyProperty PriceDiscProperty =
             DependencyProperty.Register("PriceDisc", typeof(object), typeof(OrderCard), new PropertyMetadata(0));
         public static readonly DependencyProperty PriceOrgProperty =
             DependencyProperty.Register("PriceOrg", typeof(object), typeof(OrderCard), new PropertyMetadata(0));
+        public static readonly DependencyProperty TotalPriceProperty =
+            DependencyProperty.Register("TotalPrice", typeof(object), typeof(OrderCard), new PropertyMetadata(0));
         public static readonly DependencyProperty StatusProperty =
-            DependencyProperty.Register("Status", typeof(object), typeof(OrderCard), new PropertyMetadata(Unknown));
+            DependencyProperty.Register("Status", typeof(object), typeof(OrderCard), new PropertyMetadata("Unknown"));
         public OrderCard()
         {
             InitializeComponent();
