@@ -20,8 +20,31 @@
         </Grid>
         <Label Grid.Row="0" Content="Purchase History" FontSize="22"></Label>
         <Grid Grid.Row="1">
-            <ListBoxItem>
-            </ListBoxItem>
+            <ListBox ItemsSource="{Binding L_Order}"
+                          HorizontalAlignment="Center"
+                          Name="lbOrderCardGroup"
+                          SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <uc:OrderCard
+                            Image="{Binding Path=Image}"
+                            VendorName="{Binding Path=Image}"
+                            ProductName="{Binding Path=ProductName}"
+                            BrandName="{Binding Path=BrandName}"
+                            Quantity="{Binding Path=Quantity}"
+                            PriceDisc="{Binding Path=PriceDisc}"
+                            PriceOrg="{Binding Path=PriceOrg}"
+                            TotalPrice="{Binding Path=TotalPrice}"
+                            Status="{Binding Path=Status}">
+                        </uc:OrderCard>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListBox>
         </Grid>
     </Grid>
 </Page>
