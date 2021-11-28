@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using GoninDigital.Models;
 using GoninDigital.SharedControl;
+using System.Windows.Input;
 using GoninDigital.Properties;
 using GoninDigital.Views;
 using ModernWpf.Controls;
+using System.Windows;
 
 namespace GoninDigital.ViewModels
 {
@@ -37,6 +39,7 @@ namespace GoninDigital.ViewModels
             get { return selectedOrder; }
             set { selectedOrder = value; OnPropertyChanged(); }
         }
+        public ICommand AddtoCart { get; set; }
         public OrderPageViewModel()
         {
             GoninDigitalDBContext db = DataProvider.Instance.Db;
@@ -64,8 +67,29 @@ namespace GoninDigital.ViewModels
                     order.PriceDisc = $"{((long)invoicedt.Cost / order.Quantity):0,0 đ}"; 
                     order.Status = db.InvoiceStatuses.Where(x => x.Id == invoice.StatusId).First().Name;
                     l_Order.Add(order);
+                    AddtoCart = new RelayCommand<object>((p) => { return true; }, (p) => { AddtoCartExec(userID,product.Id); });
                 }
             }
+
+        }
+        void AddtoCartExec(int userID, int productID)
+        {
+            GoninDigitalDBContext db = DataProvider.Instance.Db;
+            if (db.Carts.Where(x => x.UserId == userID & x.ProductId == productID).Count() == 0) 
+            {
+                Cart cart = new Cart();
+                cart.UserId = userID;
+                cart.ProductId = productID; 
+                cart.Quantity = 1;
+                db.Carts.Add(cart);
+                db.SaveChanges();
+            }
+            else
+            {
+                db.Carts.Where(x => x.UserId == userID & x.ProductId == productID).First().Quantity += 1; 
+                db.SaveChanges();
+            }
+            MessageBox.Show("This product has been added to your cart");
         }
     }
 }

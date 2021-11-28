@@ -65,6 +65,11 @@ namespace GoninDigital.SharedControl
             get => (object)GetValue(StatusProperty);
             set => SetValue(StatusProperty, value);
         }
+        public ICommand AddtoCart
+        {
+            get => (ICommand)GetValue(AddtoCartProperty);
+            set => SetValue(AddtoCartProperty, value);
+        }
         public static readonly DependencyProperty ImageProperty =
             DependencyProperty.Register("Image", typeof(object), typeof(OrderCard),
                 new PropertyMetadata("/Resources/Images/BlankImage.jpg"));
@@ -84,6 +89,8 @@ namespace GoninDigital.SharedControl
             DependencyProperty.Register("TotalPrice", typeof(object), typeof(OrderCard), new PropertyMetadata(0));
         public static readonly DependencyProperty StatusProperty =
             DependencyProperty.Register("Status", typeof(object), typeof(OrderCard), new PropertyMetadata("Unknown"));
+        public static readonly DependencyProperty AddtoCartProperty =
+            DependencyProperty.Register("AddtoCart", typeof(ICommand), typeof(OrderCard), new PropertyMetadata(null));
         public OrderCard()
         {
             InitializeComponent();

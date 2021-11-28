@@ -40,7 +40,8 @@
                             PriceDisc="{Binding Path=PriceDisc}"
                             PriceOrg="{Binding Path=PriceOrg}"
                             TotalPrice="{Binding Path=TotalPrice}"
-                            Status="{Binding Path=Status}">
+                            Status="{Binding Path=Status}"
+                            AddtoCart="{Binding AddtoCart, RelativeSource={RelativeSource Mode=Self}}">
                         </uc:OrderCard>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
