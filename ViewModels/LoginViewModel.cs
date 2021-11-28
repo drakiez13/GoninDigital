@@ -12,6 +12,7 @@ using GoninDigital.Utils;
 using GoninDigital.Views;
 using ModernWpf.Controls;
 using GoninDigital.Properties;
+using System.Threading;
 
 namespace GoninDigital.ViewModels
 {
@@ -82,6 +83,7 @@ namespace GoninDigital.ViewModels
         private void LoginCommandExecute()
         {
             IsBusy = true;
+            Thread.Sleep(3000);
             if (UserName == null || Password == null)
             {
                 var content = new ContentDialog();

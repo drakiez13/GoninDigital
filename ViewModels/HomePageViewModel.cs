@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using GoninDigital.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GoninDigital.ViewModels
 {
@@ -16,13 +17,6 @@ namespace GoninDigital.ViewModels
         {
             get { return art; }
             set { art = value; OnPropertyChanged(); }
-        }
-
-        private List<Product> recommendedByEditor = null;
-        public List<Product> RecommendedByEditor
-        {
-            get { return recommendedByEditor; }
-            set { recommendedByEditor = value; OnPropertyChanged(); }
         }
 
         List<Ad> ads = null;
@@ -68,7 +62,10 @@ namespace GoninDigital.ViewModels
                 List<List<Product>> _adProducts = new List<List<Product>>(3);
                 for (int i = 0; i < 3; i++)
                 {
-                    _adProducts.Add(db.AdDetails.Where(o => o.AdId == Ads[i].Id).Select(ob => ob.Product).ToList());
+                    _adProducts.Add(db.AdDetails.Where(o => o.AdId == Ads[i].Id)
+                                                .Include(x => x.Product.Vendor)
+                                                .Select(o => o.Product)
+                                                .ToList());
 
                 }
                 AdProducts = _adProducts;
@@ -80,11 +77,11 @@ namespace GoninDigital.ViewModels
             using (var db = new GoninDigitalDBContext())
             {
                 // Selection algorithm goes here
-                TopProducts = db.Products.OrderBy(o => Guid.NewGuid()).Take(6).ToList();
+                TopProducts = db.Products.Include(x => x.Vendor).OrderBy(o => Guid.NewGuid()).Take(6).ToList();
 
-                RecommendedProducts = db.Products.OrderBy(o => Guid.NewGuid()).Take(6).ToList();
+                RecommendedProducts = db.Products.Include(x => x.Vendor).OrderBy(o => Guid.NewGuid()).Take(6).ToList();
 
-                DiscountProducts = db.Products.OrderBy(o => Guid.NewGuid()).Take(6).ToList();
+                DiscountProducts = db.Products.Include(x => x.Vendor).OrderBy(o => Guid.NewGuid()).Take(6).ToList();
             }
         }
 

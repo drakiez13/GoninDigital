@@ -14,7 +14,17 @@ namespace ModernWpf.Demo.ThreadedUI
 
         public override Visual RootVisual
         {
-            get => _visualTarget?.RootVisual;
+            get
+            {
+                try
+                {
+                    return _visualTarget?.RootVisual;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
             set
             {
                 CheckDisposed();

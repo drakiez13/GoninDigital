@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GoninDigital.Views.DashBoardPages
+namespace GoninDigital.Views
 {
     /// <summary>
-    /// Interaction logic for MessagePage.xaml
+    /// Interaction logic for SplashScreenWindow.xaml
     /// </summary>
-    public partial class MessagePage : Page
+    public partial class SplashScreenWindow : Window
     {
-        public MessagePage()
+        public SplashScreenWindow()
         {
             InitializeComponent();
         }
