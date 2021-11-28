@@ -14,6 +14,12 @@ namespace GoninDigital.ViewModels
     class ProductPageViewModel : BaseViewModel
     {
         #region Properties
+        private int productId;
+        public int ProductId
+        {
+            get => productId;
+            set { productId = value; OnPropertyChanged(); }
+        }
         private string isDisc;
         public string IsDisc
         {
@@ -31,12 +37,6 @@ namespace GoninDigital.ViewModels
         {
             get { return vendorAvatar; }
             set { vendorAvatar = value; OnPropertyChanged(); }
-        }
-        private int productId;
-        public int ProductId
-        {
-            get => productId;
-            set { productId = value; OnPropertyChanged(); }
         }
         private string productType;
         public string ProductType
@@ -135,7 +135,8 @@ namespace GoninDigital.ViewModels
         #region Constructor
         public ProductPageViewModel(int id)
         {
-            product = context.Products.Where(x => x.Id == id).First(); //ID mặc định
+            ProductId = id;
+            product = context.Products.Where(x => x.Id == ProductId).First(); //ID mặc định
             loadInfo();
             AddtoCartCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddtoCartExecute(); });
         }
@@ -180,18 +181,18 @@ namespace GoninDigital.ViewModels
         void AddtoCartExecute()
         {
             int userID = context.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
-            if (context.Carts.Where(x => x.UserId == userID & x.ProductId == 2).Count() == 0) //Id mặc định
+            if (context.Carts.Where(x => x.UserId == userID & x.ProductId == ProductId).Count() == 0) //Id mặc định
             {
                 Cart cart = new Cart();
                 cart.UserId = userID;
-                cart.ProductId = 2; //Id mặc định
+                cart.ProductId = ProductId; //Id mặc định
                 cart.Quantity = 1;
                 context.Carts.Add(cart);
                 context.SaveChanges();
             }
             else
             {
-                context.Carts.Where(x => x.UserId == userID & x.ProductId == 2).First().Quantity += 1; //Id mặc định
+                context.Carts.Where(x => x.UserId == userID & x.ProductId == ProductId).First().Quantity += 1; //Id mặc định
                 context.SaveChanges();
             }
             MessageBox.Show("This product has been added to your cart");
