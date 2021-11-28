@@ -5,15 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoninDigital.Views"
         mc:Ignorable="d"
-        xmlns:threadedUi="clr-namespace:ModernWpf.Demo.ThreadedUI"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
         Title="SplashScreen" Height="450" Width="800">
     <Grid>
-        <threadedUi:ThreadedVisualHost Grid.Row="4"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           x:Name="ProgressControlHost"
-                                           Visibility="Visible"
-                                           ChildType="{x:Type threadedUi:ThreadedProgressRing}"
-                                           ChildChanged="ProgressControlHost_ChildChanged"/>
+        <ui:ProgressRing
+                    IsActive="True"
+                    Height="60"
+                    Width="60" />
     </Grid>
 </Window>
