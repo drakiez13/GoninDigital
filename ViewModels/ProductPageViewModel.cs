@@ -14,6 +14,12 @@ namespace GoninDigital.ViewModels
     class ProductPageViewModel : BaseViewModel
     {
         #region Properties
+        private int productID;
+        public int ProductID
+        {
+            get { return productID; }
+            set { productIDc = value; OnPropertyChanged(); }
+        }
         private string isDisc;
         public string IsDisc
         {
@@ -135,14 +141,8 @@ namespace GoninDigital.ViewModels
         #region Constructor
         public ProductPageViewModel(int id)
         {
-            product = context.Products.Where(x => x.Id == id).First(); //ID mặc định
-            loadInfo();
-            AddtoCartCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddtoCartExecute(); });
-        }
-
-        public ProductPageViewModel()
-        {
-            product = context.Products.Where(x => x.Id == 2).First();
+            ProductID = id;
+            product = context.Products.Where(x => x.Id == id).First(); 
             loadInfo();
             AddtoCartCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddtoCartExecute(); });
         }
@@ -180,18 +180,18 @@ namespace GoninDigital.ViewModels
         void AddtoCartExecute()
         {
             int userID = context.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
-            if (context.Carts.Where(x => x.UserId == userID & x.ProductId == 2).Count() == 0) //Id mặc định
+            if (context.Carts.Where(x => x.UserId == userID & x.ProductId == ProductID).Count() == 0) 
             {
                 Cart cart = new Cart();
                 cart.UserId = userID;
-                cart.ProductId = 2; //Id mặc định
+                cart.ProductId = ProductID; 
                 cart.Quantity = 1;
                 context.Carts.Add(cart);
                 context.SaveChanges();
             }
             else
             {
-                context.Carts.Where(x => x.UserId == userID & x.ProductId == 2).First().Quantity += 1; //Id mặc định
+                context.Carts.Where(x => x.UserId == userID & x.ProductId == ProductID).First().Quantity += 1; 
                 context.SaveChanges();
             }
             MessageBox.Show("This product has been added to your cart");
