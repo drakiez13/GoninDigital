@@ -74,8 +74,8 @@ namespace GoninDigital.ViewModels
             get => vendorName;
             set { vendorName = value; OnPropertyChanged(); }
         }
-        private long productPrice;
-        public long ProductPrice
+        private string productPrice;
+        public string ProductPrice
         {
             get => productPrice;
             set { productPrice = value; OnPropertyChanged(); }
@@ -122,8 +122,8 @@ namespace GoninDigital.ViewModels
             get => productDiscount;
             set { productDiscount = value; OnPropertyChanged(); }
         }
-        private double productDiscountPrice;
-        public double ProductDiscountPrice
+        private string productDiscountPrice;
+        public string ProductDiscountPrice
         {
             get => productDiscountPrice;
             set { productDiscountPrice = value; OnPropertyChanged(); }
@@ -158,7 +158,7 @@ namespace GoninDigital.ViewModels
             productName = product.Name;
             VendorName = context.Vendors.Where(x => x.Id == product.VendorId).First().Name;
             productType = context.ProductCategories.Where(x => x.Id == product.CategoryId).First().Name;
-            ProductPrice = product.Price;
+            ProductPrice = String.Format("{0:0,0 vnđ}", product.Price);
             if (product.DiscountRate == 0)
                 IsDisc = "Hidden";
             else
@@ -166,7 +166,7 @@ namespace GoninDigital.ViewModels
             productDescription = product.Description;
             vendorAddress = context.Vendors.Where(x => x.Id == product.VendorId).First().Address;
             brandName = context.Brands.Where(x => x.Id == product.BrandId).First().Name;
-            ProductDiscountPrice = Convert.ToDouble(product.Price) * (1 - Convert.ToDouble(product.DiscountRate) / 100);
+            ProductDiscountPrice = string.Format("{0:0,0 vnđ}",(Convert.ToDouble(product.Price) * (1 - Convert.ToDouble(product.DiscountRate) / 100)));
             var Products_of_Vendor = context.Products.Where(x => x.VendorId == product.VendorId).ToList();
             vendorRating = 0;
             for (int i = 0; i < Products_of_Vendor.Count(); i++)
