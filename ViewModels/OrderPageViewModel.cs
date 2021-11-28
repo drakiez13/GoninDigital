@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using GoninDigital.Models;
 using GoninDigital.SharedControl;
 using GoninDigital.Properties;
+using GoninDigital.Views;
+using ModernWpf.Controls;
+
 namespace GoninDigital.ViewModels
 {
     class OrderPageViewModel: BaseViewModel
@@ -37,7 +40,9 @@ namespace GoninDigital.ViewModels
         public OrderPageViewModel()
         {
             GoninDigitalDBContext db = DataProvider.Instance.Db;
-            int userID = db.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
+            //    int userID = db.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
+            L_Order = new List<Order>();
+            int userID = 4;
             L_Invoice = db.Invoices.Where(x => x.CustomerId == userID).ToList();
            foreach(Invoice invoice in L_Invoice)
             {
@@ -48,13 +53,13 @@ namespace GoninDigital.ViewModels
                     string Image = product.Image;
                     string VendorName = db.Vendors.Where(x => x.Id == product.VendorId).First().Name;
                     string ProductName = product.Name;
-                    string BrandName = product.Brand.ToString();
+                    string BrandName = db.Brands.Where(x => x.Id == product.BrandId).First().Name;
                     int Quantity = invoicedt.Quantity;
                     long PriceOrg = product.Price;
-                    double PriceDisc = Convert.ToDouble(PriceOrg) * Convert.ToDouble(product.DiscountRate) / 100;
+                    double PriceDisc = Convert.ToDouble(PriceOrg) * (1-Convert.ToDouble(product.DiscountRate) / 100);
                     long TotalPrice = (long)invoicedt.Cost;
                     string Status = db.InvoiceStatuses.Where(x => x.Id == invoice.StatusId).First().Name;
-                    L_Order.Add(new Order(Image, VendorName, ProductName, BrandName, Quantity, PriceDisc, PriceOrg, TotalPrice, Status));
+                    L_Order.Add(new Order(VendorName, ProductName, BrandName, Quantity, PriceDisc, PriceOrg, TotalPrice, Status));
                 }
             }
 

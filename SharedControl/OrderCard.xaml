@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GoninDigital.SharedControl"
              mc:Ignorable="d" 
-             d:DesignHeight="230" d:DesignWidth="800"
+             Width="auto" Height="250"
              Name="orderCard">
-    <Grid>
+    <Grid >
         <Grid Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
                   Margin="10 30 10 5">
             <Grid.ColumnDefinitions>
@@ -18,16 +18,14 @@
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
-                    <RowDefinition Height="100"/>
                     <RowDefinition/>
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Orientation="Vertical">
-                    <Label Content="{Binding VendorName,ElementName=orderCard}" Margin="20,0,0,0"></Label>
-                    <Image Source="{Binding Image, ElementName = orderCard}"
+                
+                <Image Grid.Row="1" Source="{Binding VendorName, ElementName = orderCard}"
                            VerticalAlignment="Top"
                            HorizontalAlignment="Left"/>
-                </StackPanel>
-                <StackPanel Grid.Row="3"
+                <StackPanel Grid.Row="2"
                                 Orientation="Horizontal">
                     <Label Content="Tổng giá: "/>
                     <TextBlock Text="{Binding TotalPrice, ElementName=orderCard}" 
@@ -58,24 +56,24 @@
                 </Grid>
                 <StackPanel Grid.Row="2"
                                 Orientation="Horizontal">
-                    <TextBlock Text="cc" 
+                    <TextBlock Text="{Binding PriceOrg, ElementName=orderCard}" 
                            FontSize="20"
                            FontWeight="Bold"
-                                   Width="100"/>
+                                   Width="250"/>
                     <TextBlock >
-                            <Run TextDecorations="Strikethrough" Text="{Binding PriceOrg,ElementName=orderCard}" FontSize="20"></Run>
+                            <Run TextDecorations="Strikethrough" Text="{Binding PriceDisc,ElementName=orderCard}" FontSize="20"></Run>
                     </TextBlock>
                 </StackPanel>
             </Grid>
-                            <Grid Grid.Row="1"
+            <Grid Grid.Row="1"
                           Margin="0 0 0 10">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Số lượng: "></Label>
-                        <TextBlock Text="{Binding Quantity,ElementName=orderCard}"></TextBlock>
-                    </StackPanel>
-                </Grid>
-            <StackPanel Grid.Column="2">
-                <Label Content="{Binding Status,ElementName=orderCard}" Margin="20,0,0,0"></Label>
+                <TextBlock Text="{Binding VendorName,ElementName=orderCard}"></TextBlock>
+            </Grid>
+            <StackPanel Grid.Column="2" Margin="0 30 30 0" >
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Tình trạng: " Margin="10,0,0,0"></Label>
+                    <Label Content="{Binding Status,ElementName=orderCard}"></Label>
+                </StackPanel>
                 <Button x:Name="buy"
                         Content="Buy Again"
                         Width="150"

@@ -14,14 +14,14 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition/>
+                <RowDefinition Height="400"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
         </Grid>
         <Label Grid.Row="0" Content="Purchase History" FontSize="22"></Label>
-        <Grid Grid.Row="1">
+        <Grid>
             <ListBox ItemsSource="{Binding L_Order}"
-                          HorizontalAlignment="Center"
+                        Grid.Row="1"
                           Name="lbOrderCardGroup"
                           SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
                 <ListBox.ItemsPanel>
@@ -32,8 +32,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <uc:OrderCard
-                            Image="{Binding Path=Image}"
-                            VendorName="{Binding Path=Image}"
+                            VendorName="{Binding Path=VendorName}"
                             ProductName="{Binding Path=ProductName}"
                             BrandName="{Binding Path=BrandName}"
                             Quantity="{Binding Path=Quantity}"

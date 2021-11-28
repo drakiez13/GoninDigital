@@ -63,9 +63,8 @@ namespace GoninDigital.SharedControl
             get { return status; }
             set { status = value; OnPropertyChanged(); }
         }
-        public Order(string Image, string VendorName, string ProductName, string BrandName, int Quantity, double PriceDisc, long PriceOrg, long TotalPrice, string Status)
+        public Order(string VendorName, string ProductName, string BrandName, int Quantity, double PriceDisc, long PriceOrg, long TotalPrice, string Status)
         {
-            this.Image = Image;
             this.VendorName = VendorName;
             this.ProductName = ProductName;
             this.BrandName = BrandName;
