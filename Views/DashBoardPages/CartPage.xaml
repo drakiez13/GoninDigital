@@ -1,24 +1,25 @@
 ﻿<ui:Page x:Class="GoninDigital.Views.DashBoardPages.CartPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:GoninDigital.Views.DashBoardPages"
-      xmlns:uc="clr-namespace:GoninDigital.SharedControl"
-      xmlns:ui="http://schemas.modernwpf.com/2019"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns:local="clr-namespace:GoninDigital.Views.DashBoardPages"
+         xmlns:uc="clr-namespace:GoninDigital.SharedControl"
+         xmlns:ui="http://schemas.modernwpf.com/2019"
          xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
          mc:Ignorable="d"
-      Name="cartPage"
-      DataContext="{StaticResource CartPageVM}"
-      Background="{DynamicResource AppBackgroundBrush}"
-      Title="CartPage">
+         DataContext="{StaticResource CartPageVM}"
+         Background="{DynamicResource AppBackgroundBrush}"
+         Title="CartPage">
     <Page.Resources>
-        <CollectionViewSource x:Key="ContactsCVS">
+
+        <CollectionViewSource x:Key="ProductsCVS"
+                              Source="{Binding Products}">
             <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="LastName"/>
+                <PropertyGroupDescription PropertyName="Product.Vendor.Name" />
             </CollectionViewSource.GroupDescriptions>
             <CollectionViewSource.SortDescriptions>
-                <cm:SortDescription PropertyName="LastName" />
+                <cm:SortDescription PropertyName="Product.Name" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </Page.Resources>
@@ -35,38 +36,53 @@
                            FontWeight="Bold"
                            Margin="20" />
                 </StackPanel>
+                <StackPanel Grid.Row="1">
+
+                </StackPanel>
                 <StackPanel Orientation="Vertical">
-                    <ui:ListView ItemsSource="{Binding Products}"
+                    <ui:ListView ItemsSource="{Binding Source={StaticResource ProductsCVS}}"
                                  Grid.Row="1"
                                  SelectionMode="Multiple"
                                  HorizontalAlignment="Center"
                                  Name="lbCartItemGroup"
-                                 Width="800">
-                        <ui:ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical"></StackPanel>
-                            </ItemsPanelTemplate>
-                        </ui:ListView.ItemsPanel>
+                                 Width="800"
+                                 VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                                 VirtualizingPanel.VirtualizationMode="Recycling">
                         <ui:ListView.GroupStyle>
                             <GroupStyle>
                                 <GroupStyle.HeaderTemplate>
                                     <DataTemplate>
-                                        <Border AutomationProperties.Name="{Binding Product.Vendor.Name, Mode=OneTime}">
-                                            <TextBlock Text="{Binding Product.Vendor.Name, Mode=OneTime}"
-                                                       Style="{DynamicResource TitleTextBlockStyle}" />
+                                        <Border AutomationProperties.Name="{Binding Name, Mode=OneTime}"
+                                                Height="50">
+                                            <StackPanel Orientation="Horizontal">
+                                                <ui:PersonPicture ProfilePicture="{Binding Name, Converter={StaticResource VendorNameToAvatarConverter}}"
+                                                                  DisplayName="{Binding Name}"
+                                                                  Width="40"></ui:PersonPicture>
+                                                <TextBlock Text="{Binding Name, Mode=OneTime}"
+                                                           Margin="10 0 0 0"
+                                                           VerticalAlignment="Center"
+                                                           FontSize="20"
+                                                           FontWeight="Bold" />
+                                            </StackPanel>
                                         </Border>
                                     </DataTemplate>
                                 </GroupStyle.HeaderTemplate>
                             </GroupStyle>
                         </ui:ListView.GroupStyle>
+                        <ui:ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"></StackPanel>
+                            </ItemsPanelTemplate>
+                        </ui:ListView.ItemsPanel>
+
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <DockPanel HorizontalAlignment="Stretch">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="{Binding Product.Image}"
                                                Stretch="UniformToFill"
-                                               Width="120"
-                                               Height="120"
+                                               Width="100"
+                                               Height="100"
                                                VerticalAlignment="Center" />
                                         <TextBlock Text="{Binding Product.Name}"
                                                    TextWrapping="Wrap"
@@ -75,8 +91,9 @@
                                                    VerticalAlignment="Center" />
                                     </StackPanel>
 
-                                    <Label Content="{Binding Product.Price}"
-                                           VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
+                                               VerticalAlignment="Center"
+                                               Width="120" />
 
                                     <ui:NumberBox VerticalAlignment="Center"
                                                   Value="{Binding Quantity}"
@@ -85,11 +102,29 @@
                                                   Width="100"
                                                   SmallChange="1"
                                                   LargeChange="100" />
+                                    <TextBlock Margin="40 0 0 0"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Left"
+                                               Text="Total:" />
+                                    <TextBlock Margin="0"
+                                               Width="200"
+                                               DockPanel.Dock="Right"
+                                               HorizontalAlignment="Right"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Right">
+                                        <TextBlock.Text>
+                                            <MultiBinding
+                                                Converter="{StaticResource TotalPriceConverter}"
+                                                StringFormat="C"
+                                                ConverterCulture="vi-VN"
+                                                >
+                                                <Binding Path="Product.Price"></Binding>
+                                                <Binding Path="Quantity"></Binding>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
 
-                                    <Label Padding="10"
-                                           VerticalAlignment="Center"
-                                           Content="{Binding Product.Price}" />
-                                </StackPanel>
+                                </DockPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ui:ListView>

@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using GoninDigital.ViewModels;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using Page = ModernWpf.Controls.Page;
 
 namespace GoninDigital.Views.DashBoardPages
@@ -15,9 +17,9 @@ namespace GoninDigital.Views.DashBoardPages
             
         }
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-
+            (DataContext as CartPageViewModel).OnNavigatedTo();
         }
     }
 }
