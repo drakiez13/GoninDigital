@@ -12,6 +12,7 @@ using GoninDigital.Utils;
 using GoninDigital.Views;
 using ModernWpf.Controls;
 using GoninDigital.Properties;
+using System.Reflection;
 using System.Threading;
 
 namespace GoninDigital.ViewModels
@@ -20,19 +21,6 @@ namespace GoninDigital.ViewModels
     {
         #region Properties
         Window curWindow;
-        private bool _isBusy = false;
-        public bool IsBusy
-        {
-            get => _isBusy;
-            set => Set(ref _isBusy, value);
-        }
-
-        private bool _isVisbile = true;
-        public bool IsVisible
-        {
-            get => _isVisbile;
-            set => Set(ref _isVisbile, value);
-        }
         private string art;
         public string Art
         {
@@ -83,7 +71,6 @@ namespace GoninDigital.ViewModels
         private void LoginCommandExecute()
         {
             IsBusy = true;
-            Thread.Sleep(3000);
             if (UserName == null || Password == null)
             {
                 var content = new ContentDialog();
@@ -124,7 +111,6 @@ namespace GoninDigital.ViewModels
                 };
                 content.ShowAsync();
             }
-            IsBusy = false;
         }
         private void RegisterCommandExcute()
         {

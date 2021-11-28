@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:ui="http://schemas.modernwpf.com/2019"
-             xmlns:threadedUi="clr-namespace:ModernWpf.Demo.ThreadedUI"
              xmlns:local="clr-namespace:GoninDigital.Views"
              mc:Ignorable="d" 
              Height="600"
@@ -71,8 +70,14 @@
                     </i:Interaction.Triggers>
                 </PasswordBox>
             </StackPanel>
-
-            <StackPanel Grid.Row="4"
+            <threadedUi:ThreadedVisualHost Grid.Row="4"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           x:Name="ProgressControlHost"
+                                           Visibility="Visible"
+                                           ChildType="{x:Type threadedUi:ThreadedProgressRing}"
+                                           ChildChanged="ProgressControlHost_ChildChanged"/>
+            <StackPanel Grid.Row="5"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
