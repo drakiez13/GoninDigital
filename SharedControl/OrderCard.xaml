@@ -13,7 +13,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
@@ -87,6 +87,11 @@
                         Background="{DynamicResource SystemAccentColorDark1Brush}"
                         HorizontalAlignment="Center"
                         Command="{Binding AddtoCart,ElementName=orderCard}"/>
+                <StackPanel Orientation="Horizontal" Margin="20 10 30 0">
+                    <Label Content="Purchase Date: "></Label>
+                    <TextBlock Text="{Binding Date,ElementName=orderCard}"> </TextBlock>
+                </StackPanel>
+                
             </StackPanel>
         </Grid>
     </Grid>

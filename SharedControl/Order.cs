@@ -63,5 +63,11 @@ namespace GoninDigital.SharedControl
             get { return status; }
             set { status = value; OnPropertyChanged(); }
         }
+        private string date;
+        public string Date
+        {
+            get { return date; }
+            set { date = value; OnPropertyChanged(); }
+        }
     }
 }

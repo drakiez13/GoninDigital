@@ -10,6 +10,7 @@ using GoninDigital.Properties;
 using GoninDigital.Views;
 using ModernWpf.Controls;
 using System.Windows;
+using System.Globalization;
 
 namespace GoninDigital.ViewModels
 {
@@ -75,6 +76,8 @@ namespace GoninDigital.ViewModels
                     order.TotalPrice = $"{(invoicedt.Cost):0,0 đ}";
                     order.PriceDisc = $"{((long)invoicedt.Cost / order.Quantity):0,0 đ}";
                     order.Status = db.InvoiceStatuses.Where(x => x.Id == invoice.StatusId).First().Name;
+                    order.Date = invoice.CreatedAt.ToString("dd/M/yyyy", CultureInfo.InvariantCulture); 
+                    MessageBox.Show(order.Date.ToString());
                     l_Order.Add(order);
                     AddtoCart = new RelayCommand<object>((p) => { return true; }, (p) => { AddtoCartExec(userID, product.Id); });
                 }

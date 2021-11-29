@@ -41,6 +41,7 @@
                             PriceOrg="{Binding Path=PriceOrg}"
                             TotalPrice="{Binding Path=TotalPrice}"
                             Status="{Binding Path=Status}"
+                            Date="{Binding Path=Date}"
                             AddtoCart="{Binding AddtoCart, RelativeSource={RelativeSource Mode=Self}}">
                         </uc:OrderCard>
                     </DataTemplate>
