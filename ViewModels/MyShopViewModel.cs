@@ -57,48 +57,6 @@ namespace GoninDigital.ViewModels
             thread.Start();
 
         }
-        private Vendor vendor = null;
 
-        public Vendor Vendor
-        {
-            get { return vendor; }
-            set { vendor = value; OnPropertyChanged(); }
-        }
-
-        private ObservableCollection<Product> products = null;
-        public ObservableCollection<Product> Products
-        {
-            get { return products; }
-            set { products = value; OnPropertyChanged(); }
-        }
-
-        private void InitVendor()
-        {
-            using (var db = new GoninDigitalDBContext())
-            {
-                try
-                {
-                    Vendor = db.Vendors.Include(o => o.Owner)
-                        .Include(o => o.Products)
-                        .Single(o => o.Owner.UserName == Settings.Default.usrname);
-                    /*Products = db.Products.Where(o => o.VendorId == Vendor.Id).ToList();*/
-                    Products = new ObservableCollection<Product>(Vendor.Products.ToList());
-                }
-                catch
-                {
-                    MessageBox.Show("Cannot find out any vendors ");
-                }
-            }
-        }
-        public void OnNavigatedTo()
-        {
-
-        }
-        public MyShopViewModel()
-        {
-            Thread thread = new Thread(InitVendor);
-            thread.Start();
-
-        }
     }
 }
