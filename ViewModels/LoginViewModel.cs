@@ -20,19 +20,14 @@ namespace GoninDigital.ViewModels
     {
         #region Properties
         Window curWindow;
-        private bool _isBusy = false;
-        public bool IsBusy
-        {
-            get => _isBusy;
-            set => Set(ref _isBusy, value);
+
+        private User _isExist;
+        public User isExist 
+        { 
+            get { return _isExist; }
+            set { _isExist = value; OnPropertyChanged(); }
         }
 
-        private bool _isVisbile = true;
-        public bool IsVisible
-        {
-            get => _isVisbile;
-            set => Set(ref _isVisbile, value);
-        }
         private string art;
         public string Art
         {
@@ -71,7 +66,10 @@ namespace GoninDigital.ViewModels
         {
             art = "/GoninDigital;component/Resources/Images/LoginImage.jpg";
             curWindow = window;
-            LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { LoginCommandExecute(); });
+            LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { 
+                
+                LoginCommandExecute(); 
+            });
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
             RegisterCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { RegisterCommandExcute(); });
             ResetCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ResetCommandExcute(); });
@@ -82,8 +80,7 @@ namespace GoninDigital.ViewModels
         
         private void LoginCommandExecute()
         {
-            IsBusy = true;
-            Thread.Sleep(3000);
+
             if (UserName == null || Password == null)
             {
                 var content = new ContentDialog();
@@ -94,37 +91,55 @@ namespace GoninDigital.ViewModels
                 return;
             }
 
-            GoninDigitalDBContext context = new();
-            string passEncode = Cryptography.MD5Hash(Cryptography.Base64Encode(Password));
-            var isExist = context.Users.FirstOrDefault(x => x.UserName == UserName && x.Password == passEncode);
-            if (isExist != default)
-            {
-                var dashboardWindow = new DashBoard();
-                if (isExist.TypeId == 1) //admin
-                {
-                    // Admin not save under resource setting
-                    WindowManager.ChangeWindowContent(curWindow, dashboardWindow, Resources.AdminpageWindowTitle, Resources.AdminpageControlPath);
-                }
-                else //user
-                {
-                    // save user under setting resource
-                    Settings.Default.usrname = UserName.ToString();
-                    Settings.Default.passwod = passEncode;
+            //initialize the splash screen and set it as the application main window
+            WindowManager.ChangeWindowContent(Application.Current.MainWindow, "", "GoninDigital.Views.SplashScreenView");
 
-                    WindowManager.ChangeWindowContent(curWindow, dashboardWindow, Resources.HomepageWindowTitle, Resources.HomepageControlPath);
-                }
-            }
-            else
+            //in order to ensure the UI stays responsive, we need to
+            //do the work on a different thread
+            Task.Factory.StartNew(() =>
             {
-                var content = new ContentDialog
+                //we need to do the work in batches so that we can report progress
+                GoninDigitalDBContext context = new();
+                string passEncode = Cryptography.MD5Hash(Cryptography.Base64Encode(Password));
+                isExist = context.Users.FirstOrDefault(x => x.UserName == UserName && x.Password == passEncode);
+
+                //once we're done we need to use the Dispatcher
+                //to create and show the main window
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Title = "Warning",
-                    Content = "Invalid credentials.",
-                    PrimaryButtonText = "Ok"
-                };
-                content.ShowAsync();
-            }
-            IsBusy = false;
+                    WindowManager.ChangeWindowContent(Application.Current.MainWindow, "", "GoninDigital.Views.LoginView");
+
+                    //initialize the main window, set it as the application main window
+                    //and close the splash screen
+                    if (isExist != default)
+                    {
+                        var dashboardWindow = new DashBoard();
+                        if (isExist.TypeId == 1) //admin
+                        {
+                            // Admin not save under resource setting
+                            WindowManager.ChangeWindowContent(curWindow, dashboardWindow, Resources.AdminpageWindowTitle, Resources.AdminpageControlPath);
+                        }
+                        else //user
+                        {
+                            // save user under setting resource
+                            Settings.Default.usrname = UserName.ToString();
+                            Settings.Default.passwod = passEncode;
+
+                            WindowManager.ChangeWindowContent(curWindow, dashboardWindow, Resources.HomepageWindowTitle, Resources.HomepageControlPath);
+                        }
+                    }
+                    else //login
+                    {
+                        var content = new ContentDialog
+                        {
+                            Title = "Warning",
+                            Content = "Invalid credentials.",
+                            PrimaryButtonText = "Ok"
+                        };
+                        content.ShowAsync();
+                    }
+                });
+            });
         }
         private void RegisterCommandExcute()
         {
