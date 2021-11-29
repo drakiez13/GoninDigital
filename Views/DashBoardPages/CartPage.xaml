@@ -113,15 +113,15 @@
                                                    Margin="10 0 0 0"
                                                    DockPanel.Dock="Right">
                                         <ui:CommandBar.SecondaryCommands>
-                                            <ui:AppBarButton Icon="Remove"
+                                            <ui:AppBarButton Icon="Delete"
                                                              Label="Remove"
                                                              CommandParameter="{Binding}"
                                                              Command="{Binding Source={StaticResource CartPageVM}, Path=RemoveProduct}"></ui:AppBarButton>
-                                            <ui:AppBarButton Icon="Add"
+                                            <ui:AppBarButton Icon="Library"
                                                              Label="Show product"
                                                              CommandParameter="{Binding}"
                                                              Command="{Binding Source={StaticResource CartPageVM}, Path=ShowProduct}"></ui:AppBarButton>
-                                            <ui:AppBarButton Icon="Edit"
+                                            <ui:AppBarButton Icon="Shop"
                                                              Label="Buy this only"></ui:AppBarButton>
                                         </ui:CommandBar.SecondaryCommands>
                                     </ui:CommandBar>
@@ -171,7 +171,7 @@
                 </TextBlock>
                 <ui:AppBarButton Margin="20"
                                  Icon="Shop"
-                                 Label="Purchase" />
+                                 Label="Checkout" />
             </StackPanel>
         </Grid>
     </Grid>
