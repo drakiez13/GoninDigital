@@ -4,4 +4,6 @@
     <converter:ItemsLimiter x:Key="ItemsLimiter"></converter:ItemsLimiter>
     <converter:VendorNameToAvatar x:Key="VendorNameToAvatarConverter"></converter:VendorNameToAvatar>
     <converter:TotalPriceConverter x:Key="TotalPriceConverter"></converter:TotalPriceConverter>
+    <converter:SumProductsPrice x:Key="SumProductsPrice"></converter:SumProductsPrice>
+    <converter:ListCountToVisibility x:Key="ListCountToVisibility"></converter:ListCountToVisibility>
 </ResourceDictionary>

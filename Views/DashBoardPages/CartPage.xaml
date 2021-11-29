@@ -12,7 +12,6 @@
          Background="{DynamicResource AppBackgroundBrush}"
          Title="CartPage">
     <Page.Resources>
-
         <CollectionViewSource x:Key="ProductsCVS"
                               Source="{Binding Products}">
             <CollectionViewSource.GroupDescriptions>
@@ -41,13 +40,14 @@
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <ui:ListView ItemsSource="{Binding Source={StaticResource ProductsCVS}}"
+                                 SelectionChanged="lvCartItemGroup_SelectionChanged"
                                  Grid.Row="1"
                                  SelectionMode="Multiple"
                                  HorizontalAlignment="Center"
-                                 Name="lbCartItemGroup"
+                                 Name="lvCartItemGroup"
                                  Width="800"
-                                 VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                                 VirtualizingPanel.VirtualizationMode="Recycling">
+                                 VirtualizingPanel.IsVirtualizing="True"
+                                 VirtualizingPanel.IsVirtualizingWhenGrouping="True">
                         <ui:ListView.GroupStyle>
                             <GroupStyle>
                                 <GroupStyle.HeaderTemplate>
@@ -78,52 +78,71 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel HorizontalAlignment="Stretch">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Source="{Binding Product.Image}"
-                                               Stretch="UniformToFill"
-                                               Width="100"
-                                               Height="100"
+                                    <Image Source="{Binding Product.Image}"
+                                           Stretch="UniformToFill"
+                                           Width="100"
+                                           Height="100"
+                                           VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Product.Name}"
+                                               TextWrapping="Wrap"
+                                               Width="260"
+                                               Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
-                                        <TextBlock Text="{Binding Product.Name}"
-                                                   TextWrapping="Wrap"
-                                                   Width="250"
-                                                   Margin="10,10,0,10"
-                                                   VerticalAlignment="Center" />
+                                    <StackPanel Orientation="Vertical"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Width="120">
+                                        <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
+                                                   HorizontalAlignment="Center"
+                                                   TextAlignment="Center"
+                                                   Width="100"
+                                                   Margin="0 0 0 8" />
+
+                                        <ui:NumberBox HorizontalAlignment="Center"
+                                                      Value="{Binding Quantity}"
+                                                      ValueChanged="NumberBox_ValueChanged"
+                                                      Minimum="1"
+                                                      SpinButtonPlacementMode="Inline"
+                                                      Width="100"
+                                                      SmallChange="1"
+                                                      LargeChange="100" />
                                     </StackPanel>
-
-                                    <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
-                                               VerticalAlignment="Center"
-                                               Width="120" />
-
-                                    <ui:NumberBox VerticalAlignment="Center"
-                                                  Value="{Binding Quantity}"
-                                                  Minimum="1"
-                                                  SpinButtonPlacementMode="Inline"
-                                                  Width="100"
-                                                  SmallChange="1"
-                                                  LargeChange="100" />
+                                    <ui:CommandBar VerticalAlignment="Center"
+                                                   Background="Transparent"
+                                                   Width="80"
+                                                   Margin="10 0 0 0"
+                                                   DockPanel.Dock="Right">
+                                        <ui:CommandBar.SecondaryCommands>
+                                            <ui:AppBarButton Icon="Delete"
+                                                             Label="Remove"
+                                                             CommandParameter="{Binding}"
+                                                             Command="{Binding Source={StaticResource CartPageVM}, Path=RemoveProduct}"></ui:AppBarButton>
+                                            <ui:AppBarButton Icon="Library"
+                                                             Label="Show product"
+                                                             CommandParameter="{Binding}"
+                                                             Command="{Binding Source={StaticResource CartPageVM}, Path=ShowProduct}"></ui:AppBarButton>
+                                            <ui:AppBarButton Icon="Shop"
+                                                             Label="Buy this only"></ui:AppBarButton>
+                                        </ui:CommandBar.SecondaryCommands>
+                                    </ui:CommandBar>
                                     <TextBlock Margin="40 0 0 0"
+                                               Width="160"
                                                VerticalAlignment="Center"
-                                               TextAlignment="Left"
-                                               Text="Total:" />
-                                    <TextBlock Margin="0"
-                                               Width="200"
+                                               FontWeight="Bold"
+                                               FontSize="16"
                                                DockPanel.Dock="Right"
+                                               TextAlignment="Right"
                                                HorizontalAlignment="Right"
-                                               VerticalAlignment="Center"
-                                               TextAlignment="Right">
+                                               Foreground="{DynamicResource SystemControlHighlightAltListAccentHighBrush}">
                                         <TextBlock.Text>
-                                            <MultiBinding
-                                                Converter="{StaticResource TotalPriceConverter}"
-                                                StringFormat="C"
-                                                ConverterCulture="vi-VN"
-                                                >
+                                            <MultiBinding Converter="{StaticResource TotalPriceConverter}"
+                                                          StringFormat="C"
+                                                          ConverterCulture="vi-VN">
                                                 <Binding Path="Product.Price"></Binding>
                                                 <Binding Path="Quantity"></Binding>
                                             </MultiBinding>
                                         </TextBlock.Text>
                                     </TextBlock>
-
                                 </DockPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -133,22 +152,26 @@
             </StackPanel>
         </ScrollViewer >
         <Grid Grid.Row="1"
-              Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}">
+              Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}"
+              Visibility="{Binding SelectedProducts.Count, Converter={StaticResource ListCountToVisibility}}">
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right">
 
-                <Label Content="Total Price: "
+                <Label Content="Total "
                        Margin="2"
                        VerticalAlignment="Center" />
-                <Label Content="5.000.000"
-                       Margin="2"
-                       FontWeight="Bold"
-                       FontSize="34"
-                       Foreground="{DynamicResource SystemControlForegroundAccentBrush}"
-                       VerticalAlignment="Center" />
+                <TextBlock Margin="2"
+                           FontWeight="Bold"
+                           FontSize="34"
+                           Foreground="{DynamicResource SystemControlForegroundAccentBrush}"
+                           VerticalAlignment="Center"
+                           Text="{Binding SelectedProducts, Converter={StaticResource SumProductsPrice}, 
+                                          StringFormat=C, ConverterCulture=vi-VN}">
+
+                </TextBlock>
                 <ui:AppBarButton Margin="20"
                                  Icon="Shop"
-                                 Label="Purchase" />
+                                 Label="Checkout" />
             </StackPanel>
         </Grid>
     </Grid>
