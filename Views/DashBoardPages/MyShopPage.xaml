@@ -85,6 +85,25 @@
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="All Product">
+                    <StackPanel Margin="20 0">
+                        <ItemsControl ItemsSource="{Binding Products}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <uc:ProductCard Margin="10 10 10 10"
+                                                    Clickable="False"
+                                                    ProductInfo="{Binding}"></uc:ProductCard>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </StackPanel>
+
+                </TabItem>
+                <TabItem Header="Product Manager">
                     <ui:CommandBar>
                         <ui:AppBarButton Icon="Add"
                                          Label="Add" />
@@ -93,7 +112,7 @@
                         <ui:AppBarButton Icon="Remove"
                                          Label="Remove" />
                     </ui:CommandBar>
-                    
+
                 </TabItem>
 
                 <TabItem Header="About">
