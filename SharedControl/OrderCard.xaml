@@ -22,24 +22,24 @@
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 
-                <Label Grid.Row="0" Content="{Binding VendorName, ElementName = orderCard}"
-                           VerticalAlignment="Center"
+                <Label Grid.Row="0" 
+                       Content="{Binding VendorName, ElementName = orderCard}"
+                       VerticalAlignment="Center"
                        Margin="20,0,0,0"/>
-                <Image Grid.Row="1" Source="{Binding Image, ElementName=orderCard}"
-                   Stretch="Fill"
-                   Width="150"
-                   Height="120"
-                   VerticalAlignment="Center"
+                <Image Grid.Row="1" 
+                       Source="{Binding Image, ElementName=orderCard}"
+                       Stretch="Fill"
+                       Width="150"
+                       Height="120"
+                       VerticalAlignment="Center"
                        Margin="-70,-20,0,0"/>
-                <StackPanel Grid.Row="2"
-                                Orientation="Horizontal">
-                    <Label Content="Total Price: " Margin="15,0,0,0"/>
-                    <TextBlock Text="{Binding TotalPrice, ElementName=orderCard}" 
-                                   Width="150"/>
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                     <Label Content="Total Price: " Margin="15,0,0,0"/>
+                     <TextBlock Text="{Binding TotalPrice, ElementName=orderCard}" 
+                                Width="150" FontWeight="Bold"/>
                 </StackPanel>
             </Grid>
-            <Grid Grid.Column="1"
-                  Margin="0 20 0 40 ">
+            <Grid Grid.Column="1" Margin="0 20 0 40 ">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -48,30 +48,28 @@
                 </Grid.RowDefinitions>
                 <StackPanel Margin="0 0 0 20">
                     <TextBlock Text="{Binding ProductName,ElementName=orderCard}"
-                                   TextWrapping="Wrap"
-                                   FontSize="22"
-                                   FontWeight="Bold"/>
+                               TextWrapping="Wrap"
+                               FontSize="22"
+                               FontWeight="Bold"/>
                     <Label Content="{Binding BrandName,ElementName=orderCard}"/>
                 </StackPanel>
-                <Grid Grid.Row="1"
-                          Margin="0 0 0 10">
+                <Grid Grid.Row="1" Margin="0 0 0 10">
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Quantity: "></Label>
                         <TextBlock Text="{Binding Quantity,ElementName=orderCard}"></TextBlock>
                     </StackPanel>
                 </Grid>
-                <StackPanel Grid.Row="2"
-                                Orientation="Horizontal">
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
                     <TextBlock Text="{Binding PriceDisc,ElementName=orderCard}" 
-                           FontSize="20"
-                           FontWeight="Bold"
-                                   Width="250"/>
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Width="250"/>
                     <TextBlock >
                             <Run TextDecorations="Strikethrough" Text="{Binding PriceOrg,ElementName=orderCard}" FontSize="20"></Run>
                     </TextBlock>
                 </StackPanel>
             </Grid>
-            <StackPanel Grid.Column="2" Margin="0 30 30 0" >
+            <StackPanel Grid.Column="2" Margin="0 30 30 0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Status: " Margin="25,0,0,0"></Label>
                     <Label Content="{Binding Status,ElementName=orderCard}"></Label>

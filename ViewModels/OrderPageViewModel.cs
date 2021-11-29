@@ -15,6 +15,7 @@ namespace GoninDigital.ViewModels
 {
     class OrderPageViewModel: BaseViewModel
     {
+        #region Properties
         private List<Order> l_Order;
         public List<Order> L_Order
         {
@@ -40,14 +41,22 @@ namespace GoninDigital.ViewModels
             set { selectedOrder = value; OnPropertyChanged(); }
         }
         public ICommand AddtoCart { get; set; }
+        GoninDigitalDBContext db = DataProvider.Instance.Db;
+        #endregion
+        #region Constructor
         public OrderPageViewModel()
         {
-            GoninDigitalDBContext db = DataProvider.Instance.Db;
             L_Order = new List<Order>();
             //int userID = db.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
             int userID = 4; //id mặc định do chưa có data
+            Load_HistoryPurchase(userID);
+        }
+        #endregion
+        #region Private Methods
+        void Load_HistoryPurchase(int userID)
+        {
             L_Invoice = db.Invoices.Where(x => x.CustomerId == userID).ToList();
-           foreach(Invoice invoice in L_Invoice)
+            foreach (Invoice invoice in L_Invoice)
             {
                 L_Invoice_Detail = db.InvoiceDetails.Where(x => x.InvoiceId == invoice.Id).ToList();
                 foreach (InvoiceDetail invoicedt in L_Invoice_Detail)
@@ -59,18 +68,17 @@ namespace GoninDigital.ViewModels
                     order.ProductName = product.Name;
                     order.BrandName = db.Brands.Where(x => x.Id == product.BrandId).First().Name;
                     order.Quantity = invoicedt.Quantity;
-                     if (product.DiscountRate != 0)
+                    if (product.DiscountRate != 0)
                         order.PriceOrg = $"{ (product.Price):0,0 đ}";
-                     else
+                    else
                         order.PriceOrg = "";
                     order.TotalPrice = $"{(invoicedt.Cost):0,0 đ}";
-                    order.PriceDisc = $"{((long)invoicedt.Cost / order.Quantity):0,0 đ}"; 
+                    order.PriceDisc = $"{((long)invoicedt.Cost / order.Quantity):0,0 đ}";
                     order.Status = db.InvoiceStatuses.Where(x => x.Id == invoice.StatusId).First().Name;
                     l_Order.Add(order);
-                    AddtoCart = new RelayCommand<object>((p) => { return true; }, (p) => { AddtoCartExec(userID,product.Id); });
+                    AddtoCart = new RelayCommand<object>((p) => { return true; }, (p) => { AddtoCartExec(userID, product.Id); });
                 }
             }
-
         }
         void AddtoCartExec(int userID, int productID)
         {
@@ -91,5 +99,6 @@ namespace GoninDigital.ViewModels
             }
             MessageBox.Show("This product has been added to your cart");
         }
+        #endregion
     }
 }
