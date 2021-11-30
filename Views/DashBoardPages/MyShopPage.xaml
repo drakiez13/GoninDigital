@@ -117,7 +117,8 @@
                                                 <ui:CommandBarFlyout.SecondaryCommands>
                                                     <ui:AppBarButton Label="Edit"
                                                                      Icon="Edit" 
-                                                                     Click="{Binding}"/>
+                                                                     CommandParameter="{Binding}"
+                                                                     Command="{Binding Source={StaticResource MyShopPageVM},Path=EditCommand}"/>
                                                     <ui:AppBarButton Label="Remove"
                                                                      Icon="Remove" />
                                                 </ui:CommandBarFlyout.SecondaryCommands>
