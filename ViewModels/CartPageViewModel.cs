@@ -9,9 +9,8 @@ using System.Windows;
 using System.Windows.Input;
 using GoninDigital.Models;
 using GoninDigital.Properties;
-using GoninDigital.SharedControl;
-using GoninDigital.Views;
 using GoninDigital.Views.SharedPages;
+using GoninDigital.Views;
 using Microsoft.EntityFrameworkCore;
 using ModernWpf.Controls;
 
@@ -71,6 +70,8 @@ namespace GoninDigital.ViewModels
                 cart => { Products.Remove(cart); RemoveCartDb(cart); });
             ShowProduct = new RelayCommand<Cart>(o => true, 
                 cart => DashBoard.RootFrame.Navigate(new ProductPage(cart.ProductId)));
+            BuyProduct = new RelayCommand<Cart>(o => true,
+                cart => DashBoard.RootFrame.Navigate(new CheckoutPage()));
         }
     }
 

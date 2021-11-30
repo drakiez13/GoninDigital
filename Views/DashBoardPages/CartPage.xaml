@@ -123,7 +123,9 @@
                                                              CommandParameter="{Binding}"
                                                              Command="{Binding Source={StaticResource CartPageVM}, Path=ShowProduct}"></ui:AppBarButton>
                                             <ui:AppBarButton Icon="Shop"
-                                                             Label="Buy this only"></ui:AppBarButton>
+                                                             Label="Buy this only"
+                                                             CommandParameter="{Binding}"
+                                                             Command="{Binding Source={StaticResource CartPageVM}, Path=BuyProduct}"></ui:AppBarButton>
                                         </ui:CommandBar.SecondaryCommands>
                                     </ui:CommandBar>
                                     <TextBlock Margin="40 0 0 0"

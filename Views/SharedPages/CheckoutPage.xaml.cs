@@ -19,9 +19,9 @@ namespace GoninDigital.Views.SharedPages
     /// <summary>
     /// Interaction logic for CartPage_Purchase.xaml
     /// </summary>
-    public partial class CartPage_Purchase : Page
+    public partial class CheckoutPage : Page
     {
-        public CartPage_Purchase()
+        public CheckoutPage()
         {
             InitializeComponent();
         }
