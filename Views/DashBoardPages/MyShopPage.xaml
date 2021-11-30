@@ -71,7 +71,7 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <uc:ProductCard Margin="10 10 10 10"
-                                                        Clickable="False"
+                                                        
                                                         ProductInfo="{Binding}"></uc:ProductCard>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -90,7 +90,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <uc:ProductCard Margin="10 10 10 10"
-                                                    Clickable="False"
+                                                    
                                                     ProductInfo="{Binding}"></uc:ProductCard>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -104,14 +104,35 @@
 
                 </TabItem>
                 <TabItem Header="Product Manager">
-                    <ui:CommandBar>
-                        <ui:AppBarButton Icon="Add"
-                                         Label="Add" />
-                        <ui:AppBarButton Icon="Edit"
-                                         Label="Edit" />
-                        <ui:AppBarButton Icon="Remove"
-                                         Label="Remove" />
-                    </ui:CommandBar>
+                    <StackPanel Margin="20 0">
+                        <ItemsControl ItemsSource="{Binding Products}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    
+                                    <uc:ProductCard Margin="10 10 10 10"
+                                                    Clickable="False"
+                                                    ProductInfo="{Binding}">
+                                        <ui:ContextFlyoutService.ContextFlyout>
+                                            <ui:CommandBarFlyout>
+                                                <ui:CommandBarFlyout.SecondaryCommands>
+                                                    <ui:AppBarButton Label="Edit"
+                                                                     Icon="Edit" 
+                                                                     Click="{Binding}"/>
+                                                    <ui:AppBarButton Label="Remove"
+                                                                     Icon="Remove" />
+                                                </ui:CommandBarFlyout.SecondaryCommands>
+                                            </ui:CommandBarFlyout>
+                                        </ui:ContextFlyoutService.ContextFlyout>
+                                    </uc:ProductCard>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </StackPanel>
 
                 </TabItem>
 

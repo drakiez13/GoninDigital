@@ -43,13 +43,34 @@ namespace GoninDigital.ViewModels
                 }
                 catch
                 {
-                    MessageBox.Show("Cannot find out any vendors ");
+
+                    //MessageBox.Show("Cannot find out any vendors ");
                 }
             }
         }
         public void OnNavigatedTo()
         {
             
+        }
+        public void EditProduct()
+        {
+
+        }
+        public void RemoveProduct(Product product)
+        {
+            using(var db= new GoninDigitalDBContext())
+            {
+                try
+                {
+                    db.Products.Remove(product);
+                    db.SaveChanges();
+                }
+                catch
+                {
+
+                    //MessageBox.Show("Cannot find out any vendors ");
+                }
+            }
         }
         public MyShopViewModel()
         {
