@@ -21,7 +21,7 @@
             <TabItem Header="Created" Width="160">
                 <ScrollViewer>
                     <Grid >
-                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Created}"
+                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Created}" Visibility="{Binding FlagItem[0]}"
                           SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -40,19 +40,20 @@
                             PriceOrg="{Binding Path=PriceOrg}"
                             TotalPrice="{Binding Path=TotalPrice}"
                             Status="{Binding Path=Status}"
-                            Date="{Binding Path=Date}"
-                            AddtoCart="{Binding AddtoCart, RelativeSource={RelativeSource Mode=Self}}">
+                            Date="{Binding Path=Date}">
                                     </uc:OrderCard>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ListBox>
+                        <Image  Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage[0]}"></Image>
                     </Grid>
                 </ScrollViewer>
+               
             </TabItem>
             <TabItem Header="Accepted" Width="160">
                 <ScrollViewer>
                     <Grid>
-                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Accepted}"
+                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Accepted}" Visibility="{Binding FlagItem[1]}"
                           SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -71,12 +72,12 @@
                             PriceOrg="{Binding Path=PriceOrg}"
                             TotalPrice="{Binding Path=TotalPrice}"
                             Status="{Binding Path=Status}"
-                            Date="{Binding Path=Date}"
-                            AddtoCart="{Binding AddtoCart, RelativeSource={RelativeSource Mode=Self}}">
+                            Date="{Binding Path=Date}">
                                     </uc:OrderCard>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ListBox>
+                        <Image Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage[1]}" Stretch="Fill"></Image>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
@@ -84,7 +85,7 @@
             <TabItem Header="Refused" Width="160">
                 <ScrollViewer>
                     <Grid>
-                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Refused}"
+                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Refused}" Visibility="{Binding FlagItem[2]}"
                           SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -103,19 +104,19 @@
                             PriceOrg="{Binding Path=PriceOrg}"
                             TotalPrice="{Binding Path=TotalPrice}"
                             Status="{Binding Path=Status}"
-                            Date="{Binding Path=Date}"
-                            AddtoCart="{Binding AddtoCart, RelativeSource={RelativeSource Mode=Self}}">
+                            Date="{Binding Path=Date}">
                                     </uc:OrderCard>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ListBox>
+                        <Image Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage[2]}" Stretch="Fill"></Image>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Delivered" Width="160">
                 <ScrollViewer>
                     <Grid>
-                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Delivered}"
+                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Delivered}" Visibility="{Binding FlagItem[3]}"
                           SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -134,19 +135,19 @@
                             PriceOrg="{Binding Path=PriceOrg}"
                             TotalPrice="{Binding Path=TotalPrice}"
                             Status="{Binding Path=Status}"
-                            Date="{Binding Path=Date}"
-                            AddtoCart="{Binding AddtoCart, RelativeSource={RelativeSource Mode=Self}}">
+                            Date="{Binding Path=Date}">
                                     </uc:OrderCard>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ListBox>
+                        <Image Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage[3]}" Stretch="Fill"></Image>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Canceled" Width="160">
                 <ScrollViewer>
                     <Grid>
-                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Canceled}"
+                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Canceled}" Visibility="{Binding FlagItem[4]}"
                           SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -165,12 +166,13 @@
                             PriceOrg="{Binding Path=PriceOrg}"
                             TotalPrice="{Binding Path=TotalPrice}"
                             Status="{Binding Path=Status}"
-                            Date="{Binding Path=Date}"
-                            AddtoCart="{Binding AddtoCart, RelativeSource={RelativeSource Mode=Self}}">
+                            Date="{Binding Path=Date}">
                                     </uc:OrderCard>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ListBox>
+                        <Image Height="200" Width="200" Visibility="{Binding FlagImage[4]}" 
+                               Source="{Binding Image}" Stretch="Fill"></Image>
                     </Grid>
                 </ScrollViewer>
             </TabItem>

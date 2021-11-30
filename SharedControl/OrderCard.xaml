@@ -85,13 +85,11 @@
                         Width="150"
                         Margin="20 30 30 0"
                         Background="{DynamicResource SystemAccentColorDark1Brush}"
-                        HorizontalAlignment="Center"
-                        Command="{Binding AddtoCart,ElementName=orderCard}"/>
+                        HorizontalAlignment="Center" Click="addCart_Click"/>
                 <StackPanel Orientation="Horizontal" Margin="20 10 30 0">
                     <Label Content="Purchase Date: "></Label>
-                    <TextBlock Text="{Binding Date,ElementName=orderCard}"> </TextBlock>
+                    <TextBlock Text="{Binding Date,ElementName=orderCard}"></TextBlock>
                 </StackPanel>
-                
             </StackPanel>
         </Grid>
     </Grid>

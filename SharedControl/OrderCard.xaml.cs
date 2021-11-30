@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GoninDigital.Models;
+using GoninDigital.Properties;
+using ModernWpf.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -71,11 +74,6 @@ namespace GoninDigital.SharedControl
             get => (object)GetValue(DateProperty);
             set => SetValue(DateProperty, value);
         }
-        public ICommand AddtoCart
-        {
-            get => (ICommand)GetValue(AddtoCartProperty);
-            set => SetValue(AddtoCartProperty, value);
-        }
         public static readonly DependencyProperty ImageProperty =
             DependencyProperty.Register("Image", typeof(object), typeof(OrderCard),
                 new PropertyMetadata("/Resources/Images/BlankImage.jpg"));
@@ -97,11 +95,38 @@ namespace GoninDigital.SharedControl
             DependencyProperty.Register("Status", typeof(object), typeof(OrderCard), new PropertyMetadata("Unknown"));
         public static readonly DependencyProperty DateProperty =
            DependencyProperty.Register("Date", typeof(object), typeof(OrderCard), new PropertyMetadata(0));
-        public static readonly DependencyProperty AddtoCartProperty =
-            DependencyProperty.Register("AddtoCart", typeof(ICommand), typeof(OrderCard), new PropertyMetadata(null));
         public OrderCard()
         {
             InitializeComponent();
+        }
+
+        private void addCart_Click(object sender, RoutedEventArgs e)
+        {
+            GoninDigitalDBContext db = DataProvider.Instance.Db;
+            int userID = db.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
+            int productID = db.Products.Where(x => x.Name == ProductName).First().Id;
+            if (db.Carts.Where(x => x.UserId == userID & x.ProductId == productID).Count() == 0)
+            {
+                Cart cart = new Cart();
+                cart.UserId = userID;
+                cart.ProductId = productID;
+                cart.Quantity = 1;
+                db.Carts.Add(cart);
+                db.SaveChanges();
+            }
+            else
+            {
+                db.Carts.Where(x => x.UserId == userID & x.ProductId == productID).First().Quantity += 1;
+                db.SaveChanges();
+            }
+            ContentDialog content = new()
+            {
+                Title = "Nortification",
+
+                Content = "Added this item to your cart successfully!",
+                PrimaryButtonText = "Ok"
+            };
+            content.ShowAsync();
         }
     }
 }

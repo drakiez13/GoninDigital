@@ -65,7 +65,24 @@ namespace GoninDigital.ViewModels
             get { return selectedOrder; }
             set { selectedOrder = value; OnPropertyChanged(); }
         }
-        public ICommand AddtoCart { get; set; }
+        private string[] flagItem;
+        public string[] FlagItem
+        {
+            get { return flagItem; }
+            set { flagItem = value; OnPropertyChanged(); }
+        }
+        private string[] flagImage;
+        public string[] FlagImage
+        {
+            get { return flagImage; }
+            set { flagImage = value; OnPropertyChanged(); }
+        }
+        private string image;
+        public string Image
+        {
+            get { return image; }
+            set { image = value; OnPropertyChanged(); }
+        }
         GoninDigitalDBContext db = DataProvider.Instance.Db;
         #endregion
         #region Constructor
@@ -76,6 +93,9 @@ namespace GoninDigital.ViewModels
             L_Order_Refused = new List<Order>();
             L_Order_Delivered = new List<Order>();
             L_Order_Canceled = new List<Order>();
+            flagItem = new string[5];
+            FlagImage = new string[5];
+            Image = "/Resources/Images/NoOrder.jpg";
             //int userID = db.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
             int userID = 4; //id mặc định do chưa có data
             Load_HistoryPurchase(userID);
@@ -123,28 +143,58 @@ namespace GoninDigital.ViewModels
                             L_Order_Canceled.Add(order);
                             break;
                     }
-                    AddtoCart = new RelayCommand<object>((p) => { return true; }, (p) => { AddtoCartExec(userID, product.Id); });
+                    if(L_Order_Created.Count==0)
+                    {
+                        FlagItem[0] = "Hidden";
+                        FlagImage[0] = "Visible";
+                    }
+                    else
+                    {
+                        FlagItem[0] = "Visible";
+                        FlagImage[0] = "Hidden";
+                    }
+                    if (L_Order_Accepted.Count == 0)
+                    {
+                        FlagItem[1] = "Hidden";
+                        FlagImage[1] = "Visible";
+                    }
+                    else
+                    {
+                        FlagItem[1] = "Visible";
+                        FlagImage[1] = "Hidden";
+                    }
+                    if (L_Order_Refused.Count == 0)
+                    {
+                        FlagItem[2] = "Hidden";
+                        FlagImage[2] = "Visible";
+                    }
+                    else
+                    {
+                        FlagItem[2] = "Visible";
+                        FlagImage[2] = "Hidden";
+                    }
+                    if (L_Order_Delivered.Count == 0)
+                    {
+                        FlagItem[3] = "Hidden";
+                        FlagImage[3] = "Visible";
+                    }
+                    else
+                    {
+                        FlagItem[3] = "Visible";
+                        FlagImage[3] = "Hidden";
+                    }
+                    if (L_Order_Canceled.Count == 0)
+                    {
+                        FlagItem[4] = "Hidden";
+                        FlagImage[4] = "Visible";
+                    }
+                    else
+                    {
+                        FlagItem[4] = "Visible";
+                        FlagImage[4] = "Hidden";
+                    }
                 }
             }
-        }
-        void AddtoCartExec(int userID, int productID)
-        {
-            GoninDigitalDBContext db = DataProvider.Instance.Db;
-            if (db.Carts.Where(x => x.UserId == userID & x.ProductId == productID).Count() == 0) 
-            {
-                Cart cart = new Cart();
-                cart.UserId = userID;
-                cart.ProductId = productID; 
-                cart.Quantity = 1;
-                db.Carts.Add(cart);
-                db.SaveChanges();
-            }
-            else
-            {
-                db.Carts.Where(x => x.UserId == userID & x.ProductId == productID).First().Quantity += 1; 
-                db.SaveChanges();
-            }
-            MessageBox.Show("This product has been added to your cart");
         }
         #endregion
     }
