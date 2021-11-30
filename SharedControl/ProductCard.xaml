@@ -24,7 +24,7 @@
     </UserControl.Resources>
     <Border  Style="{DynamicResource BorderMouseOver}">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.2" Color="Black" />
+            <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.4" Color="{DynamicResource SystemBaseMediumHighColor}" />
         </Border.Effect>
 
         <Grid>
@@ -36,7 +36,7 @@
                HorizontalAlignment="Left"
                Width="150" Height="150"
                Margin="0,0,0,0"
-               VerticalAlignment="Top" Source="{Binding Image, ElementName=productCard}"
+               VerticalAlignment="Top" Source="{Binding ProductInfo.Image, ElementName=productCard}"
                Stretch="UniformToFill"
                />
         <Grid Grid.Row="1">
@@ -46,7 +46,7 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock Margin="10,5,10,0" Grid.Row="0"
-                   Text="{Binding Title, ElementName=productCard}"
+                   Text="{Binding ProductInfo.Name, ElementName=productCard}"
                    TextWrapping="WrapWithOverflow"
                    MaxHeight="32"  
                    FontSize="12"
@@ -57,21 +57,36 @@
                 HorizontalAlignment="Left"
                 Margin="10,0,0,0"
                 Grid.Row="1"
-                Caption="{Binding RatingCaption, ElementName=productCard}"
-                Value="{Binding RatingValue, ElementName=productCard}"
+                Caption="{Binding ProductInfo.NRating, ElementName=productCard}"
+                Value="{Binding ProductInfo.Rating, ElementName=productCard}"
                 IsReadOnly="True"
                 >
                 <ui:RatingControl.LayoutTransform>
                     <ScaleTransform ScaleX="0.7" ScaleY="0.7"></ScaleTransform>
                 </ui:RatingControl.LayoutTransform>
             </ui:RatingControl>
-            <TextBlock VerticalAlignment="Bottom"
-                   Margin="10,0,0,5" Grid.Row="2"
-                   Text="{Binding Price, StringFormat=C, ConverterCulture=vi-VN, ElementName=productCard}" FontSize="14"
-                   FontWeight="Bold"
-                   Foreground="{DynamicResource SystemControlForegroundAccentBrush}"
-            ></TextBlock>
+            <StackPanel Grid.Row="2"
+                Orientation="Vertical"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom">
+                <Label
+                    Content="{Binding ProductInfo.Vendor.Name, ElementName=productCard}"
+                    VerticalAlignment="Bottom"
+                    FontSize="10"
+                    Margin="10 0 0 0"
+                    Foreground="{DynamicResource SystemControlBackgroundBaseMediumBrush}"
+                >
+                </Label>
 
+                <TextBlock
+                    VerticalAlignment="Bottom"
+                    Margin="10 0 0 5"
+                    Text="{Binding ProductInfo.Price, StringFormat=C, ConverterCulture=vi-VN, ElementName=productCard}"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Foreground="{DynamicResource SystemControlForegroundAccentBrush}"
+                ></TextBlock>
+            </StackPanel>
         </Grid>
     </Grid>
     </Border>

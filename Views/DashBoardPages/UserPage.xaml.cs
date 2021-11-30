@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Page = ModernWpf.Controls.Page;
 using GoninDigital.ViewModels;
 
 namespace GoninDigital.Views.DashBoardPages

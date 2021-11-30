@@ -16,15 +16,6 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.ZIndex="1"
-              Grid.Column="0"> 
-            <threadedUi:ThreadedVisualHost HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           x:Name="ProgressControlHost"
-                                           Visibility="Visible"
-                                           ChildType="{x:Type threadedUi:ThreadedProgressRing}"
-                                           ChildChanged="ProgressControlHost_ChildChanged"/>
-        </Grid>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="200" />

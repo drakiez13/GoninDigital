@@ -1,18 +1,11 @@
-﻿using GoninDigital.ViewModels;
-using System;
-using System.Collections.Generic;
+﻿using GoninDigital.Models;
+using GoninDigital.ViewModels;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Page = ModernWpf.Controls.Page;
 
 namespace GoninDigital.Views.DashBoardPages
 {
@@ -24,12 +17,23 @@ namespace GoninDigital.Views.DashBoardPages
         public CartPage()
         {
             InitializeComponent();
-            
         }
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            (DataContext as CartPageViewModel).OnNavigatedTo();
+        }
 
+        private void lvCartItemGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var items = (System.Collections.IList)lvCartItemGroup.SelectedItems;
+
+            (DataContext as CartPageViewModel).SelectedProducts = items.Cast<Cart>();
+        }
+
+        private void NumberBox_ValueChanged(ModernWpf.Controls.NumberBox sender, ModernWpf.Controls.NumberBoxValueChangedEventArgs args)
+        {
+            (DataContext as CartPageViewModel).SelectedProducts = (DataContext as CartPageViewModel).SelectedProducts;
         }
     }
 }

@@ -45,11 +45,7 @@
                 <DataTemplate>
                     <uc:ProductCard
                         Margin="20 0 20 0"
-                        Id="{Binding Path=Id}"
-                        Title="{Binding Path=Name}"
-                        Price="{Binding Path=Price}"
-                        Image="{Binding Path=Image}"
-                        RatingValue="{Binding Path=Rating}"
+                        ProductInfo="{Binding}"
                     ></uc:ProductCard>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

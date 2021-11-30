@@ -38,7 +38,6 @@ namespace GoninDigital.Views
                     PrimaryButtonText = "Ok"
                 };
                 content.ShowAsync();
-                return;
             }
             else if (!Regex.IsMatch(tbEmail.Text, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"))
             {

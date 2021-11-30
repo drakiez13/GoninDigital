@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GoninDigital.Views.DashBoardPages
+namespace GoninDigital.Views
 {
     /// <summary>
-    /// Interaction logic for MessagePage.xaml
+    /// Interaction logic for SplashScreenView.xaml
     /// </summary>
-    public partial class MessagePage : Page
+    public partial class SplashScreenView : UserControl
     {
-        public MessagePage()
+        public SplashScreenView()
         {
             InitializeComponent();
         }
