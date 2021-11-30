@@ -9,175 +9,178 @@
       d:DesignHeight="600" d:DesignWidth="950"
       d:Background="White"
       Title="UserPage">
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <Label Content="User Profile"
+            <Label Content="User Profile"
                 FontSize="22"
                 Margin="20 20 0 20"
                 FontWeight="Bold"/>
-        <Grid Grid.Row="1"
+            <Grid Grid.Row="1"
               Width="1000">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="350"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Margin="10 0 0 0"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="350"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Margin="10 0 0 0"
                   VerticalAlignment="Top"
                   MaxWidth="400">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="300"/>
-                    <RowDefinition Height="200"/>
-                </Grid.RowDefinitions>
-                <StackPanel Background="{StaticResource SystemControlBackgroundChromeMediumBrush}">
-                    <ui:PersonPicture DisplayName="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="350"/>
+                        <RowDefinition Height="200"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Background="{StaticResource SystemControlBackgroundChromeMediumBrush}">
+                        <ui:PersonPicture DisplayName="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"
                                       VerticalAlignment="Top"
                                       Margin="0 50 0 0"
                                       ProfilePicture="{Binding Avatar}"
                                       Height="150"
                                       Width="150"/>
-                    <Label Content="{Binding FullName,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        <Label Content="{Binding FullName,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                            FontWeight="Bold"
                            FontSize="18"
-                           Margin="0 10 0 0"
+                           Margin="0 20 0 0"
                            HorizontalAlignment="Center"/>
-                    <Label Content="{Binding Email, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
-                           HorizontalAlignment="Center"/>
-                    <Button Content="Edit Avatar"
+                        <Label Content="{Binding Email, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                               HorizontalAlignment="Center"
+                               Margin="0 5 0 0"/>
+                        <Button Content="Edit Avatar"
                             HorizontalAlignment="Center"
                             Command="{Binding EditAvatarCommand}"
                             Margin="0 20 0 0"/>
 
-                </StackPanel>
-                <Grid Grid.Row="1"
+                    </StackPanel>
+                    <Grid Grid.Row="1"
                       Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
                       Margin="0 10 0 0 ">
-                    <StackPanel Margin="15 0 0 0">
-                        <Grid Margin="0 20 0 0">
-                            <Label Content="Following"
+                        <StackPanel Margin="15 0 0 0">
+                            <Grid Margin="0 20 0 0">
+                                <Label Content="Following"
                                    FontSize="16"
                                    FontWeight="DemiBold"/>
-                            <Label Content="20"
+                                <Label Content="20"
                                    HorizontalAlignment="Right"
                                    FontSize="18"
                                    Margin="0 0 20 0"/>
-                        </Grid>
-                        <Grid Margin="0 20 0 0">
-                            <Label Content="Account Type"
+                            </Grid>
+                            <Grid Margin="0 20 0 0">
+                                <Label Content="Account Type"
                                    FontSize="16"
                                    FontWeight="DemiBold"/>
-                            <Label Content="{Binding UserType}"
+                                <Label Content="{Binding UserType}"
                                    HorizontalAlignment="Right"
                                    FontSize="18"
                                    Margin="0 0 20 0"/>
-                        </Grid>
-                    </StackPanel>
-                    <Button Content="Update Account To Vendor"
+                            </Grid>
+                        </StackPanel>
+                        <Button Content="Update Account To Vendor"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
                             Margin="0 0 0 15"/>
+                    </Grid>
+
                 </Grid>
-                
-            </Grid>
-            <Grid Grid.Column="1"
+                <Grid Grid.Column="1"
                   Width="570"
                   Margin="20 0 0 0"
                   MaxWidth="600"
-                  Height="500"
+                  Height="550"
                   VerticalAlignment="Top"
                   HorizontalAlignment="Left"
                   Background="{StaticResource SystemControlBackgroundChromeMediumBrush}">
-                <StackPanel Margin="0 20 0 0"
+                    <StackPanel Margin="0 20 0 0"
                             HorizontalAlignment="Center">
-                    
-                    <StackPanel Orientation="Horizontal"
+
+                        <StackPanel Orientation="Horizontal"
                                 Margin="0 10 0 0">
-                        <TextBox ui:ControlHelper.Header="First Name"
+                            <TextBox ui:ControlHelper.Header="First Name"
                                  FontSize="16"
                                  Width="200"
                                  Text="{Binding FirstName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                                 IsReadOnly="{Binding Flag,UpdateSourceTrigger=PropertyChanged }"/> 
-                        <TextBox ui:ControlHelper.Header="Last Name"
+                                 IsReadOnly="{Binding Flag,UpdateSourceTrigger=PropertyChanged }"/>
+                            <TextBox ui:ControlHelper.Header="Last Name"
                                  FontSize="16"
                                  Width="200"
                                  Margin="100 0 0 0"
                                  Text="{Binding LastName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                  IsReadOnly="{Binding Flag,UpdateSourceTrigger=PropertyChanged }"/>
-                    </StackPanel>
-                    <TextBox ui:ControlHelper.Header="User Name"
+                        </StackPanel>
+                        <TextBox ui:ControlHelper.Header="User Name"
+                             Margin="0 20 0 0"
                              Width="500"
                              HorizontalAlignment="Left"
                              FontSize="16"
                              Text="{Binding UserName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                              IsReadOnly="{Binding Flag,UpdateSourceTrigger=PropertyChanged }"/>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0 10 0 0">
-                        <ComboBox x:Name="cbGender"
+                        <StackPanel Orientation="Horizontal"
+                                Margin="0 20 0 0">
+                            <ComboBox x:Name="cbGender"
                                   Width="200"
                                   FontSize="16"
                                   ui:ControlHelper.Header="Gender"
                                   ItemsSource="{Binding LGender}"
                                   SelectedIndex="{Binding Gender}"
                                   IsHitTestVisible="{Binding Flag3,UpdateSourceTrigger=PropertyChanged}"/>
-                        <DatePicker x:Name="dpDoB"
+                            <DatePicker x:Name="dpDoB"
                                     ui:ControlHelper.Header="Date Of Birth"
                                     FontSize="16"
                                     Width="200"
                                     Margin="100 0 0 0"
                                     SelectedDate="{Binding DoB, UpdateSourceTrigger=PropertyChanged}" DisplayDate="2021-11-10" 
                                     IsHitTestVisible="{Binding Flag3,UpdateSourceTrigger=PropertyChanged}" />
-                    </StackPanel>
+                        </StackPanel>
 
-                    <TextBox ui:ControlHelper.Header="Phone Number"
+                        <TextBox ui:ControlHelper.Header="Phone Number"
                              FontSize="16"
                              Width="500"
-                             Margin="0 10 0 0"
+                             Margin="0 20 0 0"
                              HorizontalAlignment="Left"
                              Text="{Binding PhoneNum, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              IsReadOnly="{Binding Flag,UpdateSourceTrigger=PropertyChanged }"/>
-                    <TextBox ui:ControlHelper.Header="Email"
+                        <TextBox ui:ControlHelper.Header="Email"
                              FontSize="16"
-                             Margin="0 10 0 0"
+                             Margin="0 20 0 0"
                              Width="500"
                              HorizontalAlignment="Left"
                              Text="{Binding Email, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              IsReadOnly="{Binding Flag,UpdateSourceTrigger=PropertyChanged }"/>
 
-                    <StackPanel Margin="0 20 0 0"
+                        <StackPanel Margin="0 20 0 0"
                                 Orientation="Horizontal">
-                        <ui:AppBarButton x:Name="Btn_Save" Icon="Save" Label="Save"
+                            <ui:AppBarButton x:Name="Btn_Save" Icon="Save" Label="Save"
                                          Command="{Binding SavePCommand}"
                                          Visibility="{Binding Flag1, UpdateSourceTrigger=PropertyChanged}"/>
-                        <ui:AppBarButton Icon="Refresh" Label="Reset" 
+                            <ui:AppBarButton Icon="Refresh" Label="Reset" 
                                                Command="{Binding ResetPCommand}"
                                                Visibility="{Binding Flag1, UpdateSourceTrigger=PropertyChanged}"/>
-                        <ui:AppBarButton Icon="Cancel" Label="Cancel" 
+                            <ui:AppBarButton Icon="Cancel" Label="Cancel" 
                                                Margin="0 0 20 0"
                                                Command="{Binding CancelPCommand}"
                                                Visibility="{Binding Flag1, UpdateSourceTrigger=PropertyChanged}"/>
-                        
-                    </StackPanel>
-                    <Button x:Name="Btn_EditPrf"
+
+                        </StackPanel>
+                        <Button x:Name="Btn_EditPrf"
                             Content="Edit Profile"  
                             HorizontalAlignment="Center"
                             Margin="0 20 0 0"
                             Command="{Binding EditPCommand}"
                             Visibility="{Binding Flag2, UpdateSourceTrigger=PropertyChanged}"/>
-                    
-                    <!--<ui:AppBarButton Icon="Edit" Margin="288,-288,0,0" Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <!--<ui:AppBarButton Icon="Edit" Margin="288,-288,0,0" Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}"/>
                 <ui:AppBarButton Icon="Edit" Margin="-122,-101,0,0" Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="False"/>
                 <ui:AppBarButton Icon="Edit" Margin="-122,-46,0,0" Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="False"/>
                 <ui:AppBarButton Icon="Edit" Margin="-123,-2,0,0"   Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="False"/>
                 <ui:AppBarButton Icon="Edit" Margin="205,-252,0,0"   Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="False"/>
                 <ui:AppBarButton Icon="Edit" Margin="-251,-287,0,0"   Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="False"/>-->
-                </StackPanel>
+                    </StackPanel>
+                </Grid>
+
             </Grid>
-            
+
         </Grid>
-        
-    </Grid>
+    </ScrollViewer>
 </ui:Page>
