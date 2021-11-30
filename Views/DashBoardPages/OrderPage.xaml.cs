@@ -19,9 +19,9 @@ namespace GoninDigital.Views.DashBoardPages
     /// <summary>
     /// Interaction logic for HotDealPage.xaml
     /// </summary>
-    public partial class HotDealPage : Page
+    public partial class OrderPage : Page
     {
-        public HotDealPage()
+        public OrderPage()
         {
             InitializeComponent();
         }
