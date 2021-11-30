@@ -38,7 +38,8 @@
                                       VerticalAlignment="Top"
                                       Margin="0 50 0 0"
                                       ProfilePicture="{Binding Avatar}"
-                                      Height="200"/>
+                                      Height="150"
+                                      Width="150"/>
                     <Label Content="{Binding FullName,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                            FontWeight="Bold"
                            FontSize="18"
@@ -48,6 +49,7 @@
                            HorizontalAlignment="Center"/>
                     <Button Content="Edit Avatar"
                             HorizontalAlignment="Center"
+                            Command="{Binding EditAvatarCommand}"
                             Margin="0 20 0 0"/>
 
                 </StackPanel>
