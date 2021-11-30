@@ -1,4 +1,4 @@
-﻿<ui:Page x:Class="GoninDigital.Views.CartPage_Purchase"
+﻿<ui:Page x:Class="GoninDigital.Views.SharedPages.CartPage_Purchase"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

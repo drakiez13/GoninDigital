@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Page = ModernWpf.Controls.Page;
 
-namespace GoninDigital.Views
+namespace GoninDigital.Views.SharedPages
 {
     /// <summary>
     /// Interaction logic for CartPage_Purchase.xaml
