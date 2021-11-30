@@ -95,7 +95,7 @@ namespace GoninDigital.ViewModels
             L_Order_Canceled = new List<Order>();
             flagItem = new string[5];
             FlagImage = new string[5];
-            Image = "/Resources/Images/NoOrder.jpg";
+            Image = "/Resources/Images/NoOrderYet.jpg";
             //int userID = db.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
             int userID = 4; //id mặc định do chưa có data
             Load_HistoryPurchase(userID);
