@@ -17,11 +17,35 @@ namespace GoninDigital.ViewModels
     class OrderPageViewModel: BaseViewModel
     {
         #region Properties
-        private List<Order> l_Order;
-        public List<Order> L_Order
+        private List<Order> l_Order_Created;
+        public List<Order> L_Order_Created
         {
-            get { return l_Order; }
-            set { l_Order = value; OnPropertyChanged(); }
+            get { return l_Order_Created; }
+            set { l_Order_Created = value; OnPropertyChanged(); }
+        }
+        private List<Order> l_Order_Accepted;
+        public List<Order> L_Order_Accepted
+        {
+            get { return l_Order_Accepted; }
+            set { l_Order_Accepted = value; OnPropertyChanged(); }
+        }
+        private List<Order> l_Order_Refused;
+        public List<Order> L_Order_Refused
+        {
+            get { return l_Order_Refused; }
+            set { l_Order_Refused = value; OnPropertyChanged(); }
+        }
+        private List<Order> l_Order_Delivered;
+        public List<Order> L_Order_Delivered
+        {
+            get { return l_Order_Delivered; }
+            set { l_Order_Delivered = value; OnPropertyChanged(); }
+        }
+        private List<Order> l_Order_Canceled;
+        public List<Order> L_Order_Canceled
+        {
+            get { return l_Order_Canceled; }
+            set { l_Order_Canceled = value; OnPropertyChanged(); }
         }
         private List<Invoice> l_Invoice;
         public List<Invoice> L_Invoice
@@ -47,7 +71,11 @@ namespace GoninDigital.ViewModels
         #region Constructor
         public OrderPageViewModel()
         {
-            L_Order = new List<Order>();
+            L_Order_Created = new List<Order>();
+            L_Order_Accepted = new List<Order>();
+            L_Order_Refused = new List<Order>();
+            L_Order_Delivered = new List<Order>();
+            L_Order_Canceled = new List<Order>();
             //int userID = db.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
             int userID = 4; //id mặc định do chưa có data
             Load_HistoryPurchase(userID);
@@ -76,9 +104,25 @@ namespace GoninDigital.ViewModels
                     order.TotalPrice = $"{(invoicedt.Cost):0,0 đ}";
                     order.PriceDisc = $"{((long)invoicedt.Cost / order.Quantity):0,0 đ}";
                     order.Status = db.InvoiceStatuses.Where(x => x.Id == invoice.StatusId).First().Name;
-                    order.Date = invoice.CreatedAt.ToString("dd/M/yyyy", CultureInfo.InvariantCulture); 
-                    MessageBox.Show(order.Date.ToString());
-                    l_Order.Add(order);
+                    order.Date = invoice.CreatedAt.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                        switch (order.Status)
+                    {
+                        case "created   ":
+                            L_Order_Created.Add(order);
+                            break;
+                        case "accepted   ":
+                            L_Order_Accepted.Add(order);
+                            break;
+                        case "refused   ":
+                            L_Order_Refused.Add(order);
+                            break;
+                        case "delivered   ":
+                            L_Order_Delivered.Add(order);
+                            break;
+                        case "canceled   ":
+                            L_Order_Canceled.Add(order);
+                            break;
+                    }
                     AddtoCart = new RelayCommand<object>((p) => { return true; }, (p) => { AddtoCartExec(userID, product.Id); });
                 }
             }

@@ -10,28 +10,27 @@
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{StaticResource OrderPageVM}"
       Title="HotDealPage">
-    <Grid>
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="400"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-        </Grid>
-        <Label Grid.Row="0" Content="Purchase History" FontSize="22"></Label>
-        <Grid>
-            <ListBox ItemsSource="{Binding L_Order}"
-                        Grid.Row="1"
-                          Name="lbOrderCardGroup"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="Purchase History" FontSize="22" Margin="20,0,0,0" ></Label>
+        <TabControl  Grid.Row="1" Style="{StaticResource TabControlPivotStyle}" >
+            <TabItem Header="Created" Width="160">
+                <ScrollViewer>
+                    <Grid >
+                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Created}"
                           SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical"></StackPanel>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <uc:OrderCard
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"></StackPanel>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <uc:OrderCard
                             Image="{Binding Path=Image}"
                             VendorName="{Binding Path=VendorName}"
                             ProductName="{Binding Path=ProductName}"
@@ -43,10 +42,138 @@
                             Status="{Binding Path=Status}"
                             Date="{Binding Path=Date}"
                             AddtoCart="{Binding AddtoCart, RelativeSource={RelativeSource Mode=Self}}">
-                        </uc:OrderCard>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ListBox>
-        </Grid>
+                                    </uc:OrderCard>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Accepted" Width="160">
+                <ScrollViewer>
+                    <Grid>
+                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Accepted}"
+                          SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"></StackPanel>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <uc:OrderCard
+                            Image="{Binding Path=Image}"
+                            VendorName="{Binding Path=VendorName}"
+                            ProductName="{Binding Path=ProductName}"
+                            BrandName="{Binding Path=BrandName}"
+                            Quantity="{Binding Path=Quantity}"
+                            PriceDisc="{Binding Path=PriceDisc}"
+                            PriceOrg="{Binding Path=PriceOrg}"
+                            TotalPrice="{Binding Path=TotalPrice}"
+                            Status="{Binding Path=Status}"
+                            Date="{Binding Path=Date}"
+                            AddtoCart="{Binding AddtoCart, RelativeSource={RelativeSource Mode=Self}}">
+                                    </uc:OrderCard>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Refused" Width="160">
+                <ScrollViewer>
+                    <Grid>
+                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Refused}"
+                          SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"></StackPanel>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <uc:OrderCard
+                            Image="{Binding Path=Image}"
+                            VendorName="{Binding Path=VendorName}"
+                            ProductName="{Binding Path=ProductName}"
+                            BrandName="{Binding Path=BrandName}"
+                            Quantity="{Binding Path=Quantity}"
+                            PriceDisc="{Binding Path=PriceDisc}"
+                            PriceOrg="{Binding Path=PriceOrg}"
+                            TotalPrice="{Binding Path=TotalPrice}"
+                            Status="{Binding Path=Status}"
+                            Date="{Binding Path=Date}"
+                            AddtoCart="{Binding AddtoCart, RelativeSource={RelativeSource Mode=Self}}">
+                                    </uc:OrderCard>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Delivered" Width="160">
+                <ScrollViewer>
+                    <Grid>
+                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Delivered}"
+                          SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"></StackPanel>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <uc:OrderCard
+                            Image="{Binding Path=Image}"
+                            VendorName="{Binding Path=VendorName}"
+                            ProductName="{Binding Path=ProductName}"
+                            BrandName="{Binding Path=BrandName}"
+                            Quantity="{Binding Path=Quantity}"
+                            PriceDisc="{Binding Path=PriceDisc}"
+                            PriceOrg="{Binding Path=PriceOrg}"
+                            TotalPrice="{Binding Path=TotalPrice}"
+                            Status="{Binding Path=Status}"
+                            Date="{Binding Path=Date}"
+                            AddtoCart="{Binding AddtoCart, RelativeSource={RelativeSource Mode=Self}}">
+                                    </uc:OrderCard>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Canceled" Width="160">
+                <ScrollViewer>
+                    <Grid>
+                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Canceled}"
+                          SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"></StackPanel>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <uc:OrderCard
+                            Image="{Binding Path=Image}"
+                            VendorName="{Binding Path=VendorName}"
+                            ProductName="{Binding Path=ProductName}"
+                            BrandName="{Binding Path=BrandName}"
+                            Quantity="{Binding Path=Quantity}"
+                            PriceDisc="{Binding Path=PriceDisc}"
+                            PriceOrg="{Binding Path=PriceOrg}"
+                            TotalPrice="{Binding Path=TotalPrice}"
+                            Status="{Binding Path=Status}"
+                            Date="{Binding Path=Date}"
+                            AddtoCart="{Binding AddtoCart, RelativeSource={RelativeSource Mode=Self}}">
+                                    </uc:OrderCard>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Page>
