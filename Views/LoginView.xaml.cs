@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GoninDigital.ViewModels;
+using ModernWpf.Controls;
 using ModernWpf.Demo.ThreadedUI;
 
 namespace GoninDigital.Views
@@ -29,18 +30,5 @@ namespace GoninDigital.Views
         }
 
         public LoginViewModel ViewModel { get; } = new(Application.Current.MainWindow);
-
-        private void ProgressControlHost_ChildChanged(object sender, EventArgs e)
-        {
-            var host = (ThreadedVisualHost)sender;
-            if (host.Child is ThreadedProgressBar progressBar)
-            {
-                progressBar.SetBinding(ThreadedProgressBar.IsIndeterminateProperty, new Binding(nameof(ViewModel.IsBusy)) { Source = ViewModel });
-            }
-            else if (host.Child is ThreadedProgressRing progressRing)
-            {
-                progressRing.SetBinding(ThreadedProgressRing.IsActiveProperty, new Binding(nameof(ViewModel.IsBusy)) { Source = ViewModel });
-            }
-        }
     }
 }
