@@ -55,7 +55,7 @@
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem x:Name="homeItem" Content="Home" Tag="HomePage" Icon="Home" IsSelected="True"/>
                 <ui:NavigationViewItem x:Name="myShopItem" Content="My Shop" Tag="MyShopPage" Icon="Manage" />
-                <ui:NavigationViewItem x:Name="hotDealItem" Content="Hot Deal" Tag="HotDealPage" Icon="Tag"/>
+                <ui:NavigationViewItem x:Name="orderItem" Content="Purchase History" Tag="OrderPage" Icon="Tag"/>
                 <ui:NavigationViewItem x:Name="cartItem" Content="Cart" Tag="CartPage" Icon="Shop"/>
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.AutoSuggestBox>

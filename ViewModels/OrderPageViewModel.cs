@@ -143,57 +143,61 @@ namespace GoninDigital.ViewModels
                             L_Order_Canceled.Add(order);
                             break;
                     }
-                    if(L_Order_Created.Count==0)
-                    {
-                        FlagItem[0] = "Hidden";
-                        FlagImage[0] = "Visible";
-                    }
-                    else
-                    {
-                        FlagItem[0] = "Visible";
-                        FlagImage[0] = "Hidden";
-                    }
-                    if (L_Order_Accepted.Count == 0)
-                    {
-                        FlagItem[1] = "Hidden";
-                        FlagImage[1] = "Visible";
-                    }
-                    else
-                    {
-                        FlagItem[1] = "Visible";
-                        FlagImage[1] = "Hidden";
-                    }
-                    if (L_Order_Refused.Count == 0)
-                    {
-                        FlagItem[2] = "Hidden";
-                        FlagImage[2] = "Visible";
-                    }
-                    else
-                    {
-                        FlagItem[2] = "Visible";
-                        FlagImage[2] = "Hidden";
-                    }
-                    if (L_Order_Delivered.Count == 0)
-                    {
-                        FlagItem[3] = "Hidden";
-                        FlagImage[3] = "Visible";
-                    }
-                    else
-                    {
-                        FlagItem[3] = "Visible";
-                        FlagImage[3] = "Hidden";
-                    }
-                    if (L_Order_Canceled.Count == 0)
-                    {
-                        FlagItem[4] = "Hidden";
-                        FlagImage[4] = "Visible";
-                    }
-                    else
-                    {
-                        FlagItem[4] = "Visible";
-                        FlagImage[4] = "Hidden";
-                    }
+                    CheckItem();
                 }
+            }
+        }
+        void CheckItem()
+        {
+            if (L_Order_Created.Count == 0)
+            {
+                FlagItem[0] = "Hidden";
+                FlagImage[0] = "Visible";
+            }
+            else
+            {
+                FlagItem[0] = "Visible";
+                FlagImage[0] = "Hidden";
+            }
+            if (L_Order_Accepted.Count == 0)
+            {
+                FlagItem[1] = "Hidden";
+                FlagImage[1] = "Visible";
+            }
+            else
+            {
+                FlagItem[1] = "Visible";
+                FlagImage[1] = "Hidden";
+            }
+            if (L_Order_Refused.Count == 0)
+            {
+                FlagItem[2] = "Hidden";
+                FlagImage[2] = "Visible";
+            }
+            else
+            {
+                FlagItem[2] = "Visible";
+                FlagImage[2] = "Hidden";
+            }
+            if (L_Order_Delivered.Count == 0)
+            {
+                FlagItem[3] = "Hidden";
+                FlagImage[3] = "Visible";
+            }
+            else
+            {
+                FlagItem[3] = "Visible";
+                FlagImage[3] = "Hidden";
+            }
+            if (L_Order_Canceled.Count == 0)
+            {
+                FlagItem[4] = "Hidden";
+                FlagImage[4] = "Visible";
+            }
+            else
+            {
+                FlagItem[4] = "Visible";
+                FlagImage[4] = "Hidden";
             }
         }
         #endregion
