@@ -102,6 +102,7 @@
                                                       Value="{Binding Quantity}"
                                                       ValueChanged="NumberBox_ValueChanged"
                                                       Minimum="1"
+                                                      Maximum="{Binding Product.Available}"
                                                       SpinButtonPlacementMode="Inline"
                                                       Width="100"
                                                       SmallChange="1"
