@@ -73,7 +73,7 @@ namespace GoninDigital.ViewModels
                 Content = new EditProductDialog(),
 
                 Title = "Edit Product",
-                PrimaryButtonText = "Edit",
+                PrimaryButtonText = "Change",
                 CloseButtonText = "Cancel",
 
                 PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { EditBtnExec(); }),
@@ -81,23 +81,23 @@ namespace GoninDigital.ViewModels
             dialog.ShowAsync();
         }
         public ICommand RemoveCommand { get; set; }
-        public void RemoveCommandExec(Product product)
+        public async void RemoveCommandExec(Product product)
         {
             using (var db = new GoninDigitalDBContext())
             {
                 try
                 {
                     db.Products.Remove(product);
+                    
+                    await db.SaveChangesAsync();
+
                     Products.Remove(product);
-                    db.SaveChanges();
-                    /*Thread thread = new Thread(InitVendor);
-                    thread.Start();*/
                     MessageBox.Show("removed");
                 }
-                catch
+                catch (Exception e)
                 {
 
-                    //MessageBox.Show("Cannot find out any vendors ");
+                    MessageBox.Show(e.Message);
                 }
             }
         }
@@ -112,11 +112,12 @@ namespace GoninDigital.ViewModels
         public static void EditBtnExec()
         {
             
-            MessageBox.Show("edited");
-            /*using (var db = new GoninDigitalDBContext())
+            
+            using (var db = new GoninDigitalDBContext())
             {
                 db.SaveChanges();
-            }*/
+            }
+            MessageBox.Show("edited");
         }
     }
 }

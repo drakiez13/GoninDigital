@@ -12,17 +12,20 @@
              >
 
     <ui:SimpleStackPanel Spacing="12">
-        <TextBox ui:ControlHelper.Header="Name"
+        <TextBox ui:ControlHelper.Header="Product Name"
                  Text="{Binding SelectedItem.Name}"
                  AcceptsReturn="True" />
         
-        <TextBox ui:ControlHelper.Header="PrimaryButtonText"
+        <TextBox ui:ControlHelper.Header="Price"
+                 Text="{Binding SelectedItem.Origin}" />
+        
+        <TextBox ui:ControlHelper.Header="Origin Price"
                  Text="{Binding SelectedItem.Price}" />
         
-        <TextBox ui:ControlHelper.Header="SecondaryButtonText"
+        <TextBox ui:ControlHelper.Header="Descirption"
                  Text="{Binding SelectedItem.Description}" />
         
-        <TextBox ui:ControlHelper.Header="CloseButtonText"
+        <TextBox ui:ControlHelper.Header="Product Image"
                  Text="{Binding SelectedItem.Name}" />
 
        
