@@ -1,5 +1,9 @@
-﻿using System;
+﻿using GoninDigital.Models;
+using GoninDigital.Properties;
+using GoninDigital.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +25,35 @@ namespace GoninDigital.Views.SharedPages
     /// </summary>
     public partial class CheckoutPage : Page
     {
-        public CheckoutPage()
+        public Action<object> OnSuccess { get; set; }
+        public ObservableCollection<Cart> Products { get; set; }
+        public User User { get; set; }
+
+        void Init()
         {
+            using (var db = new GoninDigitalDBContext())
+            {
+                User = db.Users.Single(o => o.UserName == Settings.Default.usrname);
+            }
+        }
+
+        public CheckoutPage(IEnumerable<Cart> products, Action<object> onSuccess)
+        {
+            this.OnSuccess = onSuccess;
+            this.Products = new ObservableCollection<Cart>(products);
+            Init();
+            InitializeComponent();
+            
+            
+        }
+
+        public CheckoutPage(Product product, int quantity, Action<object> onSuccess)
+        {
+            var tmp = new List<Cart>();
+            tmp.Add(new Cart { Product = product, Quantity = quantity });
+            this.Products = new ObservableCollection<Cart>(tmp);
+            this.OnSuccess = onSuccess;
+            Init();
             InitializeComponent();
         }
     }

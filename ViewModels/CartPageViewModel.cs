@@ -34,6 +34,7 @@ namespace GoninDigital.ViewModels
         public ICommand RemoveProduct { get; set; }
         public ICommand ShowProduct { get; set; }
         public ICommand BuyProduct { get; set; }
+        public ICommand BuySelections { get; set; }
 
         private void Init()
         {
@@ -71,7 +72,10 @@ namespace GoninDigital.ViewModels
             ShowProduct = new RelayCommand<Cart>(o => true, 
                 cart => DashBoard.RootFrame.Navigate(new ProductPage(cart.ProductId)));
             BuyProduct = new RelayCommand<Cart>(o => true,
-                cart => DashBoard.RootFrame.Navigate(new CheckoutPage()));
+                cart => DashBoard.RootFrame.Navigate(new CheckoutPage(cart.Product, cart.Quantity, o => { })));
+            BuySelections = new RelayCommand<object>(o => true,
+                o => DashBoard.RootFrame.Navigate(new CheckoutPage(SelectedProducts,
+                o => { DashBoard.RootFrame.GoBack(); MessageBox.Show("do more here"); })));
         }
     }
 

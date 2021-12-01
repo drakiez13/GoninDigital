@@ -174,7 +174,8 @@
                 </TextBlock>
                 <ui:AppBarButton Margin="20"
                                  Icon="Shop"
-                                 Label="Checkout" />
+                                 Label="Checkout"
+                                 Command="{Binding BuySelections}"/>
             </StackPanel>
         </Grid>
     </Grid>
