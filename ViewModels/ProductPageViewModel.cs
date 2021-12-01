@@ -159,14 +159,14 @@ namespace GoninDigital.ViewModels
             VendorName = context.Vendors.Where(x => x.Id == product.VendorId).First().Name;
             productType = context.ProductCategories.Where(x => x.Id == product.CategoryId).First().Name;
             ProductPrice = String.Format("{0:0,0 vnđ}", product.Price);
-            if (product.DiscountRate == 0)
+            if (product.Price == product.OriginPrice)
                 IsDisc = "Hidden";
             else
                 IsDisc = "Visible";
             productDescription = product.Description;
             vendorAddress = context.Vendors.Where(x => x.Id == product.VendorId).First().Address;
             brandName = context.Brands.Where(x => x.Id == product.BrandId).First().Name;
-            ProductDiscountPrice = string.Format("{0:0,0 vnđ}", (Convert.ToDouble(product.Price) * (1 - Convert.ToDouble(product.DiscountRate) / 100)));
+            ProductDiscountPrice = string.Format("{0:0,0 vnđ}", product.OriginPrice);
             var Products_of_Vendor = context.Products.Where(x => x.VendorId == product.VendorId).ToList();
             vendorRating = 0;
             for (int i = 0; i < Products_of_Vendor.Count(); i++)
