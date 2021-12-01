@@ -13,10 +13,14 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="Purchase History" FontSize="22" Margin="20,0,0,0" ></Label>
+        <Label Grid.Row="0" 
+               Content="Purchase History" 
+               FontSize="22" 
+               FontWeight="Bold"
+               Margin="20" ></Label>
         <TabControl  Grid.Row="1" Style="{StaticResource TabControlPivotStyle}" >
             <TabItem Header="Created" Width="160">
                 <ScrollViewer>
