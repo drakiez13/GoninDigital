@@ -166,7 +166,7 @@ namespace GoninDigital.ViewModels
             productDescription = product.Description;
             vendorAddress = context.Vendors.Where(x => x.Id == product.VendorId).First().Address;
             brandName = context.Brands.Where(x => x.Id == product.BrandId).First().Name;
-            ProductDiscountPrice = string.Format("{0:0,0 vnđ}",(Convert.ToDouble(product.Price) * (1 - Convert.ToDouble(product.DiscountRate) / 100)));
+            ProductDiscountPrice = string.Format("{0:0,0 vnđ}", (Convert.ToDouble(product.Price) * (1 - Convert.ToDouble(product.DiscountRate) / 100)));
             var Products_of_Vendor = context.Products.Where(x => x.VendorId == product.VendorId).ToList();
             vendorRating = 0;
             for (int i = 0; i < Products_of_Vendor.Count(); i++)
