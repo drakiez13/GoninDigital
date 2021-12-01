@@ -117,7 +117,7 @@ namespace GoninDigital.ViewModels
                     order.ProductName = product.Name;
                     order.BrandName = db.Brands.Where(x => x.Id == product.BrandId).First().Name;
                     order.Quantity = invoicedt.Quantity;
-                    if (product.DiscountRate != 0)
+                    if (product.Price != product.OriginPrice)
                         order.PriceOrg = $"{ (product.Price):0,0 đ}";
                     else
                         order.PriceOrg = "";
