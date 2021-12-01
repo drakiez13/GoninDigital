@@ -17,7 +17,7 @@ namespace GoninDigital.ViewModels
 {
     class MyShopViewModel : BaseViewModel
     {
-        private Product selectedItem=null;
+        private Product selectedItem = null;
         public Product SelectedItem
         {
             get { return selectedItem; }
@@ -72,27 +72,27 @@ namespace GoninDigital.ViewModels
             {
                 Content = new EditProductDialog(),
 
-                Title = "Title",
-                PrimaryButtonText = "Yes",
-                SecondaryButtonText = "No",
+                Title = "Edit Product",
+                PrimaryButtonText = "Edit",
                 CloseButtonText = "Cancel",
-                DefaultButton = ContentDialogButton.Primary,
-                PrimaryButtonCommand = new RelayCommand<object>((p)=>true,p=>MessageBox.Show("sdsad")),
-                /*PrimaryButtonClick += OnPrimaryButtonClick,
-                SecondaryButtonClick += OnSecondaryButtonClick,
-                CloseButtonClick += OnCloseButtonClick,
-                Closed += OnClosed*/
+
+                PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { EditBtnExec(); }),
             };
             dialog.ShowAsync();
         }
-        public void RemoveProduct(Product product)
+        public ICommand RemoveCommand { get; set; }
+        public void RemoveCommandExec(Product product)
         {
             using (var db = new GoninDigitalDBContext())
             {
                 try
                 {
                     db.Products.Remove(product);
+                    Products.Remove(product);
                     db.SaveChanges();
+                    /*Thread thread = new Thread(InitVendor);
+                    thread.Start();*/
+                    MessageBox.Show("removed");
                 }
                 catch
                 {
@@ -104,9 +104,19 @@ namespace GoninDigital.ViewModels
         public MyShopViewModel()
         {
             EditCommand = new RelayCommand<Product>(o => true, o => EditCommandExec(o));
+            RemoveCommand = new RelayCommand<Product>(o => true, o => RemoveCommandExec(o));
             Thread thread = new Thread(InitVendor);
             thread.Start();
 
+        }
+        public static void EditBtnExec()
+        {
+            
+            MessageBox.Show("edited");
+            /*using (var db = new GoninDigitalDBContext())
+            {
+                db.SaveChanges();
+            }*/
         }
     }
 }

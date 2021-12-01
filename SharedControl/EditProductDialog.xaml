@@ -20,15 +20,12 @@
                  Text="{Binding SelectedItem.Price}" />
         
         <TextBox ui:ControlHelper.Header="SecondaryButtonText"
-                 Text="{Binding SelectedItem.Name}" />
+                 Text="{Binding SelectedItem.Description}" />
         
         <TextBox ui:ControlHelper.Header="CloseButtonText"
                  Text="{Binding SelectedItem.Name}" />
 
-        <CheckBox Content="FullSizeDesired"
-                  IsChecked="{Binding ElementName=dialog, Path=FullSizeDesired}" />
-        <CheckBox Content="IsShadowEnabled"
-                  IsChecked="{Binding ElementName=dialog, Path=IsShadowEnabled}" />
+       
 
     </ui:SimpleStackPanel>
 
