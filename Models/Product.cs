@@ -25,8 +25,8 @@ namespace GoninDigital.Models
         public string Detail { get; set; }
         public string Origin { get; set; }
         public long Price { get; set; }
-        public byte? DiscountRate { get; set; }
-        public bool ApprovalStatus { get; set; }
+        public long OriginPrice { get; set; }
+        public int? StatusId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public int BrandId { get; set; }
@@ -38,6 +38,7 @@ namespace GoninDigital.Models
 
         public virtual Brand Brand { get; set; }
         public virtual ProductCategory Category { get; set; }
+        public virtual ProductStatus Status { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual ICollection<AdDetail> AdDetails { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
