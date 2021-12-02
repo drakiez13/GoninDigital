@@ -14,10 +14,10 @@ using GoninDigital.Properties;
 using GoninDigital.Views;
 using ModernWpf.Controls;
 using System.Globalization;
-using System.Threading;
 using GoninDigital.Views;
 using GoninDigital.Views.DashBoardPages;
 using Microsoft.EntityFrameworkCore;
+using GoninDigital.Views.SharedPages;
 using ModernWpf.Controls;
 
 namespace GoninDigital.ViewModels
@@ -114,13 +114,13 @@ namespace GoninDigital.ViewModels
         }
         #endregion
         #region Private Methods
+        public void OnNavigatedTo()
+        {
+            Thread thread = new Thread(Load_HistoryPurchase);
+            thread.Start();
+        }
         private void Load_HistoryPurchase()
         {
-            L_Order_Created.Clear();
-            L_Order_Accepted.Clear();
-            L_Order_Refused.Clear();
-            L_Order_Delivered.Clear();
-            L_Order_Canceled.Clear();
             UserID = 4;
             using (var db = new GoninDigitalDBContext())
             {
@@ -138,11 +138,11 @@ namespace GoninDigital.ViewModels
                         order.BrandName = db.Brands.Where(x => x.Id == product.BrandId).First().Name;
                         order.Quantity = invoicedt.Quantity;
                         if (product.Price != product.OriginPrice)
-                            order.PriceOrg = $"{ (product.Price):0,0 đ}";
+                            order.PriceOrg = $"{ (product.OriginPrice):0,0 đ}";
                         else
-                            order.PriceOrg = "";
+                            order.PriceOrg ="";
                         order.TotalPrice = $"{(invoicedt.Cost):0,0 đ}";
-                        order.PriceDisc = $"{((long)invoicedt.Cost / order.Quantity):0,0 đ}";
+                        order.PriceDisc = $"{(product.Price):0,0 đ}  ";
                         order.Status = db.InvoiceStatuses.Where(x => x.Id == invoice.StatusId).First().Name;
                         order.Date = invoice.CreatedAt.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
                         switch (order.Status)
@@ -220,11 +220,6 @@ namespace GoninDigital.ViewModels
                 FlagItem[4] = "Visible";
                 FlagImage[4] = "Hidden";
             }
-        }
-        public void OnNavigatedTo()
-        {
-            Thread thread = new Thread(Load_HistoryPurchase);
-            thread.Start();
         }
         #endregion
     }

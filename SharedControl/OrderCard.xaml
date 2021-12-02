@@ -8,35 +8,34 @@
              Width="auto" Height="250"
              Name="orderCard">
     <Grid >
-        <Grid Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
-                  Margin="10 30 10 5">
+        <Grid 
+                  Margin="10 10 10 5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="50"/>
                     <RowDefinition/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 
-                <Label Grid.Row="0" 
+                <Label Grid.Row="0" FontSize="20" Margin="32,-15,0,0"
                        Content="{Binding VendorName, ElementName = orderCard}"
-                       VerticalAlignment="Center"
-                       Margin="20,0,0,0"/>
+                       VerticalAlignment="Center"/>
                 <Image Grid.Row="1" 
                        Source="{Binding Image, ElementName=orderCard}"
                        Stretch="Fill"
                        Width="150"
-                       Height="120"
+                       Height="150"
                        VerticalAlignment="Center"
                        Margin="-70,-20,0,0"/>
                 <StackPanel Grid.Row="2" Orientation="Horizontal">
-                     <Label Content="Total Price: " Margin="15,0,0,0"/>
+                     <Label Content="Total Price: " Margin="10,0,0,0" FontSize="16"/>
                      <TextBlock Text="{Binding TotalPrice, ElementName=orderCard}" 
-                                Width="150" FontWeight="Bold"/>
+                                Width="150" FontWeight="Bold" FontSize="16"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="1" Margin="0 20 0 40 ">
@@ -46,24 +45,23 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <StackPanel Margin="0 0 0 20">
+                <StackPanel Margin="0 10 0 20">
                     <TextBlock Text="{Binding ProductName,ElementName=orderCard}"
                                TextWrapping="Wrap"
                                FontSize="22"
                                FontWeight="Bold"/>
-                    <Label Content="{Binding BrandName,ElementName=orderCard}"/>
+                    <Label Margin="0,10,0,0" FontSize="18" Content="{Binding BrandName,ElementName=orderCard}"/>
                 </StackPanel>
-                <Grid Grid.Row="1" Margin="0 0 0 10">
+                <Grid Grid.Row="1" Margin="0 -5 0 10">
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Quantity: "></Label>
                         <TextBlock Text="{Binding Quantity,ElementName=orderCard}"></TextBlock>
                     </StackPanel>
                 </Grid>
-                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <StackPanel Grid.Row="2" Margin="0 5 0 10" Orientation="Horizontal">
                     <TextBlock Text="{Binding PriceDisc,ElementName=orderCard}" 
                                FontSize="20"
-                               FontWeight="Bold"
-                               Width="250"/>
+                               FontWeight="Bold"/>
                     <TextBlock >
                             <Run TextDecorations="Strikethrough" Text="{Binding PriceOrg,ElementName=orderCard}" FontSize="20"></Run>
                     </TextBlock>
@@ -71,24 +69,24 @@
             </Grid>
             <StackPanel Grid.Column="2" Margin="0 30 30 0">
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Status: " Margin="25,0,0,0"></Label>
-                    <Label Content="{Binding Status,ElementName=orderCard}"></Label>
+                    <Label Content="Status: " Margin="50,0,0,0" FontSize="20"></Label>
+                    <Label Content="{Binding Status,ElementName=orderCard}" FontSize="20"></Label>
                 </StackPanel>
                 <Button x:Name="buy"
                         Content="Buy Again"
-                        Width="150"
-                        Margin="20 30 30 0"
+                        Width="170"
+                        Margin="0 25 30 0"
                         Background="{DynamicResource SystemAccentColorDark1Brush}"
                         HorizontalAlignment="Center"/>
                 <Button x:Name="addCart"
                         Content="Add To Cart"
-                        Width="150"
-                        Margin="20 30 30 0"
+                        Width="170"
+                        Margin="0 25 30 0"
                         Background="{DynamicResource SystemAccentColorDark1Brush}"
                         HorizontalAlignment="Center" Click="addCart_Click"/>
-                <StackPanel Orientation="Horizontal" Margin="20 10 30 0">
-                    <Label Content="Purchase Date: "></Label>
-                    <TextBlock Text="{Binding Date,ElementName=orderCard}"></TextBlock>
+                <StackPanel Orientation="Horizontal" Margin="20 20 30 0">
+                    <Label Content="Purchase Date: " FontSize="18"></Label>
+                    <TextBlock Text="{Binding Date,ElementName=orderCard}" FontSize="18"></TextBlock>
                 </StackPanel>
             </StackPanel>
         </Grid>

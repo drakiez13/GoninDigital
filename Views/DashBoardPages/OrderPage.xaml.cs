@@ -32,7 +32,6 @@ namespace GoninDigital.Views.DashBoardPages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             (DataContext as OrderPageViewModel).OnNavigatedTo();
-            
         }
     }
 }
