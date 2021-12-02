@@ -75,7 +75,7 @@ namespace GoninDigital.ViewModels
                 cart => DashBoard.RootFrame.Navigate(new CheckoutPage(cart.Product, cart.Quantity, o => { })));
             BuySelections = new RelayCommand<object>(o => true,
                 o => DashBoard.RootFrame.Navigate(new CheckoutPage(SelectedProducts,
-                o => { DashBoard.RootFrame.GoBack(); MessageBox.Show("do more here"); })));
+                o => { MessageBox.Show("do more here"); })));
         }
     }
 
