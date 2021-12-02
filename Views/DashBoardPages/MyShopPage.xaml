@@ -16,7 +16,6 @@
         <Grid>
             <StackPanel Orientation="Vertical"
                         Margin="0 0 0 50 "
-                        
                         Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=True}">
                 <Grid VerticalAlignment="Top">
                     <Grid Height="450"
@@ -86,24 +85,7 @@
                             </StackPanel>
                         </StackPanel>
                     </TabItem>
-                    <TabItem Header="All Product">
-                        <StackPanel Margin="20 0">
-                            <ItemsControl ItemsSource="{Binding Products}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <uc:ProductCard Margin="10 10 10 10"
-                                                        ProductInfo="{Binding}"></uc:ProductCard>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
-                        </StackPanel>
 
-                    </TabItem>
                     <TabItem Header="Product Manager">
                         <StackPanel Margin="20 0">
                             <ItemsControl ItemsSource="{Binding Products}">
@@ -116,14 +98,17 @@
                                             <ui:ContextFlyoutService.ContextFlyout>
                                                 <ui:CommandBarFlyout>
                                                     <ui:CommandBarFlyout.SecondaryCommands>
+
                                                         <ui:AppBarButton Label="Edit"
                                                                          Icon="Edit"
+                                                                         
                                                                          CommandParameter="{Binding}"
                                                                          Command="{Binding Source={StaticResource MyShopPageVM},Path=EditCommand}" />
                                                         <ui:AppBarButton Label="Remove"
                                                                          Icon="Remove"
                                                                          CommandParameter="{Binding}"
                                                                          Command="{Binding Source={StaticResource MyShopPageVM},Path=RemoveCommand}" />
+
                                                     </ui:CommandBarFlyout.SecondaryCommands>
                                                 </ui:CommandBarFlyout>
                                             </ui:ContextFlyoutService.ContextFlyout>

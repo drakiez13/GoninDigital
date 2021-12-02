@@ -123,6 +123,7 @@ namespace GoninDigital.ViewModels
             }
             else
             {
+                
                 HasVendor = true;
             }
             

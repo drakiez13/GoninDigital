@@ -1,7 +1,9 @@
 ﻿using GoninDigital.Models;
 using GoninDigital.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,11 +30,18 @@ namespace GoninDigital.Views.DashBoardPages
             InitializeComponent();
             (DataContext as MyShopViewModel).IsOwner=true;
         }
-        public MyShopPage(Vendor vendor)
+        public MyShopPage(int vendorId)
         {
             InitializeComponent();
             (DataContext as MyShopViewModel).IsOwner = false;
-            (DataContext as MyShopViewModel).Vendor = vendor;
+            using (var db= new GoninDigitalDBContext())
+            {
+                (DataContext as MyShopViewModel).Vendor = db.Vendors
+                    .Include(o => o.Products).First(o => o.Id == vendorId);
+                (DataContext as MyShopViewModel).Products = new ObservableCollection<Product>(
+                    (DataContext as MyShopViewModel).Vendor.Products
+                    );
+            }
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
