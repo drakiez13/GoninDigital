@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GoninDigital.Models;
+using GoninDigital.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +26,17 @@ namespace GoninDigital.Views.DashBoardPages
         public MyShopPage()
         {
             InitializeComponent();
+            (DataContext as MyShopViewModel).IsOwner=true;
+        }
+        public MyShopPage(Vendor vendor)
+        {
+            InitializeComponent();
+            (DataContext as MyShopViewModel).IsOwner = false;
+            (DataContext as MyShopViewModel).Vendor = vendor;
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            (DataContext as MyShopViewModel).OnNavigatedTo();
         }
     }
 }

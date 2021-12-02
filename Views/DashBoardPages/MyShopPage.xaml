@@ -13,41 +13,80 @@
          Title="MyShop">
 
     <ScrollViewer>
-        <StackPanel Orientation="Vertical"
-                    Margin="0 0 0 50 ">
-            <Grid VerticalAlignment="Top">
-                <Grid Height="450"
-                      VerticalAlignment="Top">
-                    <Image Source="{Binding Vendor.Cover}"
-                           Stretch="UniformToFill"></Image>
-                    <Label Margin="20 20 0 20"
-                           FontSize="22"
-                           FontWeight="Bold">My Shop</Label>
+        <Grid>
+            <StackPanel Orientation="Vertical"
+                        Margin="0 0 0 50 "
+                        
+                        Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=True}">
+                <Grid VerticalAlignment="Top">
+                    <Grid Height="450"
+                          VerticalAlignment="Top">
+                        <Image Source="{Binding Vendor.Cover}"
+                               Stretch="UniformToFill"></Image>
+                        <Label Margin="20 20 0 20"
+                               FontSize="22"
+                               FontWeight="Bold">My Shop</Label>
+                    </Grid>
+                    <Grid Margin="0 405 0 0">
+                        <StackPanel Orientation="Vertical">
+                            <ui:PersonPicture DisplayName="Betsy Sherman"
+                                              ProfilePicture="{Binding Vendor.Avatar}"
+                                              Initials="Shop" />
+                            <Label Content="{Binding Vendor.Name}"
+                                   FontSize="25"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center" />
+                            <Label Content="{Binding Vendor.Description}"
+                                   FontSize="18"
+                                   HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
                 </Grid>
-                <Grid Margin="0 405 0 0">
-                    <StackPanel Orientation="Vertical">
-                        <ui:PersonPicture DisplayName="Betsy Sherman"
-                                          ProfilePicture="{Binding Vendor.Avatar}"
-                                          Initials="Shop" />
-                        <Label Content="{Binding Vendor.Name}"
-                               FontSize="25"
-                               FontWeight="Bold"
-                               HorizontalAlignment="Center" />
-                        <Label Content="{Binding Vendor.Description}"
-                               FontSize="18"
-                               HorizontalAlignment="Center" />
-                    </StackPanel>
-                </Grid>
-            </Grid>
 
-            <TabControl Style="{StaticResource TabControlPivotStyle}"
-                        Margin="10 30 0 10"
-                        MinHeight="400">
-                <TabItem Header="Home">
-                    <StackPanel>
-                        <Label Margin="10 30 0 0"
-                               FontWeight="Bold"
-                               FontSize="18">Best seller</Label>
+                <TabControl Style="{StaticResource TabControlPivotStyle}"
+                            Margin="10 30 0 10"
+                            MinHeight="400">
+                    <TabItem Header="Home">
+                        <StackPanel>
+                            <Label Margin="10 30 0 0"
+                                   FontWeight="Bold"
+                                   FontSize="18">Best seller</Label>
+                            <StackPanel Margin="20 0">
+                                <ItemsControl ItemsSource="{Binding Products}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <uc:ProductCard Margin="10 10 10 10"
+                                                            ProductInfo="{Binding}"></uc:ProductCard>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </StackPanel>
+                            <Label Margin="10 30 0 0"
+                                   FontWeight="Bold"
+                                   FontSize="18">On sale</Label>
+                            <StackPanel Margin="20 0">
+                                <ItemsControl ItemsSource="{Binding Products}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <uc:ProductCard Margin="10 10 10 10"
+                                                            ProductInfo="{Binding}"></uc:ProductCard>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </StackPanel>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="All Product">
                         <StackPanel Margin="20 0">
                             <ItemsControl ItemsSource="{Binding Products}">
                                 <ItemsControl.ItemTemplate>
@@ -63,16 +102,32 @@
                                 </ItemsControl.ItemsPanel>
                             </ItemsControl>
                         </StackPanel>
-                        <Label Margin="10 30 0 0"
-                               FontWeight="Bold"
-                               FontSize="18">On sale</Label>
+
+                    </TabItem>
+                    <TabItem Header="Product Manager">
                         <StackPanel Margin="20 0">
                             <ItemsControl ItemsSource="{Binding Products}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
+
                                         <uc:ProductCard Margin="10 10 10 10"
-                                                        
-                                                        ProductInfo="{Binding}"></uc:ProductCard>
+                                                        Clickable="False"
+                                                        ProductInfo="{Binding}">
+                                            <ui:ContextFlyoutService.ContextFlyout>
+                                                <ui:CommandBarFlyout>
+                                                    <ui:CommandBarFlyout.SecondaryCommands>
+                                                        <ui:AppBarButton Label="Edit"
+                                                                         Icon="Edit"
+                                                                         CommandParameter="{Binding}"
+                                                                         Command="{Binding Source={StaticResource MyShopPageVM},Path=EditCommand}" />
+                                                        <ui:AppBarButton Label="Remove"
+                                                                         Icon="Remove"
+                                                                         CommandParameter="{Binding}"
+                                                                         Command="{Binding Source={StaticResource MyShopPageVM},Path=RemoveCommand}" />
+                                                    </ui:CommandBarFlyout.SecondaryCommands>
+                                                </ui:CommandBarFlyout>
+                                            </ui:ContextFlyoutService.ContextFlyout>
+                                        </uc:ProductCard>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                                 <ItemsControl.ItemsPanel>
@@ -82,87 +137,36 @@
                                 </ItemsControl.ItemsPanel>
                             </ItemsControl>
                         </StackPanel>
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="All Product">
-                    <StackPanel Margin="20 0">
-                        <ItemsControl ItemsSource="{Binding Products}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <uc:ProductCard Margin="10 10 10 10"
-                                                    
-                                                    ProductInfo="{Binding}"></uc:ProductCard>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    </StackPanel>
 
-                </TabItem>
-                <TabItem Header="Product Manager">
-                    <StackPanel Margin="20 0">
-                        <ItemsControl ItemsSource="{Binding Products}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    
-                                    <uc:ProductCard Margin="10 10 10 10"
-                                                    Clickable="False"
-                                                    ProductInfo="{Binding}">
-                                        <ui:ContextFlyoutService.ContextFlyout>
-                                            <ui:CommandBarFlyout>
-                                                <ui:CommandBarFlyout.SecondaryCommands>
-                                                    <ui:AppBarButton Label="Edit"
-                                                                     Icon="Edit" 
-                                                                     CommandParameter="{Binding}"
-                                                                     Command="{Binding Source={StaticResource MyShopPageVM},Path=EditCommand}"/>
-                                                    <ui:AppBarButton Label="Remove"
-                                                                     Icon="Remove"
-                                                                     CommandParameter="{Binding}"
-                                                                     Command="{Binding Source={StaticResource MyShopPageVM},Path=RemoveCommand}" />
-                                                </ui:CommandBarFlyout.SecondaryCommands>
-                                            </ui:CommandBarFlyout>
-                                        </ui:ContextFlyoutService.ContextFlyout>
-                                    </uc:ProductCard>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    </StackPanel>
+                    </TabItem>
 
-                </TabItem>
-
-                <TabItem Header="About">
-                    <StackPanel HorizontalAlignment="Right">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Phone: "></Label>
-                            <Label Content="{Binding Vendor.Phone}" />
+                    <TabItem Header="About">
+                        <StackPanel HorizontalAlignment="Right">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Phone: "></Label>
+                                <Label Content="{Binding Vendor.Phone}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Address: "></Label>
+                                <Label Content="{Binding Vendor.Address}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Sold: "></Label>
+                                <Label Content="sold" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Remain: "></Label>
+                                <Label Content="Remain" />
+                            </StackPanel>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Address: "></Label>
-                            <Label Content="{Binding Vendor.Address}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Sold: "></Label>
-                            <Label Content="sold" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Remain: "></Label>
-                            <Label Content="Remain" />
-                        </StackPanel>
-                    </StackPanel>
-                </TabItem>
-            </TabControl>
-            <Button Content="New Product" />
-        </StackPanel>
-        
+                    </TabItem>
+                </TabControl>
+                <Button Content="New Product" />
+            </StackPanel>
+            <StackPanel Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=False}">
+                <Label Content="Don't have Vendor" />
+            </StackPanel>
+        </Grid>
     </ScrollViewer>
 
 </ui:Page>

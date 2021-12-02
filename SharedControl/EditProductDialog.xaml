@@ -15,11 +15,14 @@
         <TextBox ui:ControlHelper.Header="Product Name"
                  Text="{Binding SelectedItem.Name}"
                  AcceptsReturn="True" />
-        
-        <TextBox ui:ControlHelper.Header="Price"
+
+        <TextBox ui:ControlHelper.Header="Origin"
                  Text="{Binding SelectedItem.Origin}" />
-        
+
         <TextBox ui:ControlHelper.Header="Origin Price"
+                 Text="{Binding SelectedItem.OriginPrice}" />
+        
+        <TextBox ui:ControlHelper.Header="Sale off Price"
                  Text="{Binding SelectedItem.Price}" />
         
         <TextBox ui:ControlHelper.Header="Descirption"
@@ -29,7 +32,6 @@
                  Text="{Binding SelectedItem.Name}" />
 
        
-
     </ui:SimpleStackPanel>
 
 </UserControl>

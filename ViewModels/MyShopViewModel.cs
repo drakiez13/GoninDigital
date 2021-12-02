@@ -17,6 +17,20 @@ namespace GoninDigital.ViewModels
 {
     class MyShopViewModel : BaseViewModel
     {
+        private bool hasVendor;
+        public bool HasVendor
+        {
+
+            get { return hasVendor; }
+            set { hasVendor = value;OnPropertyChanged(); }
+        }
+        private bool isOwner;
+        public bool IsOwner
+        {
+            get { return isOwner; }
+            set { isOwner = value; OnPropertyChanged(); }
+        }
+
         private Product selectedItem = null;
         public Product SelectedItem
         {
@@ -49,21 +63,19 @@ namespace GoninDigital.ViewModels
                 {
                     Vendor = db.Vendors.Include(o => o.Owner)
                         .Include(o => o.Products)
-                        .Single(o => o.Owner.UserName == Settings.Default.usrname);
+                        .First(o => o.Owner.UserName == Settings.Default.usrname);
                     /*Products = db.Products.Where(o => o.VendorId == Vendor.Id).ToList();*/
                     Products = new ObservableCollection<Product>(Vendor.Products.ToList());
+                    HasVendor = true;
                 }
                 catch
                 {
 
-                    //MessageBox.Show("Cannot find out any vendors ");
+                    HasVendor = false;
                 }
             }
         }
-        public void OnNavigatedTo()
-        {
-
-        }
+        
         public ICommand EditCommand { get; set; }
         public void EditCommandExec(Product product)
         {
@@ -101,20 +113,33 @@ namespace GoninDigital.ViewModels
                 }
             }
         }
+        public void OnNavigatedTo()
+        {
+            if(isOwner)
+            {
+                
+                Thread thread = new Thread(InitVendor);
+                thread.Start();
+            }
+            else
+            {
+                HasVendor = true;
+            }
+            
+        }
         public MyShopViewModel()
         {
             EditCommand = new RelayCommand<Product>(o => true, o => EditCommandExec(o));
             RemoveCommand = new RelayCommand<Product>(o => true, o => RemoveCommandExec(o));
-            Thread thread = new Thread(InitVendor);
-            thread.Start();
 
         }
-        public static void EditBtnExec()
+        public void EditBtnExec()
         {
             
             
             using (var db = new GoninDigitalDBContext())
             {
+                db.Products.Update(selectedItem);
                 db.SaveChanges();
             }
             MessageBox.Show("edited");
