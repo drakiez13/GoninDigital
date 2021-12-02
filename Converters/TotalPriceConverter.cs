@@ -12,9 +12,17 @@ namespace GoninDigital.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var value = (long)values[0];
-            var quantity = (int)values[1];
-            return value * quantity;
+            try
+            {
+                var value = (long)values[0];
+                var quantity = (int)values[1];
+                return value * quantity;
+            }
+            catch
+            {
+                return 0;
+            }
+            
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

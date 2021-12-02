@@ -30,6 +30,7 @@ namespace GoninDigital.Models
         public virtual DbSet<ProductImage> ProductImages { get; set; }
         public virtual DbSet<ProductSpec> ProductSpecs { get; set; }
         public virtual DbSet<ProductSpecDetail> ProductSpecDetails { get; set; }
+        public virtual DbSet<ProductStatus> ProductStatuses { get; set; }
         public virtual DbSet<Rating> Ratings { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
@@ -46,7 +47,7 @@ namespace GoninDigital.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS");
 
             modelBuilder.Entity<Ad>(entity =>
             {
@@ -245,8 +246,6 @@ namespace GoninDigital.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.ApprovalStatus).HasColumnName("approval_status");
-
                 entity.Property(e => e.Available).HasColumnName("available");
 
                 entity.Property(e => e.BrandId).HasColumnName("brand_id");
@@ -262,8 +261,6 @@ namespace GoninDigital.Models
                     .HasColumnName("description");
 
                 entity.Property(e => e.Detail).HasColumnName("detail");
-
-                entity.Property(e => e.DiscountRate).HasColumnName("discount_rate");
 
                 entity.Property(e => e.Image)
                     .IsRequired()
@@ -283,9 +280,13 @@ namespace GoninDigital.Models
                     .HasMaxLength(10)
                     .HasColumnName("origin");
 
+                entity.Property(e => e.OriginPrice).HasColumnName("origin_price");
+
                 entity.Property(e => e.Price).HasColumnName("price");
 
                 entity.Property(e => e.Rating).HasColumnName("rating");
+
+                entity.Property(e => e.StatusId).HasColumnName("status_id");
 
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
@@ -304,6 +305,11 @@ namespace GoninDigital.Models
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PRODUCT_PRODUCTCATEGORY");
+
+                entity.HasOne(d => d.Status)
+                    .WithMany(p => p.Products)
+                    .HasForeignKey(d => d.StatusId)
+                    .HasConstraintName("FK_PRODUCT_STATUS");
 
                 entity.HasOne(d => d.Vendor)
                     .WithMany(p => p.Products)
@@ -387,6 +393,19 @@ namespace GoninDigital.Models
                     .HasForeignKey(d => d.SpecId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PRODUCTSPECDETAIL_PRODUCTSPEC");
+            });
+
+            modelBuilder.Entity<ProductStatus>(entity =>
+            {
+                entity.ToTable("ProductStatus");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnName("name")
+                    .IsFixedLength(true);
             });
 
             modelBuilder.Entity<Rating>(entity =>

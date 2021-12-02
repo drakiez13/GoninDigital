@@ -12,6 +12,9 @@ using GoninDigital.Utils;
 using GoninDigital.Views.DashBoardPages;
 using GoninDigital.Properties;
 using ModernWpf.Controls;
+using Microsoft.Win32;
+using System.IO;
+using GoninDigital.Utils;
 
 namespace GoninDigital.ViewModels
 {
@@ -137,6 +140,7 @@ namespace GoninDigital.ViewModels
         public ICommand ResetPCommand { get; set; }
         public ICommand SavePCommand { get; set; }
         public ICommand CancelPCommand { get; set; }
+        public ICommand EditAvatarCommand { get; set; }
         #endregion
         #region Constructor
         public UserSettingViewModel()
@@ -150,9 +154,31 @@ namespace GoninDigital.ViewModels
             ResetPCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ResetPExecute(); });
             SavePCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { SavePExecute(); });
             CancelPCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { CancelPExecute(); });
+            EditAvatarCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { EditAvatarExecute(); });
         }
         #endregion
         #region Private Methods
+        public async void EditAvatarExecute()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Title = "Choose Image..";
+
+            openFileDialog.InitialDirectory = @"C:\";
+            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var linkAvatar = await ImageUploader.UploadAsync(openFileDialog.FileName);
+                using (var db = new GoninDigitalDBContext())
+                {
+                    var t = db.Users.Where(x => x.UserName == Settings.Default.usrname).First();
+                    t.Avatar = linkAvatar;
+                    Avatar = t.Avatar;
+                    _ = db.SaveChanges();
+                }
+            }
+
+        }
         void EditPExecute()
         {
             Flag = false;

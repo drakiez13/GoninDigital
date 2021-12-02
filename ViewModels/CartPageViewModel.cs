@@ -11,6 +11,7 @@ using GoninDigital.Models;
 using GoninDigital.Properties;
 using GoninDigital.SharedControl;
 using GoninDigital.Views;
+using GoninDigital.Views.SharedPages;
 using Microsoft.EntityFrameworkCore;
 using ModernWpf.Controls;
 
@@ -24,6 +25,16 @@ namespace GoninDigital.ViewModels
             get { return products; }
             set { products = value; OnPropertyChanged(); }
         }
+        private IEnumerable<Cart> selectedProducts;
+        public IEnumerable<Cart> SelectedProducts
+        {
+            get { return selectedProducts; }
+            set { selectedProducts = value; OnPropertyChanged(); }
+        }
+
+        public ICommand RemoveProduct { get; set; }
+        public ICommand ShowProduct { get; set; }
+        public ICommand BuyProduct { get; set; }
 
         private void Init()
         {
@@ -37,6 +48,16 @@ namespace GoninDigital.ViewModels
             }
         }
 
+        private async void RemoveCartDb(Cart cart)
+        {
+            using (var db = new GoninDigitalDBContext())
+            {
+                db.Carts.Remove(cart);
+                await db.SaveChangesAsync();
+            }
+        }
+
+
         public void OnNavigatedTo()
         {
             Thread thread = new Thread(Init);
@@ -45,7 +66,12 @@ namespace GoninDigital.ViewModels
 
         public CartPageViewModel()
         {
-            
+            selectedProducts = new ObservableCollection<Cart>();
+            RemoveProduct = new RelayCommand<Cart>(o => true, 
+                cart => { Products.Remove(cart); RemoveCartDb(cart); });
+            ShowProduct = new RelayCommand<Cart>(o => true, 
+                cart => DashBoard.RootFrame.Navigate(new ProductPage(cart.ProductId)));
         }
     }
+
 }
