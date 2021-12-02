@@ -22,7 +22,7 @@
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 
-                <Label Grid.Row="0" FontSize="20" Margin="32,-15,0,0"
+                <Label Grid.Row="0" FontSize="18" Margin="32,-15,0,0"
                        Content="{Binding VendorName, ElementName = orderCard}"
                        VerticalAlignment="Center"/>
                 <Image Grid.Row="1" 
