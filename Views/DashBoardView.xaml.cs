@@ -227,6 +227,7 @@ namespace GoninDigital.Views
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            flyout.Hide();
             var selection = (e.ClickedItem as ListViewItem).Name;
             if (selection == "accountInfo")
             {

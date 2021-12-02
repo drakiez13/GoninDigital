@@ -8,6 +8,7 @@ using GoninDigital.Models;
 using System.Windows.Input;
 using GoninDigital.Views.SharedPages;
 using GoninDigital.Properties;
+using ModernWpf.Controls;
 
 namespace GoninDigital.ViewModels
 {
@@ -158,7 +159,7 @@ namespace GoninDigital.ViewModels
             productName = product.Name;
             VendorName = context.Vendors.Where(x => x.Id == product.VendorId).First().Name;
             productType = context.ProductCategories.Where(x => x.Id == product.CategoryId).First().Name;
-            ProductPrice = String.Format("{0:0,0 vnđ}", product.Price);
+            ProductPrice = String.Format("{0:0,0 vnđ}", product.OriginPrice);
             if (product.Price == product.OriginPrice)
                 IsDisc = "Hidden";
             else
@@ -166,7 +167,7 @@ namespace GoninDigital.ViewModels
             productDescription = product.Description;
             vendorAddress = context.Vendors.Where(x => x.Id == product.VendorId).First().Address;
             brandName = context.Brands.Where(x => x.Id == product.BrandId).First().Name;
-            ProductDiscountPrice = string.Format("{0:0,0 vnđ}", product.OriginPrice);
+            ProductDiscountPrice = string.Format("{0:0,0 vnđ}", product.Price);
             var Products_of_Vendor = context.Products.Where(x => x.VendorId == product.VendorId).ToList();
             vendorRating = 0;
             for (int i = 0; i < Products_of_Vendor.Count(); i++)
@@ -174,7 +175,7 @@ namespace GoninDigital.ViewModels
                 vendorRating += Products_of_Vendor[i].Rating;
             }
             vendorRating /= Products_of_Vendor.Count();
-            vendorProducts = context.Vendors.Where(x => x.Id == product.VendorId).Count();
+            vendorProducts = context.Products.Where(x => x.VendorId == product.VendorId).Count();
             productStatus = ((byte?)product.New).ToString() + "%";
             productAvailable = product.Available;
         }
@@ -195,7 +196,14 @@ namespace GoninDigital.ViewModels
                 context.Carts.Where(x => x.UserId == userID & x.ProductId == ProductId).First().Quantity += 1; //Id mặc định
                 context.SaveChanges();
             }
-            MessageBox.Show("This product has been added to your cart");
+            ContentDialog content = new()
+            {
+                Title = "Complete",
+
+                Content = "This product has been added to your cart",
+                PrimaryButtonText = "Ok"
+            };
+            content.ShowAsync();
         }
         #endregion
     }

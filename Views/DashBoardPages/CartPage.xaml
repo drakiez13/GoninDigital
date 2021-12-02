@@ -31,7 +31,7 @@
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="My Cart"
-                           FontSize="24"
+                           FontSize="22"
                            FontWeight="Bold"
                            Margin="20" />
                 </StackPanel>
