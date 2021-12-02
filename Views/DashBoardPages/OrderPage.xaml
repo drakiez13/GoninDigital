@@ -20,9 +20,8 @@
         <TabControl  Grid.Row="1" Style="{StaticResource TabControlPivotStyle}" >
             <TabItem Header="Created" Width="160">
                 <ScrollViewer>
-                    <Grid >
-                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Created}" Visibility="{Binding FlagItem[0]}"
-                          SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
+                    <Grid>
+                        <ListBox x:Name="ltb_Created" Margin="0,30,0,0" ItemsSource="{Binding L_Order_Created}" Visibility="{Binding FlagItem[0]}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Vertical"></StackPanel>

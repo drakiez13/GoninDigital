@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GoninDigital.ViewModels;
+using GoninDigital.Models;
 using Page = ModernWpf.Controls.Page;
 
 namespace GoninDigital.Views.DashBoardPages
@@ -24,6 +27,12 @@ namespace GoninDigital.Views.DashBoardPages
         public OrderPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            (DataContext as OrderPageViewModel).OnNavigatedTo();
+            
         }
     }
 }

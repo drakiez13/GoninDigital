@@ -1,20 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using GoninDigital.Models;
 using GoninDigital.SharedControl;
+using System.Windows;
 using System.Windows.Input;
+using GoninDigital.Models;
 using GoninDigital.Properties;
 using GoninDigital.Views;
 using ModernWpf.Controls;
-using System.Windows;
 using System.Globalization;
+using System.Threading;
+using GoninDigital.Views;
+using GoninDigital.Views.DashBoardPages;
+using Microsoft.EntityFrameworkCore;
+using ModernWpf.Controls;
 
 namespace GoninDigital.ViewModels
 {
-    class OrderPageViewModel: BaseViewModel
+    class OrderPageViewModel : BaseViewModel
     {
         #region Properties
         private List<Order> l_Order_Created;
@@ -83,7 +91,12 @@ namespace GoninDigital.ViewModels
             get { return image; }
             set { image = value; OnPropertyChanged(); }
         }
-        GoninDigitalDBContext db = DataProvider.Instance.Db;
+        private int userID;
+        public int UserID
+        {
+            get { return userID; }
+            set { userID = value; OnPropertyChanged(); }
+        }
         #endregion
         #region Constructor
         public OrderPageViewModel()
@@ -97,57 +110,65 @@ namespace GoninDigital.ViewModels
             FlagImage = new string[5];
             Image = "/Resources/Images/NoOrderYet.jpg";
             //int userID = db.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
-            int userID = 4; //id mặc định do chưa có data
-            Load_HistoryPurchase(userID);
+            UserID = 4; //id mặc định do chưa có data+
         }
         #endregion
         #region Private Methods
-        void Load_HistoryPurchase(int userID)
+        private void Load_HistoryPurchase()
         {
-            L_Invoice = db.Invoices.Where(x => x.CustomerId == userID).ToList();
-            foreach (Invoice invoice in L_Invoice)
+            L_Order_Created.Clear();
+            L_Order_Accepted.Clear();
+            L_Order_Refused.Clear();
+            L_Order_Delivered.Clear();
+            L_Order_Canceled.Clear();
+            UserID = 4;
+            using (var db = new GoninDigitalDBContext())
             {
-                L_Invoice_Detail = db.InvoiceDetails.Where(x => x.InvoiceId == invoice.Id).ToList();
-                foreach (InvoiceDetail invoicedt in L_Invoice_Detail)
+                L_Invoice = db.Invoices.Where(x => x.CustomerId == UserID).ToList();
+                foreach (Invoice invoice in L_Invoice)
                 {
-                    Order order = new Order();
-                    Product product = db.Products.Where(x => x.Id == invoicedt.ProductId).First();
-                    order.Image = product.Image;
-                    order.VendorName = db.Vendors.Where(x => x.Id == product.VendorId).First().Name;
-                    order.ProductName = product.Name;
-                    order.BrandName = db.Brands.Where(x => x.Id == product.BrandId).First().Name;
-                    order.Quantity = invoicedt.Quantity;
-                    if (product.Price != product.OriginPrice)
-                        order.PriceOrg = $"{ (product.Price):0,0 đ}";
-                    else
-                        order.PriceOrg = "";
-                    order.TotalPrice = $"{(invoicedt.Cost):0,0 đ}";
-                    order.PriceDisc = $"{((long)invoicedt.Cost / order.Quantity):0,0 đ}";
-                    order.Status = db.InvoiceStatuses.Where(x => x.Id == invoice.StatusId).First().Name;
-                    order.Date = invoice.CreatedAt.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
-                        switch (order.Status)
+                    L_Invoice_Detail = db.InvoiceDetails.Where(x => x.InvoiceId == invoice.Id).ToList();
+                    foreach (InvoiceDetail invoicedt in L_Invoice_Detail)
                     {
-                        case "created   ":
-                            L_Order_Created.Add(order);
-                            break;
-                        case "accepted   ":
-                            L_Order_Accepted.Add(order);
-                            break;
-                        case "refused   ":
-                            L_Order_Refused.Add(order);
-                            break;
-                        case "delivered   ":
-                            L_Order_Delivered.Add(order);
-                            break;
-                        case "canceled   ":
-                            L_Order_Canceled.Add(order);
-                            break;
+                        Order order = new Order();
+                        Product product = db.Products.Where(x => x.Id == invoicedt.ProductId).First();
+                        order.Image = product.Image;
+                        order.VendorName = db.Vendors.Where(x => x.Id == product.VendorId).First().Name;
+                        order.ProductName = product.Name;
+                        order.BrandName = db.Brands.Where(x => x.Id == product.BrandId).First().Name;
+                        order.Quantity = invoicedt.Quantity;
+                        if (product.Price != product.OriginPrice)
+                            order.PriceOrg = $"{ (product.Price):0,0 đ}";
+                        else
+                            order.PriceOrg = "";
+                        order.TotalPrice = $"{(invoicedt.Cost):0,0 đ}";
+                        order.PriceDisc = $"{((long)invoicedt.Cost / order.Quantity):0,0 đ}";
+                        order.Status = db.InvoiceStatuses.Where(x => x.Id == invoice.StatusId).First().Name;
+                        order.Date = invoice.CreatedAt.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                        switch (order.Status)
+                        {
+                            case "created   ":
+                                L_Order_Created.Add(order);
+                                break;
+                            case "accepted   ":
+                                L_Order_Accepted.Add(order);
+                                break;
+                            case "refused   ":
+                                L_Order_Refused.Add(order);
+                                break;
+                            case "delivered   ":
+                                L_Order_Delivered.Add(order);
+                                break;
+                            case "canceled   ":
+                                L_Order_Canceled.Add(order);
+                                break;
+                        }
                     }
-                    CheckItem();
                 }
             }
+            CheckItem();
         }
-        void CheckItem()
+        private void CheckItem()
         {
             if (L_Order_Created.Count == 0)
             {
@@ -199,6 +220,11 @@ namespace GoninDigital.ViewModels
                 FlagItem[4] = "Visible";
                 FlagImage[4] = "Hidden";
             }
+        }
+        public void OnNavigatedTo()
+        {
+            Thread thread = new Thread(Load_HistoryPurchase);
+            thread.Start();
         }
         #endregion
     }
