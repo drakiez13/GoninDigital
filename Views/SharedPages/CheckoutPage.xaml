@@ -170,7 +170,8 @@
                                  Text="{Binding User.FirstName}" />
                         <ui:SimpleStackPanel Orientation="Horizontal"
                                              HorizontalAlignment="Center">
-                            <Button Margin="0 0 50 0">Cancel</Button>
+                            <Button Margin="0 0 50 0"
+                                    Command="{Binding CancelButton}">Cancel</Button>
                             <Button
                                 Command="{Binding OrderButton}">Order</Button>
                         </ui:SimpleStackPanel>

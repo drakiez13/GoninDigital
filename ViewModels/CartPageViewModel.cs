@@ -48,12 +48,24 @@ namespace GoninDigital.ViewModels
             }
         }
 
-        private async void RemoveCartDb(Cart cart)
+        private void RemoveCartDb(Cart cart)
         {
             using (var db = new GoninDigitalDBContext())
             {
+                
                 db.Carts.Remove(cart);
-                await db.SaveChangesAsync();
+                Products.Remove(cart);
+                db.SaveChanges();
+            }
+        }
+        private void RemoveCartDb(IEnumerable<Cart> carts)
+        {
+            using (var db = new GoninDigitalDBContext())
+            {
+                
+                db.Carts.RemoveRange(carts);
+                Products.Clear();
+                db.SaveChanges();
             }
         }
 
@@ -67,15 +79,21 @@ namespace GoninDigital.ViewModels
         public CartPageViewModel()
         {
             selectedProducts = new ObservableCollection<Cart>();
-            RemoveProduct = new RelayCommand<Cart>(o => true, 
+            RemoveProduct = new RelayCommand<Cart>(o => true,
                 cart => { Products.Remove(cart); RemoveCartDb(cart); });
-            ShowProduct = new RelayCommand<Cart>(o => true, 
+            ShowProduct = new RelayCommand<Cart>(o => true,
                 cart => DashBoard.RootFrame.Navigate(new ProductPage(cart.ProductId)));
             BuyProduct = new RelayCommand<Cart>(o => true,
-                cart => DashBoard.RootFrame.Navigate(new CheckoutPage(cart.Product, cart.Quantity, o => { })));
+                cart => DashBoard.RootFrame.Navigate(new CheckoutPage(cart.Product, cart.Quantity, o =>
+                {
+                    RemoveCartDb(cart);
+                })));
             BuySelections = new RelayCommand<object>(o => true,
                 o => DashBoard.RootFrame.Navigate(new CheckoutPage(SelectedProducts,
-                o => { MessageBox.Show("do more here"); })));
+                o =>
+                {
+                    RemoveCartDb(SelectedProducts);
+                })));
         }
     }
 
