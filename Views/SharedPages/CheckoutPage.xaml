@@ -1,0 +1,183 @@
+﻿<ui:Page x:Class="GoninDigital.Views.SharedPages.CheckoutPage"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns:local="clr-namespace:GoninDigital.Views.DashBoardPages"
+         xmlns:uc="clr-namespace:GoninDigital.SharedControl"
+         xmlns:ui="http://schemas.modernwpf.com/2019"
+         xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+         mc:Ignorable="d"
+         Name="purchaseItem"
+         DataContext="{Binding RelativeSource={RelativeSource Self}}"
+         d:DesignHeight="600"
+         d:DesignWidth="900"
+         d:Background="White"
+         Title="CartPage_Purchase">
+    <Page.Resources>
+        <CollectionViewSource x:Key="ProductsCVS"
+                              Source="{Binding Products}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Product.Vendor.Name" />
+            </CollectionViewSource.GroupDescriptions>
+            <CollectionViewSource.SortDescriptions>
+                <cm:SortDescription PropertyName="Product.Name" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </Page.Resources>
+    <ScrollViewer>
+        <Grid Margin="20 0 0 0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label Content="Checkout"
+                           FontSize="22"
+                           Margin="0 20 0 20"
+                           FontWeight="Bold" />
+                    <StackPanel Grid.Row="1">
+                        <Label Content="Your order"
+                               FontSize="18" />
+                        <ui:ListView ItemsSource="{Binding Source={StaticResource ProductsCVS}}"
+                                     Grid.Row="1"
+                                     HorizontalAlignment="Center"
+                                     IsSelectionEnabled="False"
+                                     Width="550"
+                                     VirtualizingPanel.IsVirtualizing="True"
+                                     VirtualizingPanel.IsVirtualizingWhenGrouping="True">
+                            <ui:ListView.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate>
+                                            <Border AutomationProperties.Name="{Binding Name, Mode=OneTime}"
+                                                    Height="50">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <ui:PersonPicture ProfilePicture="{Binding Name, Converter={StaticResource VendorNameToAvatarConverter}}"
+                                                                      DisplayName="{Binding Name}"
+                                                                      Width="40"></ui:PersonPicture>
+                                                    <TextBlock Text="{Binding Name, Mode=OneTime}"
+                                                               Margin="10 0 0 0"
+                                                               VerticalAlignment="Center"
+                                                               FontSize="20"
+                                                               FontWeight="Bold" />
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                </GroupStyle>
+                            </ui:ListView.GroupStyle>
+                            <ui:ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"></StackPanel>
+                                </ItemsPanelTemplate>
+                            </ui:ListView.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <DockPanel HorizontalAlignment="Stretch">
+                                        <Image Source="{Binding Product.Image}"
+                                               Stretch="UniformToFill"
+                                               Width="80"
+                                               Height="80"
+                                               VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding Product.Name}"
+                                                   TextWrapping="Wrap"
+                                                   Width="180"
+                                                   Margin="10,0,5,0"
+                                                   VerticalAlignment="Center" />
+
+                                        <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
+                                                   VerticalAlignment="Center"
+                                                   TextAlignment="Center"
+                                                   Width="80" />
+                                        <Label VerticalAlignment="Center"
+                                               Width="20">X</Label>
+
+                                        <ui:NumberBox VerticalAlignment="Center"
+                                                      Value="{Binding Quantity}"
+                                                      SpinButtonPlacementMode="Hidden"
+                                                      IsEnabled="False"
+                                                      Width="35" />
+                                        <TextBlock Margin="10 0 0 0"
+                                                   Width="200"
+                                                   VerticalAlignment="Center"
+                                                   FontWeight="Bold"
+                                                   FontSize="16"
+                                                   DockPanel.Dock="Right"
+                                                   TextAlignment="Right"
+                                                   HorizontalAlignment="Right"
+                                                   Foreground="{DynamicResource SystemControlHighlightAltListAccentHighBrush}">
+                                            <TextBlock.Text>
+                                                <MultiBinding Converter="{StaticResource TotalPriceConverter}"
+                                                              StringFormat="C"
+                                                              ConverterCulture="vi-VN">
+                                                    <Binding Path="Product.Price"></Binding>
+                                                    <Binding Path="Quantity"></Binding>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ui:ListView>
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right"
+                                    Margin="0 0 50 0">
+                            <Label Content="Total "
+                                   Margin="2"
+                                   VerticalAlignment="Center" />
+                            <TextBlock Margin="2"
+                                       FontWeight="Bold"
+                                       FontSize="28"
+                                       Foreground="{DynamicResource SystemControlForegroundAccentBrush}"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Products, Converter={StaticResource SumProductsPrice}, 
+                                              StringFormat=C, ConverterCulture=vi-VN}">
+
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Column="1"
+                      Margin="20 70 0 0">
+
+                    <ui:SimpleStackPanel Spacing="12"
+                                         Margin="10 0 20 0">
+                        <Label Grid.Row="1"
+                               Content="Shipping info"
+                               FontSize="18" />
+                        <ui:SimpleStackPanel Orientation="Horizontal"
+                                             HorizontalAlignment="Center">
+                            <TextBox ui:ControlHelper.Header="First name"
+                                     Width="130"
+                                     Text="{Binding User.FirstName}" />
+                            <TextBox ui:ControlHelper.Header="Last name"
+                                     Width="130"
+                                     Text="{Binding User.LastName}" />
+                        </ui:SimpleStackPanel>
+
+                        <TextBox ui:ControlHelper.Header="Phone"
+                                 Text="{Binding User.PhoneNumber}" />
+                        <TextBox ui:ControlHelper.Header="Email"
+                                 Text="{Binding User.Email}" />
+                        <TextBox ui:ControlHelper.Header="Address"
+                                 Text="{Binding User.FirstName}" />
+                        <ui:SimpleStackPanel Orientation="Horizontal"
+                                             HorizontalAlignment="Center">
+                            <Button Margin="0 0 50 0"
+                                    Command="{Binding CancelButton}">Cancel</Button>
+                            <Button
+                                Command="{Binding OrderButton}">Order</Button>
+                        </ui:SimpleStackPanel>
+                    </ui:SimpleStackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</ui:Page>
