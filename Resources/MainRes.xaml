@@ -5,7 +5,6 @@
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:UsersViewModel x:Key="UsersVM"></viewmodel:UsersViewModel>
     <viewmodel:BrandsViewModel x:Key="BrandsVM"></viewmodel:BrandsViewModel>
-    <viewmodel:ProductPageViewModel x:Key="ProductPageVM"></viewmodel:ProductPageViewModel>
     <viewmodel:UserSettingViewModel x:Key="UserSettingVM"></viewmodel:UserSettingViewModel>
     <viewmodel:OrderPageViewModel x:Key="OrderPageVM"></viewmodel:OrderPageViewModel>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
