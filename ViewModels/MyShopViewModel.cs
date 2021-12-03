@@ -51,6 +51,12 @@ namespace GoninDigital.ViewModels
             get { return products; }
             set { products = value; OnPropertyChanged(); }
         }
+        private string newVendorName = null;
+        public string NewVendorName
+        {
+            get { return newVendorName; }
+            set { newVendorName = value; OnPropertyChanged(); }
+        }
 
         public int OnPrimaryButtonClick { get; private set; }
         public int PrimaryButtonClick { get; private set; }
@@ -89,6 +95,21 @@ namespace GoninDigital.ViewModels
                 CloseButtonText = "Cancel",
 
                 PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { EditBtnExec(); }),
+            };
+            dialog.ShowAsync();
+        }
+        public ICommand UpgradeCommand { get; set; }
+        public void UpgradeCommandExec()
+        {
+            var dialog = new ContentDialog
+            {
+                Content = new UpgradeVendorDialog(),
+
+                Title = "Upgrade",
+                PrimaryButtonText = "Upgrade",
+                CloseButtonText = "Cancel",
+
+                PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { UpgradeExec(); }),
             };
             dialog.ShowAsync();
         }
@@ -132,7 +153,7 @@ namespace GoninDigital.ViewModels
         {
             EditCommand = new RelayCommand<Product>(o => true, o => EditCommandExec(o));
             RemoveCommand = new RelayCommand<Product>(o => true, o => RemoveCommandExec(o));
-
+            UpgradeCommand = new RelayCommand<object>((p) => true, (p) => { UpgradeCommandExec(); });
         }
         public void EditBtnExec()
         {
@@ -144,6 +165,19 @@ namespace GoninDigital.ViewModels
                 db.SaveChanges();
             }
             MessageBox.Show("edited");
+        }
+        public void UpgradeExec()
+        {
+            
+            using (var db = new GoninDigitalDBContext())
+            {
+                int userId = db.Users.First(u => u.UserName == Settings.Default.usrname).Id;
+                Vendor newVendor = new Vendor() { Name = NewVendorName, OwnerId = userId, ApprovalStatus=0};
+                db.Vendors.Add(newVendor);
+                Vendor = newVendor;
+                HasVendor = true;
+                db.SaveChanges();
+            }
         }
     }
 }
