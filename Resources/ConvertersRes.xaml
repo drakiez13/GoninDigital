@@ -6,4 +6,5 @@
     <converter:TotalPriceConverter x:Key="TotalPriceConverter"></converter:TotalPriceConverter>
     <converter:SumProductsPrice x:Key="SumProductsPrice"></converter:SumProductsPrice>
     <converter:ListCountToVisibility x:Key="ListCountToVisibility"></converter:ListCountToVisibility>
+    <converter:SearchItemTypeToVisibility x:Key="SearchItemTypeToVisibility"></converter:SearchItemTypeToVisibility>
 </ResourceDictionary>
