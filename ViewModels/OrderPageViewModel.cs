@@ -67,23 +67,35 @@ namespace GoninDigital.ViewModels
             get { return l_Invoice_Detail; }
             set { l_Invoice_Detail = value; OnPropertyChanged(); }
         }
-        private OrderCard selectedOrder;
-        public OrderCard SelectedOrder
-        {
-            get { return selectedOrder; }
-            set { selectedOrder = value; OnPropertyChanged(); }
-        }
-        private string[] flagItem;
-        public string[] FlagItem
-        {
-            get { return flagItem; }
-            set { flagItem = value; OnPropertyChanged(); }
-        }
-        private string[] flagImage;
-        public string[] FlagImage
+        private string flagImage;
+        public string FlagImage
         {
             get { return flagImage; }
             set { flagImage = value; OnPropertyChanged(); }
+        }
+        private string flagImage1;
+        public string FlagImage1
+        {
+            get { return flagImage1; }
+            set { flagImage1 = value; OnPropertyChanged(); }
+        }
+        private string flagImage2;
+        public string FlagImage2
+        {
+            get { return flagImage2; }
+            set { flagImage2 = value; OnPropertyChanged(); }
+        }
+        private string flagImage3;
+        public string FlagImage3
+        {
+            get { return flagImage3; }
+            set { flagImage3 = value; OnPropertyChanged(); }
+        }
+        private string flagImage4;
+        public string FlagImage4
+        {
+            get { return flagImage4; }
+            set { flagImage4 = value; OnPropertyChanged(); }
         }
         private string image;
         public string Image
@@ -101,29 +113,26 @@ namespace GoninDigital.ViewModels
         #region Constructor
         public OrderPageViewModel()
         {
-            L_Order_Created = new List<Order>();
-            L_Order_Accepted = new List<Order>();
-            L_Order_Refused = new List<Order>();
-            L_Order_Delivered = new List<Order>();
-            L_Order_Canceled = new List<Order>();
-            flagItem = new string[5];
-            FlagImage = new string[5];
             Image = "/Resources/Images/NoOrderYet.jpg";
             //int userID = db.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
-            UserID = 4; //id mặc định do chưa có data+
+            UserID = 4; //id mặc định do chưa có data
         }
         #endregion
         #region Private Methods
         public void OnNavigatedTo()
         {
-            Thread thread = new Thread(Load_HistoryPurchase);
-            thread.Start();
+            Load_HistoryPurchase();
         }
         private void Load_HistoryPurchase()
         {
-            UserID = 4;
             using (var db = new GoninDigitalDBContext())
             {
+                UserID = 4;
+                L_Order_Created = new List<Order>();
+                L_Order_Accepted = new List<Order>();
+                L_Order_Refused = new List<Order>();
+                L_Order_Delivered = new List<Order>();
+                L_Order_Canceled = new List<Order>();
                 L_Invoice = db.Invoices.Where(x => x.CustomerId == UserID).ToList();
                 foreach (Invoice invoice in L_Invoice)
                 {
@@ -132,6 +141,7 @@ namespace GoninDigital.ViewModels
                     {
                         Order order = new Order();
                         Product product = db.Products.Where(x => x.Id == invoicedt.ProductId).First();
+                        order.InvoiceId = invoice.Id;
                         order.Image = product.Image;
                         order.VendorName = db.Vendors.Where(x => x.Id == product.VendorId).First().Name;
                         order.ProductName = product.Name;
@@ -140,29 +150,29 @@ namespace GoninDigital.ViewModels
                         if (product.Price != product.OriginPrice)
                             order.PriceOrg = $"{ (product.OriginPrice):0,0 đ}";
                         else
-                            order.PriceOrg ="";
+                            order.PriceOrg = "";
                         order.TotalPrice = $"{(invoicedt.Cost):0,0 đ}";
                         order.PriceDisc = $"{(product.Price):0,0 đ}  ";
                         order.Status = db.InvoiceStatuses.Where(x => x.Id == invoice.StatusId).First().Name;
                         order.Date = invoice.CreatedAt.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
-                        switch (order.Status)
-                        {
-                            case "created   ":
-                                L_Order_Created.Add(order);
-                                break;
-                            case "accepted   ":
-                                L_Order_Accepted.Add(order);
-                                break;
-                            case "refused   ":
-                                L_Order_Refused.Add(order);
-                                break;
-                            case "delivered   ":
-                                L_Order_Delivered.Add(order);
-                                break;
-                            case "canceled   ":
-                                L_Order_Canceled.Add(order);
-                                break;
-                        }
+                            switch (order.Status)
+                            {
+                                case "created   ":
+                                    L_Order_Created.Add(order);
+                                    break;
+                                case "accepted   ":
+                                    L_Order_Accepted.Add(order);
+                                    break;
+                                case "refused   ":
+                                    L_Order_Refused.Add(order);
+                                    break;
+                                case "delivered   ":
+                                    L_Order_Delivered.Add(order);
+                                    break;
+                                case "canceled   ":
+                                    L_Order_Canceled.Add(order);
+                                    break;
+                            }
                     }
                 }
             }
@@ -171,55 +181,41 @@ namespace GoninDigital.ViewModels
         private void CheckItem()
         {
             if (L_Order_Created.Count == 0)
-            {
-                FlagItem[0] = "Hidden";
-                FlagImage[0] = "Visible";
-            }
+                FlagImage = "Visible";
             else
             {
-                FlagItem[0] = "Visible";
-                FlagImage[0] = "Hidden";
+                FlagImage = "Hidden";
+                L_Order_Created.Reverse();
             }
             if (L_Order_Accepted.Count == 0)
-            {
-                FlagItem[1] = "Hidden";
-                FlagImage[1] = "Visible";
-            }
+                FlagImage1 = "Visible";
             else
             {
-                FlagItem[1] = "Visible";
-                FlagImage[1] = "Hidden";
+                FlagImage1 = "Hidden";
+                L_Order_Accepted.Reverse();
             }
             if (L_Order_Refused.Count == 0)
-            {
-                FlagItem[2] = "Hidden";
-                FlagImage[2] = "Visible";
-            }
+                FlagImage2 = "Visible";
             else
             {
-                FlagItem[2] = "Visible";
-                FlagImage[2] = "Hidden";
+                FlagImage2 = "Hidden";
+                L_Order_Refused.Reverse();
             }
             if (L_Order_Delivered.Count == 0)
-            {
-                FlagItem[3] = "Hidden";
-                FlagImage[3] = "Visible";
-            }
+                FlagImage3 = "Visible";
             else
             {
-                FlagItem[3] = "Visible";
-                FlagImage[3] = "Hidden";
+                FlagImage3 = "Hidden";
+                L_Order_Delivered.Reverse();
             }
+                
             if (L_Order_Canceled.Count == 0)
-            {
-                FlagItem[4] = "Hidden";
-                FlagImage[4] = "Visible";
-            }
+                FlagImage4 = "Visible";
             else
             {
-                FlagItem[4] = "Visible";
-                FlagImage[4] = "Hidden";
-            }
+                FlagImage4 = "Hidden";
+                l_Order_Canceled.Reverse();
+            }   
         }
         #endregion
     }
