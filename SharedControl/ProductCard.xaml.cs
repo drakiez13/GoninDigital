@@ -31,7 +31,7 @@ namespace GoninDigital.SharedControl
         {
             if (ProductInfo != null)
             {
-                DashBoard.RootFrame.Navigate(new ProductPage(ProductInfo.Id));
+                DashBoard.RootFrame.Navigate(new ProductPage(ProductInfo));
             }
         }
     }

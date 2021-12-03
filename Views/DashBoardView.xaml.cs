@@ -211,8 +211,11 @@ namespace GoninDigital.Views
 
                 if (searchItem.Type == SearchItem.ItemType.PRODUCT)
                 {
-                    RootFrame.Navigate(new ProductPage(searchItem.Id));
-                    
+                    using (var db = new GoninDigitalDBContext())
+                    {
+                        var product = db.Products.First(o => o.Id == searchItem.Id);
+                        RootFrame.Navigate(new ProductPage(product));
+                    }
                 }
                 else if (searchItem.Type == SearchItem.ItemType.VENDOR)
                 {
