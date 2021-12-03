@@ -74,10 +74,11 @@ namespace GoninDigital.ViewModels
             {
                 try
                 {
+                    
                     Vendor = db.Vendors.Include(o => o.Owner)
                         .Include(o => o.Products)
                         .First(o => o.Owner.UserName == Settings.Default.usrname);
-                    /*Products = db.Products.Where(o => o.VendorId == Vendor.Id).ToList();*/
+                    db.ProductCategories.ToList();
                     Products = new ObservableCollection<Product>(Vendor.Products.ToList());
                     HasVendor = true;
                     VisibilityOwner = "Visible";
@@ -160,6 +161,7 @@ namespace GoninDigital.ViewModels
         }
         public MyShopViewModel()
         {
+            
             EditCommand = new RelayCommand<Product>(o => true, o => EditCommandExec(o));
             RemoveCommand = new RelayCommand<Product>(o => true, o => RemoveCommandExec(o));
             UpgradeCommand = new RelayCommand<object>((p) => true, (p) => { UpgradeCommandExec(); });

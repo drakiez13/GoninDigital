@@ -39,6 +39,7 @@ namespace GoninDigital.Views.DashBoardPages
             {
                 (DataContext as MyShopViewModel).Vendor = db.Vendors
                     .Include(o => o.Products).First(o => o.Id == vendorId);
+                db.ProductCategories.ToList();
                 (DataContext as MyShopViewModel).Products = new ObservableCollection<Product>(
                     (DataContext as MyShopViewModel).Vendor.Products
                     );
