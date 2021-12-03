@@ -14,10 +14,22 @@ namespace GoninDigital.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var count = (int)value;
-            if (count == 0)
-                return Visibility.Hidden;
+            var param = (string)parameter;
+            if (param == "True")
+            {
+                if (count == 0)
+                    return Visibility.Collapsed;
+                else
+                    return Visibility.Visible;
+            }
             else
-                return Visibility.Visible;
+            {
+                if (count == 0)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            }
+            
         }
 
         public object ConvertBack(object value, Type targetTypes, object parameter, CultureInfo culture)
