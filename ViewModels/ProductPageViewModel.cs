@@ -198,7 +198,7 @@ namespace GoninDigital.ViewModels
             }
             ContentDialog content = new()
             {
-                Title = "Complete",
+                Title = "Completed",
 
                 Content = "This product has been added to your cart",
                 PrimaryButtonText = "Ok"
