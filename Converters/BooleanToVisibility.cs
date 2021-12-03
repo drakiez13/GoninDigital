@@ -22,14 +22,14 @@ namespace GoninDigital.Converters
                 }
                 else
                 {
-                    return Visibility.Hidden;
+                    return Visibility.Collapsed;
                 }
             }
             else
             {
                 if ((bool)value)
                 {
-                    return Visibility.Hidden;
+                    return Visibility.Collapsed;
                 }
                 else
                 {
