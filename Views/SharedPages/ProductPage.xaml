@@ -5,7 +5,7 @@
       xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GoninDigital.Views.SharedPages"
-      DataContext="{StaticResource ProductPageVM}"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="1000"
       d:Background="White"
@@ -14,19 +14,25 @@
     <ScrollViewer>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="300"/>
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <Label Content="Product"
+                   FontSize="22"
+                   Margin="20 20 0 20"
+                   FontWeight="Bold"/>
             <Grid Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
-                  Margin="10 30 10 5">
+                  Margin="20 0 20 10"
+                  Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="300"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
                 <Grid Margin="20 20 0 40">
-                    <Image Source="{Binding ProductImage}"
+                    <Image Source="{Binding ProductInfo.Image}"
                            VerticalAlignment="Top"
                            HorizontalAlignment="Left"/>
                 </Grid>
@@ -39,17 +45,17 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <StackPanel Margin="0 0 0 20">
-                        <TextBlock Text="{Binding ProductName }"
+                        <TextBlock Text="{Binding ProductInfo.Name }"
                                    TextWrapping="Wrap"
                                    FontSize="22"
                                    FontWeight="Bold"/>
-                        <Label Content="{Binding BrandName }"/>
+                        <Label Content="{Binding ProductInfo.Brand }"/>
                     </StackPanel>
                     <Grid Grid.Row="1"
                           Margin="0 0 0 10">
                         <ui:RatingControl HorizontalAlignment="Left"
-                                          Value="{Binding RatingValue}"
-                                          Caption="{Binding RatingCap}"
+                                          Value="{Binding ProductInfo.Rating}"
+                                          Caption="{Binding ProductInfo.NRating}"
                                           IsReadOnly="True">
                             <ui:RatingControl.LayoutTransform>
                                 <ScaleTransform ScaleX="1" ScaleY="1"></ScaleTransform>
@@ -57,25 +63,30 @@
                         </ui:RatingControl>
                     </Grid>
                     <StackPanel Grid.Row="2"
-                                Orientation="Vertical">
-                        <Label Content="{Binding ProductDiscountPrice}" 
-                           FontSize="20"
-                           FontWeight="Bold"/>
+                                Orientation="Vertical"
+                                Margin="0 0 0 10">
                         <Label>
                             <TextBlock Visibility="{Binding IsDisc}">
-                            <Run TextDecorations="Strikethrough" Text="{Binding ProductPrice}"></Run>
+                            <Run TextDecorations="Strikethrough" 
+                                 Text="{Binding ProductInfo.OriginPrice}"
+                                 FontSize="18"/>
                             </TextBlock>
                         </Label>
+                        <Label Content="{Binding ProductInfo.Price}" 
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Margin="0 0 0 5"/>
+                        
                     </StackPanel>
                     <StackPanel Grid.Row="3" Orientation="Horizontal">
                         <StackPanel Orientation="Horizontal"
                                     Margin="0 0 70 0">
                             <Label Content="Available: "/>
-                            <Label Content="{Binding ProductAvailable}"/>
+                            <Label Content="{Binding ProductInfo.Available}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Status: "/>
-                            <Label Content="{Binding ProductStatus}"/>
+                            <Label Content="{Binding ProductInfo.New}"/>
                         </StackPanel>
 
                     </StackPanel>
@@ -88,6 +99,7 @@
                         Width="150"
                         Margin="0 30 30 0"
                         Background="{DynamicResource SystemAccentColorDark1Brush}"
+                        Command="{Binding BuyCommand}"
                         HorizontalAlignment="Right"/>
                     <Button x:Name="addCart"
                         Content="Add To Cart"
@@ -99,23 +111,27 @@
 
                 </StackPanel>
             </Grid>
-            <Grid Grid.Row="1"
+            <Grid Grid.Row="2"
                   Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
-                  Margin="10 0 10 5">
+                  Margin="20 0 20 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="70"/>
                     <ColumnDefinition Width="250"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Margin="5">
-                    <Image Source="{Binding VendorAvatar}"
-                           VerticalAlignment="Top"
-                           HorizontalAlignment="Left"/>
+                <Grid Margin="20 0 0 0"
+                      VerticalAlignment="Center">
+                    <ui:PersonPicture ProfilePicture="{Binding ProductInfo.Vendor.Avatar}"
+                                      VerticalAlignment="Top"
+                                      HorizontalAlignment="Left"
+                                      Width="50" Height="50"/>
                 </Grid>
-                <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                    <Label Content="{Binding VendorName}"
+                <StackPanel Grid.Column="1" 
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center">
+                    <Label Content="{Binding ProductInfo.Vendor.Name}"
                            FontWeight="Bold"/>
-                    <Label Content="{Binding VendorAddress}"
+                    <Label Content="{Binding ProductInfo.Vendor.Address}"
                            FontSize="12"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2"
@@ -125,17 +141,17 @@
                     <StackPanel Orientation="Horizontal"
                                 Margin="0 0 40 0">
                         <Label Content="Rating: "/>
-                        <Label Content="{Binding VendorRating}"/>
+                        <Label Content="0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Products: "/>
-                        <Label Content="{Binding VendorProducts}"/>
+                        <Label Content="0"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
-            <Grid Grid.Row="2"
+            <Grid Grid.Row="3"
                   Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
-                  Margin="10 0 10 10">
+                  Margin="20 10 20 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"
@@ -154,11 +170,8 @@
                 <Grid Grid.Row="1" Grid.Column="0"
                       Margin="20 0 0 0">
                     <StackPanel>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding ProductDescription}"/>
-                        <Image Source="{Binding ProductImage}"
-                               MaxWidth="400"
-                               MaxHeight="200"
-                               HorizontalAlignment="Left"/>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding ProductInfo.Description}"/>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding ProductInfo.Detail}"></TextBlock>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="1"
@@ -170,24 +183,7 @@
                 <StackPanel Margin="20,0,0,0"
                             Grid.Column="1"
                             Grid.Row="1">
-                    <StackPanel Orientation="Horizontal"
-                                Height="30">
-                        <Label Content="Brand" 
-                               Width="150"/>
-                        <Label Content="{Binding BrandName}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                Height="30">
-                        <Label Content="Type"
-                               Width="150"/>
-                        <Label Content="{Binding ProductType }"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                Height="30">
-                        <Label Content="Vendor" 
-                               Width="150"/>
-                        <Label Content="{Binding VendorName }"/>
-                    </StackPanel>
+                    <TextBlock>Under construction</TextBlock>
                 </StackPanel>
             </Grid>
 

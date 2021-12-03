@@ -1,4 +1,7 @@
-﻿using GoninDigital.ViewModels;
+﻿using GoninDigital.Models;
+using GoninDigital.Properties;
+using GoninDigital.ViewModels;
+using ModernWpf.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +25,53 @@ namespace GoninDigital.Views.SharedPages
     /// </summary>
     public partial class ProductPage : Page
     {
-        public ProductPage(int productId)
+        public Product ProductInfo { get; set; }
+        public ICommand BuyCommand { get; set; }
+        public ICommand AddtoCartCommand { get; set; }
+        public string IsDisc { get; set; }
+        
+
+        public ProductPage(Product product)
         {
+            ProductInfo = product;
+            AddtoCartCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddtoCartExecute(); });
+            BuyCommand = new RelayCommand<Product>(p => true, p => DashBoard.RootFrame.Navigate(new CheckoutPage(ProductInfo, 1)));
+            if (product.Price == product.OriginPrice)
+                IsDisc = "Hidden";
+            else
+                IsDisc = "Visible";
             InitializeComponent();
-            if (productId != 0)
-                DataContext = new ProductPageViewModel(productId);
+        }
+
+        void AddtoCartExecute()
+        {
+            using (var context = new GoninDigitalDBContext())
+            {
+                int userID = context.Users.Where(x => x.UserName == Settings.Default.usrname).First().Id;
+                if (context.Carts.Where(x => x.UserId == userID & x.ProductId == ProductInfo.Id).Count() == 0)
+                {
+                    Cart cart = new Cart();
+                    cart.UserId = userID;
+                    cart.ProductId = ProductInfo.Id;
+                    cart.Quantity = 1;
+                    context.Carts.Add(cart);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    context.Carts.Where(x => x.UserId == userID && x.ProductId == ProductInfo.Id).First().Quantity += 1;
+                    context.SaveChanges();
+                }
+                ContentDialog content = new()
+                {
+                    Title = "Completed",
+
+                    Content = "This product has been added to your cart",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
+            }
+            
         }
     }
 }

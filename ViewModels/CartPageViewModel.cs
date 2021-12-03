@@ -9,9 +9,8 @@ using System.Windows;
 using System.Windows.Input;
 using GoninDigital.Models;
 using GoninDigital.Properties;
-using GoninDigital.SharedControl;
-using GoninDigital.Views;
 using GoninDigital.Views.SharedPages;
+using GoninDigital.Views;
 using Microsoft.EntityFrameworkCore;
 using ModernWpf.Controls;
 
@@ -35,6 +34,7 @@ namespace GoninDigital.ViewModels
         public ICommand RemoveProduct { get; set; }
         public ICommand ShowProduct { get; set; }
         public ICommand BuyProduct { get; set; }
+        public ICommand BuySelections { get; set; }
 
         private void Init()
         {
@@ -48,12 +48,24 @@ namespace GoninDigital.ViewModels
             }
         }
 
-        private async void RemoveCartDb(Cart cart)
+        private void RemoveCartDb(Cart cart)
         {
             using (var db = new GoninDigitalDBContext())
             {
+                
                 db.Carts.Remove(cart);
-                await db.SaveChangesAsync();
+                Products.Remove(cart);
+                db.SaveChanges();
+            }
+        }
+        private void RemoveCartDb(IEnumerable<Cart> carts)
+        {
+            using (var db = new GoninDigitalDBContext())
+            {
+                
+                db.Carts.RemoveRange(carts);
+                Products.Clear();
+                db.SaveChanges();
             }
         }
 
@@ -67,10 +79,21 @@ namespace GoninDigital.ViewModels
         public CartPageViewModel()
         {
             selectedProducts = new ObservableCollection<Cart>();
-            RemoveProduct = new RelayCommand<Cart>(o => true, 
+            RemoveProduct = new RelayCommand<Cart>(o => true,
                 cart => { Products.Remove(cart); RemoveCartDb(cart); });
-            ShowProduct = new RelayCommand<Cart>(o => true, 
-                cart => DashBoard.RootFrame.Navigate(new ProductPage(cart.ProductId)));
+            ShowProduct = new RelayCommand<Cart>(o => true,
+                cart => DashBoard.RootFrame.Navigate(new ProductPage(cart.Product)));
+            BuyProduct = new RelayCommand<Cart>(o => true,
+                cart => DashBoard.RootFrame.Navigate(new CheckoutPage(cart.Product, cart.Quantity, o =>
+                {
+                    RemoveCartDb(cart);
+                })));
+            BuySelections = new RelayCommand<object>(o => true,
+                o => DashBoard.RootFrame.Navigate(new CheckoutPage(SelectedProducts,
+                o =>
+                {
+                    RemoveCartDb(SelectedProducts);
+                })));
         }
     }
 
