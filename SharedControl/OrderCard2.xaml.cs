@@ -107,25 +107,6 @@ namespace GoninDigital.SharedControl
             InitializeComponent();
         }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            GoninDigitalDBContext db = DataProvider.Instance.Db;
-            var invoicedt = db.InvoiceDetails.Where(x => x.InvoiceId == (int)InvoiceId).First();
-            var invoice=db.Invoices.Where(x=>x.Id == (int)InvoiceId).First();
-            _ = db.InvoiceDetails.Remove(invoicedt);
-            _ = db.Invoices.Remove(invoice);
-            _ = db.SaveChanges();
-            
-            ContentDialog content = new()
-            {
-                Title = "Nortification",
-
-                Content = "This order has been deleted!",
-                PrimaryButtonText = "Ok"
-            };
-            content.ShowAsync();
-        }
-
         private void addCart_Click(object sender, RoutedEventArgs e)
         {
             using (var db = new GoninDigitalDBContext())
