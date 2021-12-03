@@ -88,7 +88,7 @@
                         Width="170"
                         Margin="0 20 30 0"
                         Background="{DynamicResource SystemAccentColorDark1Brush}"
-                        HorizontalAlignment="Center" Click="addCart_Click"/>
+                        HorizontalAlignment="Center"/>
             <StackPanel Orientation="Horizontal" Margin="20 20 30 0">
                         <Label Content="Purchase Date: " FontSize="18"></Label>
                         <TextBlock Text="{Binding Date,ElementName=orderCard2}" FontSize="18"></TextBlock>
