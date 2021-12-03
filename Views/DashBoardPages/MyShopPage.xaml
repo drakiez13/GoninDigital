@@ -101,11 +101,12 @@
 
                                                         <ui:AppBarButton Label="Edit"
                                                                          Icon="Edit"
-                                                                         
+                                                                         Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=False}"
                                                                          CommandParameter="{Binding}"
                                                                          Command="{Binding Source={StaticResource MyShopPageVM},Path=EditCommand}" />
                                                         <ui:AppBarButton Label="Remove"
                                                                          Icon="Remove"
+                                                                         Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=False}"
                                                                          CommandParameter="{Binding}"
                                                                          Command="{Binding Source={StaticResource MyShopPageVM},Path=RemoveCommand}" />
 
