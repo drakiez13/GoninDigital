@@ -9,4 +9,5 @@
     <converter:BooleanToVisibility x:Key="BooleanToVisibility"></converter:BooleanToVisibility>
     <converter:SearchItemTypeToVisibility x:Key="SearchItemTypeToVisibility"></converter:SearchItemTypeToVisibility>
     <converter:PriceToPercentageOff x:Key="PriceToPercentageOff"></converter:PriceToPercentageOff>
+    <converter:BooleanConverter x:Key="BooleanConverter"></converter:BooleanConverter>
 </ResourceDictionary>

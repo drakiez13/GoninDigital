@@ -24,6 +24,13 @@ namespace GoninDigital.ViewModels
             get { return hasVendor; }
             set { hasVendor = value;OnPropertyChanged(); }
         }
+        private string visibilityOwner;
+        public string VisibilityOwner
+        {
+
+            get { return visibilityOwner; }
+            set { visibilityOwner = value; OnPropertyChanged(); }
+        }
         private bool isOwner;
         public bool IsOwner
         {
@@ -73,10 +80,12 @@ namespace GoninDigital.ViewModels
                     /*Products = db.Products.Where(o => o.VendorId == Vendor.Id).ToList();*/
                     Products = new ObservableCollection<Product>(Vendor.Products.ToList());
                     HasVendor = true;
+                    VisibilityOwner = "Visible";
+                    
                 }
                 catch
                 {
-
+                   
                     HasVendor = false;
                 }
             }

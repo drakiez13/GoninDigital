@@ -34,6 +34,7 @@ namespace GoninDigital.Views.DashBoardPages
         {
             InitializeComponent();
             (DataContext as MyShopViewModel).IsOwner = false;
+            (DataContext as MyShopViewModel).VisibilityOwner = "Visible";
             using (var db= new GoninDigitalDBContext())
             {
                 (DataContext as MyShopViewModel).Vendor = db.Vendors

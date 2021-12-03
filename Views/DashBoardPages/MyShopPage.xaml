@@ -86,33 +86,36 @@
                         </StackPanel>
                     </TabItem>
 
-                    <TabItem Header="Product Manager">
+                    <TabItem Header="All Product">
                         <StackPanel Margin="20 0">
                             <ItemsControl ItemsSource="{Binding Products}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-
+                                        
                                         <uc:ProductCard Margin="10 10 10 10"
-                                                        Clickable="False"
-                                                        ProductInfo="{Binding}">
+                                                        Clickable="{Binding Source={StaticResource MyShopPageVM},Path=IsOwner,Converter={StaticResource BooleanConverter}}"
+                                                        ProductInfo="{Binding}"
+                                                        Content="">
                                             <ui:ContextFlyoutService.ContextFlyout>
                                                 <ui:CommandBarFlyout>
                                                     <ui:CommandBarFlyout.SecondaryCommands>
 
                                                         <ui:AppBarButton Label="Edit"
                                                                          Icon="Edit"
-                                                                         Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=False}"
+                                                                         Visibility="Collapsed"
                                                                          CommandParameter="{Binding}"
                                                                          Command="{Binding Source={StaticResource MyShopPageVM},Path=EditCommand}" />
                                                         <ui:AppBarButton Label="Remove"
                                                                          Icon="Remove"
-                                                                         Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=False}"
+                                                                         Visibility="Collapsed"
                                                                          CommandParameter="{Binding}"
                                                                          Command="{Binding Source={StaticResource MyShopPageVM},Path=RemoveCommand}" />
 
                                                     </ui:CommandBarFlyout.SecondaryCommands>
                                                 </ui:CommandBarFlyout>
                                             </ui:ContextFlyoutService.ContextFlyout>
+
+
                                         </uc:ProductCard>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -125,8 +128,28 @@
                         </StackPanel>
 
                     </TabItem>
-
+                    
                     <TabItem Header="About">
+                        <StackPanel HorizontalAlignment="Right">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Phone: "></Label>
+                                <Label Content="{Binding Vendor.Phone}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Address: "></Label>
+                                <Label Content="{Binding Vendor.Address}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Sold: "></Label>
+                                <Label Content="sold" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Remain: "></Label>
+                                <Label Content="Remain" />
+                            </StackPanel>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="More" >
                         <StackPanel HorizontalAlignment="Right">
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="Phone: "></Label>
