@@ -22,7 +22,7 @@ namespace GoninDigital.Views
     {
         public enum ItemType
         {
-            VENDOR, PRODUCT
+            VENDOR, PRODUCT, NOTFOUND
         }
         public int Id { get; set; }
 
@@ -195,7 +195,10 @@ namespace GoninDigital.Views
                         sender.ItemsSource = combined;
                     else
                         sender.ItemsSource = new List<SearchItem>() 
-                        { new SearchItem { Name = "No Results Found", Image = null, Description = null } };
+                        { new SearchItem { Name = "No Results Found",
+                                           Image = null, Description = null,
+                                           Type=SearchItem.ItemType.NOTFOUND } 
+                        };
                 }
             }
         }
