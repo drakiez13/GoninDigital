@@ -149,9 +149,38 @@
                 </TabControl>
                 <Button Content="New Product" />
             </StackPanel>
-            <StackPanel Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=False}">
-                <Label Content="Don't have Vendor" />
-            </StackPanel>
+            <Grid Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=False}">
+                <Grid VerticalAlignment="Top">
+                    <Label Margin="20 20 0 20"
+                               FontSize="22"
+                               FontWeight="Bold">My Shop</Label>
+                </Grid>
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <Label Content="You don't have any Vendor, Would you like to Upgrade your account to vendor" />
+                    <Button Content="Upgrade"
+                            Margin="0 20 0 0"
+                            HorizontalAlignment="Center"
+                            Command="{Binding UpgradeCommand}"/>
+                </StackPanel>
+                
+            </Grid>
+            <Grid Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=False}">
+                <Grid VerticalAlignment="Top">
+                    <Label Margin="20 20 0 20"
+                               FontSize="22"
+                               FontWeight="Bold">My Shop</Label>
+                </Grid>
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <Label Content="You don't have any Vendor, Would you like to Upgrade your account to vendor" />
+                    <Button Content="Upgrade"
+                            Margin="0 20 0 0"
+                            HorizontalAlignment="Center"
+                            Command="{Binding UpgradeCommand}"/>
+                </StackPanel>
+
+            </Grid>
         </Grid>
     </ScrollViewer>
 
