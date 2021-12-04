@@ -6,11 +6,16 @@
       xmlns:uc="clr-namespace:GoninDigital.SharedControl"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GoninDigital.Views.DashBoardPages"
+      xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{StaticResource OrderPageVM}"
       Title="HotDealPage">
-
+    <Page.Resources>
+        <CollectionViewSource x:Key="L_Ordered"
+                              Source="{Binding L_Order_Created}">
+        </CollectionViewSource>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -24,9 +29,8 @@
         <TabControl  Grid.Row="1" Style="{StaticResource TabControlPivotStyle}" >
             <TabItem Header="Created" Width="160">
                 <ScrollViewer>
-                    <Grid >
-                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Created}" Visibility="{Binding FlagItem[0]}"
-                          SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
+                    <Grid>
+                        <ListView x:Name="ltb_Created" HorizontalAlignment="Center" ItemsSource="{Binding Source={StaticResource L_Ordered}}" Visibility="{Binding FlagItem[0]}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Vertical"></StackPanel>
@@ -48,16 +52,16 @@
                                     </uc:OrderCard>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
-                        </ListBox>
-                        <Image  Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage[0]}"></Image>
+                        </ListView>
+                        <Image  Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage}"></Image>
                     </Grid>
                 </ScrollViewer>
                
             </TabItem>
-            <TabItem Header="Accepted" Width="160">
+            <TabItem Header="   Accepted" Width="160">
                 <ScrollViewer>
                     <Grid>
-                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Accepted}" Visibility="{Binding FlagItem[1]}"
+                        <ListBox HorizontalAlignment="Center" ItemsSource="{Binding L_Order_Accepted}" Visibility="{Binding FlagItem1}"
                           SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -81,15 +85,15 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ListBox>
-                        <Image Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage[1]}" Stretch="Fill"></Image>
+                        <Image Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage2}" Stretch="Fill"></Image>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
 
-            <TabItem Header="Refused" Width="160">
+            <TabItem Header="    Refused" Width="160">
                 <ScrollViewer>
                     <Grid>
-                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Refused}" Visibility="{Binding FlagItem[2]}"
+                        <ListBox Margin="0,30,0,0" HorizontalAlignment="Center" ItemsSource="{Binding L_Order_Refused}" Visibility="{Binding FlagItem[2]}"
                           SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -113,14 +117,14 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ListBox>
-                        <Image Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage[2]}" Stretch="Fill"></Image>
+                        <Image Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage3}" Stretch="Fill"></Image>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Delivered" Width="160">
+            <TabItem Header="   Delivered" Width="160">
                 <ScrollViewer>
                     <Grid>
-                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Delivered}" Visibility="{Binding FlagItem[3]}"
+                        <ListBox Margin="0,30,0,0" HorizontalAlignment="Center" ItemsSource="{Binding L_Order_Delivered}" Visibility="{Binding FlagItem4}"
                           SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -144,14 +148,14 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ListBox>
-                        <Image Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage[3]}" Stretch="Fill"></Image>
+                        <Image Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage3}" Stretch="Fill"></Image>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Canceled" Width="160">
+            <TabItem Header="   Canceled" Width="160">
                 <ScrollViewer>
                     <Grid>
-                        <ListBox Margin="0,30,0,0" ItemsSource="{Binding L_Order_Canceled}" Visibility="{Binding FlagItem[4]}"
+                        <ListBox Margin="0,30,0,0" HorizontalAlignment="Center" ItemsSource="{Binding L_Order_Canceled}" 
                           SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -175,7 +179,7 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ListBox>
-                        <Image Height="200" Width="200" Visibility="{Binding FlagImage[4]}" 
+                        <Image Height="200" Width="200" Visibility="{Binding FlagImage4}" 
                                Source="{Binding Image}" Stretch="Fill"></Image>
                     </Grid>
                 </ScrollViewer>
