@@ -77,11 +77,22 @@
                                        TextAlignment="Center"
                                        Width="100"
                                        Margin="0 0 0 8" />
-
                             
                         </StackPanel>
-                        
-                        
+                        <StackPanel Orientation="Vertical"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right"
+                                    Width="120">
+                            <TextBlock Text="{Binding OriginPrice, StringFormat=C, ConverterCulture=vi-VN}"
+                                       HorizontalAlignment="Center"
+                                       TextAlignment="Center"
+                                       Width="100"
+                                       Margin="0 0 0 8" />
+
+                        </StackPanel>
+
+
+
                     </DockPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
