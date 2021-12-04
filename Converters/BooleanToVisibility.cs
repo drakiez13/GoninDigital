@@ -9,32 +9,39 @@ using System.Windows.Data;
 
 namespace GoninDigital.Converters
 {
-    internal class ListCountToVisibility : IValueConverter
+    class BooleanToVisibility : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var count = (int)value;
-            var param = (string)parameter;
-            if (param == "True")
+            string flag = (string)parameter;
+            if(flag == "True")
             {
-                if (count == 0)
-                    return Visibility.Collapsed;
-                else
+                if ((bool)value)
+                {
                     return Visibility.Visible;
+                }
+                else
+                {
+                    return Visibility.Collapsed;
+                }
             }
             else
             {
-                if (count == 0)
-                    return Visibility.Visible;
-                else
+                if ((bool)value)
+                {
                     return Visibility.Collapsed;
+                }
+                else
+                {
+                    return Visibility.Visible;
+                }
             }
-            
         }
 
-        public object ConvertBack(object value, Type targetTypes, object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return null;
         }
+    
     }
 }

@@ -82,7 +82,7 @@ namespace GoninDigital.ViewModels
             RemoveProduct = new RelayCommand<Cart>(o => true,
                 cart => { Products.Remove(cart); RemoveCartDb(cart); });
             ShowProduct = new RelayCommand<Cart>(o => true,
-                cart => DashBoard.RootFrame.Navigate(new ProductPage(cart.ProductId)));
+                cart => DashBoard.RootFrame.Navigate(new ProductPage(cart.Product)));
             BuyProduct = new RelayCommand<Cart>(o => true,
                 cart => DashBoard.RootFrame.Navigate(new CheckoutPage(cart.Product, cart.Quantity, o =>
                 {

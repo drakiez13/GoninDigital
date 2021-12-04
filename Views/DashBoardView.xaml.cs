@@ -22,7 +22,7 @@ namespace GoninDigital.Views
     {
         public enum ItemType
         {
-            VENDOR, PRODUCT
+            VENDOR, PRODUCT, NOTFOUND
         }
         public int Id { get; set; }
 
@@ -195,7 +195,10 @@ namespace GoninDigital.Views
                         sender.ItemsSource = combined;
                     else
                         sender.ItemsSource = new List<SearchItem>() 
-                        { new SearchItem { Name = "No Results Found", Image = null, Description = null } };
+                        { new SearchItem { Name = "No Results Found",
+                                           Image = null, Description = null,
+                                           Type=SearchItem.ItemType.NOTFOUND } 
+                        };
                 }
             }
         }
@@ -208,12 +211,15 @@ namespace GoninDigital.Views
 
                 if (searchItem.Type == SearchItem.ItemType.PRODUCT)
                 {
-                    RootFrame.Navigate(new ProductPage(searchItem.Id));
-                    
+                    using (var db = new GoninDigitalDBContext())
+                    {
+                        var product = db.Products.First(o => o.Id == searchItem.Id);
+                        RootFrame.Navigate(new ProductPage(product));
+                    }
                 }
                 else if (searchItem.Type == SearchItem.ItemType.VENDOR)
                 {
-                    // implement navigate to vendor
+                    RootFrame.Navigate(new MyShopPage(searchItem.Id));
                 }
                 navigationView.IsPaneOpen = false;
             }
@@ -227,6 +233,7 @@ namespace GoninDigital.Views
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            flyout.Hide();
             var selection = (e.ClickedItem as ListViewItem).Name;
             if (selection == "accountInfo")
             {

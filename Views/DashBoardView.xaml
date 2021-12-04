@@ -68,7 +68,13 @@
                     <ui:AutoSuggestBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
+                                <ui:PersonPicture
+                                    Visibility="{Binding Type, Converter={StaticResource SearchItemTypeToVisibility}, ConverterParameter=False}"
+                                    ProfilePicture="{Binding Image}"
+                                    DisplayName="{Binding Name}"
+                                    Width="64" Height="64"></ui:PersonPicture>
                                 <Image
+                                    Visibility="{Binding Type, Converter={StaticResource SearchItemTypeToVisibility}, ConverterParameter=True}"
                                     Source="{Binding Image}"
                                     Width="64" Height="64" Stretch="UniformToFill"></Image>
                                 <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10 0 0 0">

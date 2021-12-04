@@ -9,22 +9,29 @@ using System.Windows.Data;
 
 namespace GoninDigital.Converters
 {
-    internal class ListCountToVisibility : IValueConverter
+    internal class SearchItemTypeToVisibility : IValueConverter
     {
+        static int VENDOR = 0;
+        static int PRODUCT = 1;
+        static int NOTFOUND = 2;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var count = (int)value;
-            var param = (string)parameter;
-            if (param == "True")
+            var type = (int)value;
+            
+            if (type == NOTFOUND)
+                return Visibility.Collapsed;
+
+            var control = (string)parameter;
+            if (control == "True")
             {
-                if (count == 0)
-                    return Visibility.Collapsed;
-                else
+                if (type == PRODUCT)
                     return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
             }
             else
             {
-                if (count == 0)
+                if (type == VENDOR)
                     return Visibility.Visible;
                 else
                     return Visibility.Collapsed;
@@ -32,7 +39,7 @@ namespace GoninDigital.Converters
             
         }
 
-        public object ConvertBack(object value, Type targetTypes, object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return null;
         }
