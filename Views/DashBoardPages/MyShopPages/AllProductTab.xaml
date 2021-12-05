@@ -1,4 +1,4 @@
-﻿<Page x:Class="GoninDigital.Views.DashBoardPages.MyShopPages.AllProductTab"
+﻿<ui:Page x:Class="GoninDigital.Views.DashBoardPages.MyShopPages.AllProductTab"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,8 +6,7 @@
       xmlns:local="clr-namespace:GoninDigital.Views.DashBoardPages.MyShopPages"
       xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:uc="clr-namespace:GoninDigital.SharedControl"
-      mc:Ignorable="d"
-      d:DesignWidth="1000"
+      
       DataContext="{StaticResource MyShopPageVM}"
       Title="AllProductTab">
 
@@ -17,9 +16,7 @@
                 <DataTemplate>
 
                     <uc:ProductCard Margin="10 10 10 10"
-                                    ProductInfo="{Binding}"
-                                    Content="">
-
+                                    ProductInfo="{Binding}">
                     </uc:ProductCard>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -30,4 +27,4 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
     </StackPanel>
-</Page>
+</ui:Page>

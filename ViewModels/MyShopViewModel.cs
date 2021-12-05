@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using GoninDigital.SharedControl;
 using ModernWpf.Controls;
 using System.Windows.Input;
+using Microsoft.Win32;
+using GoninDigital.Utils;
 
 namespace GoninDigital.ViewModels
 {
@@ -172,11 +174,34 @@ namespace GoninDigital.ViewModels
             }
             
         }
+        public ICommand ImageEditCommand { get; set; }
+        public async void ImageEditCommandExec(object o)
+        {
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Title = "Choose Image..";
+
+            openFileDialog.InitialDirectory = @"C:\";
+            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var linkAvatar = await ImageUploader.UploadAsync(openFileDialog.FileName);
+                using (var db = new GoninDigitalDBContext())
+                {
+                    SelectedItem.Image = linkAvatar;
+
+                    db.Update(SelectedItem);
+                    _ = db.SaveChanges();
+                }
+            }
+        }
         public MyShopViewModel()
         {
             
             EditCommand = new RelayCommand<Product>(o => true, o => EditCommandExec(o));
             RemoveCommand = new RelayCommand<Product>(o => true, o => RemoveCommandExec(o));
+            ImageEditCommand = new RelayCommand<Product>(o => true, o => ImageEditCommandExec(o));
             UpgradeCommand = new RelayCommand<object>((p) => true, (p) => { UpgradeCommandExec(); });
         }
         public void EditBtnExec()
