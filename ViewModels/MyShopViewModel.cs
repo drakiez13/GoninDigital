@@ -93,9 +93,9 @@ namespace GoninDigital.ViewModels
         }
         
         public ICommand EditCommand { get; set; }
-        public void EditCommandExec(Product product)
+        public void EditCommandExec(object o)
         {
-            SelectedItem = product;
+            
             var dialog = new ContentDialog
             {
                 Content = new EditProductDialog(),
@@ -124,17 +124,17 @@ namespace GoninDigital.ViewModels
             dialog.ShowAsync();
         }
         public ICommand RemoveCommand { get; set; }
-        public async void RemoveCommandExec(Product product)
+        public async void RemoveCommandExec(object o)
         {
             using (var db = new GoninDigitalDBContext())
             {
                 try
                 {
-                    db.Products.Remove(product);
+                    db.Products.Remove(SelectedItem);
                     
                     await db.SaveChangesAsync();
 
-                    Products.Remove(product);
+                    Products.Remove(SelectedItem);
                     MessageBox.Show("removed");
                 }
                 catch (Exception e)

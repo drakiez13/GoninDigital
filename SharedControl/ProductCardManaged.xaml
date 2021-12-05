@@ -8,7 +8,7 @@
              xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d" 
              DataContext="{StaticResource MyShopPageVM}"
-             d:DesignHeight="450" d:DesignWidth="800">
+             >
     <UserControl.Resources>
         <CollectionViewSource x:Key="ProductsCVS"
                               Source="{Binding Products}">
@@ -16,7 +16,7 @@
                 <PropertyGroupDescription PropertyName="Category.Name" />
             </CollectionViewSource.GroupDescriptions>
             <CollectionViewSource.SortDescriptions>
-                <cm:SortDescription PropertyName="Name" />
+                <cm:SortDescription PropertyName="Id" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </UserControl.Resources>
@@ -26,7 +26,7 @@
                      Grid.Row="1"
                      SelectionMode="Single"
                      HorizontalAlignment="Center"
-                     Name="lvCartItemGroup"
+                     
                      Width="800"
                      VirtualizingPanel.IsVirtualizing="True"
                      VirtualizingPanel.IsVirtualizingWhenGrouping="True">
@@ -72,7 +72,7 @@
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Center"
                                     Width="120">
-                            <TextBlock Text="{Binding Price, StringFormat=C, ConverterCulture=vi-VN}"
+                            <TextBlock Text="{Binding OriginPrice, StringFormat=C, ConverterCulture=vi-VN}"
                                        HorizontalAlignment="Center"
                                        TextAlignment="Center"
                                        Width="100"
@@ -83,7 +83,7 @@
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Right"
                                     Width="120">
-                            <TextBlock Text="{Binding OriginPrice, StringFormat=C, ConverterCulture=vi-VN}"
+                            <TextBlock Text="{Binding Price, StringFormat=C, ConverterCulture=vi-VN}"
                                        HorizontalAlignment="Center"
                                        TextAlignment="Center"
                                        Width="100"

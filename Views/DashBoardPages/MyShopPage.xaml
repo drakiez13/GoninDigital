@@ -102,12 +102,12 @@
 
                                                         <ui:AppBarButton Label="Edit"
                                                                          Icon="Edit"
-                                                                         Visibility="Collapsed"
+                                                                         
                                                                          CommandParameter="{Binding}"
                                                                          Command="{Binding Source={StaticResource MyShopPageVM},Path=EditCommand}" />
                                                         <ui:AppBarButton Label="Remove"
                                                                          Icon="Remove"
-                                                                         Visibility="Collapsed"
+                                                                         
                                                                          CommandParameter="{Binding}"
                                                                          Command="{Binding Source={StaticResource MyShopPageVM},Path=RemoveCommand}" />
 
@@ -128,17 +128,7 @@
                         </StackPanel>
 
                     </TabItem>
-                    <TabItem Header="Product Manager">
-                        
-                        <StackPanel Margin="20 0">
-                            <ui:CommandBar>
-                                <ui:AppBarButton Icon="Add"
-                                                 Name="Add" />
-                            </ui:CommandBar>
-                            <uc:ProductCardManaged />
-                        </StackPanel>
-
-                    </TabItem>
+                    
                     <TabItem Header="About">
                         <StackPanel HorizontalAlignment="Right">
                             <StackPanel Orientation="Horizontal">
@@ -159,25 +149,26 @@
                             </StackPanel>
                         </StackPanel>
                     </TabItem>
-                    <TabItem Header="More" >
-                        <StackPanel HorizontalAlignment="Right">
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Phone: "></Label>
-                                <Label Content="{Binding Vendor.Phone}" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Address: "></Label>
-                                <Label Content="{Binding Vendor.Address}" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Sold: "></Label>
-                                <Label Content="sold" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Remain: "></Label>
-                                <Label Content="Remain" />
-                            </StackPanel>
+                    <TabItem Header="Product Manager"
+                             Visibility="{Binding IsOwner,Converter={StaticResource BooleanToVisibility},ConverterParameter=True}">
+
+                        <StackPanel Margin="20 0">
+                            <ui:CommandBar>
+                                <ui:AppBarButton Icon="Add"
+                                                 Label="Add"
+                                                 />
+                                <ui:AppBarButton Icon="Edit"
+                                                 Label="Edit"
+                                                 
+                                                 Command="{Binding EditCommand}" />
+                                <ui:AppBarButton Icon="Remove"
+                                                 Label="Remove"
+                                                 
+                                                 Command="{Binding RemoveCommand}" />
+                            </ui:CommandBar>
+                            <uc:ProductCardManaged />
                         </StackPanel>
+
                     </TabItem>
                 </TabControl>
                 <Button Content="New Product" />
