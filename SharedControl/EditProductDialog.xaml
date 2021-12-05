@@ -27,9 +27,8 @@
         <TextBox ui:ControlHelper.Header="Descirption"
                  Text="{Binding SelectedItem.Description}" />
         
-        <TextBox ui:ControlHelper.Header="Product Image"
-                 Text="{Binding SelectedItem.Name}" />
-
+        <Button Content="Product Image" />
+        
        
     </ui:SimpleStackPanel>
 

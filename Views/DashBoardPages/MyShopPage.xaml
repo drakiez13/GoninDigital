@@ -93,29 +93,10 @@
                                     <DataTemplate>
                                         
                                         <uc:ProductCard Margin="10 10 10 10"
-                                                        Clickable="{Binding Source={StaticResource MyShopPageVM},Path=IsOwner,Converter={StaticResource BooleanConverter}}"
+                                                        
                                                         ProductInfo="{Binding}"
                                                         Content="">
-                                            <ui:ContextFlyoutService.ContextFlyout>
-                                                <ui:CommandBarFlyout>
-                                                    <ui:CommandBarFlyout.SecondaryCommands>
-
-                                                        <ui:AppBarButton Label="Edit"
-                                                                         Icon="Edit"
-                                                                         
-                                                                         CommandParameter="{Binding}"
-                                                                         Command="{Binding Source={StaticResource MyShopPageVM},Path=EditCommand}" />
-                                                        <ui:AppBarButton Label="Remove"
-                                                                         Icon="Remove"
-                                                                         
-                                                                         CommandParameter="{Binding}"
-                                                                         Command="{Binding Source={StaticResource MyShopPageVM},Path=RemoveCommand}" />
-
-                                                    </ui:CommandBarFlyout.SecondaryCommands>
-                                                </ui:CommandBarFlyout>
-                                            </ui:ContextFlyoutService.ContextFlyout>
-
-
+                                            
                                         </uc:ProductCard>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -148,11 +129,11 @@
                                 <Label Content="Remain" />
                             </StackPanel>
                         </StackPanel>
-                    </TabItem>
+                    </TabItem >
                     <TabItem Header="Product Manager"
                              Visibility="{Binding IsOwner,Converter={StaticResource BooleanToVisibility},ConverterParameter=True}">
 
-                        <StackPanel Margin="20 0">
+                        <StackPanel Margin="20 10 20 0">
                             <ui:CommandBar>
                                 <ui:AppBarButton Icon="Add"
                                                  Label="Add"

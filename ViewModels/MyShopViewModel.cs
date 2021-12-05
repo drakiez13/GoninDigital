@@ -58,6 +58,19 @@ namespace GoninDigital.ViewModels
             get { return products; }
             set { products = value; OnPropertyChanged(); }
         }
+
+        private ObservableCollection<Product> productBestSeller = null;
+        public ObservableCollection<Product> ProductBestSeller
+        {
+            get { return productBestSeller; }
+            set { productBestSeller = value; OnPropertyChanged(); }
+        }
+        private ObservableCollection<Product> productSpecial = null;
+        public ObservableCollection<Product> ProductSpecial
+        {
+            get { return productSpecial; }
+            set { productSpecial = value; OnPropertyChanged(); }
+        }
         private string newVendorName = null;
         public string NewVendorName
         {
