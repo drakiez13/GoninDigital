@@ -11,11 +11,6 @@
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{StaticResource OrderPageVM}"
       Title="HotDealPage">
-    <Page.Resources>
-        <CollectionViewSource x:Key="L_Ordered"
-                              Source="{Binding L_Order_Created}">
-        </CollectionViewSource>
-    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -25,163 +20,40 @@
                Content="Purchase History" 
                FontSize="22" 
                FontWeight="Bold"
-               Margin="20" ></Label>
-        <TabControl  Grid.Row="1" Style="{StaticResource TabControlPivotStyle}" >
-            <TabItem Header="Created" Width="160">
+               Margin="20 20 0 10" ></Label>
+        <TabControl Grid.Row="1"
+                    Margin="10 0 0 0"
+                    Style="{StaticResource TabControlPivotStyle}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>OK</TextBlock>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabItem Header="Created">
                 <ScrollViewer>
-                    <Grid>
-                        <ListView x:Name="ltb_Created" HorizontalAlignment="Center" ItemsSource="{Binding Source={StaticResource L_Ordered}}" Visibility="{Binding FlagItem[0]}">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Vertical"></StackPanel>
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <uc:OrderCard
-                            Image="{Binding Path=Image}"
-                            VendorName="{Binding Path=VendorName}"
-                            ProductName="{Binding Path=ProductName}"
-                            BrandName="{Binding Path=BrandName}"
-                            Quantity="{Binding Path=Quantity}"
-                            PriceDisc="{Binding Path=PriceDisc}"
-                            PriceOrg="{Binding Path=PriceOrg}"
-                            TotalPrice="{Binding Path=TotalPrice}"
-                            Status="{Binding Path=Status}"
-                            Date="{Binding Path=Date}">
-                                    </uc:OrderCard>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ListView>
-                        <Image  Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage}"></Image>
-                    </Grid>
+                    
                 </ScrollViewer>
-               
+
             </TabItem>
-            <TabItem Header="   Accepted" Width="160">
+            <TabItem Header="Accepted">
                 <ScrollViewer>
-                    <Grid>
-                        <ListBox HorizontalAlignment="Center" ItemsSource="{Binding L_Order_Accepted}" Visibility="{Binding FlagItem1}"
-                          SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Vertical"></StackPanel>
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <uc:OrderCard
-                            Image="{Binding Path=Image}"
-                            VendorName="{Binding Path=VendorName}"
-                            ProductName="{Binding Path=ProductName}"
-                            BrandName="{Binding Path=BrandName}"
-                            Quantity="{Binding Path=Quantity}"
-                            PriceDisc="{Binding Path=PriceDisc}"
-                            PriceOrg="{Binding Path=PriceOrg}"
-                            TotalPrice="{Binding Path=TotalPrice}"
-                            Status="{Binding Path=Status}"
-                            Date="{Binding Path=Date}">
-                                    </uc:OrderCard>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ListBox>
-                        <Image Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage2}" Stretch="Fill"></Image>
-                    </Grid>
+                    
                 </ScrollViewer>
             </TabItem>
 
-            <TabItem Header="    Refused" Width="160">
+            <TabItem Header="Refused">
                 <ScrollViewer>
-                    <Grid>
-                        <ListBox Margin="0,30,0,0" HorizontalAlignment="Center" ItemsSource="{Binding L_Order_Refused}" Visibility="{Binding FlagItem[2]}"
-                          SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Vertical"></StackPanel>
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <uc:OrderCard
-                            Image="{Binding Path=Image}"
-                            VendorName="{Binding Path=VendorName}"
-                            ProductName="{Binding Path=ProductName}"
-                            BrandName="{Binding Path=BrandName}"
-                            Quantity="{Binding Path=Quantity}"
-                            PriceDisc="{Binding Path=PriceDisc}"
-                            PriceOrg="{Binding Path=PriceOrg}"
-                            TotalPrice="{Binding Path=TotalPrice}"
-                            Status="{Binding Path=Status}"
-                            Date="{Binding Path=Date}">
-                                    </uc:OrderCard>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ListBox>
-                        <Image Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage3}" Stretch="Fill"></Image>
-                    </Grid>
+                    
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="   Delivered" Width="160">
+            <TabItem Header="Delivered">
                 <ScrollViewer>
-                    <Grid>
-                        <ListBox Margin="0,30,0,0" HorizontalAlignment="Center" ItemsSource="{Binding L_Order_Delivered}" Visibility="{Binding FlagItem4}"
-                          SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Vertical"></StackPanel>
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <uc:OrderCard
-                            Image="{Binding Path=Image}"
-                            VendorName="{Binding Path=VendorName}"
-                            ProductName="{Binding Path=ProductName}"
-                            BrandName="{Binding Path=BrandName}"
-                            Quantity="{Binding Path=Quantity}"
-                            PriceDisc="{Binding Path=PriceDisc}"
-                            PriceOrg="{Binding Path=PriceOrg}"
-                            TotalPrice="{Binding Path=TotalPrice}"
-                            Status="{Binding Path=Status}"
-                            Date="{Binding Path=Date}">
-                                    </uc:OrderCard>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ListBox>
-                        <Image Height="200" Width="200" Source="{Binding Image}" Visibility="{Binding FlagImage3}" Stretch="Fill"></Image>
-                    </Grid>
+                    
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="   Canceled" Width="160">
+            <TabItem Header="Canceled">
                 <ScrollViewer>
-                    <Grid>
-                        <ListBox Margin="0,30,0,0" HorizontalAlignment="Center" ItemsSource="{Binding L_Order_Canceled}" 
-                          SelectedItem="{Binding SelectedItem,Mode=OneWayToSource}">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Vertical"></StackPanel>
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <uc:OrderCard
-                            Image="{Binding Path=Image}"
-                            VendorName="{Binding Path=VendorName}"
-                            ProductName="{Binding Path=ProductName}"
-                            BrandName="{Binding Path=BrandName}"
-                            Quantity="{Binding Path=Quantity}"
-                            PriceDisc="{Binding Path=PriceDisc}"
-                            PriceOrg="{Binding Path=PriceOrg}"
-                            TotalPrice="{Binding Path=TotalPrice}"
-                            Status="{Binding Path=Status}"
-                            Date="{Binding Path=Date}">
-                                    </uc:OrderCard>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ListBox>
-                        <Image Height="200" Width="200" Visibility="{Binding FlagImage4}" 
-                               Source="{Binding Image}" Stretch="Fill"></Image>
-                    </Grid>
+                    
                 </ScrollViewer>
             </TabItem>
         </TabControl>
