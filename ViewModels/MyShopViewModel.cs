@@ -139,18 +139,15 @@ namespace GoninDigital.ViewModels
             dialog.ShowAsync();
         }
         public ICommand RemoveCommand { get; set; }
-        public async void RemoveCommandExec(object o)
+        public void RemoveCommandExec(object o)
         {
             using (var db = new GoninDigitalDBContext())
             {
                 try
                 {
-                    db.Products.Remove(SelectedItem);
-                    
-                    await db.SaveChangesAsync();
-
-                    Products.Remove(SelectedItem);
-                    MessageBox.Show("removed");
+                    SelectedItem.StatusId = (int)Constants.ProductStatus.REMOVED;
+                    db.Update(SelectedItem);
+                    _=db.SaveChanges();
                 }
                 catch (Exception e)
                 {
@@ -206,7 +203,6 @@ namespace GoninDigital.ViewModels
         }
         public void EditBtnExec()
         {
-            
             
             using (var db = new GoninDigitalDBContext())
             {
