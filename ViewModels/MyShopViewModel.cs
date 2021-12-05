@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using GoninDigital.SharedControl;
 using ModernWpf.Controls;
 using System.Windows.Input;
+using Microsoft.Win32;
+using GoninDigital.Utils;
 
 namespace GoninDigital.ViewModels
 {
@@ -23,6 +25,13 @@ namespace GoninDigital.ViewModels
 
             get { return hasVendor; }
             set { hasVendor = value;OnPropertyChanged(); }
+        }
+        private string visibilityOwner;
+        public string VisibilityOwner
+        {
+
+            get { return visibilityOwner; }
+            set { visibilityOwner = value; OnPropertyChanged(); }
         }
         private bool isOwner;
         public bool IsOwner
@@ -51,6 +60,19 @@ namespace GoninDigital.ViewModels
             get { return products; }
             set { products = value; OnPropertyChanged(); }
         }
+
+        private ObservableCollection<Product> productBestSeller = null;
+        public ObservableCollection<Product> ProductBestSeller
+        {
+            get { return productBestSeller; }
+            set { productBestSeller = value; OnPropertyChanged(); }
+        }
+        private ObservableCollection<Product> productSpecial = null;
+        public ObservableCollection<Product> ProductSpecial
+        {
+            get { return productSpecial; }
+            set { productSpecial = value; OnPropertyChanged(); }
+        }
         private string newVendorName = null;
         public string NewVendorName
         {
@@ -67,25 +89,28 @@ namespace GoninDigital.ViewModels
             {
                 try
                 {
+                    
                     Vendor = db.Vendors.Include(o => o.Owner)
                         .Include(o => o.Products)
                         .First(o => o.Owner.UserName == Settings.Default.usrname);
-                    /*Products = db.Products.Where(o => o.VendorId == Vendor.Id).ToList();*/
+                    db.ProductCategories.ToList();
                     Products = new ObservableCollection<Product>(Vendor.Products.ToList());
                     HasVendor = true;
+                    VisibilityOwner = "Visible";
+                    
                 }
                 catch
                 {
-
+                   
                     HasVendor = false;
                 }
             }
         }
         
         public ICommand EditCommand { get; set; }
-        public void EditCommandExec(Product product)
+        public void EditCommandExec(object o)
         {
-            SelectedItem = product;
+            
             var dialog = new ContentDialog
             {
                 Content = new EditProductDialog(),
@@ -114,17 +139,17 @@ namespace GoninDigital.ViewModels
             dialog.ShowAsync();
         }
         public ICommand RemoveCommand { get; set; }
-        public async void RemoveCommandExec(Product product)
+        public async void RemoveCommandExec(object o)
         {
             using (var db = new GoninDigitalDBContext())
             {
                 try
                 {
-                    db.Products.Remove(product);
+                    db.Products.Remove(SelectedItem);
                     
                     await db.SaveChangesAsync();
 
-                    Products.Remove(product);
+                    Products.Remove(SelectedItem);
                     MessageBox.Show("removed");
                 }
                 catch (Exception e)
@@ -149,10 +174,34 @@ namespace GoninDigital.ViewModels
             }
             
         }
+        public ICommand ImageEditCommand { get; set; }
+        public async void ImageEditCommandExec(object o)
+        {
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Title = "Choose Image..";
+
+            openFileDialog.InitialDirectory = @"C:\";
+            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var linkAvatar = await ImageUploader.UploadAsync(openFileDialog.FileName);
+                using (var db = new GoninDigitalDBContext())
+                {
+                    SelectedItem.Image = linkAvatar;
+
+                    db.Update(SelectedItem);
+                    _ = db.SaveChanges();
+                }
+            }
+        }
         public MyShopViewModel()
         {
+            
             EditCommand = new RelayCommand<Product>(o => true, o => EditCommandExec(o));
             RemoveCommand = new RelayCommand<Product>(o => true, o => RemoveCommandExec(o));
+            ImageEditCommand = new RelayCommand<Product>(o => true, o => ImageEditCommandExec(o));
             UpgradeCommand = new RelayCommand<object>((p) => true, (p) => { UpgradeCommandExec(); });
         }
         public void EditBtnExec()
