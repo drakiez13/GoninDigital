@@ -79,6 +79,12 @@ namespace GoninDigital.ViewModels
             get { return newVendorName; }
             set { newVendorName = value; OnPropertyChanged(); }
         }
+        private string vendorName = null;
+        public string VendorName
+        {
+            get { return vendorName; }
+            set { vendorName = value; OnPropertyChanged(); }
+        }
 
         public int OnPrimaryButtonClick { get; private set; }
         public int PrimaryButtonClick { get; private set; }
@@ -96,6 +102,7 @@ namespace GoninDigital.ViewModels
                     db.ProductCategories.ToList();
                     Products = new ObservableCollection<Product>(Vendor.Products.ToList());
                     HasVendor = true;
+                    VendorName = Vendor.Name;
                     VisibilityOwner = "Visible";
                     
                 }
@@ -159,6 +166,63 @@ namespace GoninDigital.ViewModels
                 }
             }
         }
+        public ICommand SaveVendorInfoCommand { get; set; }
+        public void SaveVendorConfirm()
+        {
+            var dialog = new ContentDialog
+            {
+                Content = "Do you want to change your vendor information ?",
+
+                Title = "Confirm",
+                PrimaryButtonText = "Save",
+                CloseButtonText = "Cancel",
+                CloseButtonCommand = new RelayCommand<object>((p) => true, (p) => { ResetVendorInfoExec(); }),
+                PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { SaveVendorInfoExec(); }),
+            };
+            dialog.ShowAsync();
+        }
+        public ICommand ResetVendorInfoCommand { get; set; }
+        public void ResetVendorInfoExec()
+        {
+            using (var db = new GoninDigitalDBContext())
+            {
+                Vendor = db.Vendors.Include(o => o.Owner)
+                    .Include(o => o.Products)
+                    .First(o => o.Owner.UserName == Settings.Default.usrname);
+                db.ProductCategories.ToList();
+                VendorName = Vendor.Name;
+            }
+        }
+        public async void SaveVendorInfoExec()
+        {
+            using (var db = new GoninDigitalDBContext())
+            {
+                try
+                {
+                    Vendor.Name = VendorName;
+                    db.Vendors.Update(Vendor);
+                    await db.SaveChangesAsync();
+                    var dialog = new ContentDialog
+                    {
+                        Title = "Completed",
+                        Content = "Your vendor infomation is saved",
+                        PrimaryButtonText = "Ok"
+                    };
+                    await dialog.ShowAsync();
+                }
+                catch (Exception e)
+                {
+
+                    var dialog = new ContentDialog
+                    {
+                        Title = "Error",
+                        Content = e.Message,
+                        PrimaryButtonText = "Ok"
+                    };
+                    await dialog.ShowAsync();
+                }
+            }
+        }
         public void OnNavigatedTo()
         {
             if(isOwner)
@@ -203,6 +267,16 @@ namespace GoninDigital.ViewModels
             RemoveCommand = new RelayCommand<Product>(o => true, o => RemoveCommandExec(o));
             ImageEditCommand = new RelayCommand<Product>(o => true, o => ImageEditCommandExec(o));
             UpgradeCommand = new RelayCommand<object>((p) => true, (p) => { UpgradeCommandExec(); });
+            ResetVendorInfoCommand = new RelayCommand<object>((p) => true, (p) => { ResetVendorInfoExec(); });
+            SaveVendorInfoCommand = new RelayCommand<object>((p) =>
+            {
+                if (string.IsNullOrEmpty(VendorName))
+                {
+                    return false;
+                }
+                
+                return true;
+            }, (p) => { SaveVendorConfirm(); });
         }
         public void EditBtnExec()
         {
