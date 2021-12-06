@@ -92,7 +92,8 @@ namespace GoninDigital.ViewModels
                     
                     Vendor = db.Vendors.Include(o => o.Owner)
                         .Include(o => o.Products)
-                        .First(o => o.Owner.UserName == Settings.Default.usrname);
+                        .Where(o=> o.Products.)
+                        .First(o => o.Owner.UserName == Settings.Default.usrname );
                     db.ProductCategories.ToList();
                     Products = new ObservableCollection<Product>(Vendor.Products.ToList());
                     HasVendor = true;
@@ -180,7 +181,7 @@ namespace GoninDigital.ViewModels
             openFileDialog.Title = "Choose Image..";
 
             openFileDialog.InitialDirectory = @"C:\";
-            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
                 var linkAvatar = await ImageUploader.UploadAsync(openFileDialog.FileName);

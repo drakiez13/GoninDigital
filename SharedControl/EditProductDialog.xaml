@@ -10,36 +10,64 @@
              d:DesignWidth="800"
              DataContext="{StaticResource MyShopPageVM}">
     <ScrollViewer>
-    <ui:SimpleStackPanel Spacing="12">
-            <StackPanel Orientation="Horizontal">
-                <ui:PersonPicture VerticalAlignment="Top"
-                                  Margin="0 0 0 0"
-                                  ProfilePicture="{Binding SelectedItem.Image}"
-                                  Height="80"
-                                  Width="80"
-                                  >
-                    
-                </ui:PersonPicture>
-                <Button Content="Edit" HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Command="{Binding ImageEditCommand}"></Button>
+        <StackPanel>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <ui:PersonPicture VerticalAlignment="Top"
+                                      Margin="0 0 0 0"
+                                      ProfilePicture="{Binding SelectedItem.Image}"
+                                      Height="80"
+                                      Width="80">
+
+                    </ui:PersonPicture>
+                    <Button Content="Edit"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Command="{Binding ImageEditCommand}"></Button>
+                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <StackPanel>
+                    <TextBox ui:ControlHelper.Header="Product Name"
+                             Text="{Binding SelectedItem.Name}"
+                             AcceptsReturn="True" />
+
+                    <TextBox ui:ControlHelper.Header="Origin"
+                             Text="{Binding SelectedItem.Origin}" />
+
+                    <TextBox ui:ControlHelper.Header="Origin Price"
+                             Text="{Binding SelectedItem.OriginPrice}" />
+
+                    <TextBox ui:ControlHelper.Header="Sale off Price"
+                             Text="{Binding SelectedItem.Price}" />
+
+                    <TextBox ui:ControlHelper.Header="Descirption"
+                             Height="50"
+                             Text="{Binding SelectedItem.Description}" />
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+
+                    <TextBox ui:ControlHelper.Header="Category Name"
+                             Text="{Binding SelectedItem.Category.Name}"
+                             AcceptsReturn="True" />
+
+                    <TextBox ui:ControlHelper.Header="Brand Name"
+                             Text="{Binding SelectedItem.Brand.Name}" />
+
+                    <TextBox ui:ControlHelper.Header="Available"
+                             Text="{Binding SelectedItem.Available}" />
+
+                    <TextBox ui:ControlHelper.Header="New"
+                             Text="{Binding SelectedItem.New}" />
+
+                    <TextBox ui:ControlHelper.Header="Details"
+                             Text="{Binding SelectedItem.Detail}" />
+                </StackPanel>
             </StackPanel>
-            <TextBox ui:ControlHelper.Header="Product Name"
-                 Text="{Binding SelectedItem.Name}"
-                 AcceptsReturn="True" />
-
-        <TextBox ui:ControlHelper.Header="Origin"
-                 Text="{Binding SelectedItem.Origin}" />
-
-        <TextBox ui:ControlHelper.Header="Origin Price"
-                 Text="{Binding SelectedItem.OriginPrice}" />
-        
-        <TextBox ui:ControlHelper.Header="Sale off Price"
-                 Text="{Binding SelectedItem.Price}" />
-
-         <TextBox ui:ControlHelper.Header="Descirption"
-                     Text="{Binding SelectedItem.Description}" />
-
-        </ui:SimpleStackPanel>
+        </StackPanel>
     </ScrollViewer>
 </UserControl>
