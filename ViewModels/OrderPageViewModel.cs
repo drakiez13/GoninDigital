@@ -5,49 +5,65 @@ using GoninDigital.SharedControl;
 using GoninDigital.Properties;
 using Microsoft.EntityFrameworkCore;
 using GoninDigital.Utils;
+using System.Windows.Input;
+using System.Collections.ObjectModel;
 
 namespace GoninDigital.ViewModels
 {
     class OrderPageViewModel : BaseViewModel
     {
-        private List<Invoice> createdInvoices;
-        public List<Invoice> CreatedInvoices
+        private ObservableCollection<Invoice> createdInvoices;
+        public ObservableCollection<Invoice> CreatedInvoices
         {
             get { return createdInvoices; }
             set { createdInvoices = value; OnPropertyChanged(); }
         }
-        private List<Invoice> acceptedInvoices;
-        public List<Invoice> AcceptedInvoices
+        private ObservableCollection<Invoice> acceptedInvoices;
+        public ObservableCollection<Invoice> AcceptedInvoices
         {
             get { return acceptedInvoices; }
             set { acceptedInvoices = value; OnPropertyChanged(); }
         }
-        private List<Invoice> deliveredInvoices;
-        public List<Invoice> DeliveredInvoices
+        private ObservableCollection<Invoice> deliveredInvoices;
+        public ObservableCollection<Invoice> DeliveredInvoices
         {
             get { return deliveredInvoices; }
             set { deliveredInvoices = value; OnPropertyChanged(); }
         }
-        private List<Invoice> canceledInvoices;
-        public List<Invoice> CanceledInvoices
+        private ObservableCollection<Invoice> canceledInvoices;
+        public ObservableCollection<Invoice> CanceledInvoices
         {
             get { return canceledInvoices; }
             set { canceledInvoices = value; OnPropertyChanged(); }
         }
-        private List<Invoice> refusedInvoices;
-        public List<Invoice> RefusedInvoices
+        private ObservableCollection<Invoice> refusedInvoices;
+        public ObservableCollection<Invoice> RefusedInvoices
         {
             get { return refusedInvoices; }
             set { refusedInvoices = value; OnPropertyChanged(); }
         }
 
+        public ICommand CancelInvoice { get; set; }
+
         public OrderPageViewModel()
         {
-            createdInvoices = new List<Invoice>();
-            acceptedInvoices = new List<Invoice>();
-            deliveredInvoices = new List<Invoice>();
-            canceledInvoices = new List<Invoice>();
-            refusedInvoices = new List<Invoice>();
+            createdInvoices = new ObservableCollection<Invoice>();
+            acceptedInvoices = new ObservableCollection<Invoice>();
+            deliveredInvoices = new ObservableCollection<Invoice>();
+            canceledInvoices = new ObservableCollection<Invoice>();
+            refusedInvoices = new ObservableCollection<Invoice>();
+
+            CancelInvoice = new RelayCommand<Invoice>(o => true, o => { 
+                o.StatusId = (int)Constants.InvoiceStatus.CANCELED;
+                o.FinishedAt = System.DateTime.Now;
+                CreatedInvoices.Remove(o);
+                CanceledInvoices.Add(o);
+                using (var db = new GoninDigitalDBContext())
+                {
+                    db.Update(o);
+                    db.SaveChanges();
+                }
+            });
         }
 
         public void OnNavigatedTo()
@@ -60,13 +76,15 @@ namespace GoninDigital.ViewModels
             using (var db = new GoninDigitalDBContext())
             {
                 var userInvoices = db.Invoices.Include(o => o.Customer)
+                                              .Include(o => o.Vendor)
+                                              .Include(o => o.InvoiceDetails).ThenInclude(o => o.Product)
                                               .Where(o => o.Customer.UserName == Settings.Default.usrname)
                                               .ToList();
-                CreatedInvoices = userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.CREATED).ToList();
-                AcceptedInvoices = userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.ACCEPTED).ToList();
-                DeliveredInvoices = userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.DELIVERED).ToList();
-                CanceledInvoices = userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.CANCELED).ToList();
-                RefusedInvoices = userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.REFUSED).ToList();
+                CreatedInvoices = new ObservableCollection<Invoice>(userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.CREATED));
+                AcceptedInvoices = new ObservableCollection<Invoice>(userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.ACCEPTED));
+                DeliveredInvoices = new ObservableCollection<Invoice>(userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.DELIVERED));
+                CanceledInvoices = new ObservableCollection<Invoice>(userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.CANCELED));
+                RefusedInvoices = new ObservableCollection<Invoice>(userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.REFUSED));
 
             }
         }

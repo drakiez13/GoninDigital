@@ -1,26 +1,27 @@
 ﻿<ui:Page x:Class="GoninDigital.Views.DashBoardPages.OrderPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:ui="http://schemas.modernwpf.com/2019"
-      xmlns:uc="clr-namespace:GoninDigital.SharedControl"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:GoninDigital.Views.DashBoardPages"
-      xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      DataContext="{StaticResource OrderPageVM}"
-      Title="HotDealPage">
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:ui="http://schemas.modernwpf.com/2019"
+         xmlns:uc="clr-namespace:GoninDigital.SharedControl"
+         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns:local="clr-namespace:GoninDigital.Views.DashBoardPages"
+         xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+         mc:Ignorable="d"
+         d:DesignHeight="450"
+         d:DesignWidth="800"
+         DataContext="{StaticResource OrderPageVM}"
+         Title="HotDealPage">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" 
-               Content="Purchase History" 
-               FontSize="22" 
+        <Label Grid.Row="0"
+               Content="Purchase History"
+               FontSize="22"
                FontWeight="Bold"
-               Margin="20 20 0 10" ></Label>
+               Margin="20 20 0 10"></Label>
         <TabControl Grid.Row="1"
                     Margin="10 0 0 0"
                     Style="{StaticResource TabControlPivotStyle}">
@@ -30,31 +31,213 @@
                 </DataTemplate>
             </TabControl.ItemTemplate>
             <TabItem Header="Created">
-                <ScrollViewer>
-                    
-                </ScrollViewer>
+                <ui:ListView Margin="0 10 0 0"
+                             ItemsSource="{Binding CreatedInvoices}"
+                             IsSelectionEnabled="False"
+                             ScrollViewer.CanContentScroll="False">
+                    <ui:ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0 10 0 0"
+                                        HorizontalAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal">
+                                    <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
+                                                      DisplayName="{Binding Vendor.Name}"
+                                                      Width="40"></ui:PersonPicture>
+                                    <TextBlock Text="{Binding Vendor.Name, Mode=OneTime}"
+                                               Margin="10 0 0 0"
+                                               VerticalAlignment="Center"
+                                               FontSize="20"
+                                               FontWeight="Bold" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="30 10 0 0" VerticalAlignment="Center">
+                                    <TextBlock Text="Created At: "
+                                               VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Text="{Binding CreatedAt}"
+                                               VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Margin="150 0 0 0"
+                                               Text="Value: "
+                                               VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Text="{Binding Value, StringFormat=C, ConverterCulture=vi-VN}"
+                                           FontWeight="Bold"
+                                           VerticalAlignment="Center"
+                                           FontSize="20"
+                                           Foreground="{DynamicResource SystemControlHighlightAccentBrush}"></TextBlock>
+                                    <Button Margin="200 0 0 0" CommandParameter="{Binding}"
+                                            Command="{Binding Source={StaticResource OrderPageVM}, Path=CancelInvoice}">Cancel</Button>
+                                </StackPanel>
+                                
+                                <Expander Header="Show products">
+                                    <ui:ListView ItemsSource="{Binding InvoiceDetails}">
+                                        <ui:ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <DockPanel HorizontalAlignment="Stretch">
+                                                <Image Source="{Binding Product.Image}"
+                                                       Stretch="UniformToFill"
+                                                       Width="80"
+                                                       Height="80"
+                                                       VerticalAlignment="Center" />
+                                                <TextBlock Text="{Binding Product.Name}"
+                                                           TextWrapping="Wrap"
+                                                           Width="250"
+                                                           Margin="10,0,5,0"
+                                                           VerticalAlignment="Center" />
+
+                                                <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
+                                                           VerticalAlignment="Center"
+                                                           TextAlignment="Center"
+                                                           Width="160" />
+                                                <Label VerticalAlignment="Center"
+                                                       Width="50">X</Label>
+
+                                                <ui:NumberBox VerticalAlignment="Center"
+                                                              Value="{Binding Quantity}"
+                                                              SpinButtonPlacementMode="Hidden"
+                                                              IsEnabled="False"
+                                                              Width="35" />
+
+                                            </DockPanel>
+                                        </DataTemplate>
+                                        </ui:ListView.ItemTemplate>
+                                    </ui:ListView>
+                                </Expander>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ui:ListView.ItemTemplate>
+                </ui:ListView>
 
             </TabItem>
             <TabItem Header="Accepted">
-                <ScrollViewer>
-                    
-                </ScrollViewer>
+                <ui:ListView Margin="0 10 0 0"
+                             ItemsSource="{Binding AcceptedInvoices}"
+                             IsSelectionEnabled="False">
+                    <ui:ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0 10 0 0"
+                                        HorizontalAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal">
+                                    <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
+                                                      DisplayName="{Binding Vendor.Name}"
+                                                      Width="40"></ui:PersonPicture>
+                                    <TextBlock Text="{Binding Vendor.Name, Mode=OneTime}"
+                                               Margin="10 0 0 0"
+                                               VerticalAlignment="Center"
+                                               FontSize="20"
+                                               FontWeight="Bold" />
+                                </StackPanel>
+
+                                <TextBlock Text="Created At: "></TextBlock>
+                                <TextBlock Text="{Binding CreatedAt}"></TextBlock>
+                                <TextBlock Text="Value: "></TextBlock>
+                                <TextBlock Text="{Binding Value}"></TextBlock>
+                                <Expander Header="Show products">
+                                    <StackPanel>
+                                        <TextBlock>OK</TextBlock>
+                                    </StackPanel>
+                                </Expander>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ui:ListView.ItemTemplate>
+                </ui:ListView>
             </TabItem>
 
             <TabItem Header="Refused">
-                <ScrollViewer>
-                    
-                </ScrollViewer>
+                <ui:ListView Margin="0 10 0 0"
+                             ItemsSource="{Binding RefusedInvoices}"
+                             IsSelectionEnabled="False">
+                    <ui:ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0 10 0 0"
+                                        HorizontalAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal">
+                                    <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
+                                                      DisplayName="{Binding Vendor.Name}"
+                                                      Width="40"></ui:PersonPicture>
+                                    <TextBlock Text="{Binding Vendor.Name, Mode=OneTime}"
+                                               Margin="10 0 0 0"
+                                               VerticalAlignment="Center"
+                                               FontSize="20"
+                                               FontWeight="Bold" />
+                                </StackPanel>
+
+                                <TextBlock Text="Refused At: "></TextBlock>
+                                <TextBlock Text="{Binding FinishedAt}"></TextBlock>
+                                <TextBlock Text="Value: "></TextBlock>
+                                <TextBlock Text="{Binding Value}"></TextBlock>
+                                <Expander Header="Show products">
+                                    <StackPanel>
+                                        <TextBlock>OK</TextBlock>
+                                    </StackPanel>
+                                </Expander>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ui:ListView.ItemTemplate>
+                </ui:ListView>
             </TabItem>
             <TabItem Header="Delivered">
-                <ScrollViewer>
-                    
-                </ScrollViewer>
+                <ui:ListView Margin="0 10 0 0"
+                             ItemsSource="{Binding DeliveredInvoices}"
+                             IsSelectionEnabled="False">
+                    <ui:ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0 10 0 0"
+                                        HorizontalAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal">
+                                    <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
+                                                      DisplayName="{Binding Vendor.Name}"
+                                                      Width="40"></ui:PersonPicture>
+                                    <TextBlock Text="{Binding Vendor.Name, Mode=OneTime}"
+                                               Margin="10 0 0 0"
+                                               VerticalAlignment="Center"
+                                               FontSize="20"
+                                               FontWeight="Bold" />
+                                </StackPanel>
+
+                                <TextBlock Text="Delivered At: "></TextBlock>
+                                <TextBlock Text="{Binding FinishedAt}"></TextBlock>
+                                <TextBlock Text="Value: "></TextBlock>
+                                <TextBlock Text="{Binding Value}"></TextBlock>
+                                <Expander Header="Show products">
+                                    <StackPanel>
+                                        <TextBlock>OK</TextBlock>
+                                    </StackPanel>
+                                </Expander>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ui:ListView.ItemTemplate>
+                </ui:ListView>
             </TabItem>
             <TabItem Header="Canceled">
-                <ScrollViewer>
-                    
-                </ScrollViewer>
+                <ui:ListView Margin="0 10 0 0"
+                             ItemsSource="{Binding CanceledInvoices}"
+                             IsSelectionEnabled="False">
+                    <ui:ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0 10 0 0"
+                                        HorizontalAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal">
+                                    <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
+                                                      DisplayName="{Binding Vendor.Name}"
+                                                      Width="40"></ui:PersonPicture>
+                                    <TextBlock Text="{Binding Vendor.Name, Mode=OneTime}"
+                                               Margin="10 0 0 0"
+                                               VerticalAlignment="Center"
+                                               FontSize="20"
+                                               FontWeight="Bold" />
+                                </StackPanel>
+
+                                <TextBlock Text="Canceled At: "></TextBlock>
+                                <TextBlock Text="{Binding FinishedAt}"></TextBlock>
+                                <TextBlock Text="Value: "></TextBlock>
+                                <TextBlock Text="{Binding Value}"></TextBlock>
+                                <Expander Header="Show products">
+                                    <StackPanel>
+                                        <TextBlock>OK</TextBlock>
+                                    </StackPanel>
+                                </Expander>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ui:ListView.ItemTemplate>
+                </ui:ListView>
             </TabItem>
         </TabControl>
     </Grid>
