@@ -42,27 +42,28 @@
                         </StackPanel>
                     </Grid>
                 </Grid>
-
-                <ui:NavigationView x:Name="nav" Margin="0 30 0 0" MinHeight="500"
+                <Grid>
+                    <ui:NavigationView x:Name="nav" Margin="0 30 0 0" MinHeight="500"
                                    SelectionChanged="nav_SelectionChanged"
                                    PaneDisplayMode="Top"
                                    SelectionFollowsFocus="Enabled"
                                    IsTabStop="False"
                                    IsBackButtonVisible="Collapsed">
-                    <ui:NavigationView.MenuItems>
-                        <ui:NavigationViewItem Content="Home"
+                        <ui:NavigationView.MenuItems>
+                            <ui:NavigationViewItem Content="Home"
                                                Tag="HomeTab"
                                                IsSelected="True"/>
-                        <ui:NavigationViewItem Content="All Product"
+                            <ui:NavigationViewItem Content="All Product"
                                                Tag="AllProductTab" />
-                        <ui:NavigationViewItem Content="Product Manager"
+                            <ui:NavigationViewItem Content="Product Manager"
                                                Tag="ProductManagerTab" />
-                        <ui:NavigationViewItem Content="About" 
+                            <ui:NavigationViewItem Content="About" 
                                                Tag="AboutTab" />
-                    </ui:NavigationView.MenuItems>
-                    <ui:Frame x:Name="frame"/>
-                </ui:NavigationView>
-
+                        </ui:NavigationView.MenuItems>
+                        <ui:Frame x:Name="frame"/>
+                    </ui:NavigationView>
+                </Grid>
+   
             </StackPanel>
             <Grid Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=False}">
                 <Grid VerticalAlignment="Top">
