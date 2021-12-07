@@ -15,9 +15,9 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="225"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="150"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
         <Grid>
             <StackPanel Orientation="Horizontal">
                 <ui:AutoSuggestBox QueryIcon="Find" 
@@ -31,6 +31,7 @@
             </StackPanel>
         </Grid>
         <DataGrid x:Name="dataGrid"
+                  Margin="10,0,0,10"
                   ItemsSource="{Binding L_Shop}"
                   SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}"
                   Grid.Row="1"
@@ -41,8 +42,7 @@
                   RowDetailsVisibilityMode="Collapsed"
                   VirtualizingPanel.VirtualizationMode="Recycling"
                   VirtualizingPanel.IsVirtualizingWhenGrouping="True" 
-                  AutoGenerateColumns="False" 
-                  IsReadOnly="False" >
+                  AutoGenerateColumns="False"  >
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Header="Id"
@@ -77,56 +77,68 @@
                 <DataGridTextColumn
                     Header="Phone Number"
                     MinWidth="120"
+                    Width="*"
                     Binding="{Binding Phone}"
                     IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Grid.Row="2" Content="Not Accepted" Margin="0,5,0,0"
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="950"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Request" Margin="30,5,0,0"
                FontSize="20"
-               FontWeight="Bold"/>
+               FontWeight="Bold"
+                   />
+            <StackPanel Grid.Column="1" Orientation="Horizontal"
+                        >
+                <ui:AppBarButton 
+                Visibility="{Binding SelectedVendors.Count,
+                           Converter={StaticResource ListCountToVisibility},
+                           ConverterParameter=True}"
+                                 Icon="Delete"
+                                 Label="Remove"
+                                 Command="{Binding RemoveSelectionsCommand}"
+                                />
+
+                <ui:AppBarButton 
+                Visibility="{Binding SelectedVendors.Count,
+                           Converter={StaticResource ListCountToVisibility},
+                           ConverterParameter=True}"
+                                 Icon="Shop"
+                                 Label="Accept"
+                                 Command="{Binding AcceptSelectionsCommand}"/>
+            </StackPanel>
+        </Grid>
+
+
         <StackPanel Orientation="Vertical" Grid.Row="3" Margin="0,15,0,0">
             <ui:ListView ItemsSource="{Binding L_ShopNew}"
                          x:Name="lvShopPage"
                          SelectionChanged="ListView_SelectionChanged"
                                  SelectionMode="Multiple"
                                  HorizontalAlignment="Left"
-                                 Width="auto"
+                         Height="150"
                                  VirtualizingPanel.IsVirtualizing="True"
-                                 VirtualizingPanel.IsVirtualizingWhenGrouping="True">
-                <ui:ListView.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <Border AutomationProperties.Name="{Binding Name}"
-                                                Height="50">
-                                    <StackPanel Orientation="Horizontal">
-                                        <ui:PersonPicture ProfilePicture="{Binding Name, Converter={StaticResource VendorNameToAvatarConverter}}"
-                                                                  DisplayName="{Binding Name}"
-                                                                  Width="40"></ui:PersonPicture>
-                                        <TextBlock Text="{Binding Name, Mode=OneTime}"
-                                                           Margin="10 0 0 0"
-                                                           VerticalAlignment="Center"
-                                                           FontSize="20"
-                                                           FontWeight="Bold" />
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </ui:ListView.GroupStyle>
+                                 VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                         >
+
+
                 <ui:ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"></StackPanel>
+                        
                     </ItemsPanelTemplate>
                 </ui:ListView.ItemsPanel>
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <DockPanel HorizontalAlignment="Stretch">
+                        <DockPanel HorizontalAlignment="Stretch" Height="60">
                             <Image Source="{Binding Avatar}"
                                            Stretch="UniformToFill"
-                                           Width="50"
-                                           Height="50"
+                                           Width="40"
+                                           Height="40"
                                            VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Name}"
                                                TextWrapping="Wrap"
@@ -135,38 +147,22 @@
                                                VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Description}"
                                                TextWrapping="Wrap"
-                                               Width="180"
-                                               Margin="10,10,0,10"
-                                               VerticalAlignment="Center" />
-                            <TextBlock Text="{Binding Products.Count}"
-                                               TextWrapping="Wrap"
-                                               Width="130"
+                                               Width="250"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Address}"
                                                TextWrapping="Wrap"
-                                               Width="200"
+                                               Width="350"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Phone}"
                                                TextWrapping="Wrap"
-                                               Width="150"
+                                               Width="180"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
-                            <StackPanel Orientation="Vertical"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                Width="120">
-                                <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
-                                                   HorizontalAlignment="Center"
-                                                   TextAlignment="Center"
-                                                   Width="100"
-                                                   Margin="0 0 0 8" />
-                            </StackPanel>
                             <ui:CommandBar VerticalAlignment="Center"
                                                    Background="Transparent"
-                                                   Width="80"
-                                                   Margin="10 0 0 0"
+                                                   Width="auto"
                                                    DockPanel.Dock="Right">
                                 <ui:CommandBar.SecondaryCommands>
                                     <ui:AppBarButton Icon="Delete"
@@ -183,40 +179,10 @@
                                                              Command="{Binding Source={StaticResource ManageShopPageVM}, Path=AcceptCommand}"></ui:AppBarButton>
                                 </ui:CommandBar.SecondaryCommands>
                             </ui:CommandBar>
-                            <TextBlock Margin="40 0 0 0"
-                                               Width="160"
-                                               VerticalAlignment="Center"
-                                               FontWeight="Bold"
-                                               FontSize="16"
-                                               DockPanel.Dock="Right"
-                                               TextAlignment="Right"
-                                               HorizontalAlignment="Right"
-                                               Foreground="{DynamicResource SystemControlHighlightAltListAccentHighBrush}">
-                            </TextBlock>
                         </DockPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ui:ListView>
         </StackPanel>
-        <Grid Grid.Row="4"
-              MinHeight="50"
-              Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}"
-              Visibility="{Binding SelectedVendors.Count,
-                           Converter={StaticResource ListCountToVisibility},
-                           ConverterParameter=True}">
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Right">
-
-                <ui:AppBarButton 
-                                 Icon="Delete"
-                                 Label="Remove"
-                                 Command="{Binding RemoveSelectionsCommand}"/>
-
-                <ui:AppBarButton 
-                                 Icon="Shop"
-                                 Label="Accept"
-                                 Command="{Binding AcceptSelectionsCommand}"/>
-            </StackPanel>
-        </Grid>
     </Grid>
 </Page>

@@ -14,6 +14,7 @@ namespace GoninDigital.ViewModels
 {
     class ManageShopPageViewModel:BaseViewModel
     {
+        #region Properties
         private ObservableCollection<Vendor> l_Shop;
         public ObservableCollection<Vendor> L_Shop { get { return l_Shop; } set { l_Shop = value; OnPropertyChanged(); } }
         private ObservableCollection<Vendor> l_ShopNew;
@@ -32,23 +33,24 @@ namespace GoninDigital.ViewModels
         public ICommand AcceptCommand { get; set; }
         public ICommand RemoveSelectionsCommand { get; set; }
         public ICommand AcceptSelectionsCommand { get; set; }
+        #endregion
+        #region Constructor
         public ManageShopPageViewModel()
         {
+            SelectedVendors=new ObservableCollection<Vendor>();
             L_Shop = new ObservableCollection<Vendor>(DataProvider.Instance.Db.Vendors.Where(x=>x.ApprovalStatus==1));
             L_ShopNew = new ObservableCollection<Vendor>(DataProvider.Instance.Db.Vendors.Where(x => x.ApprovalStatus == 0));
-            for (int i = 0; i < L_Shop.Count(); i++)
-            {
-                _ = DataProvider.Instance.Db.Users.First(x => x.Id == L_Shop[i].OwnerId).UserName;
-                foreach (Product product in DataProvider.Instance.Db.Products.Where(x => x.VendorId == L_Shop[i].Id))
-                    _ = product.Name;
-            }
-            for (int i = 0; i < L_ShopNew.Count(); i++)
-            {
-                _ = DataProvider.Instance.Db.Users.First(x => x.Id == L_ShopNew[i].OwnerId).UserName;
-                foreach (Product product in DataProvider.Instance.Db.Products.Where(x => x.VendorId == L_ShopNew[i].Id))
-                    _ = product.Name;
-            }
-            DeleteCommand = new RelayCommand<Object>((p) => 
+            LoadInfo();
+            RemoveCommand = new RelayCommand<Vendor>(o => true,
+               vendor => { RemoveExec(vendor); });
+            ShowVendorCommand = new RelayCommand<Vendor>(o => true,
+                vendor => DashBoard.RootFrame.Navigate(new MyShopPage(12)));
+            AcceptCommand = new RelayCommand<Vendor>(o => true, vendor => { AcceptExec(vendor); });
+            RemoveSelectionsCommand = new RelayCommand<Vendor>(o => true, SelectedVendors =>
+            { RemoveSelectionsExec(selectedVendors); });
+            AcceptSelectionsCommand = new RelayCommand<Vendor>(o => true, SelectedVendors =>
+            { AcceptSelectionsExec(selectedVendors); });
+            DeleteCommand = new RelayCommand<Object>((p) =>
             {
                 if (SelectedItem != null)
                 {
@@ -57,22 +59,11 @@ namespace GoninDigital.ViewModels
                 return false;
             }, (p) =>
             {
-                var vendor = DataProvider.Instance.Db.Vendors.First(x => x.Id == SelectedItem.Id);
-                L_Shop.Remove(vendor);
-                DataProvider.Instance.Db.Vendors.Remove(vendor);
-                DataProvider.Instance.Db.SaveChanges();
+                DeleteExec();
             });
-            RemoveCommand = new RelayCommand<Vendor>(o => true,
-               vendor => { L_ShopNew.Remove(vendor); RemoveExec(vendor); });
-            ShowVendorCommand = new RelayCommand<Vendor>(o => true,
-                vendor => DashBoard.RootFrame.Navigate(new MyShopPage(vendor.Id)));
-            AcceptCommand = new RelayCommand<Vendor>(o => true, vendor => { AcceptExec(vendor); });
-            RemoveSelectionsCommand = new RelayCommand<Vendor>(o => true, SelectedVendors =>
-            { RemoveSelectionsExec(selectedVendors); });
-            AcceptSelectionsCommand = new RelayCommand<Vendor>(o => true, SelectedVendors =>
-            { AcceptSelectionsExec(selectedVendors); });
-
         }
+        #endregion
+        #region Private Methods
         private void RemoveExec(Vendor vendor)
         {
             using (var db = new GoninDigitalDBContext())
@@ -120,5 +111,26 @@ namespace GoninDigital.ViewModels
                 }
             }
         }
+        private void DeleteExec()
+        {
+            var vendor = DataProvider.Instance.Db.Vendors.First(x => x.Id == SelectedItem.Id);
+            L_Shop.Remove(vendor);
+            DataProvider.Instance.Db.Vendors.Remove(vendor);
+            DataProvider.Instance.Db.SaveChanges();
+        }
+        private void LoadInfo()
+        {
+            for (int i = 0; i < L_Shop.Count(); i++)
+            {
+                foreach (Product product in DataProvider.Instance.Db.Products.Where(x => x.VendorId == L_Shop[i].Id))
+                    _ = product.Name;
+            }
+            for (int i = 0; i < L_ShopNew.Count(); i++)
+            {
+                foreach (Product product in DataProvider.Instance.Db.Products.Where(x => x.VendorId == L_ShopNew[i].Id))
+                    _ = product.Name;
+            }
+        }
+#endregion
     }
 }
