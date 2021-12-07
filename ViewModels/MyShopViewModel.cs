@@ -89,6 +89,10 @@ namespace GoninDigital.ViewModels
         public int OnPrimaryButtonClick { get; private set; }
         public int PrimaryButtonClick { get; private set; }
 
+
+        public ICommand EditAvatarCommand { get; set; }
+        public ICommand EditCoverPhotoCommand { get; set; }
+
         private void InitVendor()
         {
             using (var db = new GoninDigitalDBContext())
@@ -267,6 +271,8 @@ namespace GoninDigital.ViewModels
             RemoveCommand = new RelayCommand<Product>(o => true, o => RemoveCommandExec(o));
             ImageEditCommand = new RelayCommand<Product>(o => true, o => ImageEditCommandExec(o));
             UpgradeCommand = new RelayCommand<object>((p) => true, (p) => { UpgradeCommandExec(); });
+            EditCoverPhotoCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { EditCoverPhotoExec(); });
+            EditAvatarCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { EditAvatarExec(); });
             ResetVendorInfoCommand = new RelayCommand<object>((p) => true, (p) => { ResetVendorInfoExec(); });
             SaveVendorInfoCommand = new RelayCommand<object>((p) =>
             {
@@ -277,6 +283,52 @@ namespace GoninDigital.ViewModels
                 
                 return true;
             }, (p) => { SaveVendorConfirm(); });
+        }
+        public async void EditAvatarExec()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Title = "Choose Image..";
+
+            openFileDialog.InitialDirectory = @"C:\";
+            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var linkAvatar = await ImageUploader.UploadAsync(openFileDialog.FileName);
+                using (var db = new GoninDigitalDBContext())
+                {
+                    Vendor.Avatar = linkAvatar;
+                    db.Vendors.Update(Vendor);
+                    _ = db.SaveChanges();
+                    Vendor = db.Vendors.Include(o => o.Owner)
+                            .Include(o => o.Products)
+                            .First(o => o.Owner.UserName == Settings.Default.usrname);
+                }
+            }
+
+        }
+        public async void EditCoverPhotoExec()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Title = "Choose Image..";
+
+            openFileDialog.InitialDirectory = @"C:\";
+            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var linkAvatar = await ImageUploader.UploadAsync(openFileDialog.FileName);
+                using (var db = new GoninDigitalDBContext())
+                {
+                    Vendor.Cover = linkAvatar;
+                    db.Vendors.Update(Vendor);
+                    _ = db.SaveChanges();
+                    Vendor = db.Vendors.Include(o => o.Owner)
+                            .Include(o => o.Products)
+                            .First(o => o.Owner.UserName == Settings.Default.usrname);
+                }
+            }
+
         }
         public void EditBtnExec()
         {
