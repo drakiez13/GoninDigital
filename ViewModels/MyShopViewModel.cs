@@ -92,10 +92,9 @@ namespace GoninDigital.ViewModels
                     
                     Vendor = db.Vendors.Include(o => o.Owner)
                         .Include(o => o.Products)
-                        .Where(o=> o.Products.)
                         .First(o => o.Owner.UserName == Settings.Default.usrname );
                     db.ProductCategories.ToList();
-                    Products = new ObservableCollection<Product>(Vendor.Products.ToList());
+                    Products = new ObservableCollection<Product>(Vendor.Products.Where(o=>o.StatusId==(int)Constants.ProductStatus.ACCEPTED).ToList());
                     HasVendor = true;
                     VisibilityOwner = "Visible";
                     
