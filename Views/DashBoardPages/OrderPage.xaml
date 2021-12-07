@@ -32,6 +32,7 @@
             </TabControl.ItemTemplate>
             <TabItem Header="Created">
                 <ui:ListView Margin="0 10 0 0"
+                             MaxWidth="900"
                              ItemsSource="{Binding CreatedInvoices}"
                              IsSelectionEnabled="False"
                              ScrollViewer.CanContentScroll="False">
@@ -55,19 +56,23 @@
                                     <TextBlock Text="{Binding CreatedAt}"
                                                VerticalAlignment="Center"></TextBlock>
                                     <TextBlock Margin="150 0 0 0"
-                                               Text="Value: "
+                                               Text="Total: "
                                                VerticalAlignment="Center"></TextBlock>
                                     <TextBlock Text="{Binding Value, StringFormat=C, ConverterCulture=vi-VN}"
                                            FontWeight="Bold"
                                            VerticalAlignment="Center"
                                            FontSize="20"
                                            Foreground="{DynamicResource SystemControlHighlightAccentBrush}"></TextBlock>
-                                    <Button Margin="200 0 0 0" CommandParameter="{Binding}"
+                                    <Button Margin="200 0 0 0"
+                                            HorizontalAlignment="Right"
+                                            CommandParameter="{Binding}"
                                             Command="{Binding Source={StaticResource OrderPageVM}, Path=CancelInvoice}">Cancel</Button>
                                 </StackPanel>
                                 
-                                <Expander Header="Show products">
-                                    <ui:ListView ItemsSource="{Binding InvoiceDetails}">
+                                <Expander Header="Show products" Margin="10 10 0 10">
+                                    <ui:ListView ItemsSource="{Binding InvoiceDetails}"
+                                                 Width="650"
+                                                 HorizontalAlignment="Left">
                                         <ui:ListView.ItemTemplate>
                                         <DataTemplate>
                                             <DockPanel HorizontalAlignment="Stretch">

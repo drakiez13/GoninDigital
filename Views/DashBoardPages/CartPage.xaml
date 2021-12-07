@@ -190,11 +190,14 @@
                         Converter={StaticResource ListCountToVisibility},
                         ConverterParameter=False}">
             <TextBlock FontSize="24"
-                       HorizontalAlignment="Center">
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource SystemControlBackgroundBaseMediumLowBrush}">
                 You have not added any products to cart yet.
             </TextBlock>
             <TextBlock FontSize="20"
-                       HorizontalAlignment="Center">
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource SystemControlBackgroundBaseMediumLowBrush}"
+                       >
                 Let's shopping now :)
             </TextBlock>
         </ui:SimpleStackPanel>
