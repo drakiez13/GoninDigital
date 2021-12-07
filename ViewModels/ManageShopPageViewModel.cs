@@ -38,13 +38,15 @@ namespace GoninDigital.ViewModels
         public ManageShopPageViewModel()
         {
             SelectedVendors=new ObservableCollection<Vendor>();
-            L_Shop = new ObservableCollection<Vendor>(DataProvider.Instance.Db.Vendors.Where(x=>x.ApprovalStatus==1));
-            L_ShopNew = new ObservableCollection<Vendor>(DataProvider.Instance.Db.Vendors.Where(x => x.ApprovalStatus == 0));
-            LoadInfo();
+            using (var db = new GoninDigitalDBContext())
+            {
+                L_Shop = new ObservableCollection<Vendor>(db.Vendors.Where(x => x.ApprovalStatus == 1));
+                L_ShopNew = new ObservableCollection<Vendor>(db.Vendors.Where(x => x.ApprovalStatus == 0));
+            }
             RemoveCommand = new RelayCommand<Vendor>(o => true,
                vendor => { RemoveExec(vendor); });
             ShowVendorCommand = new RelayCommand<Vendor>(o => true,
-                vendor => DashBoard.RootFrame.Navigate(new MyShopPage(12)));
+                vendor => DashBoard.RootFrame.Navigate(new MyShopPage(vendor.Id)));
             AcceptCommand = new RelayCommand<Vendor>(o => true, vendor => { AcceptExec(vendor); });
             RemoveSelectionsCommand = new RelayCommand<Vendor>(o => true, SelectedVendors =>
             { RemoveSelectionsExec(selectedVendors); });
@@ -66,11 +68,12 @@ namespace GoninDigital.ViewModels
         #region Private Methods
         private void RemoveExec(Vendor vendor)
         {
+            L_ShopNew.Remove(vendor);
             using (var db = new GoninDigitalDBContext())
             {
-
+                var product = db.Products.Where(x => x.VendorId == vendor.Id);
+                db.Products.RemoveRange(product);
                 db.Vendors.Remove(vendor);
-                L_ShopNew.Remove(vendor);
                 db.SaveChanges();
             }
         }
@@ -78,7 +81,6 @@ namespace GoninDigital.ViewModels
         {
             using (var db = new GoninDigitalDBContext())
             {
-
                 db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = 1;
                 L_ShopNew.Remove(vendor);
                 L_Shop.Add(vendor);
@@ -87,10 +89,15 @@ namespace GoninDigital.ViewModels
         }
         private void RemoveSelectionsExec(IEnumerable<Vendor> selectedVendors)
         {
+            
             using (var db = new GoninDigitalDBContext())
             {
                 foreach(Vendor vendor in selectedVendors.ToList())
+                {
                     L_ShopNew.Remove(vendor);
+                    var product = db.Products.Where(x => x.VendorId == vendor.Id);
+                    db.Products.RemoveRange(product);
+                }
                 db.Vendors.RemoveRange(selectedVendors);
                 db.SaveChanges();
             }
@@ -113,22 +120,14 @@ namespace GoninDigital.ViewModels
         }
         private void DeleteExec()
         {
-            var vendor = DataProvider.Instance.Db.Vendors.First(x => x.Id == SelectedItem.Id);
-            L_Shop.Remove(vendor);
-            DataProvider.Instance.Db.Vendors.Remove(vendor);
-            DataProvider.Instance.Db.SaveChanges();
-        }
-        private void LoadInfo()
-        {
-            for (int i = 0; i < L_Shop.Count(); i++)
+            using (var db = new GoninDigitalDBContext())
             {
-                foreach (Product product in DataProvider.Instance.Db.Products.Where(x => x.VendorId == L_Shop[i].Id))
-                    _ = product.Name;
-            }
-            for (int i = 0; i < L_ShopNew.Count(); i++)
-            {
-                foreach (Product product in DataProvider.Instance.Db.Products.Where(x => x.VendorId == L_ShopNew[i].Id))
-                    _ = product.Name;
+                var vendor = db.Vendors.First(x => x.Id == SelectedItem.Id);
+                L_Shop.Remove(vendor);
+                var product = db.Products.Where(x => x.VendorId == vendor.Id);
+                db.Products.RemoveRange(product);
+                db.Vendors.Remove(vendor);
+                db.SaveChanges();
             }
         }
 #endregion
