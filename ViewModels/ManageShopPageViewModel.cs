@@ -98,7 +98,7 @@ namespace GoninDigital.ViewModels
         {
             using (var db = new GoninDigitalDBContext())
             {
-                foreach(Vendor vendor in selectedVendors)
+                foreach(Vendor vendor in selectedVendors.ToList())
                     L_ShopNew.Remove(vendor);
                 db.Vendors.RemoveRange(selectedVendors);
                 db.SaveChanges();
