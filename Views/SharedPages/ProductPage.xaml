@@ -66,17 +66,17 @@
                                 Orientation="Vertical"
                                 Margin="0 0 0 10">
                         <Label>
-                            <TextBlock Visibility="{Binding IsDisc}">
-                            <Run TextDecorations="Strikethrough" 
-                                 Text="{Binding ProductInfo.OriginPrice}"
-                                 FontSize="18"/>
-                            </TextBlock>
-                        </Label>
-                        <Label Content="{Binding ProductInfo.Price}" 
+                            <TextBlock Text="{Binding ProductInfo.Price, StringFormat=C, ConverterCulture=vi-VN}" 
                                FontSize="24"
                                FontWeight="Bold"
                                Margin="0 0 0 5"/>
-                        
+                        </Label>
+                        <TextBlock Visibility="{Binding IsDisc}">
+                            <Run TextDecorations="Strikethrough" 
+                                 Text="{Binding ProductInfo.OriginPrice, StringFormat=C, ConverterCulture=vi-VN}"
+                                 FontSize="18"/>
+                        </TextBlock>
+
                     </StackPanel>
                     <StackPanel Grid.Row="3" Orientation="Horizontal">
                         <StackPanel Orientation="Horizontal"
