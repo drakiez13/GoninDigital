@@ -6,6 +6,7 @@
     <viewmodel:UsersViewModel x:Key="UsersVM"></viewmodel:UsersViewModel>
     <viewmodel:BrandsViewModel x:Key="BrandsVM"></viewmodel:BrandsViewModel>
     <viewmodel:UserSettingViewModel x:Key="UserSettingVM"></viewmodel:UserSettingViewModel>
+    <viewmodel:ManageShopPageViewModel x:Key="ManageShopPageVM"></viewmodel:ManageShopPageViewModel>
     <viewmodel:OrderPageViewModel x:Key="OrderPageVM"></viewmodel:OrderPageViewModel>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <Style x:Key="OptionsPanelStyle" TargetType="ui:SimpleStackPanel">
