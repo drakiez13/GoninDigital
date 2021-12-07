@@ -102,9 +102,9 @@ namespace GoninDigital.ViewModels
                     
                     Vendor = db.Vendors.Include(o => o.Owner)
                         .Include(o => o.Products)
-                        .First(o => o.Owner.UserName == Settings.Default.usrname);
+                        .First(o => o.Owner.UserName == Settings.Default.usrname );
                     db.ProductCategories.ToList();
-                    Products = new ObservableCollection<Product>(Vendor.Products.ToList());
+                    Products = new ObservableCollection<Product>(Vendor.Products.Where(o=>o.StatusId==(int)Constants.ProductStatus.ACCEPTED).ToList());
                     HasVendor = true;
                     VendorName = Vendor.Name;
                     VisibilityOwner = "Visible";
@@ -150,18 +150,15 @@ namespace GoninDigital.ViewModels
             dialog.ShowAsync();
         }
         public ICommand RemoveCommand { get; set; }
-        public async void RemoveCommandExec(object o)
+        public void RemoveCommandExec(object o)
         {
             using (var db = new GoninDigitalDBContext())
             {
                 try
                 {
-                    db.Products.Remove(SelectedItem);
-                    
-                    await db.SaveChangesAsync();
-
-                    Products.Remove(SelectedItem);
-                    MessageBox.Show("removed");
+                    SelectedItem.StatusId = (int)Constants.ProductStatus.REMOVED;
+                    db.Update(SelectedItem);
+                    _=db.SaveChanges();
                 }
                 catch (Exception e)
                 {
@@ -251,7 +248,7 @@ namespace GoninDigital.ViewModels
             openFileDialog.Title = "Choose Image..";
 
             openFileDialog.InitialDirectory = @"C:\";
-            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
                 var linkAvatar = await ImageUploader.UploadAsync(openFileDialog.FileName);
@@ -332,7 +329,6 @@ namespace GoninDigital.ViewModels
         }
         public void EditBtnExec()
         {
-            
             
             using (var db = new GoninDigitalDBContext())
             {

@@ -5,41 +5,72 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:local="clr-namespace:GoninDigital.SharedControl"
-             mc:Ignorable="d"
-             d:DesignHeight="450"
-             d:DesignWidth="800"
+             Width="800"
              DataContext="{StaticResource MyShopPageVM}">
     <ScrollViewer>
-    <ui:SimpleStackPanel Spacing="12">
-            <StackPanel Orientation="Horizontal">
-                <ui:PersonPicture VerticalAlignment="Top"
-                                  Margin="0 0 0 0"
-                                  ProfilePicture="{Binding SelectedItem.Image}"
-                                  Height="80"
-                                  Width="80"
-                                  >
+       
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <ui:PersonPicture VerticalAlignment="Top"
+                                      Margin="20 0 0 0"
+                                      ProfilePicture="{Binding SelectedItem.Image}"
+                                      Height="80"
+                                      Width="80">
+
+                    </ui:PersonPicture>
+                    <Button Content="Change Image" Margin="20"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Command="{Binding ImageEditCommand}"></Button>
+                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="250"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0 " Margin="5">
+                        
+                        <TextBox ui:ControlHelper.Header="Product Name"
+                                 Text="{Binding SelectedItem.Name}"
+                                  />
+
+                        <TextBox ui:ControlHelper.Header="Origin"
+                                 Text="{Binding SelectedItem.Origin}" />
+
+                        <TextBox ui:ControlHelper.Header="Origin Price"
+                                 Text="{Binding SelectedItem.OriginPrice}" />
+
+                        <TextBox ui:ControlHelper.Header="Sale off Price"
+                                 Text="{Binding SelectedItem.Price}" />
+
+                        <TextBox ui:ControlHelper.Header="Descirption"
+                                 
+                                 Text="{Binding SelectedItem.Description}" />
                     
-                </ui:PersonPicture>
-                <Button Content="Edit" HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Command="{Binding ImageEditCommand}"></Button>
+                </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="5">
+
+                        <TextBox ui:ControlHelper.Header="Category Name"
+                                 Text="{Binding SelectedItem.Category.Name}"
+                                 />
+
+                        <TextBox ui:ControlHelper.Header="Brand Name"
+                                 Text="{Binding SelectedItem.Brand.Name}" />
+
+                        <TextBox ui:ControlHelper.Header="Available"
+                                 Text="{Binding SelectedItem.Available}" />
+
+                        <TextBox ui:ControlHelper.Header="New"
+                                 Text="{Binding SelectedItem.New}" />
+
+                        <TextBox ui:ControlHelper.Header="Details" 
+                                 Text="{Binding SelectedItem.Detail}" />
+                    
+                </StackPanel>
+                </Grid>
             </StackPanel>
-            <TextBox ui:ControlHelper.Header="Product Name"
-                 Text="{Binding SelectedItem.Name}"
-                 AcceptsReturn="True" />
 
-        <TextBox ui:ControlHelper.Header="Origin"
-                 Text="{Binding SelectedItem.Origin}" />
-
-        <TextBox ui:ControlHelper.Header="Origin Price"
-                 Text="{Binding SelectedItem.OriginPrice}" />
         
-        <TextBox ui:ControlHelper.Header="Sale off Price"
-                 Text="{Binding SelectedItem.Price}" />
-
-         <TextBox ui:ControlHelper.Header="Descirption"
-                     Text="{Binding SelectedItem.Description}" />
-
-        </ui:SimpleStackPanel>
     </ScrollViewer>
 </UserControl>
