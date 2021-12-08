@@ -7,7 +7,6 @@
          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
          xmlns:local="clr-namespace:GoninDigital.Views.DashBoardPages"
          xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-        
          DataContext="{StaticResource OrderPageVM}"
          Title="HotDealPage">
     <Grid>
@@ -29,13 +28,14 @@
                 </DataTemplate>
             </TabControl.ItemTemplate>
             <TabItem Header="Created">
-                <ui:ListView Margin="0 10 0 0" MaxWidth="900"
+                <ui:ListView Margin="0 10 0 0"
+                             MaxWidth="900"
                              ItemsSource="{Binding CreatedInvoices}"
-                             IsSelectionEnabled="False" 
+                             IsSelectionEnabled="False"
                              ScrollViewer.CanContentScroll="False">
-                    <ui:ListView.ItemTemplate >
-                        <DataTemplate >
-                            <StackPanel Margin="0 0 0 10">
+                    <ui:ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0 10 0 5">
                                 <StackPanel Orientation="Horizontal">
                                     <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
                                                       DisplayName="{Binding Vendor.Name}"
@@ -47,8 +47,8 @@
                                 </StackPanel>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="2*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Orientation="Horizontal">
@@ -60,8 +60,9 @@
                                                    FontWeight="Light"></TextBlock>
                                     </StackPanel>
 
-                                    <StackPanel Orientation="Horizontal"
-                                                Grid.Column="1" HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" Margin="150 0 0 0"
+                                                Grid.Column="1"
+                                                HorizontalAlignment="Center">
                                         <TextBlock Text="Total: "
                                                    VerticalAlignment="Center"
                                                    FontWeight="Light"></TextBlock>
@@ -72,11 +73,12 @@
                                                    Foreground="{DynamicResource SystemControlHighlightAccentBrush}"></TextBlock>
                                     </StackPanel>
                                     <StackPanel Grid.Column="2">
-                                        <ui:AppBarButton Icon="Delete" Label="Remove"
+                                        <ui:AppBarButton Icon="Delete"
+                                                         Label="Remove"
                                                          HorizontalAlignment="Right"
                                                          CommandParameter="{Binding}"
                                                          Command="{Binding Source={StaticResource OrderPageVM}, Path=CancelInvoice}" />
-                                        
+
                                     </StackPanel>
                                 </Grid>
 
@@ -92,34 +94,30 @@
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <Border BorderBrush="Gainsboro"
-                                                        BorderThickness="0,1,0,0"
-                                                        >
-                                                <DockPanel HorizontalAlignment="Stretch" Margin="0,10">
-                                                    <Image Source="{Binding Product.Image}"
-                                                           Stretch="UniformToFill"
-                                                           Width="80"
-                                                           Height="80"
-                                                           VerticalAlignment="Center" />
-                                                    <TextBlock Text="{Binding Product.Name}"
-                                                               TextWrapping="Wrap"
-                                                               Width="250"
-                                                               Margin="10,0,5,0"
+                                                        BorderThickness="0,1,0,0">
+                                                    <StackPanel Orientation="Horizontal"
+                                                               Margin="0,10">
+                                                        <Image Source="{Binding Product.Image}"
+                                                               Stretch="UniformToFill"
+                                                               Width="80"
+                                                               Height="80"
                                                                VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Product.Name}"
+                                                                   TextWrapping="Wrap"
+                                                                   Width="250"
+                                                                   Margin="10,0,5,0"
+                                                                   VerticalAlignment="Center" />
 
-                                                    <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
-                                                               VerticalAlignment="Center"
-                                                               TextAlignment="Center"
-                                                               Width="160" />
-                                                    <Label VerticalAlignment="Center"
-                                                           Width="50">X</Label>
-
-                                                    <ui:NumberBox VerticalAlignment="Center"
-                                                                  Value="{Binding Quantity}"
-                                                                  SpinButtonPlacementMode="Hidden"
-                                                                  IsEnabled="False"
-                                                                  Width="35" />
-
-                                                </DockPanel>
+                                                        <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
+                                                                   VerticalAlignment="Center" Margin="80 0 0 0"
+                                                                   TextAlignment="Center"
+                                                                   Width="160" />
+                                                        <Label VerticalAlignment="Center"
+                                                               Width="20">X</Label>
+                                                        <ui:PersonPicture Margin="20 0 0 0"
+                                                                          Initials="{Binding Quantity}"
+                                                                          Width="30"></ui:PersonPicture>
+                                                    </StackPanel>
                                                 </Border>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
