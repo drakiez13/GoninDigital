@@ -1,6 +1,8 @@
 ﻿using GoninDigital.Models;
+using GoninDigital.Properties;
+using GoninDigital.Utils;
 using GoninDigital.ViewModels;
-using GoninDigital.Views.DashBoardPages.MyShopPages;
+using GoninDigital.Views.DashBoardPages;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -55,32 +57,5 @@ namespace GoninDigital.Views.DashBoardPages
             (DataContext as MyShopViewModel).OnNavigatedTo();
         }
 
-        private void nav_SelectionChanged(ModernWpf.Controls.NavigationView sender, ModernWpf.Controls.NavigationViewSelectionChangedEventArgs args)
-        {
-            if (args.IsSettingsSelected)
-            {
-                frame.Navigate(typeof(HomePage));
-                return;
-            }
-            var selectedItem = (ModernWpf.Controls.NavigationViewItem)args.SelectedItem;
-            if (selectedItem != null)
-            {
-                string selectedItemTag = (string)selectedItem.Tag;
-                string pageName = "GoninDigital.Views.DashBoardPages.MyShopPages." + selectedItemTag;
-
-                Page togo;
-                if (!pages.TryGetValue(pageName, out togo))
-                {
-                    Type pageType = typeof(HomeTab).Assembly.GetType(pageName);
-                    togo = (Page)Activator.CreateInstance(pageType);
-                    pages.Add(pageName, togo);
-                }
-                frame.Navigate(togo);
-            }
-            else
-            {
-                frame.Navigate(typeof(HomeTab));
-            }
-        }
     }
 }

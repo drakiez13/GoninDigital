@@ -67,4 +67,19 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Views\DashBoardPages\ShopAboutPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Views\DashBoardPages\ShopAllProductPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Views\DashBoardPages\ShopOrdersManagerPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Views\DashBoardPages\ShopProductManagerPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
 </Project>

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:GoninDigital.Views"
         xmlns:ui="http://schemas.modernwpf.com/2019"
         mc:Ignorable="d"
+        DataContext="{StaticResource DashBoardVM}"
         Name="dashboard"
         Height="auto"  Width="auto">
     <UserControl.Resources>
@@ -54,7 +55,18 @@
                            PaneTitle="Gonin Digital">
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem x:Name="homeItem" Content="Home" Tag="HomePage" Icon="Home" IsSelected="True"/>
-                <ui:NavigationViewItem x:Name="myShopItem" Content="My Shop" Tag="MyShopPage" Icon="Manage" />
+                <ui:NavigationViewItem x:Name="myShopItem" Content="My Shop" Tag="MyShopPage" Icon="Manage" >
+                    <ui:NavigationViewItem.MenuItems >
+                        <ui:NavigationViewItem Content="All Product"
+                                               Tag="ShopAllProductPage" />
+                        <ui:NavigationViewItem Content="Products Manager"
+                                               Tag="ShopProductManagerPage" />
+                        <ui:NavigationViewItem Content="Orders Manager"
+                                               Tag="ShopOrdersManagerPage"/>
+                        <ui:NavigationViewItem Content="About" 
+                                               Tag="ShopAboutPage" />
+                    </ui:NavigationViewItem.MenuItems>
+                </ui:NavigationViewItem>
                 <ui:NavigationViewItem x:Name="orderItem" Content="Purchase History" Tag="OrderPage" Icon="Tag"/>
                 <ui:NavigationViewItem x:Name="cartItem" Content="Cart" Tag="CartPage" Icon="Shop"/>
             </ui:NavigationView.MenuItems>

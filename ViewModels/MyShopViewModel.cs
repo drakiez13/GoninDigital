@@ -105,6 +105,8 @@ namespace GoninDigital.ViewModels
                         .First(o => o.Owner.UserName == Settings.Default.usrname );
                     db.ProductCategories.ToList();
                     Products = new ObservableCollection<Product>(Vendor.Products.Where(o=>o.StatusId==(int)Constants.ProductStatus.ACCEPTED).ToList());
+                    ProductBestSeller = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).Take(10).ToList());
+                    ProductSpecial = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).Take(5).ToList());
                     HasVendor = true;
                     VendorName = Vendor.Name;
                     VisibilityOwner = "Visible";
@@ -280,6 +282,7 @@ namespace GoninDigital.ViewModels
                 
                 return true;
             }, (p) => { SaveVendorConfirm(); });
+
         }
         public async void EditAvatarExec()
         {
