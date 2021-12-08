@@ -13,6 +13,7 @@ using GoninDigital.Views.SharedPages;
 using GoninDigital.Views;
 using Microsoft.EntityFrameworkCore;
 using ModernWpf.Controls;
+using GoninDigital.Utils;
 
 namespace GoninDigital.ViewModels
 {
@@ -36,15 +37,53 @@ namespace GoninDigital.ViewModels
         public ICommand BuyProduct { get; set; }
         public ICommand BuySelections { get; set; }
 
-        private void Init()
+        private async void Init()
         {
             using (var db = new GoninDigitalDBContext())
             {
-                Products = new ObservableCollection<Cart>(db.Carts.Include(x => x.User)
+                Products = new ObservableCollection<Cart>(await db.Carts.Include(x => x.User)
                                 .Include(x => x.Product)
                                 .Include(x => x.Product.Vendor)
-                                .Where(o => o.User.UserName == Settings.Default.usrname)
-                                .ToList());
+                                .Where(
+                                    o => o.User.UserName == Settings.Default.usrname
+                                    && o.Product.StatusId == (int)Constants.ProductStatus.ACCEPTED
+                                )
+                                .ToListAsync());
+
+                var removedProducts = new ObservableCollection<Cart>(await db.Carts.Include(x => x.User)
+                                .Include(x => x.Product)
+                                .Include(x => x.Product.Vendor)
+                                .Where(
+                                    o => o.User.UserName == Settings.Default.usrname
+                                    && o.Product.StatusId == (int)Constants.ProductStatus.REMOVED
+                                )
+                                .ToListAsync());
+
+                if (removedProducts.Count > 0)
+                {
+                    var removedName = "";
+                    foreach (var product in removedProducts)
+                    {
+                        removedName += "\n" +product.Product.Name;
+                    }
+                    var dialog = new ContentDialog { 
+                        Title = "Your cart changed",
+                        Content = "The Product(s) listed below were removed by vendor\n" + removedName,
+                        PrimaryButtonText = "Continue shopping..."
+                    };
+                    await dialog.ShowAsync();
+                    db.Carts.RemoveRange(removedProducts);
+                    await db.SaveChangesAsync();
+                }
+            }
+        }
+
+        public async void Update()
+        {
+            using (var db = new GoninDigitalDBContext())
+            {
+                db.Carts.UpdateRange(Products);
+                await db.SaveChangesAsync();
             }
         }
 
@@ -72,8 +111,7 @@ namespace GoninDigital.ViewModels
 
         public void OnNavigatedTo()
         {
-            Thread thread = new Thread(Init);
-            thread.Start();
+            Init();
         }
 
         public CartPageViewModel()
