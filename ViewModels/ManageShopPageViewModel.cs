@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GoninDigital.Models;
 using GoninDigital.Views;
 using GoninDigital.Views.DashBoardPages;
+
+using GoninDigital.Properties;
+using GoninDigital.Views.SharedPages;
+using Microsoft.EntityFrameworkCore;
+using ModernWpf.Controls;
 
 namespace GoninDigital.ViewModels
 {
@@ -71,9 +77,7 @@ namespace GoninDigital.ViewModels
             L_ShopNew.Remove(vendor);
             using (var db = new GoninDigitalDBContext())
             {
-                var product = db.Products.Where(x => x.VendorId == vendor.Id);
-                db.Products.RemoveRange(product);
-                db.Vendors.Remove(vendor);
+                db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = 2;
                 db.SaveChanges();
             }
         }
@@ -95,10 +99,8 @@ namespace GoninDigital.ViewModels
                 foreach(Vendor vendor in selectedVendors.ToList())
                 {
                     L_ShopNew.Remove(vendor);
-                    var product = db.Products.Where(x => x.VendorId == vendor.Id);
-                    db.Products.RemoveRange(product);
+                    db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = 2;
                 }
-                db.Vendors.RemoveRange(selectedVendors);
                 db.SaveChanges();
             }
         }
@@ -124,9 +126,7 @@ namespace GoninDigital.ViewModels
             {
                 var vendor = db.Vendors.First(x => x.Id == SelectedItem.Id);
                 L_Shop.Remove(vendor);
-                var product = db.Products.Where(x => x.VendorId == vendor.Id);
-                db.Products.RemoveRange(product);
-                db.Vendors.Remove(vendor);
+                db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = 2;
                 db.SaveChanges();
             }
         }
