@@ -8,16 +8,15 @@ namespace GoninDigital.ViewModels
 {
     internal class DashBoardViewModel: BaseViewModel
     {
-        private bool hasVendor;
-        public bool HasVendor
+        private string hasVendor;
+        public string HasVendor
         {
-
             get { return hasVendor; }
             set { hasVendor = value; OnPropertyChanged(); }
         }
         public DashBoardViewModel()
         {
-            HasVendor = false;
+            HasVendor = "Collapsed";
         }
     }
 }

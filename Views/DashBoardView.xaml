@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:GoninDigital.Views"
         xmlns:ui="http://schemas.modernwpf.com/2019"
         mc:Ignorable="d"
-        DataContext="{StaticResource DashBoardVM}"
         Name="dashboard"
         Height="auto"  Width="auto">
     <UserControl.Resources>
@@ -43,7 +42,7 @@
             </ui:ListViewItem>
         </ui:ListView>
     </UserControl.Resources>
-    <Grid>
+    <Grid> 
         <ui:NavigationView x:Name="navigationView"
                            Grid.Row="1"
                            MinHeight="400"
@@ -55,8 +54,11 @@
                            PaneTitle="Gonin Digital">
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem x:Name="homeItem" Content="Home" Tag="HomePage" Icon="Home" IsSelected="True"/>
-                <ui:NavigationViewItem x:Name="myShopItem" Content="My Shop" Tag="MyShopPage" Icon="Manage" >
-                    <ui:NavigationViewItem.MenuItems >
+                <ui:NavigationViewItem x:Name="myShopItem" Content="My Shop" Tag="MyShopPage" Icon="Manage"
+                                       Visibility="{Binding HasVendor, Converter={StaticResource BooleanToVisibility}, ConverterParameter=False}"/>
+                <ui:NavigationViewItem x:Name="myShopItemHasVendor" Content="My Shop" Tag="MyShopPage" Icon="Manage"
+                                       Visibility="{Binding HasVendor, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">
+                    <ui:NavigationViewItem.MenuItems>
                         <ui:NavigationViewItem Content="All Product"
                                                Tag="ShopAllProductPage" />
                         <ui:NavigationViewItem Content="Products Manager"

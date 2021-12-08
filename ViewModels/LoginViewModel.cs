@@ -102,6 +102,7 @@ namespace GoninDigital.ViewModels
                 GoninDigitalDBContext context = new();
                 string passEncode = Cryptography.MD5Hash(Cryptography.Base64Encode(Password));
                 isExist = context.Users.FirstOrDefault(x => x.UserName == UserName && x.Password == passEncode);
+                Settings.Default.usrname = UserName.ToString();
 
                 //once we're done we need to use the Dispatcher
                 //to create and show the main window
