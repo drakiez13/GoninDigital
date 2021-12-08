@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Page = ModernWpf.Controls.Page;
-namespace GoninDigital.Views.DashBoardPages.MyShopPages
+namespace GoninDigital.Views.DashBoardPages
 {
     /// <summary>
-    /// Interaction logic for HomeTab.xaml
+    /// Interaction logic for AboutTab.xaml
     /// </summary>
-    public partial class HomeTab : Page
+    public partial class ShopAboutPage : Page
     {
-        public HomeTab()
+        public ShopAboutPage()
         {
             InitializeComponent();
         }

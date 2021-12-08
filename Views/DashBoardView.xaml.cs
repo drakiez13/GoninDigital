@@ -39,6 +39,12 @@ namespace GoninDigital.Views
     
     public partial class DashBoard : UserControl
     {
+        private bool hasVendor;
+        public bool HasVendor
+        {
+            get { return hasVendor; }
+            set { hasVendor = value; }
+        }
         private static Frame rootFrame;
         public static Frame RootFrame
         {
@@ -56,6 +62,19 @@ namespace GoninDigital.Views
         {
             InitializeComponent();
             DataContext = this;
+            using (var db = new GoninDigitalDBContext())
+            {
+                if (db.Users.FirstOrDefault(o => o.UserName == Settings.Default.usrname).TypeId == (int)Constants.UserType.VENDOR)
+                {
+                    hasVendor = true;
+                }
+                else
+                {
+                    hasVendor = false;
+                }
+            }
+
+
             rootFrame = contentFrame;
             pages = new Dictionary<string, Page>();
         }

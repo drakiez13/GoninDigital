@@ -42,7 +42,7 @@
             </ui:ListViewItem>
         </ui:ListView>
     </UserControl.Resources>
-    <Grid>
+    <Grid> 
         <ui:NavigationView x:Name="navigationView"
                            Grid.Row="1"
                            MinHeight="400"
@@ -54,7 +54,21 @@
                            PaneTitle="Gonin Digital">
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem x:Name="homeItem" Content="Home" Tag="HomePage" Icon="Home" IsSelected="True"/>
-                <ui:NavigationViewItem x:Name="myShopItem" Content="My Shop" Tag="MyShopPage" Icon="Manage" />
+                <ui:NavigationViewItem x:Name="myShopItem" Content="My Shop" Tag="MyShopPage" Icon="Manage"
+                                       Visibility="{Binding HasVendor, Converter={StaticResource BooleanToVisibility}, ConverterParameter=False}"/>
+                <ui:NavigationViewItem x:Name="myShopItemHasVendor" Content="My Shop" Tag="MyShopPage" Icon="Manage"
+                                       Visibility="{Binding HasVendor, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">
+                    <ui:NavigationViewItem.MenuItems>
+                        <ui:NavigationViewItem Content="All Product"
+                                               Tag="ShopAllProductPage" />
+                        <ui:NavigationViewItem Content="Products Manager"
+                                               Tag="ShopProductManagerPage" />
+                        <ui:NavigationViewItem Content="Orders Manager"
+                                               Tag="ShopOrdersManagerPage"/>
+                        <ui:NavigationViewItem Content="About" 
+                                               Tag="ShopAboutPage" />
+                    </ui:NavigationViewItem.MenuItems>
+                </ui:NavigationViewItem>
                 <ui:NavigationViewItem x:Name="orderItem" Content="Purchase History" Tag="OrderPage" Icon="Tag"/>
                 <ui:NavigationViewItem x:Name="cartItem" Content="Cart" Tag="CartPage" Icon="Shop"/>
             </ui:NavigationView.MenuItems>

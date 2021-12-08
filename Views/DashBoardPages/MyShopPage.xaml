@@ -15,68 +15,81 @@
 
     <ScrollViewer>
         <Grid>
-            <StackPanel Orientation="Vertical"
+            <Grid Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=True}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Vertical"
                         Margin="0 0 0 50 "
-                        Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=True}">
-                <Grid VerticalAlignment="Top">
-                    <Grid Height="450"
+                        >
+                    <Grid VerticalAlignment="Top">
+                        <Grid Height="450"
                           VerticalAlignment="Top">
-                        <Image Source="{Binding Vendor.Cover}"
+                            <Image Source="{Binding Vendor.Cover}"
                                Stretch="UniformToFill"></Image>
-                        <Label Margin="20 20 0 20"
+                            <Label Margin="20 20 0 20"
                                FontSize="22"
                                FontWeight="Bold">My Shop</Label>
-                    </Grid>
-                    <Grid Margin="0 405 0 0">
-                        <StackPanel Orientation="Vertical">
-                            <ui:PersonPicture DisplayName="Betsy Sherman"
+                        </Grid>
+                        <Grid Margin="0 405 0 0">
+                            <StackPanel Orientation="Vertical">
+                                <ui:PersonPicture DisplayName="Betsy Sherman"
                                               ProfilePicture="{Binding Vendor.Avatar}"
                                               Initials="Shop" />
-                            <Label Content="{Binding Vendor.Name}"
+                                <Label Content="{Binding Vendor.Name}"
                                    FontSize="25"
                                    FontWeight="Bold"
                                    HorizontalAlignment="Center" />
-                            <Label Content="{Binding Vendor.Description}"
+                                <Label Content="{Binding Vendor.Description}"
                                    FontSize="18"
                                    HorizontalAlignment="Center" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Bottom">
-                            <Button Content="Edit Avatar"
-                                    Margin="0 0 20 0"
-                                    Command="{Binding EditAvatarCommand}"/>
-                            <Button Content="Edit Cover"
-                                    Margin="0 0 20 0"
-                                    Command="{Binding EditCoverPhotoCommand}"/>
-                        </StackPanel>
-                        
+                            </StackPanel>
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Grid>
-                    <ui:NavigationView x:Name="nav" Margin="0 30 0 0" MinHeight="500"
-                                   SelectionChanged="nav_SelectionChanged"
-                                   PaneDisplayMode="Top"
-                                   SelectionFollowsFocus="Enabled"
-                                   IsTabStop="False"
-                                   IsBackButtonVisible="Collapsed">
-                        <ui:NavigationView.MenuItems>
-                            <ui:NavigationViewItem Content="Home"
-                                               Tag="HomeTab"
-                                               IsSelected="True"/>
-                            <ui:NavigationViewItem Content="All Product"
-                                               Tag="AllProductTab" />
-                            <ui:NavigationViewItem Content="Product Manager"
-                                               Tag="ProductManagerTab" />
-                            <ui:NavigationViewItem Content="About" 
-                                               Tag="AboutTab" />
-                        </ui:NavigationView.MenuItems>
-                        <ui:Frame x:Name="frame"/>
-                    </ui:NavigationView>
-                </Grid>
-   
-            </StackPanel>
-            <Grid Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=False}">
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <Label Margin="10 30 0 0"
+                       FontWeight="Bold"
+                       FontSize="18">Best seller</Label>
+                    <StackPanel Margin="20 0">
+                        <ItemsControl ItemsSource="{Binding ProductBestSeller}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <uc:ProductCard Margin="10 10 10 10"
+                                        ProductInfo="{Binding}"></uc:ProductCard>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </StackPanel>
+                    <Label Margin="10 30 0 0"
+                       FontWeight="Bold"
+                       FontSize="18">Special Product</Label>
+                    <StackPanel Margin="20 0">
+                        <ItemsControl ItemsSource="{Binding ProductSpecial}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <uc:ProductCard Margin="10 10 10 10"
+                                        ProductInfo="{Binding}"></uc:ProductCard>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </StackPanel>
+                </StackPanel>
+                
+            </Grid>
+            <Grid Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=False}"
+                  Grid.Row="1">
                 <Grid VerticalAlignment="Top">
                     <Label Margin="20 20 0 20"
                                FontSize="22"
@@ -93,6 +106,7 @@
 
             </Grid>
         </Grid>
+        
     </ScrollViewer>
 
 </ui:Page>
