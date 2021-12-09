@@ -1,4 +1,4 @@
-﻿<ui:Page
+﻿<ui:Page x:Class="GoninDigital.Views.AdminPages.UsersManagerPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:GoninDigital.Views.AdminPages"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:ui="http://schemas.modernwpf.com/2019"
-      xmlns:Models="clr-namespace:GoninDigital.Models" x:Class="GoninDigital.Views.AdminPages.UserPage"
+      xmlns:Models="clr-namespace:GoninDigital.Models" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{StaticResource UsersVM}"
