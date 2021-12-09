@@ -44,6 +44,7 @@ namespace GoninDigital.ViewModels
         }
 
         public ICommand CancelInvoice { get; set; }
+        public ICommand ReOrderInvoice { get; set; }
 
         public OrderPageViewModel()
         {
@@ -58,6 +59,18 @@ namespace GoninDigital.ViewModels
                 o.FinishedAt = System.DateTime.Now;
                 CreatedInvoices.Remove(o);
                 CanceledInvoices.Add(o);
+                using (var db = new GoninDigitalDBContext())
+                {
+                    db.Update(o);
+                    db.SaveChanges();
+                }
+            });
+            ReOrderInvoice = new RelayCommand<Invoice>(o => true, o => {
+                o.StatusId = (int)Constants.InvoiceStatus.ACCEPTED;
+                o.CreatedAt = System.DateTime.Now;
+                o.FinishedAt=null;
+                CanceledInvoices.Remove(o);
+                CreatedInvoices.Add(o);
                 using (var db = new GoninDigitalDBContext())
                 {
                     db.Update(o);
