@@ -37,15 +37,22 @@
                         <ui:PersonPicture DisplayName="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"
                                       VerticalAlignment="Top"
                                       Margin="0 50 0 0"
-                                      ProfilePicture="{Binding Avatar}"
+                                      ProfilePicture="{Binding User.Avatar}"
                                       Height="150"
                                       Width="150"/>
-                        <Label Content="{Binding FullName,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                           FontWeight="Bold"
-                           FontSize="18"
-                           Margin="0 20 0 0"
-                           HorizontalAlignment="Center"/>
-                        <Label Content="{Binding Email, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                        <StackPanel Margin="0 20 0 0"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+                            <Label Content="{Binding User.FirstName,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                   FontWeight="Bold"
+                                   FontSize="18"/>
+                            <Label Content="{Binding User.LastName,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                   FontWeight="Bold"
+                                   FontSize="18"
+                                   Margin="7 0 0 0"/>
+                        </StackPanel>
+                        
+                        <Label Content="{Binding User.Email, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
                                HorizontalAlignment="Center"
                                Margin="0 5 0 0"/>
                         <Button Content="Edit Avatar"
@@ -100,13 +107,13 @@
                             <TextBox ui:ControlHelper.Header="First Name"
                                  FontSize="16"
                                  Width="200"
-                                 Text="{Binding FirstName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                 Text="{Binding User.FirstName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                                  IsReadOnly="{Binding Flag,UpdateSourceTrigger=PropertyChanged }"/>
                             <TextBox ui:ControlHelper.Header="Last Name"
                                  FontSize="16"
                                  Width="200"
                                  Margin="100 0 0 0"
-                                 Text="{Binding LastName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                 Text="{Binding User.LastName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                  IsReadOnly="{Binding Flag,UpdateSourceTrigger=PropertyChanged }"/>
                         </StackPanel>
                         <TextBox ui:ControlHelper.Header="User Name"
@@ -114,7 +121,7 @@
                              Width="500"
                              HorizontalAlignment="Left"
                              FontSize="16"
-                             Text="{Binding UserName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                             Text="{Binding User.UserName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                              IsReadOnly="{Binding Flag,UpdateSourceTrigger=PropertyChanged }"/>
                         <StackPanel Orientation="Horizontal"
                                 Margin="0 20 0 0">
@@ -130,7 +137,7 @@
                                     FontSize="16"
                                     Width="200"
                                     Margin="100 0 0 0"
-                                    SelectedDate="{Binding DoB, UpdateSourceTrigger=PropertyChanged}" DisplayDate="2021-11-10" 
+                                    SelectedDate="{Binding User.DateOfBirth, UpdateSourceTrigger=PropertyChanged}" DisplayDate="2021-11-10" 
                                     IsHitTestVisible="{Binding Flag3,UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
 
@@ -139,14 +146,14 @@
                              Width="500"
                              Margin="0 20 0 0"
                              HorizontalAlignment="Left"
-                             Text="{Binding PhoneNum, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Text="{Binding User.PhoneNumber, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              IsReadOnly="{Binding Flag,UpdateSourceTrigger=PropertyChanged }"/>
                         <TextBox ui:ControlHelper.Header="Email"
                              FontSize="16"
                              Margin="0 20 0 0"
                              Width="500"
                              HorizontalAlignment="Left"
-                             Text="{Binding Email, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Text="{Binding User.Email, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              IsReadOnly="{Binding Flag,UpdateSourceTrigger=PropertyChanged }"/>
 
                         <StackPanel Margin="0 20 0 0"
@@ -167,8 +174,7 @@
                             Content="Edit Profile"  
                             HorizontalAlignment="Center"
                             Margin="0 20 0 0"
-                            Command="{Binding EditPCommand}"
-                            Visibility="{Binding Flag2, UpdateSourceTrigger=PropertyChanged}"/>
+                            Command="{Binding EditPCommand}"/>
 
                         <!--<ui:AppBarButton Icon="Edit" Margin="288,-288,0,0" Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}"/>
                 <ui:AppBarButton Icon="Edit" Margin="-122,-101,0,0" Visibility="{Binding flag1, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="False"/>

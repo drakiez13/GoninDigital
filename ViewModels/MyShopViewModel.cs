@@ -250,7 +250,7 @@ namespace GoninDigital.ViewModels
             openFileDialog.Title = "Choose Image..";
 
             openFileDialog.InitialDirectory = @"C:\";
-            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg|All files (*.*)|*.*";
+            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
                 var linkAvatar = await ImageUploader.UploadAsync(openFileDialog.FileName);
@@ -291,7 +291,7 @@ namespace GoninDigital.ViewModels
             openFileDialog.Title = "Choose Image..";
 
             openFileDialog.InitialDirectory = @"C:\";
-            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
                 var linkAvatar = await ImageUploader.UploadAsync(openFileDialog.FileName);
