@@ -54,9 +54,9 @@
                            PaneTitle="Gonin Digital">
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem x:Name="homeItem" Content="Home" Tag="HomePage" Icon="Home" IsSelected="True"/>
-                <ui:NavigationViewItem x:Name="myShopItem" Content="My Shop" Tag="MyShopPage" Icon="Manage"
+                <ui:NavigationViewItem x:Name="myShopItem" Content="My Vendor" Tag="MyShopPage" Icon="Manage"
                                        Visibility="{Binding HasVendor, Converter={StaticResource BooleanToVisibility}, ConverterParameter=False}"/>
-                <ui:NavigationViewItem x:Name="myShopItemHasVendor" Content="My Shop" Icon="Manage"
+                <ui:NavigationViewItem x:Name="myShopItemHasVendor" Content="My Vendor" Icon="Manage"
                                        Visibility="{Binding HasVendor, Converter={StaticResource BooleanToVisibility}, ConverterParameter=True}">
                     <ui:NavigationViewItem.MenuItems>
                         <ui:NavigationViewItem Content="Home"
@@ -67,7 +67,7 @@
                                                Tag="ShopProductManagerPage" />
                         <ui:NavigationViewItem Content="Orders Manager"
                                                Tag="ShopOrdersManagerPage"/>
-                        <ui:NavigationViewItem Content="About" 
+                        <ui:NavigationViewItem Content="Vendor Profile" 
                                                Tag="ShopAboutPage" />
                     </ui:NavigationViewItem.MenuItems>
                 </ui:NavigationViewItem>
