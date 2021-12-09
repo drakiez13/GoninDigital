@@ -90,15 +90,19 @@ namespace GoninDigital.Views
             if (selectedItem != null)
             {
                 string selectedItemTag = (string)selectedItem.Tag;
-                string pageName = "GoninDigital.Views.DashBoardPages." + selectedItemTag;
-                Page togo;
-                if (!pages.TryGetValue(pageName, out togo))
+                if(selectedItemTag != null)
                 {
-                    Type pageType = typeof(HomePage).Assembly.GetType(pageName);
-                    togo = (Page)Activator.CreateInstance(pageType);
-                    pages.Add(pageName, togo);
+                    string pageName = "GoninDigital.Views.DashBoardPages." + selectedItemTag;
+                    Page togo;
+                    if (!pages.TryGetValue(pageName, out togo))
+                    {
+                        Type pageType = typeof(HomePage).Assembly.GetType(pageName);
+                        togo = (Page)Activator.CreateInstance(pageType);
+                        pages.Add(pageName, togo);
+                    }
+                    contentFrame.Navigate(togo);
                 }
-                contentFrame.Navigate(togo);
+                
             }
             else
             {
