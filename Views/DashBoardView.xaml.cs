@@ -193,7 +193,10 @@ namespace GoninDigital.Views
                 var content = sender.Text;
                 using (var context = new GoninDigitalDBContext())
                 {
-                    var productResult = context.Products.Where(product => product.Name.Contains(content))
+                    var productResult = context.Products.Where(
+                            product => product.StatusId == (int)Constants.ProductStatus.ACCEPTED
+                            && product.Name.Contains(content)
+                        )
                         .Select(product => new SearchItem {
                             Id = product.Id,
                             Name = product.Name,
@@ -202,7 +205,10 @@ namespace GoninDigital.Views
                             Type = SearchItem.ItemType.PRODUCT
                         })
                         .ToList();
-                    var vendorResult = context.Vendors.Where(vendor => vendor.Name.Contains(content))
+                    var vendorResult = context.Vendors.Where(
+                            vendor => vendor.Name.Contains(content)
+                            && vendor.ApprovalStatus == 1
+                        )
                         .Select(vendor => new SearchItem {
                             Id=vendor.Id,
                             Name = vendor.Name,
