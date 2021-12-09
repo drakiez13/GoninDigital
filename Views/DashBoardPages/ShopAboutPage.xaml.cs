@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoninDigital.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,16 @@ namespace GoninDigital.Views.DashBoardPages
     /// </summary>
     public partial class ShopAboutPage : Page
     {
+        private Dictionary<string, Page> pages;
         public ShopAboutPage()
         {
             InitializeComponent();
+            (DataContext as MyShopViewModel).IsOwner = true;
+            pages = new Dictionary<string, Page>();
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            (DataContext as MyShopViewModel).OnNavigatedTo();
         }
     }
 }

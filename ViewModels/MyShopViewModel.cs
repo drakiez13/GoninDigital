@@ -282,7 +282,6 @@ namespace GoninDigital.ViewModels
                 
                 return true;
             }, (p) => { SaveVendorConfirm(); });
-
         }
         public async void EditAvatarExec()
         {
