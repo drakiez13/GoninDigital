@@ -35,7 +35,7 @@ namespace GoninDigital.ViewModels
                     return true;
                 }
                 return false;
-            }, (p) =>
+            }, (p) => {
                 using (var db = new GoninDigitalDBContext())
                 {
                     var brand = db.Brands.First(x => x.Id == SelectedItem.Id);
