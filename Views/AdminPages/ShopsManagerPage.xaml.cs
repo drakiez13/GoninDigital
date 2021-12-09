@@ -12,18 +12,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GoninDigital.ViewModels;
 using GoninDigital.Models;
 
 namespace GoninDigital.Views.AdminPages
 {
     /// <summary>
-    /// Interaction logic for UserPage.xaml
+    /// Interaction logic for ShopPage.xaml
     /// </summary>
-    public partial class UserPage
+    public partial class ShopsManagerPage : Page
     {
-        public UserPage()
+        public ShopsManagerPage()
         {
             InitializeComponent();
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var vendors = (System.Collections.IList)lvShopPage.SelectedItems;
+
+            (DataContext as ManageShopPageViewModel).SelectedVendors = vendors.Cast<Vendor>();
         }
     }
 }

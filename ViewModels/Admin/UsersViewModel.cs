@@ -12,17 +12,21 @@ namespace GoninDigital.ViewModels
 {
     public class UsersViewModel : BaseViewModel
     {
-        private ObservableCollection<User> _List;
-        public ObservableCollection<User> List { get { return _List; } set { _List = value; OnPropertyChanged(); } }
-        private User _SelectedItem;
-        public User SelectedItem { get { return _SelectedItem; } set { _SelectedItem = value; OnPropertyChanged(); } }
+        private ObservableCollection<User> list;
+        public ObservableCollection<User> List { get { return list; } set { list = value; OnPropertyChanged(); } }
+        private User selectedItem;
+        public User SelectedItem { get { return selectedItem; } set { selectedItem = value; OnPropertyChanged(); } }
 
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand AddCommand { get; set; }
         public UsersViewModel()
         {
-            _List = new ObservableCollection<User>(DataProvider.Instance.Db.Users);
+            using (var db = new GoninDigitalDBContext())
+            {
+                list = new ObservableCollection<User>(db.Users);
+            }
+            
 
             #region UpdateCommand
             UpdateCommand = new RelayCommand<Object>((p) =>
@@ -34,9 +38,13 @@ namespace GoninDigital.ViewModels
                 return false;
             }, (p) =>
             {
-                var user = DataProvider.Instance.Db.Users.First(x => x.Id == SelectedItem.Id);
-                user = SelectedItem;
-                DataProvider.Instance.Db.SaveChanges();
+                using (var db = new GoninDigitalDBContext())
+                {
+                    var user = db.Users.First(x => x.Id == SelectedItem.Id);
+                    user = SelectedItem;
+                    db.SaveChanges();
+                }
+                
             });
             #endregion
 
@@ -50,10 +58,14 @@ namespace GoninDigital.ViewModels
                 return false;
             }, (p) =>
             {
-                var user = DataProvider.Instance.Db.Users.First(x => x.Id == SelectedItem.Id);
-                List.Remove(user);
-                DataProvider.Instance.Db.Users.Remove(user);
-                DataProvider.Instance.Db.SaveChanges();
+                using (var db = new GoninDigitalDBContext())
+                {
+                    var user = db.Users.First(x => x.Id == SelectedItem.Id);
+                    List.Remove(user);
+                    db.Users.Remove(user);
+                    db.SaveChanges();
+                }
+                
             });
             #endregion
 
@@ -63,9 +75,13 @@ namespace GoninDigital.ViewModels
                 return false;
             }, (p) =>
             {
-                var user = DataProvider.Instance.Db.Users.First(x => x.Id == SelectedItem.Id);
-                user = SelectedItem;
-                DataProvider.Instance.Db.SaveChanges();
+                using (var db = new GoninDigitalDBContext())
+                {
+                    var user = db.Users.First(x => x.Id == SelectedItem.Id);
+                    user = SelectedItem;
+                    db.SaveChanges();
+                }
+                
             });
             #endregion
 

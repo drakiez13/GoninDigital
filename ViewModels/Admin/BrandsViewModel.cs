@@ -12,10 +12,10 @@ namespace GoninDigital.ViewModels
 {
     public class BrandsViewModel : BaseViewModel
     {
-        private ObservableCollection<Brand> _List;
-        public ObservableCollection<Brand> List { get { return _List; } set { _List = value; OnPropertyChanged(); } }
-        private Brand _SelectedItem;
-        public Brand SelectedItem { get { return _SelectedItem; } set { _SelectedItem = value; OnPropertyChanged(); } }
+        private ObservableCollection<Brand> list;
+        public ObservableCollection<Brand> List { get { return list; } set { list = value; OnPropertyChanged(); } }
+        private Brand selectedItem;
+        public Brand SelectedItem { get { return selectedItem; } set { selectedItem = value; OnPropertyChanged(); } }
 
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
@@ -24,7 +24,7 @@ namespace GoninDigital.ViewModels
         {
             using (var db = new GoninDigitalDBContext())
             {
-                _List = new ObservableCollection<Brand>(db.Brands);
+                list = new ObservableCollection<Brand>(db.Brands);
             }
 
 
