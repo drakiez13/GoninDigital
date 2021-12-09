@@ -27,7 +27,6 @@ namespace GoninDigital.ViewModels
                 list = new ObservableCollection<Brand>(db.Brands);
             }
 
-
             #region UpdateCommand
             UpdateCommand = new RelayCommand<Object>((p) =>
             {
@@ -37,7 +36,6 @@ namespace GoninDigital.ViewModels
                 }
                 return false;
             }, (p) =>
-            {
                 using (var db = new GoninDigitalDBContext())
                 {
                     var brand = db.Brands.First(x => x.Id == SelectedItem.Id);
@@ -65,7 +63,6 @@ namespace GoninDigital.ViewModels
                     db.Brands.Remove(brand);
                     db.SaveChanges();
                 }
-
             });
             #endregion
 
@@ -81,7 +78,6 @@ namespace GoninDigital.ViewModels
                     user = SelectedItem;
                     db.SaveChanges();
                 }
-
             });
             #endregion
 
