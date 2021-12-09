@@ -22,7 +22,11 @@ namespace GoninDigital.ViewModels
         public ICommand AddCommand { get; set; }
         public BrandsViewModel()
         {
-            _List = new ObservableCollection<Brand>(DataProvider.Instance.Db.Brands);
+            using(var db = new GoninDigitalDBContext())
+            {
+                _List = new ObservableCollection<Brand>(db.Brands);
+            }
+            
 
             #region UpdateCommand
             UpdateCommand = new RelayCommand<Object>((p) =>
@@ -33,10 +37,14 @@ namespace GoninDigital.ViewModels
                 }
                 return false;
             }, (p) =>
-            {
-                var brand = DataProvider.Instance.Db.Brands.First(x => x.Id == SelectedItem.Id);
-                brand = SelectedItem;
-                DataProvider.Instance.Db.SaveChanges();
+            { 
+                using (var db = new GoninDigitalDBContext())
+                {
+                    var brand = db.Brands.First(x => x.Id == SelectedItem.Id);
+
+                    brand = SelectedItem;
+                    db.SaveChanges();
+                }
             });
             #endregion
 
@@ -50,10 +58,14 @@ namespace GoninDigital.ViewModels
                 return false;
             }, (p) =>
             {
-                var brand = DataProvider.Instance.Db.Brands.First(x => x.Id == SelectedItem.Id);
-                List.Remove(brand);
-                DataProvider.Instance.Db.Brands.Remove(brand);
-                DataProvider.Instance.Db.SaveChanges();
+                using (var db = new GoninDigitalDBContext())
+                {
+                    var brand = db.Brands.First(x => x.Id == SelectedItem.Id);
+                    List.Remove(brand);
+                    db.Brands.Remove(brand);
+                    db.SaveChanges();
+                }
+                
             });
             #endregion
 
@@ -63,9 +75,13 @@ namespace GoninDigital.ViewModels
                 return false;
             }, (p) =>
             {
-                var user = DataProvider.Instance.Db.Brands.First(x => x.Id == SelectedItem.Id);
-                user = SelectedItem;
-                DataProvider.Instance.Db.SaveChanges();
+                using (var db = new GoninDigitalDBContext())
+                {
+                    var user = db.Brands.First(x => x.Id == SelectedItem.Id);
+                    user = SelectedItem;
+                    db.SaveChanges();
+                }
+                
             });
             #endregion
 
