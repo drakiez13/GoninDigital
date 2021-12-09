@@ -18,14 +18,15 @@
             <StackPanel Orientation="Vertical"
                         Margin="0 0 0 50 "
                         Visibility="{Binding HasVendor,Converter={StaticResource BooleanToVisibility},ConverterParameter=True}">
+                <Label Margin="20 20 0 20"
+                       FontSize="22"
+                       Content="Vendor Profile"
+                       FontWeight="Bold"/>
                 <Grid VerticalAlignment="Top">
                     <Grid Height="450"
                           VerticalAlignment="Top">
                         <Image Source="{Binding Vendor.Cover}"
                                Stretch="UniformToFill"></Image>
-                        <Label Margin="20 20 0 20"
-                               FontSize="22"
-                               FontWeight="Bold">My Shop</Label>
                     </Grid>
                     <Grid Margin="0 405 0 0">
                         <StackPanel Orientation="Vertical">
@@ -53,6 +54,9 @@
 
                     </Grid>
                 </Grid>
+                <Grid Height="5"
+                      Margin="10"
+                      Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}"></Grid>
             </StackPanel>
             <Grid HorizontalAlignment="Center"
               Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}"

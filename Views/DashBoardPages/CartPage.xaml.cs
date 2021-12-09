@@ -34,6 +34,7 @@ namespace GoninDigital.Views.DashBoardPages
         private void NumberBox_ValueChanged(ModernWpf.Controls.NumberBox sender, ModernWpf.Controls.NumberBoxValueChangedEventArgs args)
         {
             (DataContext as CartPageViewModel).SelectedProducts = (DataContext as CartPageViewModel).SelectedProducts;
+            (DataContext as CartPageViewModel).Update();
         }
     }
 }

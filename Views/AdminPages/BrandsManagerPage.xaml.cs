@@ -12,17 +12,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GoninDigital.Models;
 
 namespace GoninDigital.Views.AdminPages
 {
     /// <summary>
-    /// Interaction logic for ProductPage.xaml
+    /// Interaction logic for BrandPage.xaml
     /// </summary>
-    public partial class ProductPage : Page
+    public partial class BrandsManagerPage
     {
-        public ProductPage()
+        public BrandsManagerPage()
         {
             InitializeComponent();
+
         }
+
     }
 }

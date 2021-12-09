@@ -70,8 +70,20 @@ namespace GoninDigital.ViewModels
                         //and close the splash screen
                         if (Settings.Default.usrname != "")
                         {
-                            var dashboardWindow = new DashBoard();
-                            WindowManager.ChangeWindowContent(p, dashboardWindow, Resources.HomepageWindowTitle, Resources.HomepageControlPath);
+                            using(var db = new GoninDigitalDBContext())
+                            {
+                                if (db.Users.FirstOrDefault(o => o.UserName == Settings.Default.usrname).TypeId == (int)Constants.UserType.ADMIN)
+                                {
+                                    var adminWindow = new AdminView();
+                                    WindowManager.ChangeWindowContent(p, adminWindow, Resources.AdminpageWindowTitle, Resources.AdminpageControlPath);
+                                }
+                                else
+                                {
+                                    var dashboardWindow = new DashBoard();
+                                    WindowManager.ChangeWindowContent(p, dashboardWindow, Resources.HomepageWindowTitle, Resources.HomepageControlPath);
+                                }
+                            }
+                            
                         }
                         else //login
                         {
