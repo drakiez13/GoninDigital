@@ -207,11 +207,8 @@
                                                    FontSize="22"
                                                    Foreground="{DynamicResource SystemControlHighlightAccentBrush}"></TextBlock>
                                         </StackPanel>
-
                                     </Grid>
-
-
-
+                                    
                                     <StackPanel>
                                         <Label Content="Products" Margin="40 -10 0 0"
                                                FontSize="18"
