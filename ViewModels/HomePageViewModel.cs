@@ -64,6 +64,7 @@ namespace GoninDigital.ViewModels
                 {
                     _adProducts.Add(await db.AdDetails.Where(o => o.AdId == Ads[i].Id)
                                                 .Include(x => x.Product.Vendor)
+                                                .Include(x => x.Product.Brand)
                                                 .Select(o => o.Product)
                                                 .ToListAsync());
 
@@ -77,11 +78,20 @@ namespace GoninDigital.ViewModels
             using (var db = new GoninDigitalDBContext())
             {
                 // Selection algorithm goes here
-                TopProducts = await db.Products.Include(x => x.Vendor).OrderBy(o => Guid.NewGuid()).Take(6).ToListAsync();
+                TopProducts = await db.Products
+                    .Include(x => x.Vendor)
+                    .Include(x => x.Brand)
+                    .OrderBy(o => Guid.NewGuid()).Take(6).ToListAsync();
 
-                RecommendedProducts = await db.Products.Include(x => x.Vendor).OrderBy(o => Guid.NewGuid()).Take(6).ToListAsync();
+                RecommendedProducts = await db.Products
+                    .Include(x => x.Vendor)
+                    .Include(x => x.Brand)
+                    .OrderBy(o => Guid.NewGuid()).Take(6).ToListAsync();
 
-                DiscountProducts = await db.Products.Include(x => x.Vendor).OrderBy(o => Guid.NewGuid()).Take(6).ToListAsync();
+                DiscountProducts = await db.Products
+                    .Include(x => x.Vendor)
+                    .Include(x => x.Brand)
+                    .OrderBy(o => Guid.NewGuid()).Take(6).ToListAsync();
             }
         }
 
