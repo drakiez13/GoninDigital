@@ -9,7 +9,7 @@ namespace GoninDigital.Models
     {
         public int UserId { get; set; }
         public int ProductId { get; set; }
-        public short Value { get; set; }
+        public double Value { get; set; }
 
         public virtual Product Product { get; set; }
         public virtual User User { get; set; }

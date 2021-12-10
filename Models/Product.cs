@@ -31,7 +31,7 @@ namespace GoninDigital.Models
         public DateTime UpdatedAt { get; set; }
         public int BrandId { get; set; }
         public string Image { get; set; }
-        public byte Rating { get; set; }
+        public double Rating { get; set; }
         public int NRating { get; set; }
         public int Available { get; set; }
         public byte? New { get; set; }
