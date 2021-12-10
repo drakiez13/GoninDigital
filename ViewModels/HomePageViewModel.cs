@@ -54,7 +54,7 @@ namespace GoninDigital.ViewModels
             set { discountProducts = value; OnPropertyChanged(); }
         }
 
-        private void InitAds()
+        private async void InitAds()
         {
             using (var db = new GoninDigitalDBContext())
             {
@@ -62,26 +62,26 @@ namespace GoninDigital.ViewModels
                 List<List<Product>> _adProducts = new List<List<Product>>(3);
                 for (int i = 0; i < 3; i++)
                 {
-                    _adProducts.Add(db.AdDetails.Where(o => o.AdId == Ads[i].Id)
+                    _adProducts.Add(await db.AdDetails.Where(o => o.AdId == Ads[i].Id)
                                                 .Include(x => x.Product.Vendor)
                                                 .Select(o => o.Product)
-                                                .ToList());
+                                                .ToListAsync());
 
                 }
                 AdProducts = _adProducts;
             }
         }
 
-        private void InitProducts()
+        private async void InitProducts()
         {
             using (var db = new GoninDigitalDBContext())
             {
                 // Selection algorithm goes here
-                TopProducts = db.Products.Include(x => x.Vendor).OrderBy(o => Guid.NewGuid()).Take(6).ToList();
+                TopProducts = await db.Products.Include(x => x.Vendor).OrderBy(o => Guid.NewGuid()).Take(6).ToListAsync();
 
-                RecommendedProducts = db.Products.Include(x => x.Vendor).OrderBy(o => Guid.NewGuid()).Take(6).ToList();
+                RecommendedProducts = await db.Products.Include(x => x.Vendor).OrderBy(o => Guid.NewGuid()).Take(6).ToListAsync();
 
-                DiscountProducts = db.Products.Include(x => x.Vendor).OrderBy(o => Guid.NewGuid()).Take(6).ToList();
+                DiscountProducts = await db.Products.Include(x => x.Vendor).OrderBy(o => Guid.NewGuid()).Take(6).ToListAsync();
             }
         }
 
@@ -91,10 +91,9 @@ namespace GoninDigital.ViewModels
 
             ads = new List<Ad>(3);
             adProducts = new List<List<Product>>(3);
-            Thread thread1 = new Thread(InitAds);
-            thread1.Start();
-            Thread thread2 = new Thread(InitProducts);
-            thread2.Start();
+
+            InitAds();
+            InitProducts();
         }
     }
 }
