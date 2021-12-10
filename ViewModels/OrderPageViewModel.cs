@@ -92,7 +92,7 @@ namespace GoninDigital.ViewModels
                 var userInvoices = db.Invoices.Include(o => o.Customer)
                                               .Include(o => o.Vendor)
                                               .Include(o => o.InvoiceDetails).ThenInclude(o => o.Product)
-                                              .Where(o => o.Customer.Id==4)
+                                              .Where(o => o.Customer.UserName == Settings.Default.usrname)
                                               .ToList();
                 CreatedInvoices = new ObservableCollection<Invoice>(userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.CREATED));
                 AcceptedInvoices = new ObservableCollection<Invoice>(userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.ACCEPTED));
