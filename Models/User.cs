@@ -10,6 +10,7 @@ namespace GoninDigital.Models
         public User()
         {
             Carts = new HashSet<Cart>();
+            Comments = new HashSet<Comment>();
             Favorites = new HashSet<Favorite>();
             Invoices = new HashSet<Invoice>();
             Ratings = new HashSet<Rating>();
@@ -30,6 +31,7 @@ namespace GoninDigital.Models
 
         public virtual UserType Type { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Favorite> Favorites { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; }

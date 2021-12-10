@@ -11,6 +11,7 @@ namespace GoninDigital.Models
         {
             AdDetails = new HashSet<AdDetail>();
             Carts = new HashSet<Cart>();
+            Comments = new HashSet<Comment>();
             Favorites = new HashSet<Favorite>();
             InvoiceDetails = new HashSet<InvoiceDetail>();
             ProductSpecDetails = new HashSet<ProductSpecDetail>();
@@ -42,6 +43,7 @@ namespace GoninDigital.Models
         public virtual Vendor Vendor { get; set; }
         public virtual ICollection<AdDetail> AdDetails { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Favorite> Favorites { get; set; }
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
         public virtual ICollection<ProductSpecDetail> ProductSpecDetails { get; set; }

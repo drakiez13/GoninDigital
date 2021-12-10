@@ -21,6 +21,7 @@ namespace GoninDigital.Models
         public virtual DbSet<AdDetail> AdDetails { get; set; }
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Favorite> Favorites { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
@@ -40,7 +41,8 @@ namespace GoninDigital.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(Properties.Settings.Default.DBconnstr);
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=tcp:0.tcp.ap.ngrok.io,10672;Initial Catalog=GoninDigitalDB;Persist Security Info=False;User ID=gonindigital;Password=gonindigital;MultipleActiveResultSets=False;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 
@@ -130,6 +132,45 @@ namespace GoninDigital.Models
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CART_USER");
+            });
+
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity.ToTable("Comment");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ParentId).HasColumnName("parentId");
+
+                entity.Property(e => e.ProductId).HasColumnName("productId");
+
+                entity.Property(e => e.Time)
+                    .HasColumnType("datetime")
+                    .HasColumnName("time");
+
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.Property(e => e.Value)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("value");
+
+                entity.HasOne(d => d.Parent)
+                    .WithMany(p => p.InverseParent)
+                    .HasForeignKey(d => d.ParentId)
+                    .HasConstraintName("FK_Comment_Comment");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Comment_Product");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Comment_User");
             });
 
             modelBuilder.Entity<Favorite>(entity =>
