@@ -8,7 +8,7 @@ using GoninDigital.Views.DashBoardPages;
 using ModernWpf.Controls;
 using ModernWpf.Controls.Primitives;
 using System.Linq;
-using Frame = System.Windows.Controls.Frame;
+using Frame = ModernWpf.Controls.Frame;
 using Page = ModernWpf.Controls.Page;
 using GoninDigital.Views.SharedPages;
 using GoninDigital.Properties;
@@ -102,7 +102,6 @@ namespace GoninDigital.Views
                     }
                     contentFrame.Navigate(togo);
                 }
-                
             }
             else
             {
@@ -112,7 +111,15 @@ namespace GoninDigital.Views
 
         private void navigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
-            contentFrame.GoBack();
+            try
+            {
+                contentFrame.GoBack();
+            }
+            catch (Exception ex)
+            {
+                contentFrame.RemoveBackEntry();
+                contentFrame.GoBack();
+            }
         }
 
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
@@ -122,9 +129,10 @@ namespace GoninDigital.Views
             else
                 navigationView.IsBackEnabled = false;
 
-            var desType = contentFrame.SourcePageType;
+            /*var desType = contentFrame.SourcePageType;
             if (desType == typeof(HomePage))
             {
+                
                 homeItem.IsSelected = true;
             }
             else if (desType == typeof(CartPage))
@@ -142,8 +150,8 @@ namespace GoninDigital.Views
             else if (desType == typeof(MyShopPage))
             {
                 myShopItem.IsSelected = true;
-            }
-            
+            }*/
+
         }
 
         private void NavigationViewItem_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -270,11 +278,9 @@ namespace GoninDigital.Views
             }
             else if (selection == "logout")
             {
-                // clear
                 Settings.Default.usrname = "";
                 Settings.Default.passwod = "";
 
-                //var loginWindow = new LoginViewModel(Application.Current.MainWindow);
                 WindowManager.ChangeWindowContent(Application.Current.MainWindow, Properties.Resources.LoginWindowTitle, Properties.Resources.LoginControlPath);
             }
         }

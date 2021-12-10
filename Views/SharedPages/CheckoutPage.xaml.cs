@@ -114,5 +114,12 @@ namespace GoninDigital.Views.SharedPages
             Init();
             InitializeComponent();
         }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            // Checkout page should not in back stack
+            DashBoard.RootFrame.RemoveBackEntry();
+        }
     }
 }
