@@ -119,11 +119,31 @@ namespace GoninDigital.Views.SharedPages
         {
             using (var context = new GoninDigitalDBContext())
             {
-                if (false) // user bought product
+                User tmp = context.Users.FirstOrDefault(x => Settings.Default.usrname == x.UserName);
+                List<Invoice> all_invoice_current_user = context.Invoices.Where(x => x.CustomerId == tmp.Id && x.StatusId == 4).ToList();
+                bool isBought = false;
+                foreach (var inv in all_invoice_current_user)
                 {
-                    User tmp = context.Users.FirstOrDefault(x => Settings.Default.usrname == x.UserName);
+                     isBought = (context.InvoiceDetails.Where(x => x.InvoiceId == inv.Id && x.ProductId == ProductInfo.Id).Any() && true);
+                }
+                
+                if (isBought) // user bought product
+                {
                     var usr_rating = context.Ratings.FirstOrDefault(x => x.UserId == tmp.Id && x.ProductId == ProductInfo.Id);
-                    usr_rating.Value = (short)sender.Value;
+                    if (usr_rating == default)
+                    {
+                        Rating rating = new()
+                        {
+                            UserId = tmp.Id,
+                            ProductId = ProductInfo.Id,
+                            Value = (short)sender.Value,
+                        };
+                        context.Ratings.Add(rating);
+                    }
+                    else
+                    {
+                        usr_rating.Value = (short)sender.Value;
+                    }
                     context.SaveChanges();
                 }
                 else
