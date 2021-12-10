@@ -52,7 +52,6 @@
                                                          Margin="650 0 0 0"
                                                          CommandParameter="{Binding}"
                                                          Command="{Binding Source={StaticResource OrderPageVM}, Path=CancelInvoice}" />
-
                                     </StackPanel>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
