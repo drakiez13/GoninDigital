@@ -152,7 +152,7 @@ namespace GoninDigital.Views.SharedPages
                     }
 
                     var cur_item = context.Products.FirstOrDefault(x => x.Id == ProductInfo.Id);
-                    cur_item.NRating++;
+                    if (usr_rating != default) cur_item.NRating++;
                     cur_item.Rating = sum/cur_item.NRating;
                     context.SaveChanges();
                 }
