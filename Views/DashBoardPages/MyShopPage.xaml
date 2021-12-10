@@ -20,8 +20,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <StackPanel Orientation="Vertical"
-                            Margin="0 0 0 50 ">
+                <Grid Margin="0 0 0 50 ">
                     <Label Margin="20 20 0 20"
                            FontSize="22"
                            Content="My Shop"
@@ -32,9 +31,9 @@
                             <Image Source="{Binding Vendor.Cover}"
                                    Stretch="UniformToFill"></Image>
                         </Grid>
-                        <Grid Margin="0 405 0 0">
+                        <Grid Margin="0 400 0 0">
                             <StackPanel Orientation="Vertical">
-                                <ui:PersonPicture DisplayName="Betsy Sherman"
+                                <ui:PersonPicture DisplayName="Avatar"
                                               ProfilePicture="{Binding Vendor.Avatar}"
                                               Initials="Shop" />
                                 <Label Content="{Binding Vendor.Name}"
@@ -47,10 +46,8 @@
                             </StackPanel>
                         </Grid>
                     </Grid>
-                    <Grid Height="5"
-                      Margin="10"
-                      Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}"></Grid>
-                </StackPanel>
+                    
+                </Grid>
                 <StackPanel Grid.Row="1">
                     <Label Margin="20 0 0 0"
                            FontWeight="Bold"
