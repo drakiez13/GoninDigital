@@ -50,8 +50,8 @@ namespace GoninDigital.Views.SharedPages
         public ICommand RatingBoxCommand { get; set; }
         public string IsDisc { get; set; }
 
-        int _userRating = 0;
-        public int userRating 
+        double _userRating = 0;
+        public double userRating 
         {
             get { return _userRating; }
             set { _userRating = value; OnPropertyChanged(); }
@@ -145,7 +145,7 @@ namespace GoninDigital.Views.SharedPages
                         usr_rating.Value = (short)sender.Value;
                     }
                     List<Rating> cur_item_rating = context.Ratings.Where(x => x.ProductId == ProductInfo.Id).ToList();
-                    int sum = 0;
+                    double sum = 0;
                     foreach (var item_rate in cur_item_rating)
                     {
                         sum += item_rate.Value;
