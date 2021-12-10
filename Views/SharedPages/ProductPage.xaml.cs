@@ -4,7 +4,9 @@ using GoninDigital.ViewModels;
 using ModernWpf.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,13 +25,37 @@ namespace GoninDigital.Views.SharedPages
     /// <summary>
     /// Interaction logic for ProductPage.xaml
     /// </summary>
-    public partial class ProductPage : Page
+    public partial class ProductPage : Page, INotifyPropertyChanged
     {
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (Equals(storage, value))
+            {
+                return;
+            }
+            storage = value;
+            OnPropertyChanged(propertyName);
+        }
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
         public Product ProductInfo { get; set; }
         public ICommand BuyCommand { get; set; }
         public ICommand AddtoCartCommand { get; set; }
+        public ICommand RatingBoxCommand { get; set; }
         public string IsDisc { get; set; }
-        
+
+        int _userRating = 0;
+        public int userRating 
+        {
+            get { return _userRating; }
+            set { _userRating = value; OnPropertyChanged(); }
+        }
 
         public ProductPage(Product product)
         {
@@ -40,6 +66,21 @@ namespace GoninDigital.Views.SharedPages
                 IsDisc = "Hidden";
             else
                 IsDisc = "Visible";
+
+            using (GoninDigitalDBContext context = new())
+            {
+                User tmp = context.Users.FirstOrDefault(x => Settings.Default.usrname == x.UserName);
+                var usr_rating = context.Ratings.FirstOrDefault(x => x.UserId == tmp.Id && x.ProductId == ProductInfo.Id);
+                if (usr_rating != default) // user rated this product
+                {
+                    userRating = usr_rating.Value;
+                }
+                else
+                {
+                    userRating = 0;
+                }
+            }
+            
             InitializeComponent();
         }
 
@@ -72,6 +113,50 @@ namespace GoninDigital.Views.SharedPages
                 content.ShowAsync();
             }
             
+        }
+
+        private void RatingBox_ValueChanged(RatingControl sender, object args)
+        {
+            using (var context = new GoninDigitalDBContext())
+            {
+                User tmp = context.Users.FirstOrDefault(x => Settings.Default.usrname == x.UserName);
+                List<Invoice> all_invoice_current_user = context.Invoices.Where(x => x.CustomerId == tmp.Id && x.StatusId == 4).ToList();
+                bool isBought = false;
+                foreach (var inv in all_invoice_current_user)
+                {
+                     isBought = (context.InvoiceDetails.Where(x => x.InvoiceId == inv.Id && x.ProductId == ProductInfo.Id).Any() && true);
+                }
+                
+                if (isBought) // user bought product
+                {
+                    var usr_rating = context.Ratings.FirstOrDefault(x => x.UserId == tmp.Id && x.ProductId == ProductInfo.Id);
+                    if (usr_rating == default)
+                    {
+                        Rating rating = new()
+                        {
+                            UserId = tmp.Id,
+                            ProductId = ProductInfo.Id,
+                            Value = (short)sender.Value,
+                        };
+                        context.Ratings.Add(rating);
+                    }
+                    else
+                    {
+                        usr_rating.Value = (short)sender.Value;
+                    }
+                    context.SaveChanges();
+                }
+                else
+                {
+                    ContentDialog content = new()
+                    {
+                        Title = "Warning",
+                        Content = "You must buy item before rate for this.",
+                        PrimaryButtonText = "Ok"
+                    };
+                    content.ShowAsync();
+                }
+            }
         }
     }
 }

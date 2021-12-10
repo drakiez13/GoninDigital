@@ -7,6 +7,7 @@
       xmlns:local="clr-namespace:GoninDigital.Views.SharedPages"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
       mc:Ignorable="d" 
+         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       d:DesignHeight="600" d:DesignWidth="1000"
       d:Background="White"
       Title="ProductPage">
@@ -17,6 +18,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="300"/>
                 <RowDefinition Height="70"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label Content="Product"
@@ -186,7 +188,18 @@
                     <TextBlock>Under construction</TextBlock>
                 </StackPanel>
             </Grid>
-
+            <Grid Grid.Row="4"
+                  Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
+                  Margin="20 0 20 10">
+                <Label Content="Ratings and reviews"
+                       FontSize="22"
+                       FontWeight="Bold"
+                       Margin="20 10 20 10"/>
+                <ui:RatingControl x:Name="RatingBox"
+                                  Value="{Binding userRating, Mode=TwoWay}"
+                                  ValueChanged="RatingBox_ValueChanged">
+                </ui:RatingControl>
+            </Grid>
         </Grid>
     </ScrollViewer>
 </ui:Page>

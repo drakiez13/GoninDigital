@@ -50,9 +50,9 @@ namespace GoninDigital.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=tcp:minhdeeptry.ddns.net,1433;Initial Catalog=GoninDigitalDB;Persist Secur" +
-            "ity Info=False;User ID=gonindigital;Password=gonindigital;MultipleActiveResultSe" +
-            "ts=False;TrustServerCertificate=False;Connection Timeout=30;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=tcp:0.tcp.ap.ngrok.io,10672;Initial Catalog=GoninDigitalDB;Persist Securit" +
+            "y Info=False;User ID=gonindigital;Password=gonindigital;MultipleActiveResultSets" +
+            "=False;TrustServerCertificate=False;Connection Timeout=30;")]
         public string DBconnstr {
             get {
                 return ((string)(this["DBconnstr"]));
