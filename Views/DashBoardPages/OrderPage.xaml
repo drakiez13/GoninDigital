@@ -28,524 +28,616 @@
                 </DataTemplate>
             </TabControl.ItemTemplate>
             <TabItem Header="Created">
-                <ui:ListView Margin="0 10 0 0"
+                <Grid>
+                    <ui:ListView Margin="0 10 0 0"
                              MaxWidth="900"
                              ItemsSource="{Binding CreatedInvoices}"
                              IsSelectionEnabled="False"
                              ScrollViewer.CanContentScroll="False">
-                    <ui:ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0 10 0 5">
-                                <StackPanel Orientation="Horizontal">
-                                    <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
+                        <ui:ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0 10 0 5">
+                                    <StackPanel Orientation="Horizontal">
+                                        <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
                                                       DisplayName="{Binding Vendor.Name}"
                                                       Width="30"></ui:PersonPicture>
-                                    <TextBlock Text="{Binding Vendor.Name, Mode=OneTime}"
+                                        <TextBlock Text="{Binding Vendor.Name, Mode=OneTime}"
                                                Margin="10 0 0 0"
                                                VerticalAlignment="Center"
                                                FontSize="18" />
-                                </StackPanel>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Orientation="Horizontal" Margin="40 0 0 0">
-                                        <TextBlock Text="Created At: "
-                                                   VerticalAlignment="Center"
-                                                   FontWeight="Light"></TextBlock>
-                                        <TextBlock Text="{Binding CreatedAt}"
-                                                   VerticalAlignment="Center"
-                                                   FontWeight="Light"></TextBlock>
-                                    </StackPanel>
-
-                                    <StackPanel Orientation="Horizontal" Margin="170 0 0 0"
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Center">
-                                        <TextBlock Text="Total: "
-                                                   VerticalAlignment="Center"
-                                                   FontWeight="Light"></TextBlock>
-                                        <TextBlock Text="{Binding Value, StringFormat=C, ConverterCulture=vi-VN}"
-                                                   FontWeight="Bold"
-                                                   VerticalAlignment="Center"
-                                                   FontSize="20"
-                                                   Foreground="{DynamicResource SystemControlHighlightAccentBrush}"></TextBlock>
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="2">
                                         <ui:AppBarButton Icon="Delete"
                                                          Label="Remove"
                                                          HorizontalAlignment="Right"
+                                                         Grid.Column="2"
+                                                         Margin="650 0 0 0"
                                                          CommandParameter="{Binding}"
                                                          Command="{Binding Source={StaticResource OrderPageVM}, Path=CancelInvoice}" />
 
                                     </StackPanel>
-                                </Grid>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="280" />
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Horizontal" Margin="40 -25 0 0">
+                                            <TextBlock Text="Created At: "
+                                                   VerticalAlignment="Center"
+                                                   FontSize="15"
+                                                   FontWeight="Light"></TextBlock>
+                                            <TextBlock Text="{Binding CreatedAt}"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="14"
+                                                   FontWeight="Light"></TextBlock>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" Margin="30 5 0 0"
+                                                Grid.Column="2"
+                                                HorizontalAlignment="Center">
+                                            <TextBlock Text="Total: "
+                                                       FontSize="18"
+                                                   VerticalAlignment="Center"
+                                                   FontWeight="Light"></TextBlock>
+                                            <TextBlock Text="{Binding Value, StringFormat=C, ConverterCulture=vi-VN}"
+                                                       Margin="5 0 0 0"
+                                                   FontWeight="Bold"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="22"
+                                                   Foreground="{DynamicResource SystemControlHighlightAccentBrush}"></TextBlock>
+                                        </StackPanel>
+
+                                    </Grid>
 
 
 
-                                <StackPanel>
-                                    <Label Content="Products" Margin="40 0 0 0"
+                                    <StackPanel>
+                                        <Label Content="Products" Margin="40 -10 0 0"
+                                               FontSize="18"
                                            FontWeight="Light" />
-                                    <ItemsControl ItemsSource="{Binding InvoiceDetails}"
+                                        <ItemsControl ItemsSource="{Binding InvoiceDetails}"
                                                   Width="800"
                                                   Margin="40 0 0 0"
                                                   HorizontalAlignment="Left">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Border BorderBrush="Gainsboro"
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border BorderBrush="Gainsboro"
                                                         BorderThickness="0,2,0,0">
-                                                    <StackPanel Orientation="Horizontal"
+                                                        <StackPanel Orientation="Horizontal"
                                                                Margin="0,10">
-                                                        <Image Source="{Binding Product.Image}"
+                                                            <Image Source="{Binding Product.Image}"
                                                                Stretch="UniformToFill"
                                                                Width="80"
                                                                Height="80"
                                                                VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding Product.Name}"
+                                                            <TextBlock Text="{Binding Product.Name}"
                                                                    TextWrapping="Wrap"
                                                                    Width="250"
                                                                    Margin="10,0,5,0"
                                                                    VerticalAlignment="Center" />
 
-                                                        <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
-                                                                   VerticalAlignment="Center" Margin="80 0 0 0"
+                                                            <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
+                                                                   VerticalAlignment="Center" Margin="0 0 0 0"
+                                                                   FontSize="20"
                                                                    TextAlignment="Center"
-                                                                   Width="160" />
-                                                        <Label VerticalAlignment="Center"
+                                                                   Width="150" />
+                                                            <Label VerticalAlignment="Center"
                                                                Width="20">X</Label>
-                                                        <ui:PersonPicture Margin="20 0 0 0"
+                                                            <ui:PersonPicture Margin="0 0 0 0"
                                                                           Initials="{Binding Quantity}"
                                                                           Width="30"></ui:PersonPicture>
-                                                    </StackPanel>
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
+
+                                                            <TextBlock Text="{Binding Cost, StringFormat=C, ConverterCulture=vi-VN}"
+                                                                   VerticalAlignment="Center" Margin="100 0 0 0"
+                                                                   TextAlignment="Center"
+                                                                   FontSize="20"
+                                                                   Width="150" />
+                                                        </StackPanel>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+
                                 </StackPanel>
+                            </DataTemplate>
+                        </ui:ListView.ItemTemplate>
 
-                            </StackPanel>
-                        </DataTemplate>
-                    </ui:ListView.ItemTemplate>
-                </ui:ListView>
-
+                    </ui:ListView>
+                    <Image Source="{Binding ImageEmpty}" 
+                           Height="200"
+                           Width="200"
+                           Visibility="{Binding CreatedInvoices.Count, Converter={StaticResource ListCountToVisibility},
+                           ConverterParameter=False}" />
+                </Grid>
             </TabItem>
             <TabItem Header="Accepted">
-                <ui:ListView Margin="0 10 0 0"
+                <Grid>
+                    <ui:ListView Margin="0 10 0 0"
                              MaxWidth="900"
                              ItemsSource="{Binding AcceptedInvoices}"
                              IsSelectionEnabled="False"
                              ScrollViewer.CanContentScroll="False">
-                    <ui:ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0 10 0 5">
-                                <StackPanel Orientation="Horizontal">
-                                    <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
+                        <ui:ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0 10 0 5">
+                                    <StackPanel Orientation="Horizontal">
+                                        <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
                                                       DisplayName="{Binding Vendor.Name}"
                                                       Width="30"></ui:PersonPicture>
-                                    <TextBlock Text="{Binding Vendor.Name, Mode=OneTime}"
+                                        <TextBlock Text="{Binding Vendor.Name, Mode=OneTime}"
                                                Margin="10 0 0 0"
                                                VerticalAlignment="Center"
                                                FontSize="18" />
-                                </StackPanel>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Created At: "
-                                                   VerticalAlignment="Center"
-                                                   FontWeight="Light"></TextBlock>
-                                        <TextBlock Text="{Binding CreatedAt}"
-                                                   VerticalAlignment="Center"
-                                                   FontWeight="Light"></TextBlock>
-                                    </StackPanel>
+                                        <ui:AppBarButton Icon="Delete"
+                                                         Label="Remove"
+                                                         HorizontalAlignment="Right"
+                                                         Grid.Column="2"
+                                                         Margin="650 0 0 0"
+                                                         CommandParameter="{Binding}"
+                                                         Command="{Binding Source={StaticResource OrderPageVM}, Path=CancelInvoice}" />
 
-                                    <StackPanel Orientation="Horizontal"
-                                                Margin="170 0 0 0"
-                                                Grid.Column="1"
+                                    </StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="280" />
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Horizontal" Margin="40 -25 0 0">
+                                            <TextBlock Text="Created At: "
+                                                   VerticalAlignment="Center"
+                                                   FontSize="15"
+                                                   FontWeight="Light"></TextBlock>
+                                            <TextBlock Text="{Binding CreatedAt}"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="14"
+                                                   FontWeight="Light"></TextBlock>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" Margin="30 5 0 0"
+                                                Grid.Column="2"
                                                 HorizontalAlignment="Center">
-                                        <TextBlock Text="Total: "
+                                            <TextBlock Text="Total: "
+                                                       FontSize="18"
                                                    VerticalAlignment="Center"
                                                    FontWeight="Light"></TextBlock>
-                                        <TextBlock Text="{Binding Value, StringFormat=C, ConverterCulture=vi-VN}"
+                                            <TextBlock Text="{Binding Value, StringFormat=C, ConverterCulture=vi-VN}"
+                                                       Margin="5 0 0 0"
                                                    FontWeight="Bold"
                                                    VerticalAlignment="Center"
-                                                   FontSize="20"
+                                                   FontSize="22"
                                                    Foreground="{DynamicResource SystemControlHighlightAccentBrush}"></TextBlock>
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="2">
-                                        <ui:AppBarButton Icon="Shop"
-                                                         Label="ReOrder"
-                                                         HorizontalAlignment="Right"
-                                                         CommandParameter="{Binding}"
-                                                         Command="{Binding Source={StaticResource OrderPageVM}, Path=ReOrderInvoice}" />
+                                        </StackPanel>
 
-                                    </StackPanel>
-                                </Grid>
+                                    </Grid>
 
 
 
-                                <StackPanel>
-                                    <Label Content="Products"
+                                    <StackPanel>
+                                        <Label Content="Products" Margin="40 -10 0 0"
+                                               FontSize="18"
                                            FontWeight="Light" />
-                                    <ItemsControl ItemsSource="{Binding InvoiceDetails}"
+                                        <ItemsControl ItemsSource="{Binding InvoiceDetails}"
                                                   Width="800"
-                                                  Margin="30 0 0 0"
+                                                  Margin="40 0 0 0"
                                                   HorizontalAlignment="Left">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Border BorderBrush="Gainsboro"
-                                                        BorderThickness="0,1,0,0">
-                                                    <StackPanel Orientation="Horizontal"
-                                                                Margin="0,10">
-                                                        <Image Source="{Binding Product.Image}"
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border BorderBrush="Gainsboro"
+                                                        BorderThickness="0,2,0,0">
+                                                        <StackPanel Orientation="Horizontal"
+                                                               Margin="0,10">
+                                                            <Image Source="{Binding Product.Image}"
                                                                Stretch="UniformToFill"
                                                                Width="80"
                                                                Height="80"
                                                                VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding Product.Name}"
+                                                            <TextBlock Text="{Binding Product.Name}"
                                                                    TextWrapping="Wrap"
                                                                    Width="250"
                                                                    Margin="10,0,5,0"
                                                                    VerticalAlignment="Center" />
 
-                                                        <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
-                                                                   VerticalAlignment="Center"
-                                                                   Margin="80 0 0 0"
+                                                            <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
+                                                                   VerticalAlignment="Center" Margin="0 0 0 0"
+                                                                   FontSize="20"
                                                                    TextAlignment="Center"
-                                                                   Width="160" />
-                                                        <Label VerticalAlignment="Center"
+                                                                   Width="150" />
+                                                            <Label VerticalAlignment="Center"
                                                                Width="20">X</Label>
-                                                        <ui:PersonPicture Margin="20 0 0 0"
+                                                            <ui:PersonPicture Margin="0 0 0 0"
                                                                           Initials="{Binding Quantity}"
                                                                           Width="30"></ui:PersonPicture>
-                                                    </StackPanel>
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
 
-                            </StackPanel>
-                        </DataTemplate>
-                    </ui:ListView.ItemTemplate>
-                </ui:ListView>
+                                                            <TextBlock Text="{Binding Cost, StringFormat=C, ConverterCulture=vi-VN}"
+                                                                   VerticalAlignment="Center" Margin="100 0 0 0"
+                                                                   TextAlignment="Center"
+                                                                   FontSize="20"
+                                                                   Width="150" />
+                                                        </StackPanel>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ui:ListView.ItemTemplate>
+                    </ui:ListView>
+                    <Image Source="{Binding ImageEmpty}" 
+                           Height="200"
+                           Width="200"
+                           Visibility="{Binding AcceptedInvoices.Count, Converter={StaticResource ListCountToVisibility},
+                           ConverterParameter=False}" />
+                </Grid>
             </TabItem>
 
             <TabItem Header="Refused">
-                <ui:ListView Margin="0 10 0 0"
+                <Grid>
+                    <ui:ListView Margin="0 10 0 0"
                              MaxWidth="900"
                              ItemsSource="{Binding RefusedInvoices}"
                              IsSelectionEnabled="False"
                              ScrollViewer.CanContentScroll="False">
-                    <ui:ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0 10 0 5">
-                                <StackPanel Orientation="Horizontal">
-                                    <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
+                        <ui:ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0 10 0 5">
+                                    <StackPanel Orientation="Horizontal">
+                                        <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
                                                       DisplayName="{Binding Vendor.Name}"
                                                       Width="30"></ui:PersonPicture>
-                                    <TextBlock Text="{Binding Vendor.Name, Mode=OneTime}"
+                                        <TextBlock Text="{Binding Vendor.Name, Mode=OneTime}"
                                                Margin="10 0 0 0"
                                                VerticalAlignment="Center"
                                                FontSize="18" />
-                                </StackPanel>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Created At: "
-                                                   VerticalAlignment="Center"
-                                                   FontWeight="Light"></TextBlock>
-                                        <TextBlock Text="{Binding CreatedAt}"
-                                                   VerticalAlignment="Center"
-                                                   FontWeight="Light"></TextBlock>
-                                    </StackPanel>
+                                        <ui:AppBarButton Icon="Delete"
+                                                         Label="Remove"
+                                                         HorizontalAlignment="Right"
+                                                         Grid.Column="2"
+                                                         Margin="650 0 0 0"
+                                                         CommandParameter="{Binding}"
+                                                         Command="{Binding Source={StaticResource OrderPageVM}, Path=CancelInvoice}" />
 
-                                    <StackPanel Orientation="Horizontal"
-                                                Margin="170 0 0 0"
-                                                Grid.Column="1"
+                                    </StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="280" />
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Horizontal" Margin="40 -25 0 0">
+                                            <TextBlock Text="Created At: "
+                                                   VerticalAlignment="Center"
+                                                   FontSize="15"
+                                                   FontWeight="Light"></TextBlock>
+                                            <TextBlock Text="{Binding CreatedAt}"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="14"
+                                                   FontWeight="Light"></TextBlock>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" Margin="30 5 0 0"
+                                                Grid.Column="2"
                                                 HorizontalAlignment="Center">
-                                        <TextBlock Text="Total: "
+                                            <TextBlock Text="Total: "
+                                                       FontSize="18"
                                                    VerticalAlignment="Center"
                                                    FontWeight="Light"></TextBlock>
-                                        <TextBlock Text="{Binding Value, StringFormat=C, ConverterCulture=vi-VN}"
+                                            <TextBlock Text="{Binding Value, StringFormat=C, ConverterCulture=vi-VN}"
+                                                       Margin="5 0 0 0"
                                                    FontWeight="Bold"
                                                    VerticalAlignment="Center"
-                                                   FontSize="20"
+                                                   FontSize="22"
                                                    Foreground="{DynamicResource SystemControlHighlightAccentBrush}"></TextBlock>
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="2">
-                                        <ui:AppBarButton Icon="Shop"
-                                                         Label="ReOrder"
-                                                         HorizontalAlignment="Right"
-                                                         CommandParameter="{Binding}"
-                                                         Command="{Binding Source={StaticResource OrderPageVM}, Path=ReOrderInvoice}" />
+                                        </StackPanel>
 
-                                    </StackPanel>
-                                </Grid>
+                                    </Grid>
 
 
 
-                                <StackPanel>
-                                    <Label Content="Products"
+                                    <StackPanel>
+                                        <Label Content="Products" Margin="40 -10 0 0"
+                                               FontSize="18"
                                            FontWeight="Light" />
-                                    <ItemsControl ItemsSource="{Binding InvoiceDetails}"
+                                        <ItemsControl ItemsSource="{Binding InvoiceDetails}"
                                                   Width="800"
-                                                  Margin="30 0 0 0"
+                                                  Margin="40 0 0 0"
                                                   HorizontalAlignment="Left">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Border BorderBrush="Gainsboro"
-                                                        BorderThickness="0,1,0,0">
-                                                    <StackPanel Orientation="Horizontal"
-                                                                Margin="0,10">
-                                                        <Image Source="{Binding Product.Image}"
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border BorderBrush="Gainsboro"
+                                                        BorderThickness="0,2,0,0">
+                                                        <StackPanel Orientation="Horizontal"
+                                                               Margin="0,10">
+                                                            <Image Source="{Binding Product.Image}"
                                                                Stretch="UniformToFill"
                                                                Width="80"
                                                                Height="80"
                                                                VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding Product.Name}"
+                                                            <TextBlock Text="{Binding Product.Name}"
                                                                    TextWrapping="Wrap"
                                                                    Width="250"
                                                                    Margin="10,0,5,0"
                                                                    VerticalAlignment="Center" />
 
-                                                        <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
-                                                                   VerticalAlignment="Center"
-                                                                   Margin="80 0 0 0"
+                                                            <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
+                                                                   VerticalAlignment="Center" Margin="0 0 0 0"
+                                                                   FontSize="20"
                                                                    TextAlignment="Center"
-                                                                   Width="160" />
-                                                        <Label VerticalAlignment="Center"
+                                                                   Width="150" />
+                                                            <Label VerticalAlignment="Center"
                                                                Width="20">X</Label>
-                                                        <ui:PersonPicture Margin="20 0 0 0"
+                                                            <ui:PersonPicture Margin="0 0 0 0"
                                                                           Initials="{Binding Quantity}"
                                                                           Width="30"></ui:PersonPicture>
-                                                    </StackPanel>
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
 
-                            </StackPanel>
-                        </DataTemplate>
-                    </ui:ListView.ItemTemplate>
-                </ui:ListView>
+                                                            <TextBlock Text="{Binding Cost, StringFormat=C, ConverterCulture=vi-VN}"
+                                                                   VerticalAlignment="Center" Margin="100 0 0 0"
+                                                                   TextAlignment="Center"
+                                                                   FontSize="20"
+                                                                   Width="150" />
+                                                        </StackPanel>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ui:ListView.ItemTemplate>
+                    </ui:ListView>
+                    <Image Source="{Binding ImageEmpty}" 
+                           Height="200"
+                           Width="200"
+                           Visibility="{Binding RefusedInvoices.Count, Converter={StaticResource ListCountToVisibility},
+                           ConverterParameter=False}" />
+                </Grid>
             </TabItem>
             <TabItem Header="Delivered">
-                <ui:ListView Margin="0 10 0 0"
+                <Grid>
+                    <ui:ListView Margin="0 10 0 0"
                              MaxWidth="900"
                              ItemsSource="{Binding DeliveredInvoices}"
                              IsSelectionEnabled="False"
                              ScrollViewer.CanContentScroll="False">
-                    <ui:ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0 10 0 5">
-                                <StackPanel Orientation="Horizontal">
-                                    <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
+                        <ui:ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0 10 0 5">
+                                    <StackPanel Orientation="Horizontal">
+                                        <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
                                                       DisplayName="{Binding Vendor.Name}"
                                                       Width="30"></ui:PersonPicture>
-                                    <TextBlock Text="{Binding Vendor.Name, Mode=OneTime}"
+                                        <TextBlock Text="{Binding Vendor.Name, Mode=OneTime}"
                                                Margin="10 0 0 0"
                                                VerticalAlignment="Center"
                                                FontSize="18" />
-                                </StackPanel>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Created At: "
-                                                   VerticalAlignment="Center"
-                                                   FontWeight="Light"></TextBlock>
-                                        <TextBlock Text="{Binding CreatedAt}"
-                                                   VerticalAlignment="Center"
-                                                   FontWeight="Light"></TextBlock>
-                                    </StackPanel>
+                                        <ui:AppBarButton Icon="Delete"
+                                                         Label="Remove"
+                                                         HorizontalAlignment="Right"
+                                                         Grid.Column="2"
+                                                         Margin="650 0 0 0"
+                                                         CommandParameter="{Binding}"
+                                                         Command="{Binding Source={StaticResource OrderPageVM}, Path=CancelInvoice}" />
 
-                                    <StackPanel Orientation="Horizontal"
-                                                Margin="170 0 0 0"
-                                                Grid.Column="1"
+                                    </StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="280" />
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Horizontal" Margin="40 -25 0 0">
+                                            <TextBlock Text="Created At: "
+                                                   VerticalAlignment="Center"
+                                                   FontSize="15"
+                                                   FontWeight="Light"></TextBlock>
+                                            <TextBlock Text="{Binding CreatedAt}"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="14"
+                                                   FontWeight="Light"></TextBlock>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" Margin="30 5 0 0"
+                                                Grid.Column="2"
                                                 HorizontalAlignment="Center">
-                                        <TextBlock Text="Total: "
+                                            <TextBlock Text="Total: "
+                                                       FontSize="18"
                                                    VerticalAlignment="Center"
                                                    FontWeight="Light"></TextBlock>
-                                        <TextBlock Text="{Binding Value, StringFormat=C, ConverterCulture=vi-VN}"
+                                            <TextBlock Text="{Binding Value, StringFormat=C, ConverterCulture=vi-VN}"
+                                                       Margin="5 0 0 0"
                                                    FontWeight="Bold"
                                                    VerticalAlignment="Center"
-                                                   FontSize="20"
+                                                   FontSize="22"
                                                    Foreground="{DynamicResource SystemControlHighlightAccentBrush}"></TextBlock>
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="2">
-                                        <ui:AppBarButton Icon="Shop"
-                                                         Label="ReOrder"
-                                                         HorizontalAlignment="Right"
-                                                         CommandParameter="{Binding}"
-                                                         Command="{Binding Source={StaticResource OrderPageVM}, Path=ReOrderInvoice}" />
+                                        </StackPanel>
 
-                                    </StackPanel>
-                                </Grid>
+                                    </Grid>
 
 
 
-                                <StackPanel>
-                                    <Label Content="Products"
+                                    <StackPanel>
+                                        <Label Content="Products" Margin="40 -10 0 0"
+                                               FontSize="18"
                                            FontWeight="Light" />
-                                    <ItemsControl ItemsSource="{Binding InvoiceDetails}"
+                                        <ItemsControl ItemsSource="{Binding InvoiceDetails}"
                                                   Width="800"
-                                                  Margin="30 0 0 0"
+                                                  Margin="40 0 0 0"
                                                   HorizontalAlignment="Left">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Border BorderBrush="Gainsboro"
-                                                        BorderThickness="0,1,0,0">
-                                                    <StackPanel Orientation="Horizontal"
-                                                                Margin="0,10">
-                                                        <Image Source="{Binding Product.Image}"
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border BorderBrush="Gainsboro"
+                                                        BorderThickness="0,2,0,0">
+                                                        <StackPanel Orientation="Horizontal"
+                                                               Margin="0,10">
+                                                            <Image Source="{Binding Product.Image}"
                                                                Stretch="UniformToFill"
                                                                Width="80"
                                                                Height="80"
                                                                VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding Product.Name}"
+                                                            <TextBlock Text="{Binding Product.Name}"
                                                                    TextWrapping="Wrap"
                                                                    Width="250"
                                                                    Margin="10,0,5,0"
                                                                    VerticalAlignment="Center" />
 
-                                                        <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
-                                                                   VerticalAlignment="Center"
-                                                                   Margin="80 0 0 0"
+                                                            <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
+                                                                   VerticalAlignment="Center" Margin="0 0 0 0"
+                                                                   FontSize="20"
                                                                    TextAlignment="Center"
-                                                                   Width="160" />
-                                                        <Label VerticalAlignment="Center"
+                                                                   Width="150" />
+                                                            <Label VerticalAlignment="Center"
                                                                Width="20">X</Label>
-                                                        <ui:PersonPicture Margin="20 0 0 0"
+                                                            <ui:PersonPicture Margin="0 0 0 0"
                                                                           Initials="{Binding Quantity}"
                                                                           Width="30"></ui:PersonPicture>
-                                                    </StackPanel>
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
 
-                            </StackPanel>
-                        </DataTemplate>
-                    </ui:ListView.ItemTemplate>
-                </ui:ListView>
+                                                            <TextBlock Text="{Binding Cost, StringFormat=C, ConverterCulture=vi-VN}"
+                                                                   VerticalAlignment="Center" Margin="100 0 0 0"
+                                                                   TextAlignment="Center"
+                                                                   FontSize="20"
+                                                                   Width="150" />
+                                                        </StackPanel>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ui:ListView.ItemTemplate>
+                    </ui:ListView>
+                    <Image Source="{Binding ImageEmpty}"
+                           Height="200"
+                           Width="200"
+                           Visibility="{Binding DeliveredInvoices.Count, Converter={StaticResource ListCountToVisibility},
+                           ConverterParameter=False}" />
+                </Grid>
             </TabItem>
             <TabItem Header="Canceled">
-                <ui:ListView Margin="0 10 0 0"
+                <Grid>
+                    <ui:ListView Margin="0 10 0 0"
                              MaxWidth="900"
                              ItemsSource="{Binding CanceledInvoices}"
                              IsSelectionEnabled="False"
                              ScrollViewer.CanContentScroll="False">
-                    <ui:ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0 10 0 5">
-                                <StackPanel Orientation="Horizontal">
-                                    <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
+                        <ui:ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0 10 0 5">
+                                    <StackPanel Orientation="Horizontal">
+                                        <ui:PersonPicture ProfilePicture="{Binding Vendor.Avatar}"
                                                       DisplayName="{Binding Vendor.Name}"
                                                       Width="30"></ui:PersonPicture>
-                                    <TextBlock Text="{Binding Vendor.Name, Mode=OneTime}"
+                                        <TextBlock Text="{Binding Vendor.Name, Mode=OneTime}"
                                                Margin="10 0 0 0"
                                                VerticalAlignment="Center"
                                                FontSize="18" />
-                                </StackPanel>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Created At: "
-                                                   VerticalAlignment="Center"
-                                                   FontWeight="Light"></TextBlock>
-                                        <TextBlock Text="{Binding CreatedAt}"
-                                                   VerticalAlignment="Center"
-                                                   FontWeight="Light"></TextBlock>
-                                    </StackPanel>
+                                        <ui:AppBarButton Icon="Delete"
+                                                         Label="Remove"
+                                                         HorizontalAlignment="Right"
+                                                         Grid.Column="2"
+                                                         Margin="650 0 0 0"
+                                                         CommandParameter="{Binding}"
+                                                         Command="{Binding Source={StaticResource OrderPageVM}, Path=CancelInvoice}" />
 
-                                    <StackPanel Orientation="Horizontal"
-                                                Margin="170 0 0 0"
-                                                Grid.Column="1"
+                                    </StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="280" />
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Horizontal" Margin="40 -25 0 0">
+                                            <TextBlock Text="Created At: "
+                                                   VerticalAlignment="Center"
+                                                   FontSize="15"
+                                                   FontWeight="Light"></TextBlock>
+                                            <TextBlock Text="{Binding CreatedAt}"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="14"
+                                                   FontWeight="Light"></TextBlock>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" Margin="30 5 0 0"
+                                                Grid.Column="2"
                                                 HorizontalAlignment="Center">
-                                        <TextBlock Text="Total: "
+                                            <TextBlock Text="Total: "
+                                                       FontSize="18"
                                                    VerticalAlignment="Center"
                                                    FontWeight="Light"></TextBlock>
-                                        <TextBlock Text="{Binding Value, StringFormat=C, ConverterCulture=vi-VN}"
+                                            <TextBlock Text="{Binding Value, StringFormat=C, ConverterCulture=vi-VN}"
+                                                       Margin="5 0 0 0"
                                                    FontWeight="Bold"
                                                    VerticalAlignment="Center"
-                                                   FontSize="20"
+                                                   FontSize="22"
                                                    Foreground="{DynamicResource SystemControlHighlightAccentBrush}"></TextBlock>
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="2">
-                                        <ui:AppBarButton Icon="Shop"
-                                                         Label="ReOrder"
-                                                         HorizontalAlignment="Right"
-                                                         CommandParameter="{Binding}"
-                                                         Command="{Binding Source={StaticResource OrderPageVM}, Path=ReOrderInvoice}" />
+                                        </StackPanel>
 
-                                    </StackPanel>
-                                </Grid>
+                                    </Grid>
 
 
 
-                                <StackPanel>
-                                    <Label Content="Products"
+                                    <StackPanel>
+                                        <Label Content="Products" Margin="40 -10 0 0"
+                                               FontSize="18"
                                            FontWeight="Light" />
-                                    <ItemsControl ItemsSource="{Binding InvoiceDetails}"
+                                        <ItemsControl ItemsSource="{Binding InvoiceDetails}"
                                                   Width="800"
-                                                  Margin="30 0 0 0"
+                                                  Margin="40 0 0 0"
                                                   HorizontalAlignment="Left">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Border BorderBrush="Gainsboro"
-                                                        BorderThickness="0,1,0,0">
-                                                    <StackPanel Orientation="Horizontal"
-                                                                Margin="0,10">
-                                                        <Image Source="{Binding Product.Image}"
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border BorderBrush="Gainsboro"
+                                                        BorderThickness="0,2,0,0">
+                                                        <StackPanel Orientation="Horizontal"
+                                                               Margin="0,10">
+                                                            <Image Source="{Binding Product.Image}"
                                                                Stretch="UniformToFill"
                                                                Width="80"
                                                                Height="80"
                                                                VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding Product.Name}"
+                                                            <TextBlock Text="{Binding Product.Name}"
                                                                    TextWrapping="Wrap"
                                                                    Width="250"
                                                                    Margin="10,0,5,0"
                                                                    VerticalAlignment="Center" />
 
-                                                        <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
-                                                                   VerticalAlignment="Center"
-                                                                   Margin="80 0 0 0"
+                                                            <TextBlock Text="{Binding Product.Price, StringFormat=C, ConverterCulture=vi-VN}"
+                                                                   VerticalAlignment="Center" Margin="0 0 0 0"
+                                                                   FontSize="20"
                                                                    TextAlignment="Center"
-                                                                   Width="160" />
-                                                        <Label VerticalAlignment="Center"
+                                                                   Width="150" />
+                                                            <Label VerticalAlignment="Center"
                                                                Width="20">X</Label>
-                                                        <ui:PersonPicture Margin="20 0 0 0"
+                                                            <ui:PersonPicture Margin="0 0 0 0"
                                                                           Initials="{Binding Quantity}"
                                                                           Width="30"></ui:PersonPicture>
-                                                    </StackPanel>
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
 
-                            </StackPanel>
-                        </DataTemplate>
-                    </ui:ListView.ItemTemplate>
-                </ui:ListView>
+                                                            <TextBlock Text="{Binding Cost, StringFormat=C, ConverterCulture=vi-VN}"
+                                                                   VerticalAlignment="Center" Margin="100 0 0 0"
+                                                                   TextAlignment="Center"
+                                                                   FontSize="20"
+                                                                   Width="150" />
+                                                        </StackPanel>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ui:ListView.ItemTemplate>
+                    </ui:ListView>
+                    <Image Source="{Binding ImageEmpty}" 
+                           Height="200"
+                           Width="200"
+                           Visibility="{Binding CanceledInvoices.Count, Converter={StaticResource ListCountToVisibility},
+                           ConverterParameter=False}" />
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

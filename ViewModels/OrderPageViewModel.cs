@@ -42,7 +42,7 @@ namespace GoninDigital.ViewModels
             get { return refusedInvoices; }
             set { refusedInvoices = value; OnPropertyChanged(); }
         }
-
+        public string ImageEmpty { get; set; }
         public ICommand CancelInvoice { get; set; }
         public ICommand ReOrderInvoice { get; set; }
 
@@ -77,6 +77,7 @@ namespace GoninDigital.ViewModels
                     db.SaveChanges();
                 }
             });
+            ImageEmpty = "/Resources/Images/NoOrderYet.jpg";
         }
 
         public void OnNavigatedTo()
@@ -91,7 +92,7 @@ namespace GoninDigital.ViewModels
                 var userInvoices = db.Invoices.Include(o => o.Customer)
                                               .Include(o => o.Vendor)
                                               .Include(o => o.InvoiceDetails).ThenInclude(o => o.Product)
-                                              .Where(o => o.Customer.UserName == Settings.Default.usrname)
+                                              .Where(o => o.Customer.Id==4)
                                               .ToList();
                 CreatedInvoices = new ObservableCollection<Invoice>(userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.CREATED));
                 AcceptedInvoices = new ObservableCollection<Invoice>(userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.ACCEPTED));
