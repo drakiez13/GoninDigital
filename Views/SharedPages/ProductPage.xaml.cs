@@ -154,6 +154,7 @@ namespace GoninDigital.Views.SharedPages
                     var cur_item = context.Products.FirstOrDefault(x => x.Id == ProductInfo.Id);
                     if (usr_rating == default) cur_item.NRating++;
                     cur_item.Rating = sum/cur_item.NRating;
+                    context.Products.Update(cur_item);
                     context.SaveChanges();
                 }
                 else
