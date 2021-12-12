@@ -33,6 +33,15 @@ namespace GoninDigital.ViewModels
             get { return selectedVendors; }
             set { selectedVendors = value; OnPropertyChanged(); }
         }
+        private string searchName;
+        public string SearchName
+        {
+            get { return searchName; }
+            set 
+            { 
+                searchName = value; OnPropertyChanged();
+            }
+        }
         public ICommand DeleteCommand { get; set; }
         public ICommand RemoveCommand { get; set; }
         public ICommand ShowVendorCommand { get; set; }
@@ -46,8 +55,6 @@ namespace GoninDigital.ViewModels
             SelectedVendors = new ObservableCollection<Vendor>();
             using (var db = new GoninDigitalDBContext())
             {
-                db.Users.First(x => x.Id == 31).TypeId = (int)Utils.Constants.UserType.VENDOR;
-                db.SaveChanges();
                 L_Shop = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.ACTIVE));
                 L_ShopNew = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.REQUEST));
             }
@@ -71,6 +78,7 @@ namespace GoninDigital.ViewModels
             {
                 DeleteExec();
             });
+            SearchName = "";
         }
         #endregion
         #region Private Methods
@@ -142,6 +150,31 @@ namespace GoninDigital.ViewModels
                 db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = (byte)Utils.Constants.ApprovalStatus.CLOSED;
                 db.Users.First(x => x.Id == vendor.OwnerId).TypeId = (int)Utils.Constants.UserType.CUSTOMER;
                 db.SaveChanges();
+            }
+        }
+        public void SearchVendor()
+        {
+            string s = SearchName.ToLower();
+            if(SearchName!="")
+            {
+                int count = 0;
+                while(count<L_Shop.Count())
+                {
+                    if (!L_Shop[count].Name.ToLower().Contains(s))
+                        L_Shop.RemoveAt(count);
+                    else
+                        count += 1;
+                }
+            }
+        }
+        public void SearchChanged()
+        {
+            if (SearchName=="")
+            {
+                using (var db= new GoninDigitalDBContext())
+                {
+                    L_Shop = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.ACTIVE));
+                }
             }
         }
         #endregion

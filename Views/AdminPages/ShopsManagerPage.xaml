@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:GoninDigital.Views.AdminPages"
+      xmlns:local="clr-namespace:GoninDigital.Views.AdminPages" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{StaticResource ManageShopPageVM}"
@@ -24,7 +24,11 @@
                                    AutomationProperties.Name="Search"
                                    Width="300"
                                    HorizontalAlignment="Left"
-                                   Margin="20"/>
+                                   Margin="20"
+                                   Text="{Binding SearchName, Mode=TwoWay}"
+                                   TextChanged="AutoSuggestBox_TextChanged"
+                                   QuerySubmitted="AutoSuggestBox_QuerySubmitted">
+                </ui:AutoSuggestBox>
                 <Button Content="Delete" 
                         Margin="5"
                         Command="{Binding DeleteCommand}"/>

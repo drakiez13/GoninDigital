@@ -33,5 +33,15 @@ namespace GoninDigital.Views.AdminPages
 
             (DataContext as ManageShopPageViewModel).SelectedVendors = vendors.Cast<Vendor>();
         }
+
+        private void AutoSuggestBox_QuerySubmitted(ModernWpf.Controls.AutoSuggestBox sender, ModernWpf.Controls.AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            (DataContext as ManageShopPageViewModel).SearchVendor();
+        }
+
+        private void AutoSuggestBox_TextChanged(ModernWpf.Controls.AutoSuggestBox sender, ModernWpf.Controls.AutoSuggestBoxTextChangedEventArgs args)
+        {
+            (DataContext as ManageShopPageViewModel).SearchChanged();
+        }
     }
 }
