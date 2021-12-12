@@ -18,13 +18,13 @@ using ModernWpf.Controls;
 
 namespace GoninDigital.ViewModels
 {
-    class ManageShopPageViewModel:BaseViewModel
+    class ManageShopPageViewModel : BaseViewModel
     {
         #region Properties
         private ObservableCollection<Vendor> l_Shop;
         public ObservableCollection<Vendor> L_Shop { get { return l_Shop; } set { l_Shop = value; OnPropertyChanged(); } }
         private ObservableCollection<Vendor> l_ShopNew;
-        public ObservableCollection<Vendor> L_ShopNew { get { return l_ShopNew; } set { l_ShopNew= value; OnPropertyChanged(); } }
+        public ObservableCollection<Vendor> L_ShopNew { get { return l_ShopNew; } set { l_ShopNew = value; OnPropertyChanged(); } }
         private Vendor _SelectedItem;
         public Vendor SelectedItem { get { return _SelectedItem; } set { _SelectedItem = value; OnPropertyChanged(); } }
         private IEnumerable<Vendor> selectedVendors;
@@ -43,11 +43,11 @@ namespace GoninDigital.ViewModels
         #region Constructor
         public ManageShopPageViewModel()
         {
-            SelectedVendors=new ObservableCollection<Vendor>();
+            SelectedVendors = new ObservableCollection<Vendor>();
             using (var db = new GoninDigitalDBContext())
             {
-                L_Shop = new ObservableCollection<Vendor>(db.Vendors.Where(x => x.ApprovalStatus == 1));
-                L_ShopNew = new ObservableCollection<Vendor>(db.Vendors.Where(x => x.ApprovalStatus == 0));
+                L_Shop = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.ACTIVE));
+                L_ShopNew = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.REQUEST));
             }
             RemoveCommand = new RelayCommand<Vendor>(o => true,
                vendor => { RemoveExec(vendor); });
@@ -77,7 +77,7 @@ namespace GoninDigital.ViewModels
             L_ShopNew.Remove(vendor);
             using (var db = new GoninDigitalDBContext())
             {
-                db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = 2;
+                db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = (byte)Utils.Constants.ApprovalStatus.CLOSED;
                 db.SaveChanges();
             }
         }
@@ -93,20 +93,20 @@ namespace GoninDigital.ViewModels
         }
         private void RemoveSelectionsExec(IEnumerable<Vendor> selectedVendors)
         {
-            
+
             using (var db = new GoninDigitalDBContext())
             {
-                foreach(Vendor vendor in selectedVendors.ToList())
+                foreach (Vendor vendor in selectedVendors.ToList())
                 {
                     L_ShopNew.Remove(vendor);
-                    db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = 2;
+                    db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = (byte)Utils.Constants.ApprovalStatus.CLOSED;
                 }
                 db.SaveChanges();
             }
         }
         private void AcceptSelectionsExec(IEnumerable<Vendor> selectedVendors)
         {
-            if (selectedVendors!=null)
+            if (selectedVendors != null)
             {
                 using (var db = new GoninDigitalDBContext())
                 {
@@ -126,10 +126,10 @@ namespace GoninDigital.ViewModels
             {
                 var vendor = db.Vendors.First(x => x.Id == SelectedItem.Id);
                 L_Shop.Remove(vendor);
-                db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = 2;
+                db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = (byte)Utils.Constants.ApprovalStatus.CLOSED;
                 db.SaveChanges();
             }
         }
-#endregion
+        #endregion
     }
 }
