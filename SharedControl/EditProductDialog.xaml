@@ -13,7 +13,7 @@
                 <StackPanel Orientation="Horizontal">
                     <ui:PersonPicture VerticalAlignment="Top"
                                       Margin="20 0 0 0"
-                                      ProfilePicture="{Binding SelectedItem.Image}"
+                                      ProfilePicture="{Binding ProductClone.Image}"
                                       Height="80"
                                       Width="80">
 
@@ -32,40 +32,39 @@
                     <StackPanel Grid.Column="0 " Margin="5">
                         
                         <TextBox ui:ControlHelper.Header="Product Name"
-                                 Text="{Binding SelectedItem.Name}"
+                             Text="{Binding ProductClone.Name}"
                                   />
 
                         <TextBox ui:ControlHelper.Header="Origin"
-                                 Text="{Binding SelectedItem.Origin}" />
+                             Text="{Binding ProductClone.Origin}" />
 
                         <TextBox ui:ControlHelper.Header="Origin Price"
-                                 Text="{Binding SelectedItem.OriginPrice}" />
+                             Text="{Binding ProductClone.OriginPrice}" />
 
                         <TextBox ui:ControlHelper.Header="Sale off Price"
-                                 Text="{Binding SelectedItem.Price}" />
+                             Text="{Binding ProductClone.Price}" />
 
                         <TextBox ui:ControlHelper.Header="Descirption"
-                                 
-                                 Text="{Binding SelectedItem.Description}" />
+                             Text="{Binding ProductClone.Description}" />
                     
                 </StackPanel>
                     <StackPanel Grid.Column="1" Margin="5">
 
                         <TextBox ui:ControlHelper.Header="Category Name"
-                                 Text="{Binding SelectedItem.Category.Name}"
+                             Text="{Binding ProductClone.Category.Name}"
                                  />
 
                         <TextBox ui:ControlHelper.Header="Brand Name"
-                                 Text="{Binding SelectedItem.Brand.Name}" />
+                             Text="{Binding ProductClone.Brand.Name}" />
 
                         <TextBox ui:ControlHelper.Header="Available"
-                                 Text="{Binding SelectedItem.Available}" />
+                             Text="{Binding ProductClone.Available}" />
 
                         <TextBox ui:ControlHelper.Header="New"
-                                 Text="{Binding SelectedItem.New}" />
+                             Text="{Binding ProductClone.New}" />
 
-                        <TextBox ui:ControlHelper.Header="Details" 
-                                 Text="{Binding SelectedItem.Detail}" />
+                        <TextBox ui:ControlHelper.Header="Details"
+                             Text="{Binding ProductClone.Detail}" />
                     
                 </StackPanel>
                 </Grid>

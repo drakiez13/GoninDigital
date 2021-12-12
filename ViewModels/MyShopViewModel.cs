@@ -85,6 +85,12 @@ namespace GoninDigital.ViewModels
             get { return vendorName; }
             set { vendorName = value; OnPropertyChanged(); }
         }
+        private Product productClone;
+        public Product ProductClone
+        {
+            get { return productClone; }
+            set { productClone = value; OnPropertyChanged(); }
+        }
 
         public int OnPrimaryButtonClick { get; private set; }
         public int PrimaryButtonClick { get; private set; }
@@ -123,7 +129,8 @@ namespace GoninDigital.ViewModels
         public ICommand EditCommand { get; set; }
         public void EditCommandExec(object o)
         {
-            
+            productClone = selectedItem;
+
             var dialog = new ContentDialog
             {
                 Content = new EditProductDialog(),
@@ -131,8 +138,9 @@ namespace GoninDigital.ViewModels
                 Title = "Edit Product",
                 PrimaryButtonText = "Change",
                 CloseButtonText = "Cancel",
-
+                
                 PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { EditBtnExec(); }),
+                CloseButtonCommand = new RelayCommand<object>((p) => true, (p) => { CloseBtnExec(); }),
             };
             dialog.ShowAsync();
         }
@@ -263,26 +271,7 @@ namespace GoninDigital.ViewModels
                 }
             }
         }
-        public MyShopViewModel()
-        {
-            
-            EditCommand = new RelayCommand<Product>(o => true, o => EditCommandExec(o));
-            RemoveCommand = new RelayCommand<Product>(o => true, o => RemoveCommandExec(o));
-            ImageEditCommand = new RelayCommand<Product>(o => true, o => ImageEditCommandExec(o));
-            UpgradeCommand = new RelayCommand<object>((p) => true, (p) => { UpgradeCommandExec(); });
-            EditCoverPhotoCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { EditCoverPhotoExec(); });
-            EditAvatarCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { EditAvatarExec(); });
-            ResetVendorInfoCommand = new RelayCommand<object>((p) => true, (p) => { ResetVendorInfoExec(); });
-            SaveVendorInfoCommand = new RelayCommand<object>((p) =>
-            {
-                if (string.IsNullOrEmpty(VendorName))
-                {
-                    return false;
-                }
-                
-                return true;
-            }, (p) => { SaveVendorConfirm(); });
-        }
+        
         public async void EditAvatarExec()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -329,11 +318,16 @@ namespace GoninDigital.ViewModels
             }
 
         }
+        public void CloseBtnExec()
+        {
+
+        }
         public void EditBtnExec()
         {
             
             using (var db = new GoninDigitalDBContext())
             {
+                selectedItem = productClone;
                 db.Products.Update(selectedItem);
                 db.SaveChanges();
             }
@@ -355,5 +349,44 @@ namespace GoninDigital.ViewModels
                 db.SaveChanges();
             }
         }
+        
+        public ICommand AddCommand { get; set; }
+        public void AddCommandExec(object o)
+        {
+
+            var dialog = new ContentDialog
+            {
+                Content = new EditProductDialog(),
+
+                Title = "Edit Product",
+                PrimaryButtonText = "Change",
+                CloseButtonText = "Cancel",
+
+                PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => {  }),
+            };
+            dialog.ShowAsync();
+        }
+        public MyShopViewModel()
+        {
+            productClone = new Product();
+            
+            EditCommand = new RelayCommand<Product>(o => true, o => EditCommandExec(o));
+            RemoveCommand = new RelayCommand<Product>(o => true, o => RemoveCommandExec(o));
+            ImageEditCommand = new RelayCommand<Product>(o => true, o => ImageEditCommandExec(o));
+            UpgradeCommand = new RelayCommand<object>((p) => true, (p) => { UpgradeCommandExec(); });
+            EditCoverPhotoCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { EditCoverPhotoExec(); });
+            EditAvatarCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { EditAvatarExec(); });
+            ResetVendorInfoCommand = new RelayCommand<object>((p) => true, (p) => { ResetVendorInfoExec(); });
+            SaveVendorInfoCommand = new RelayCommand<object>((p) =>
+            {
+                if (string.IsNullOrEmpty(VendorName))
+                {
+                    return false;
+                }
+
+                return true;
+            }, (p) => { SaveVendorConfirm(); });
+        }
+
     }
 }
