@@ -15,6 +15,7 @@ using GoninDigital.Properties;
 using System.Windows.Media.Imaging;
 using ListViewItem = ModernWpf.Controls.ListViewItem;
 using GoninDigital.Utils;
+using Microsoft.EntityFrameworkCore;
 
 namespace GoninDigital.Views
 {
@@ -93,8 +94,7 @@ namespace GoninDigital.Views
                 if(selectedItemTag != null)
                 {
                     string pageName = "GoninDigital.Views.DashBoardPages." + selectedItemTag;
-                    Page togo;
-                    if (!pages.TryGetValue(pageName, out togo))
+                    if (!pages.TryGetValue(pageName, out Page togo))
                     {
                         Type pageType = typeof(HomePage).Assembly.GetType(pageName);
                         togo = (Page)Activator.CreateInstance(pageType);
@@ -115,7 +115,7 @@ namespace GoninDigital.Views
             {
                 contentFrame.GoBack();
             }
-            catch (Exception ex)
+            catch
             {
                 contentFrame.RemoveBackEntry();
                 contentFrame.GoBack();
@@ -250,7 +250,9 @@ namespace GoninDigital.Views
                 {
                     using (var db = new GoninDigitalDBContext())
                     {
-                        var product = db.Products.First(o => o.Id == searchItem.Id);
+                        var product = db.Products
+                            .Include(o => o.Vendor)
+                            .First(o => o.Id == searchItem.Id);
                         RootFrame.Navigate(new ProductPage(product));
                     }
                 }

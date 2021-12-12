@@ -22,11 +22,6 @@
         <TabControl Grid.Row="1"
                     Margin="10 0 0 0"
                     Style="{StaticResource TabControlPivotStyle}">
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock>OK</TextBlock>
-                </DataTemplate>
-            </TabControl.ItemTemplate>
             <TabItem Header="Created">
                 <ui:ListView Margin="0 10 0 0"
                              MaxWidth="900"
@@ -74,7 +69,7 @@
                                     </StackPanel>
                                     <StackPanel Grid.Column="2">
                                         <ui:AppBarButton Icon="Delete"
-                                                         Label="Remove"
+                                                         Label="Cancel"
                                                          HorizontalAlignment="Right"
                                                          CommandParameter="{Binding}"
                                                          Command="{Binding Source={StaticResource OrderPageVM}, Path=CancelInvoice}" />
@@ -177,12 +172,13 @@
                                                    Foreground="{DynamicResource SystemControlHighlightAccentBrush}"></TextBlock>
                                     </StackPanel>
                                     <StackPanel Grid.Column="2">
-                                        <ui:AppBarButton Icon="Shop"
-                                                         Label="ReOrder"
+                                        <ui:AppBarButton Icon="Delete"
+                                                         Label="Cancel"
+                                                         ToolTip="You cannot cancel the order now. Contact vendor for helping."
+                                                         IsEnabled="False"
                                                          HorizontalAlignment="Right"
                                                          CommandParameter="{Binding}"
                                                          Command="{Binding Source={StaticResource OrderPageVM}, Path=ReOrderInvoice}" />
-
                                     </StackPanel>
                                 </Grid>
 
