@@ -36,6 +36,7 @@ namespace GoninDigital.Models
         public int NRating { get; set; }
         public int Available { get; set; }
         public byte? New { get; set; }
+        public int Buy { get; set; }
 
         public virtual Brand Brand { get; set; }
         public virtual ProductCategory Category { get; set; }

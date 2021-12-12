@@ -290,6 +290,8 @@ namespace GoninDigital.Models
 
                 entity.Property(e => e.BrandId).HasColumnName("brand_id");
 
+                entity.Property(e => e.Buy).HasColumnName("buy");
+
                 entity.Property(e => e.CategoryId).HasColumnName("category_id");
 
                 entity.Property(e => e.CreatedAt)
