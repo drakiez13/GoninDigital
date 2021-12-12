@@ -137,17 +137,18 @@
                         <DockPanel HorizontalAlignment="Stretch" Height="60" >
                             <Image Source="{Binding Avatar}"
                                            Stretch="UniformToFill"
-                                           Width="70"
-                                           Height="40"
+                                           Width="40"
+                                           Height="30" 
+                                           Margin="0 0 0 0"
                                            VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Name}"
                                                TextWrapping="Wrap"
                                                Width="100"
-                                               Margin="10,10,0,10"
+                                               Margin="20,10,0,10"
                                                VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Description}"
                                                TextWrapping="Wrap"
-                                               Width="150"
+                                               Width="170"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Address}"
