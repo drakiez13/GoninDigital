@@ -14,7 +14,12 @@ namespace GoninDigital.Utils
             VENDOR = 2,
             CUSTOMER = 3,
         }
-
+        public enum ApprovalStatus
+        {
+            APPROVED = 1,
+            REJECTED = 2, //EQUAL TO REMOVE
+            WAITING = 0,
+        }
         public enum GenderType
         {
             NOTKNOWN = 0,

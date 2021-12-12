@@ -52,7 +52,7 @@ namespace GoninDigital.ViewModels
             RemoveCommand = new RelayCommand<Vendor>(o => true,
                vendor => { RemoveExec(vendor); });
             ShowVendorCommand = new RelayCommand<Vendor>(o => true,
-                vendor => DashBoard.RootFrame.Navigate(new MyShopPage(vendor.Id)));
+                vendor => DashBoard.RootFrame.Navigate(new ShopPage(vendor.Id)));
             AcceptCommand = new RelayCommand<Vendor>(o => true, vendor => { AcceptExec(vendor); });
             RemoveSelectionsCommand = new RelayCommand<Vendor>(o => true, SelectedVendors =>
             { RemoveSelectionsExec(selectedVendors); });

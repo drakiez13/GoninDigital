@@ -26,20 +26,14 @@ namespace GoninDigital.ViewModels
             get { return hasVendor; }
             set { hasVendor = value;OnPropertyChanged(); }
         }
-        private string visibilityOwner;
-        public string VisibilityOwner
+
+        private bool isUpgrade;
+        public bool IsUpgrade
         {
 
-            get { return visibilityOwner; }
-            set { visibilityOwner = value; OnPropertyChanged(); }
+            get { return isUpgrade; }
+            set { isUpgrade = value; OnPropertyChanged(); }
         }
-        private bool isOwner;
-        public bool IsOwner
-        {
-            get { return isOwner; }
-            set { isOwner = value; OnPropertyChanged(); }
-        }
-
         private Product selectedItem = null;
         public Product SelectedItem
         {
@@ -103,25 +97,32 @@ namespace GoninDigital.ViewModels
         {
             using (var db = new GoninDigitalDBContext())
             {
-                try
+                if (db.Users.First(o => o.UserName == Settings.Default.usrname).TypeId == (int)Constants.UserType.CUSTOMER)
                 {
-                    
+                    HasVendor = false;
+                    Vendor = db.Vendors.Include(o => o.Owner)
+                            .Include(o => o.Products)
+                            .First(o => o.Owner.UserName == Settings.Default.usrname);
+                    if (Vendor == null)
+                    {
+                        IsUpgrade = false;
+                    }
+                    else
+                    {
+                        IsUpgrade = true;
+                    }
+                }
+                else
+                {
                     Vendor = db.Vendors.Include(o => o.Owner)
                         .Include(o => o.Products)
-                        .First(o => o.Owner.UserName == Settings.Default.usrname );
+                        .First(o => o.Owner.UserName == Settings.Default.usrname);
                     db.ProductCategories.ToList();
-                    Products = new ObservableCollection<Product>(Vendor.Products.Where(o=>o.StatusId==(int)Constants.ProductStatus.ACCEPTED).ToList());
+                    Products = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).ToList());
                     ProductBestSeller = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).Take(10).ToList());
                     ProductSpecial = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).Take(5).ToList());
                     HasVendor = true;
                     VendorName = Vendor.Name;
-                    VisibilityOwner = "Visible";
-                    
-                }
-                catch
-                {
-                   
-                    HasVendor = false;
                 }
             }
         }
@@ -234,21 +235,6 @@ namespace GoninDigital.ViewModels
                 }
             }
         }
-        public void OnNavigatedTo()
-        {
-            if(isOwner)
-            {
-                
-                Thread thread = new Thread(InitVendor);
-                thread.Start();
-            }
-            else
-            {
-                
-                HasVendor = true;
-            }
-            
-        }
         public ICommand ImageEditCommand { get; set; }
         public async void ImageEditCommandExec(object o)
         {
@@ -339,7 +325,7 @@ namespace GoninDigital.ViewModels
             using (var db = new GoninDigitalDBContext())
             {
                 int userId = db.Users.First(u => u.UserName == Settings.Default.usrname).Id;
-                Vendor newVendor = new Vendor() { Name = NewVendorName, OwnerId = userId, ApprovalStatus=0};
+                Vendor newVendor = new Vendor() { Name = NewVendorName, OwnerId = userId, ApprovalStatus= (int)Constants.ApprovalStatus.WAITING};
                 User user = db.Users.First(o => o.UserName == Settings.Default.usrname);
                 user.TypeId = (int)Constants.UserType.VENDOR;
                 db.Vendors.Add(newVendor);
@@ -368,8 +354,38 @@ namespace GoninDigital.ViewModels
         }
         public MyShopViewModel()
         {
+
+            using (var db = new GoninDigitalDBContext())
+            {
+                if (db.Users.First(o => o.UserName == Settings.Default.usrname).TypeId == (int)Constants.UserType.CUSTOMER)
+                {
+                    HasVendor = false;
+                    try
+                    {
+                        Vendor = db.Vendors.Include(o => o.Owner)
+                            .Include(o => o.Products)
+                            .First(o => o.Owner.UserName == Settings.Default.usrname);
+                        IsUpgrade = true;
+                    }
+                    catch
+                    {
+                        IsUpgrade = false;
+                    }
+                }
+                else
+                {
+                    Vendor = db.Vendors.Include(o => o.Owner)
+                        .Include(o => o.Products)
+                        .First(o => o.Owner.UserName == Settings.Default.usrname);
+                    db.ProductCategories.ToList();
+                    Products = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).ToList());
+                    ProductBestSeller = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).Take(10).ToList());
+                    ProductSpecial = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).Take(5).ToList());
+                    HasVendor = true;
+                    VendorName = Vendor.Name;
+                }
+            }
             productClone = new Product();
-            
             EditCommand = new RelayCommand<Product>(o => true, o => EditCommandExec(o));
             RemoveCommand = new RelayCommand<Product>(o => true, o => RemoveCommandExec(o));
             ImageEditCommand = new RelayCommand<Product>(o => true, o => ImageEditCommandExec(o));
