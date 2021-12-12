@@ -25,6 +25,8 @@ namespace GoninDigital.ViewModels
         public ObservableCollection<Vendor> L_Shop { get { return l_Shop; } set { l_Shop = value; OnPropertyChanged(); } }
         private ObservableCollection<Vendor> l_ShopNew;
         public ObservableCollection<Vendor> L_ShopNew { get { return l_ShopNew; } set { l_ShopNew = value; OnPropertyChanged(); } }
+        private ObservableCollection<Vendor> l_ShopClosed;
+        public ObservableCollection<Vendor> L_ShopClosed { get { return l_ShopClosed; } set { l_ShopClosed = value; OnPropertyChanged(); } }
         private Vendor _SelectedItem;
         public Vendor SelectedItem { get { return _SelectedItem; } set { _SelectedItem = value; OnPropertyChanged(); } }
         private IEnumerable<Vendor> selectedVendors;
@@ -58,10 +60,9 @@ namespace GoninDigital.ViewModels
                 L_Shop = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.ACTIVE));
                 L_ShopNew = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.REQUEST));
             }
+            L_ShopClosed = new ObservableCollection<Vendor>();
             RemoveCommand = new RelayCommand<Vendor>(o => true,
                vendor => { RemoveExec(vendor); });
-            ShowVendorCommand = new RelayCommand<Vendor>(o => true,
-                vendor => DashBoard.RootFrame.Navigate(new MyShopPage(vendor.Id)));
             AcceptCommand = new RelayCommand<Vendor>(o => true, vendor => { AcceptExec(vendor); });
             RemoveSelectionsCommand = new RelayCommand<Vendor>(o => true, SelectedVendors =>
             { RemoveSelectionsExec(selectedVendors); });
@@ -186,9 +187,20 @@ namespace GoninDigital.ViewModels
             using (var db = new GoninDigitalDBContext())
             {
                 if (flag)
-                    L_Shop = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus != (byte)Utils.Constants.ApprovalStatus.REQUEST));
+                { 
+                    L_Shop = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus != (byte)Utils.Constants.ApprovalStatus.REQUEST)); 
+                }
                 else
                     L_Shop = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.ACTIVE));
+            }
+        }
+        public void StrikeThrough()
+        {
+            L_ShopClosed = new ObservableCollection<Vendor>();
+            foreach(Vendor vendor in L_Shop)
+            {
+                if (vendor.ApprovalStatus == 2)
+                    L_ShopClosed.Add(vendor);
             }
         }
         #endregion

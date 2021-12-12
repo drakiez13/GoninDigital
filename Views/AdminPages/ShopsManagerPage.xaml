@@ -22,7 +22,7 @@
             <StackPanel Orientation="Horizontal">
                 <ui:AutoSuggestBox QueryIcon="Find" 
                                    AutomationProperties.Name="Search"
-                                   Width="300"
+                                   Width="350"
                                    HorizontalAlignment="Left"
                                    Margin="20"
                                    Text="{Binding SearchName, Mode=TwoWay}"
@@ -54,30 +54,45 @@
                   RowDetailsVisibilityMode="Collapsed"
                   VirtualizingPanel.VirtualizationMode="Recycling"
                   VirtualizingPanel.IsVirtualizingWhenGrouping="True" 
-                  AutoGenerateColumns="False"  >
+                  AutoGenerateColumns="False"
+                  IsReadOnly="False" >
+            <DataGrid.Resources>
+                <Style x:Key="DefaultStyle" TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ApprovalStatus, Converter={StaticResource ApprovalStatustoVisibility}}" Value="False">
+                            <Setter Property="TextDecorations" Value="Strikethrough"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Header="Id"
                     MinWidth="40"
-                    Width="*"
+                    Width="0.5*"
                     Binding="{Binding Id}" 
+                    ElementStyle="{StaticResource DefaultStyle}"
+                    
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Vendor Name"
                     MinWidth="100"
                     Width="2*"
                     Binding="{Binding Name}"
+                    ElementStyle="{StaticResource DefaultStyle}"
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Owner Name"
                     MinWidth="100"
                     Width="*"
                     Binding="{Binding Owner.UserName}"
+                    ElementStyle="{StaticResource DefaultStyle}"
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Description"
                     MinWidth="100"
                     Binding="{Binding Description}"
+                    ElementStyle="{StaticResource DefaultStyle}"
                     Width="3*"
                     IsReadOnly="True"/>
                 <DataGridTextColumn
@@ -85,12 +100,14 @@
                     MinWidth="70"
                     Width="3*"
                     Binding="{Binding Address}"
+                    ElementStyle="{StaticResource DefaultStyle}"
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Phone Number"
                     MinWidth="120"
                     Width="*"
                     Binding="{Binding Phone}"
+                    ElementStyle="{StaticResource DefaultStyle}"
                     IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
@@ -133,10 +150,7 @@
                                  HorizontalAlignment="Left"
                          Height="150"
                                  VirtualizingPanel.IsVirtualizing="True"
-                                 VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                         >
-
-
+                                 VirtualizingPanel.IsVirtualizingWhenGrouping="True">
                 <ui:ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"></StackPanel>
@@ -182,10 +196,6 @@
                                                              Label="Remove"
                                                              CommandParameter="{Binding}"
                                                              Command="{Binding Source={StaticResource ManageShopPageVM}, Path=RemoveCommand}"></ui:AppBarButton>
-                                    <ui:AppBarButton Icon="Library"
-                                                             Label="Show Vendor"
-                                                             CommandParameter="{Binding}"
-                                                             Command="{Binding Source={StaticResource ManageShopPageVM}, Path=ShowVendorCommand}"></ui:AppBarButton>
                                     <ui:AppBarButton Icon="Shop"
                                                              Label="Accept"
                                                              CommandParameter="{Binding}"
