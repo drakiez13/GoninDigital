@@ -157,6 +157,10 @@ namespace GoninDigital.ViewModels
             string s = SearchName.ToLower();
             if(SearchName!="")
             {
+                using (var db = new GoninDigitalDBContext())
+                {
+                    L_Shop = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.ACTIVE));
+                }
                 int count = 0;
                 while(count<L_Shop.Count())
                 {
@@ -175,6 +179,16 @@ namespace GoninDigital.ViewModels
                 {
                     L_Shop = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.ACTIVE));
                 }
+            }
+        }
+        public void ToggleChanged(bool flag)
+        {
+            using (var db = new GoninDigitalDBContext())
+            {
+                if (flag)
+                    L_Shop = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus != (byte)Utils.Constants.ApprovalStatus.REQUEST));
+                else
+                    L_Shop = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.ACTIVE));
             }
         }
         #endregion

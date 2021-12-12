@@ -32,6 +32,14 @@
                 <Button Content="Delete" 
                         Margin="5"
                         Command="{Binding DeleteCommand}"/>
+                <ui:ToggleSwitch
+                        x:Name="toggleSwitch"
+                        Margin="30 0 0 0"
+                        OffContent="Only Active Shops"
+                        OnContent="All Shops"
+                        IsOn="False" 
+                    Toggled="toggleSwitch_Toggled"
+                    />
             </StackPanel>
         </Grid>
         <DataGrid x:Name="dataGrid"

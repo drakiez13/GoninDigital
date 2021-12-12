@@ -43,5 +43,10 @@ namespace GoninDigital.Views.AdminPages
         {
             (DataContext as ManageShopPageViewModel).SearchChanged();
         }
+
+        private void toggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            (DataContext as ManageShopPageViewModel).ToggleChanged(toggleSwitch.IsOn);
+        }
     }
 }
