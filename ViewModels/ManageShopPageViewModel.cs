@@ -79,7 +79,7 @@ namespace GoninDigital.ViewModels
             L_ShopNew.Remove(vendor);
             using (var db = new GoninDigitalDBContext())
             {
-                db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = (byte)Utils.Constants.ApprovalStatus.CLOSED;
+                db.Vendors.Remove(vendor);
                 db.Users.First(x => x.Id == vendor.OwnerId).TypeId = (int)Utils.Constants.UserType.CUSTOMER;
                 db.SaveChanges();
             }
@@ -103,7 +103,7 @@ namespace GoninDigital.ViewModels
                 foreach (Vendor vendor in selectedVendors.ToList())
                 {
                     L_ShopNew.Remove(vendor);
-                    db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = (byte)Utils.Constants.ApprovalStatus.CLOSED;
+                    db.Vendors.Remove(vendor);
                     db.Users.First(x => x.Id == vendor.OwnerId).TypeId = (int)Utils.Constants.UserType.CUSTOMER;
                     db.SaveChanges();
                 }
