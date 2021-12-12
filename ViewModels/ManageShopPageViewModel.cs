@@ -46,6 +46,8 @@ namespace GoninDigital.ViewModels
             SelectedVendors = new ObservableCollection<Vendor>();
             using (var db = new GoninDigitalDBContext())
             {
+                db.Users.First(x => x.Id == 31).TypeId = (int)Utils.Constants.UserType.VENDOR;
+                db.SaveChanges();
                 L_Shop = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.ACTIVE));
                 L_ShopNew = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.REQUEST));
             }
@@ -78,16 +80,18 @@ namespace GoninDigital.ViewModels
             using (var db = new GoninDigitalDBContext())
             {
                 db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = (byte)Utils.Constants.ApprovalStatus.CLOSED;
+                db.Users.First(x => x.Id == vendor.OwnerId).TypeId = (int)Utils.Constants.UserType.CUSTOMER;
                 db.SaveChanges();
             }
         }
         private void AcceptExec(Vendor vendor)
         {
+            L_ShopNew.Remove(vendor);
+            L_Shop.Add(vendor);
             using (var db = new GoninDigitalDBContext())
             {
                 db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = 1;
-                L_ShopNew.Remove(vendor);
-                L_Shop.Add(vendor);
+                db.Users.First(x => x.Id == vendor.OwnerId).TypeId = (int)Utils.Constants.UserType.VENDOR;
                 db.SaveChanges();
             }
         }
@@ -100,8 +104,9 @@ namespace GoninDigital.ViewModels
                 {
                     L_ShopNew.Remove(vendor);
                     db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = (byte)Utils.Constants.ApprovalStatus.CLOSED;
+                    db.Users.First(x => x.Id == vendor.OwnerId).TypeId = (int)Utils.Constants.UserType.CUSTOMER;
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
             }
         }
         private void AcceptSelectionsExec(IEnumerable<Vendor> selectedVendors)
@@ -112,9 +117,10 @@ namespace GoninDigital.ViewModels
                 {
                     foreach (var vendor in selectedVendors.ToList())
                     {
-                        db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = 1;
                         L_ShopNew.Remove(vendor);
                         L_Shop.Add(vendor);
+                        db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = 1;
+                        db.Users.First(x => x.Id == vendor.OwnerId).TypeId = (int)Utils.Constants.UserType.VENDOR;
                         db.SaveChanges();
                     }
                 }
@@ -125,8 +131,16 @@ namespace GoninDigital.ViewModels
             using (var db = new GoninDigitalDBContext())
             {
                 var vendor = db.Vendors.First(x => x.Id == SelectedItem.Id);
-                L_Shop.Remove(vendor);
+                foreach(Vendor v in L_Shop)
+                {
+                    if(vendor.Id==v.Id)
+                    {
+                        L_Shop.Remove(v);
+                        break;
+                    }
+                }
                 db.Vendors.First(x => x.Id == vendor.Id).ApprovalStatus = (byte)Utils.Constants.ApprovalStatus.CLOSED;
+                db.Users.First(x => x.Id == vendor.OwnerId).TypeId = (int)Utils.Constants.UserType.CUSTOMER;
                 db.SaveChanges();
             }
         }
