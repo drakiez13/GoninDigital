@@ -13,7 +13,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="225"/>
+            <RowDefinition Height="300"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -47,26 +47,31 @@
                 <DataGridTextColumn
                     Header="Id"
                     MinWidth="40"
+                    Width="*"
                     Binding="{Binding Id}" 
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Vendor Name"
                     MinWidth="100"
+                    Width="2*"
                     Binding="{Binding Name}"
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Owner Name"
                     MinWidth="100"
+                    Width="*"
                     Binding="{Binding Owner.UserName}"
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Description"
                     MinWidth="100"
                     Binding="{Binding Description}"
+                    Width="3*"
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Address"
                     MinWidth="70"
+                    Width="3*"
                     Binding="{Binding Address}"
                     IsReadOnly="True"/>
                 <DataGridTextColumn
@@ -79,7 +84,7 @@
         </DataGrid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="950"/>
+                <ColumnDefinition Width="800"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Content="Request" Margin="30,5,0,0"
@@ -108,7 +113,7 @@
         </Grid>
 
 
-        <StackPanel Orientation="Vertical" Grid.Row="3" Margin="0,15,0,0">
+        <StackPanel Orientation="Vertical" Grid.Row="3" Margin="20,15,0,0">
             <ui:ListView ItemsSource="{Binding L_ShopNew}"
                          x:Name="lvShopPage"
                          SelectionChanged="ListView_SelectionChanged"
@@ -129,10 +134,10 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <DockPanel HorizontalAlignment="Stretch" Height="60">
+                        <DockPanel HorizontalAlignment="Stretch" Height="60" >
                             <Image Source="{Binding Avatar}"
                                            Stretch="UniformToFill"
-                                           Width="40"
+                                           Width="70"
                                            Height="40"
                                            VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Name}"
@@ -142,17 +147,17 @@
                                                VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Description}"
                                                TextWrapping="Wrap"
-                                               Width="250"
+                                               Width="150"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Address}"
                                                TextWrapping="Wrap"
-                                               Width="350"
+                                               Width="300"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Phone}"
                                                TextWrapping="Wrap"
-                                               Width="180"
+                                               Width="150"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
                             <ui:CommandBar VerticalAlignment="Center"
