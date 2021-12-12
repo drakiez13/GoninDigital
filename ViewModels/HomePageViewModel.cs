@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using GoninDigital.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -54,6 +55,8 @@ namespace GoninDigital.ViewModels
             set { discountProducts = value; OnPropertyChanged(); }
         }
 
+        public ICommand OnSeeAllClick;
+
         private async void InitAds()
         {
             using (var db = new GoninDigitalDBContext())
@@ -77,16 +80,32 @@ namespace GoninDigital.ViewModels
         {
             using (var db = new GoninDigitalDBContext())
             {
-                // Selection algorithm goes here
-                TopProducts = await db.Products
+                List<Product> randomProducts = await db.Products
                     .Include(x => x.Vendor)
                     .Include(x => x.Brand)
-                    .OrderBy(o => Guid.NewGuid()).Take(6).ToListAsync();
+                    .OrderBy(o => Guid.NewGuid()).Take(20).ToListAsync();
+
+                var topInvoiceDetails = db.InvoiceDetails
+                    .Include(x => x.Invoice)
+                    .Include(x => x.Product)
+                    .Where(o => o.Invoice.CreatedAt > DateTime.Now.AddDays(-7))
+                    .AsEnumerable()
+                    .GroupBy(x => x.ProductId)
+                    .OrderByDescending(x => x.Count())
+                    .ToList();
+
+                var tmp = topInvoiceDetails.Select(o => o.Key);
+
+                var fetchedProducts = await db.Products.Where(o => tmp.Contains(o.Id)).ToListAsync();
+                if (fetchedProducts.Count < 10)
+                    fetchedProducts.AddRange(randomProducts);
+
+                TopProducts = fetchedProducts;
 
                 RecommendedProducts = await db.Products
                     .Include(x => x.Vendor)
                     .Include(x => x.Brand)
-                    .OrderBy(o => Guid.NewGuid()).Take(6).ToListAsync();
+                    .OrderBy(o => Guid.NewGuid()).Take(20).ToListAsync();
 
                 DiscountProducts = await db.Products
                     .Include(x => x.Vendor)
@@ -101,6 +120,10 @@ namespace GoninDigital.ViewModels
 
             ads = new List<Ad>(3);
             adProducts = new List<List<Product>>(3);
+
+            OnSeeAllClick = new RelayCommand<object>(o => true, o => { 
+                
+            });
 
             InitAds();
             InitProducts();
