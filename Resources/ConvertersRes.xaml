@@ -6,6 +6,7 @@
     <converter:TotalPriceConverter x:Key="TotalPriceConverter"></converter:TotalPriceConverter>
     <converter:SumProductsPrice x:Key="SumProductsPrice"></converter:SumProductsPrice>
     <converter:ListCountToVisibility x:Key="ListCountToVisibility"></converter:ListCountToVisibility>
+    <converter:ApprovalStatustoVisibility x:Key="ApprovalStatustoVisibility"></converter:ApprovalStatustoVisibility>
     <converter:BooleanToVisibility x:Key="BooleanToVisibility"></converter:BooleanToVisibility>
     <converter:SearchItemTypeToVisibility x:Key="SearchItemTypeToVisibility"></converter:SearchItemTypeToVisibility>
     <converter:PriceToPercentageOff x:Key="PriceToPercentageOff"></converter:PriceToPercentageOff>
