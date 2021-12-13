@@ -21,15 +21,16 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid Margin="0 0 0 50 ">
-                    <Label Margin="20 20 0 20"
-                           FontSize="22"
-                           Content="My Shop"
-                           FontWeight="Bold"/>
+                    
                     <Grid VerticalAlignment="Top">
                         <Grid Height="450"
                               VerticalAlignment="Top">
                             <Image Source="{Binding Vendor.Cover}"
                                    Stretch="UniformToFill"></Image>
+                            <Label Margin="20 20 0 20"
+                                   FontSize="22"
+                                   Content="My Shop"
+                                   FontWeight="Bold" />
                         </Grid>
                         <Grid Margin="0 400 0 0">
                             <StackPanel Orientation="Vertical">

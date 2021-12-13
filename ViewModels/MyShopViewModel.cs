@@ -111,7 +111,25 @@ namespace GoninDigital.ViewModels
 
         public ICommand EditAvatarCommand { get; set; }
         public ICommand EditCoverPhotoCommand { get; set; }
-        
+
+        public ICommand AddCommand { get; set; }
+        public void AddCommandExec(object o)
+        {
+            
+
+            var dialog = new ContentDialog
+            {
+                Content = new EditProductDialog(),
+
+                Title = "Edit Product",
+                PrimaryButtonText = "Change",
+                CloseButtonText = "Cancel",
+
+                PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { EditBtnExec(); }),
+                CloseButtonCommand = new RelayCommand<object>((p) => true, (p) => { CloseBtnExec(); }),
+            };
+            dialog.ShowAsync();
+        }
         public ICommand EditCommand { get; set; }
         public void EditCommandExec(object o)
         {
@@ -296,7 +314,15 @@ namespace GoninDigital.ViewModels
         }
         public void CloseBtnExec()
         {
-
+            /*using (var db = new GoninDigitalDBContext())
+            {
+                var productTemp = db.Products.Single(o => o == selectedItem);
+                selectedItem = productTemp;
+                productClone = productTemp;
+                db.Products.Update(selectedItem);
+                db.SaveChanges();
+                MessageBox.Show(productTemp.Origin);
+            }*/
         }
         public void EditBtnExec()
         {
@@ -325,22 +351,7 @@ namespace GoninDigital.ViewModels
             upgradeDialog.Hide();
         }
         
-        public ICommand AddCommand { get; set; }
-        public void AddCommandExec(object o)
-        {
-
-            var dialog = new ContentDialog
-            {
-                Content = new EditProductDialog(),
-
-                Title = "Edit Product",
-                PrimaryButtonText = "Change",
-                CloseButtonText = "Cancel",
-
-                PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => {  }),
-            };
-            dialog.ShowAsync();
-        }
+        
         public MyShopViewModel()
         {
 
@@ -378,6 +389,7 @@ namespace GoninDigital.ViewModels
             }
             productClone = new Product();
             newVendor = new Vendor();
+            AddCommand = new RelayCommand<Product>(o => true, o => AddCommandExec(o));
             EditCommand = new RelayCommand<Product>(o => true, o => EditCommandExec(o));
             RemoveCommand = new RelayCommand<Product>(o => true, o => RemoveCommandExec(o));
             ImageEditCommand = new RelayCommand<Product>(o => true, o => ImageEditCommandExec(o));
