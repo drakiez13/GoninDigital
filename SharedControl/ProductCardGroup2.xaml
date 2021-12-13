@@ -28,6 +28,7 @@
         <ui:HyperlinkButton
             Grid.Row="0" Grid.Column="1"
             HorizontalAlignment="Right"
+            Command="{Binding OnSeeAllClick, ElementName=productCardGroup2}"
             Margin="0 10 50 0"
             >
             <Label>See all</Label>

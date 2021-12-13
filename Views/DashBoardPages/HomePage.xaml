@@ -24,7 +24,6 @@
             <uc:ProductCardGroup2 
                 Title="Best seller this week"
                 ProductList="{Binding TopProducts}"
-                OnSeeAllClick="{Binding }"
                 Margin="0 50 0 0">
             </uc:ProductCardGroup2>
             <uc:ProductCardGroup 
