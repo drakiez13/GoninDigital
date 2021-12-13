@@ -283,6 +283,18 @@ namespace GoninDigital.Views
                 Settings.Default.usrname = "";
                 Settings.Default.passwod = "";
 
+                try
+                {
+                    for (int i = 0; i < 100; i++)
+                    {
+                        Application.Current.Windows[i].DataContext = null;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                
                 WindowManager.ChangeWindowContent(Application.Current.MainWindow, Properties.Resources.LoginWindowTitle, Properties.Resources.LoginControlPath);
             }
         }
