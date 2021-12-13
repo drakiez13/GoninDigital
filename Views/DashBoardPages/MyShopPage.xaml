@@ -108,7 +108,7 @@
                 <Grid Visibility="{Binding IsUpgrade,Converter={StaticResource BooleanToVisibility},ConverterParameter=True}">
                     <StackPanel HorizontalAlignment="Center"
                             VerticalAlignment="Center">
-                        <Label Content="You have submittdf a request to upgrade, please wait for the admin to accept it" />
+                        <Label Content="You have submited a request to upgrade, please wait for the admin to accept it" />
                     </StackPanel>
                 </Grid>
 

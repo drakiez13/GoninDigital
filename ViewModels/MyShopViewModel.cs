@@ -19,6 +19,12 @@ namespace GoninDigital.ViewModels
 {
     class MyShopViewModel : BaseViewModel
     {
+        private ContentDialog upgradeDialog;
+        public ContentDialog UpgradeDialog
+        {
+            get { return upgradeDialog; }
+            set { upgradeDialog = value; }
+        }
         private bool hasVendor;
         public bool HasVendor
         {
@@ -33,6 +39,13 @@ namespace GoninDigital.ViewModels
 
             get { return isUpgrade; }
             set { isUpgrade = value; OnPropertyChanged(); }
+        }
+        private bool isNameAvailable = true;
+        public bool IsNameAvailable
+        {
+
+            get { return isNameAvailable; }
+            set { isNameAvailable = value; OnPropertyChanged(); }
         }
         private Product selectedItem = null;
         public Product SelectedItem
@@ -67,17 +80,23 @@ namespace GoninDigital.ViewModels
             get { return productSpecial; }
             set { productSpecial = value; OnPropertyChanged(); }
         }
-        private string newVendorName = null;
-        public string NewVendorName
+        private Vendor newVendor;
+        public Vendor NewVendor
         {
-            get { return newVendorName; }
-            set { newVendorName = value; OnPropertyChanged(); }
+            get { return newVendor; }
+            set { newVendor = value; OnPropertyChanged(); }
         }
         private string vendorName = null;
         public string VendorName
         {
             get { return vendorName; }
             set { vendorName = value; OnPropertyChanged(); }
+        }
+        private List<string> allVendorNames = null;
+        public List<string> AllVendorNames
+        {
+            get { return allVendorNames; }
+            set { allVendorNames = value; OnPropertyChanged(); }
         }
         private Product productClone;
         public Product ProductClone
@@ -92,40 +111,6 @@ namespace GoninDigital.ViewModels
 
         public ICommand EditAvatarCommand { get; set; }
         public ICommand EditCoverPhotoCommand { get; set; }
-
-        private void InitVendor()
-        {
-            using (var db = new GoninDigitalDBContext())
-            {
-                if (db.Users.First(o => o.UserName == Settings.Default.usrname).TypeId == (int)Constants.UserType.CUSTOMER)
-                {
-                    HasVendor = false;
-                    Vendor = db.Vendors.Include(o => o.Owner)
-                            .Include(o => o.Products)
-                            .First(o => o.Owner.UserName == Settings.Default.usrname);
-                    if (Vendor == null)
-                    {
-                        IsUpgrade = false;
-                    }
-                    else
-                    {
-                        IsUpgrade = true;
-                    }
-                }
-                else
-                {
-                    Vendor = db.Vendors.Include(o => o.Owner)
-                        .Include(o => o.Products)
-                        .First(o => o.Owner.UserName == Settings.Default.usrname);
-                    db.ProductCategories.ToList();
-                    Products = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).ToList());
-                    ProductBestSeller = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).Take(10).ToList());
-                    ProductSpecial = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).Take(5).ToList());
-                    HasVendor = true;
-                    VendorName = Vendor.Name;
-                }
-            }
-        }
         
         public ICommand EditCommand { get; set; }
         public void EditCommandExec(object o)
@@ -145,20 +130,25 @@ namespace GoninDigital.ViewModels
             };
             dialog.ShowAsync();
         }
+        public ICommand UpgradeVendorCommand { get; set; }
+        public ICommand CloseUpgradeBDCommand { get; set; }
+        public void CloseUpgradeBDExec()
+        {
+            upgradeDialog.Hide();
+        }
         public ICommand UpgradeCommand { get; set; }
         public void UpgradeCommandExec()
         {
-            var dialog = new ContentDialog
+            if (upgradeDialog == null)
             {
-                Content = new UpgradeVendorDialog(),
+                upgradeDialog = new ContentDialog
+                {
+                    Content = new UpgradeVendorDialog(),
 
-                Title = "Upgrade",
-                PrimaryButtonText = "Upgrade",
-                CloseButtonText = "Cancel",
-
-                PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { UpgradeExec(); }),
-            };
-            dialog.ShowAsync();
+                    Title = "Upgrade",
+                };
+            }
+            upgradeDialog.ShowAsync();
         }
         public ICommand RemoveCommand { get; set; }
         public void RemoveCommandExec(object o)
@@ -321,19 +311,18 @@ namespace GoninDigital.ViewModels
         }
         public void UpgradeExec()
         {
-            
+
             using (var db = new GoninDigitalDBContext())
             {
                 int userId = db.Users.First(u => u.UserName == Settings.Default.usrname).Id;
-                Vendor newVendor = new Vendor() { Name = NewVendorName, OwnerId = userId, ApprovalStatus= (int)Constants.ApprovalStatus.WAITING};
-                User user = db.Users.First(o => o.UserName == Settings.Default.usrname);
-                user.TypeId = (int)Constants.UserType.VENDOR;
+                newVendor.OwnerId = userId;
+                newVendor.ApprovalStatus = (int)Constants.ApprovalStatus.WAITING;
                 db.Vendors.Add(newVendor);
-                db.Users.Update(user);
                 Vendor = newVendor;
-                HasVendor = true;
+                IsUpgrade = true;
                 db.SaveChanges();
             }
+            upgradeDialog.Hide();
         }
         
         public ICommand AddCommand { get; set; }
@@ -369,6 +358,8 @@ namespace GoninDigital.ViewModels
                     }
                     catch
                     {
+                        var query = from o in db.Vendors select o.Name;
+                        AllVendorNames = query.ToList();
                         IsUpgrade = false;
                     }
                 }
@@ -386,13 +377,31 @@ namespace GoninDigital.ViewModels
                 }
             }
             productClone = new Product();
+            newVendor = new Vendor();
             EditCommand = new RelayCommand<Product>(o => true, o => EditCommandExec(o));
             RemoveCommand = new RelayCommand<Product>(o => true, o => RemoveCommandExec(o));
             ImageEditCommand = new RelayCommand<Product>(o => true, o => ImageEditCommandExec(o));
-            UpgradeCommand = new RelayCommand<object>((p) => true, (p) => { UpgradeCommandExec(); });
             EditCoverPhotoCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { EditCoverPhotoExec(); });
             EditAvatarCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { EditAvatarExec(); });
             ResetVendorInfoCommand = new RelayCommand<object>((p) => true, (p) => { ResetVendorInfoExec(); });
+
+            UpgradeCommand = new RelayCommand<object>((p) => true, (p) => { UpgradeCommandExec(); });
+            UpgradeVendorCommand = new RelayCommand<object>((p) =>
+            {
+                if (string.IsNullOrEmpty(newVendor.Name))
+                {
+                    return false;
+                }
+                if (allVendorNames.Any(s => newVendor.Name.Contains(s)))
+                {
+                    isNameAvailable = false;
+                    return false;
+                }
+                
+                return true;
+            }, (p) => { UpgradeExec(); });
+            CloseUpgradeBDCommand = new RelayCommand<object>((p) => true, (p) => { CloseUpgradeBDExec(); });
+
             SaveVendorInfoCommand = new RelayCommand<object>((p) =>
             {
                 if (string.IsNullOrEmpty(VendorName))
