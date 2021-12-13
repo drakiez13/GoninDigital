@@ -258,7 +258,7 @@ namespace GoninDigital.Views
                 }
                 else if (searchItem.Type == SearchItem.ItemType.VENDOR)
                 {
-                    RootFrame.Navigate(new MyShopPage(searchItem.Id));
+                    RootFrame.Navigate(new ShopPage(searchItem.Id));
                 }
                 navigationView.IsPaneOpen = false;
             }
@@ -282,7 +282,6 @@ namespace GoninDigital.Views
             {
                 Settings.Default.usrname = "";
                 Settings.Default.passwod = "";
-
                 try
                 {
                     for (int i = 0; i < 100; i++)
@@ -295,6 +294,7 @@ namespace GoninDigital.Views
 
                 }
                 
+                pages.Clear();
                 WindowManager.ChangeWindowContent(Application.Current.MainWindow, Properties.Resources.LoginWindowTitle, Properties.Resources.LoginControlPath);
             }
         }

@@ -25,12 +25,7 @@ namespace GoninDigital.Views.DashBoardPages
         public ShopOrdersManagerPage()
         {
             InitializeComponent();
-            (DataContext as MyShopViewModel).IsOwner = true;
             pages = new Dictionary<string, Page>();
-        }
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            (DataContext as MyShopViewModel).OnNavigatedTo();
         }
     }
 }

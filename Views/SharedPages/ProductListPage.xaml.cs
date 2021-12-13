@@ -22,17 +22,25 @@ namespace GoninDigital.Views.SharedPages
 {
     public partial class ProductListPage : Page
     {
-        public ObservableCollection<Product> Products { get; set; }
+        public struct Parameter
+        {
+            public List<Product> products { get; set; }
+            public string title { get; set; }
+            public string subtitle { get; set; }
+            public string cover { get; set; }
+        }
+
+        public List<Product> Products { get; set; }
         public string PageTitle { get; set; }
         public string Subtitle { get; set; }
         public string Cover { get; set; }
 
-        public ProductListPage(ObservableCollection<Product> products, string title, string subtitle, string cover = null)
+        public ProductListPage(Parameter parameters)
         {
-            Products = products;
-            PageTitle = title;
-            Subtitle = subtitle;
-            Cover = cover;
+            Products = parameters.products;
+            PageTitle = parameters.title;
+            Subtitle = parameters.subtitle;
+            Cover = parameters.cover;
 
             InitializeComponent();
         }

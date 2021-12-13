@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using GoninDigital.Models;
+using GoninDigital.ViewModels;
+using GoninDigital.Views;
+using GoninDigital.Views.SharedPages;
+using static GoninDigital.Views.SharedPages.ProductListPage;
 
 namespace GoninDigital.SharedControl
 {
@@ -30,11 +24,6 @@ namespace GoninDigital.SharedControl
         {
             get => (object)GetValue(SubtitleProperty);
             set => SetValue(SubtitleProperty, value);
-        }
-        public object OnSeeAllClick
-        {
-            get => (object)GetValue(OnSeeAllClickProperty);
-            set => SetValue(OnSeeAllClickProperty, value);
         }
         public object ProductList
         {
@@ -59,14 +48,27 @@ namespace GoninDigital.SharedControl
             DependencyProperty.Register("Title", typeof(object), typeof(ProductCardGroup2), new PropertyMetadata("Title"));
         public static readonly DependencyProperty SubtitleProperty =
             DependencyProperty.Register("Subtitle", typeof(object), typeof(ProductCardGroup2), new PropertyMetadata("Subtitle"));
-        public static readonly DependencyProperty OnSeeAllClickProperty =
-            DependencyProperty.Register("OnSeeAllClick", typeof(object), typeof(ProductCardGroup2), new PropertyMetadata(null));
         public static readonly DependencyProperty ProductListProperty =
             DependencyProperty.Register("ProductList", typeof(object), typeof(ProductCardGroup2), new PropertyMetadata(metaProducts), o => o != null);
         public static readonly DependencyProperty GroupBackgroundProperty =
             DependencyProperty.Register("GroupBackground", typeof(object), typeof(ProductCardGroup2), new PropertyMetadata("DarkSeaGreen"), o => o != null);
+        
+        public ICommand OnSeeAllClick { get; set; }
+
         public ProductCardGroup2()
         {
+            OnSeeAllClick = new RelayCommand<object>(o => true, o =>
+            {
+                var parameters = new Parameter
+                {
+                    title = (string)Title,
+                    subtitle = (string)Subtitle,
+                    products = ProductList as List<Product>,
+                    cover = (string)GroupBackground
+                };
+
+                DashBoard.RootFrame.Navigate(new ProductListPage(parameters));
+            });
             InitializeComponent();
         }
     }

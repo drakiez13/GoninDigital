@@ -33,28 +33,7 @@ namespace GoninDigital.Views.DashBoardPages
         public MyShopPage()
         {
             InitializeComponent();
-            (DataContext as MyShopViewModel).IsOwner = true;
             pages = new Dictionary<string, Page>();
-        }
-        public MyShopPage(int vendorId)
-        {
-            InitializeComponent();
-            pages = new Dictionary<string, Page>();
-            (DataContext as MyShopViewModel).IsOwner = false;
-            (DataContext as MyShopViewModel).VisibilityOwner = "Visible";
-            using (var db = new GoninDigitalDBContext())
-            {
-                (DataContext as MyShopViewModel).Vendor = db.Vendors
-                    .Include(o => o.Products).First(o => o.Id == vendorId);
-                db.ProductCategories.ToList();
-                (DataContext as MyShopViewModel).Products = new ObservableCollection<Product>(
-                    (DataContext as MyShopViewModel).Vendor.Products
-                    );
-            }
-        }
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            (DataContext as MyShopViewModel).OnNavigatedTo();
         }
 
     }

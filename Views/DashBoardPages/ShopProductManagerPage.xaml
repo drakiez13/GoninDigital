@@ -30,7 +30,8 @@
                FontWeight="Bold"/>
             <ui:CommandBar>
                 <ui:AppBarButton Icon="Add"
-                             Label="Add" />
+                             Label="Add"
+                                 Command="{Binding AddCommand}" />
                 <ui:AppBarButton Icon="Edit"
                              Label="Edit"
                              Command="{Binding EditCommand}" />
