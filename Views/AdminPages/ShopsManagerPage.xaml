@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:GoninDigital.Views.AdminPages"
+      xmlns:local="clr-namespace:GoninDigital.Views.AdminPages" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{StaticResource ManageShopPageVM}"
@@ -13,7 +13,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="225"/>
+            <RowDefinition Height="300"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -22,12 +22,24 @@
             <StackPanel Orientation="Horizontal">
                 <ui:AutoSuggestBox QueryIcon="Find" 
                                    AutomationProperties.Name="Search"
-                                   Width="300"
+                                   Width="350"
                                    HorizontalAlignment="Left"
-                                   Margin="20"/>
+                                   Margin="20"
+                                   Text="{Binding SearchName, Mode=TwoWay}"
+                                   TextChanged="AutoSuggestBox_TextChanged"
+                                   QuerySubmitted="AutoSuggestBox_QuerySubmitted">
+                </ui:AutoSuggestBox>
                 <Button Content="Delete" 
                         Margin="5"
                         Command="{Binding DeleteCommand}"/>
+                <ui:ToggleSwitch
+                        x:Name="toggleSwitch"
+                        Margin="30 0 0 0"
+                        OffContent="Only Active Shops"
+                        OnContent="All Shops"
+                        IsOn="False" 
+                    Toggled="toggleSwitch_Toggled"
+                    />
             </StackPanel>
         </Grid>
         <DataGrid x:Name="dataGrid"
@@ -42,44 +54,66 @@
                   RowDetailsVisibilityMode="Collapsed"
                   VirtualizingPanel.VirtualizationMode="Recycling"
                   VirtualizingPanel.IsVirtualizingWhenGrouping="True" 
-                  AutoGenerateColumns="False"  >
+                  AutoGenerateColumns="False"
+                  IsReadOnly="False" >
+            <DataGrid.Resources>
+                <Style x:Key="DefaultStyle" TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ApprovalStatus, Converter={StaticResource ApprovalStatustoVisibility}}" Value="False">
+                            <Setter Property="TextDecorations" Value="Strikethrough"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Header="Id"
                     MinWidth="40"
+                    Width="0.5*"
                     Binding="{Binding Id}" 
+                    ElementStyle="{StaticResource DefaultStyle}"
+                    
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Vendor Name"
                     MinWidth="100"
+                    Width="2*"
                     Binding="{Binding Name}"
+                    ElementStyle="{StaticResource DefaultStyle}"
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Owner Name"
                     MinWidth="100"
+                    Width="*"
                     Binding="{Binding Owner.UserName}"
+                    ElementStyle="{StaticResource DefaultStyle}"
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Description"
                     MinWidth="100"
                     Binding="{Binding Description}"
+                    ElementStyle="{StaticResource DefaultStyle}"
+                    Width="3*"
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Address"
                     MinWidth="70"
+                    Width="3*"
                     Binding="{Binding Address}"
+                    ElementStyle="{StaticResource DefaultStyle}"
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Phone Number"
                     MinWidth="120"
                     Width="*"
                     Binding="{Binding Phone}"
+                    ElementStyle="{StaticResource DefaultStyle}"
                     IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="950"/>
+                <ColumnDefinition Width="800"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Content="Request" Margin="30,5,0,0"
@@ -108,7 +142,7 @@
         </Grid>
 
 
-        <StackPanel Orientation="Vertical" Grid.Row="3" Margin="0,15,0,0">
+        <StackPanel Orientation="Vertical" Grid.Row="3" Margin="20,15,0,0">
             <ui:ListView ItemsSource="{Binding L_ShopNew}"
                          x:Name="lvShopPage"
                          SelectionChanged="ListView_SelectionChanged"
@@ -116,43 +150,41 @@
                                  HorizontalAlignment="Left"
                          Height="150"
                                  VirtualizingPanel.IsVirtualizing="True"
-                                 VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                         >
-
-
+                                 VirtualizingPanel.IsVirtualizingWhenGrouping="True">
                 <ui:ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"></StackPanel>
-                        
+
                     </ItemsPanelTemplate>
                 </ui:ListView.ItemsPanel>
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <DockPanel HorizontalAlignment="Stretch" Height="60">
+                        <DockPanel HorizontalAlignment="Stretch" Height="60" >
                             <Image Source="{Binding Avatar}"
                                            Stretch="UniformToFill"
                                            Width="40"
-                                           Height="40"
+                                           Height="30" 
+                                           Margin="0 0 0 0"
                                            VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Name}"
                                                TextWrapping="Wrap"
                                                Width="100"
-                                               Margin="10,10,0,10"
+                                               Margin="20,10,0,10"
                                                VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Description}"
                                                TextWrapping="Wrap"
-                                               Width="250"
+                                               Width="170"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Address}"
                                                TextWrapping="Wrap"
-                                               Width="350"
+                                               Width="300"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Phone}"
                                                TextWrapping="Wrap"
-                                               Width="180"
+                                               Width="150"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
                             <ui:CommandBar VerticalAlignment="Center"
@@ -164,10 +196,6 @@
                                                              Label="Remove"
                                                              CommandParameter="{Binding}"
                                                              Command="{Binding Source={StaticResource ManageShopPageVM}, Path=RemoveCommand}"></ui:AppBarButton>
-                                    <ui:AppBarButton Icon="Library"
-                                                             Label="Show Vendor"
-                                                             CommandParameter="{Binding}"
-                                                             Command="{Binding Source={StaticResource ManageShopPageVM}, Path=ShowVendorCommand}"></ui:AppBarButton>
                                     <ui:AppBarButton Icon="Shop"
                                                              Label="Accept"
                                                              CommandParameter="{Binding}"
