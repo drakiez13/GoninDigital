@@ -15,6 +15,13 @@
          d:Background="White"
          Title="CartPage_Purchase">
     <ScrollViewer>
-        
+        <StackPanel Orientation="Vertical">
+            <Grid>
+                <Image Source="{Binding Cover}"></Image>
+                <Label Margin="20 20 0 20"
+                       FontSize="22"
+                       FontWeight="Bold">Home</Label>
+            </Grid>
+        </StackPanel>
     </ScrollViewer>
 </ui:Page>

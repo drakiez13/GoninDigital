@@ -8,10 +8,34 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{StaticResource MyShopPageVM}">
-    <ui:SimpleStackPanel Spacing="12">
+    <StackPanel>
 
-        <TextBox ui:ControlHelper.Header="Vendor Name"
-                 Text="{Binding NewVendorName}" />
-
-    </ui:SimpleStackPanel>
+        <TextBox ui:ControlHelper.Header="Vendor Name*"
+                 Margin="0 20 0 0"
+                 Text="{Binding NewVendor.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBlock Text="*This name is not available"
+                   Foreground="Red"
+                   Visibility="{Binding IsNameAvailable, Converter={StaticResource BooleanToVisibility}, ConverterParameter=true}"/>
+        <TextBox ui:ControlHelper.Header="Phone"
+                 Margin="0 10 0 0"
+                 Text="{Binding NewVendor.Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox ui:ControlHelper.Header="Address"
+                 Margin="0 10 0 0"
+                 Text="{Binding NewVendor.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox ui:ControlHelper.Header="Description"
+                 Margin="0 10 0 0"
+                 Text="{Binding NewVendor.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0 30 0 0">
+            <Button Content="Upgrade"
+                    Width="150"
+                    Command="{Binding UpgradeVendorCommand}"/>
+            <Button Content="Cancel"
+                    Width="150"
+                    Command="{Binding CloseUpgradeBDCommand}"
+                    Margin="40 0 0 0"/>
+        </StackPanel>
+        
+    </StackPanel>
 </UserControl>
