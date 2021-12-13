@@ -51,7 +51,7 @@
                     <StackPanel Grid.Column="1" Margin="5">
 
                         <TextBox ui:ControlHelper.Header="Category Name"
-                             Text="{Binding ProductClone.Category.Name}"
+                             Text="{Binding SelectedItem.Category.Name}"
                                  />
 
                         <TextBox ui:ControlHelper.Header="Brand Name"
