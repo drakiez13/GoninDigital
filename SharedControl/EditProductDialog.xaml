@@ -50,14 +50,18 @@
                 </StackPanel>
                     <StackPanel Grid.Column="1" Margin="5">
 
-                        <TextBox ui:ControlHelper.Header="Category Name"
-                             Text="{Binding SelectedItem.Category.Name}"
-                                 />
+                        <ComboBox ItemsSource="{Binding CategoryList}"
+                                  ui:ControlHelper.Header="Category Name"
+                                  Width="240" MaxDropDownHeight="200"
+                                  SelectedItem="{Binding ProductClone.Category.Name}"/>
 
-                        <TextBox ui:ControlHelper.Header="Brand Name"
-                             Text="{Binding ProductClone.Brand.Name}" />
+                    <ComboBox ItemsSource="{Binding BrandList}"
+                              ui:ControlHelper.Header="Category Name"
+                              Width="240"
+                              MaxDropDownHeight="200"
+                              SelectedItem="{Binding ProductClone.Brand.Name}" />
 
-                        <TextBox ui:ControlHelper.Header="Available"
+                    <TextBox ui:ControlHelper.Header="Available"
                              Text="{Binding ProductClone.Available}" />
 
                         <TextBox ui:ControlHelper.Header="New"

@@ -104,6 +104,18 @@ namespace GoninDigital.ViewModels
             get { return productClone; }
             set { productClone = value; OnPropertyChanged(); }
         }
+        private List<string> categoryList;
+        public List<string> CategoryList
+        {
+            get { return categoryList; }
+            set { categoryList = value; OnPropertyChanged(); }
+        }
+        private List<string> brandList;
+        public List<string> BrandList
+        {
+            get { return brandList; }
+            set { brandList = value; OnPropertyChanged(); }
+        }
 
         public int OnPrimaryButtonClick { get; private set; }
         public int PrimaryButtonClick { get; private set; }
@@ -354,9 +366,11 @@ namespace GoninDigital.ViewModels
         
         public MyShopViewModel()
         {
-
+            
             using (var db = new GoninDigitalDBContext())
             {
+                categoryList = db.ProductCategories.Select(o => o.Name).ToList();
+                brandList = db.Brands.Select(o => o.Name).ToList();
                 if (db.Users.First(o => o.UserName == Settings.Default.usrname).TypeId == (int)Constants.UserType.CUSTOMER)
                 {
                     HasVendor = false;
