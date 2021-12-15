@@ -11,6 +11,7 @@
     <converter:SearchItemTypeToVisibility x:Key="SearchItemTypeToVisibility"></converter:SearchItemTypeToVisibility>
     <converter:PriceToPercentageOff x:Key="PriceToPercentageOff"></converter:PriceToPercentageOff>
     <converter:BooleanConverter x:Key="BooleanConverter"></converter:BooleanConverter>
+    <converter:ProductStatustoVisibility x:Key="ProductStatustoVisibility"></converter:ProductStatustoVisibility>
     <converter:BrandIdToName x:Key="BrandIdToName"></converter:BrandIdToName>
     <converter:CategoryIdToName x:Key="CategoryIdToName"></converter:CategoryIdToName>
 </ResourceDictionary>

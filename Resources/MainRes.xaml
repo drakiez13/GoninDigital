@@ -8,6 +8,7 @@
     <viewmodel:UserSettingViewModel x:Key="UserSettingVM"></viewmodel:UserSettingViewModel>
     <viewmodel:ManageShopPageViewModel x:Key="ManageShopPageVM"></viewmodel:ManageShopPageViewModel>
     <viewmodel:OrderPageViewModel x:Key="OrderPageVM"></viewmodel:OrderPageViewModel>
+    <viewmodel:ManageProductPageViewModel x:Key="ManageProductPageVM"></viewmodel:ManageProductPageViewModel>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <Style x:Key="OptionsPanelStyle" TargetType="ui:SimpleStackPanel">
         <Setter Property="Spacing" Value="12" />
