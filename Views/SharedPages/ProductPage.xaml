@@ -195,7 +195,18 @@
                 <StackPanel Margin="20,0,0,0"
                             Grid.Column="1"
                             Grid.Row="1">
-                    <TextBlock>Under construction</TextBlock>
+                    <ItemsControl ItemsSource="{Binding ProductInfo.ProductSpecDetails}">
+                        <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Width="120"
+                                           Text="{Binding Spec.Name}"
+                                           FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Value}" />
+                            </StackPanel>
+                        </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="4"

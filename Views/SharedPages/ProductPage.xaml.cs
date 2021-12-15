@@ -1,6 +1,7 @@
 ﻿using GoninDigital.Models;
 using GoninDigital.Properties;
 using GoninDigital.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using ModernWpf.Controls;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,16 @@ namespace GoninDigital.Views.SharedPages
 
         public ProductPage(Product product)
         {
-            ProductInfo = product;
+            using (var db = new GoninDigitalDBContext())
+            {
+                ProductInfo = db.Products
+                    .Include(o => o.Category)
+                    .Include(o => o.Brand)
+                    .Include(o => o.ProductSpecDetails)
+                    .ThenInclude(o => o.Spec)
+                    .First(o => o.Id == product.Id);
+            }
+            
             AddtoCartCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddtoCartExecute(); });
             BuyCommand = new RelayCommand<Product>(p => true, p => DashBoard.RootFrame.Navigate(new CheckoutPage(ProductInfo, 1)));
             if (product.Price == product.OriginPrice)
