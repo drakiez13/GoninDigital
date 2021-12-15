@@ -5,77 +5,107 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:local="clr-namespace:GoninDigital.SharedControl"
-             Width="800"
+             Width="1200"
              DataContext="{StaticResource MyShopPageVM}">
     <ScrollViewer>
-       
-            <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <ui:PersonPicture VerticalAlignment="Top"
-                                      Margin="20 0 0 0"
-                                      ProfilePicture="{Binding ProductClone.Image}"
-                                      Height="80"
-                                      Width="80">
 
-                    </ui:PersonPicture>
-                    <Button Content="Change Image" Margin="20"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Command="{Binding ImageEditCommand}"></Button>
-                </StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250"/>
-                        <ColumnDefinition Width="250"/>
-                    </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <ui:PersonPicture VerticalAlignment="Top"
+                                  Margin="20 0 0 0"
+                                  ProfilePicture="{Binding SelectedItem.Image}"
+                                  Height="80"
+                                  Width="80">
 
-                    <StackPanel Grid.Column="0 " Margin="5">
-                        
-                        <TextBox ui:ControlHelper.Header="Product Name"
-                             Text="{Binding ProductClone.Name}"
-                                  />
+                </ui:PersonPicture>
+                <Button Content="Edit"
+                        Margin="20"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding ImageEditCommand}"></Button>
+            </StackPanel>
+            <Grid Margin="0 30 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="250" />
+                </Grid.ColumnDefinitions>
 
-                        <TextBox ui:ControlHelper.Header="Origin"
-                             Text="{Binding ProductClone.Origin}" />
+                <StackPanel Grid.Column="0 "
+                            Margin="0 0 5 0">
+                    <Label Content="Product Infomation"
+                           FontSize="20"
+                           Margin="0 0 0 10"
+                           HorizontalAlignment="Center" />
+                    <TextBox ui:ControlHelper.Header="Product Name"
+                             Text="{Binding SelectedItem.Name}"
+                             Width="240" />
 
-                        <TextBox ui:ControlHelper.Header="Origin Price"
-                             Text="{Binding ProductClone.OriginPrice}" />
+                    <TextBox ui:ControlHelper.Header="Origin"
+                             Width="240"
+                             Text="{Binding SelectedItem.Origin}" />
 
-                        <TextBox ui:ControlHelper.Header="Sale off Price"
-                             Text="{Binding ProductClone.Price}" />
+                    <TextBox ui:ControlHelper.Header="Origin Price"
+                             Width="240"
+                             Text="{Binding SelectedItem.OriginPrice}" />
 
-                        <TextBox ui:ControlHelper.Header="Descirption"
-                             Text="{Binding ProductClone.Description}" />
-                    
-                </StackPanel>
-                    <StackPanel Grid.Column="1" Margin="5">
+                    <TextBox ui:ControlHelper.Header="Sale off Price"
+                             Width="240"
+                             Text="{Binding SelectedItem.Price}" />
 
-                        <ComboBox x:Name="cbCategory"
-                                  ItemsSource="{Binding CategoryList}"
-                                  ui:ControlHelper.Header="Category Name"
-                                  Width="240" MaxDropDownHeight="200"
-                                  SelectedItem="{Binding ProductClone.Category.Name}"/>
+                    <TextBox ui:ControlHelper.Header="Descirption"
+                             Width="240"
+                             Text="{Binding SelectedItem.Description}" />
+                    <TextBox ui:ControlHelper.Header="Available"
+                             Width="240"
+                             Text="{Binding SelectedItem.Available}" />
 
-                    <ComboBox x:Name="cbBrand"
-                              ItemsSource="{Binding BrandList}"
+                    <TextBox ui:ControlHelper.Header="New"
+                             Width="240"
+                             Text="{Binding SelectedItem.New}" />
+                    <ComboBox x:Name="cbCategory"
+                              ItemsSource="{Binding CategoryList}"
                               ui:ControlHelper.Header="Category Name"
                               Width="240"
                               MaxDropDownHeight="200"
-                              SelectedItem="{Binding ProductClone.Brand.Name}" />
+                              SelectedItem="{Binding SelectedItem.CategoryId,Converter={StaticResource CategoryIdToName},Mode=TwoWay}" />
 
-                    <TextBox ui:ControlHelper.Header="Available"
-                             Text="{Binding ProductClone.Available}" />
 
-                        <TextBox ui:ControlHelper.Header="New"
-                             Text="{Binding ProductClone.New}" />
+                    <ComboBox x:Name="cbBrand"
+                              ItemsSource="{Binding BrandList}"
+                              ui:ControlHelper.Header="Brand Name"
+                              Width="240"
+                              MaxDropDownHeight="200"
+                              SelectedItem="{Binding SelectedItem.BrandId,Converter={StaticResource BrandIdToName},Mode=TwoWay}" />
 
-                        <TextBox ui:ControlHelper.Header="Details"
-                             Text="{Binding ProductClone.Detail}" />
-                    
                 </StackPanel>
-                </Grid>
-            </StackPanel>
+                <StackPanel Grid.Column="1"
+                            Margin="5 0 0 0">
+                    <Label Content="Technique Infomation"
+                           FontSize="20"
+                           Margin="0 0 0 10"
+                           HorizontalAlignment="Center" />
 
-        
+                    <ItemsControl ItemsSource="{Binding SelectedProductSpecs}"
+                                  Width="240">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBox ui:ControlHelper.Header="{Binding Spec.Name}"
+                                         Text="{Binding Value}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </StackPanel>
+
+            </Grid>
+            <StackPanel>
+                
+                <TextBox ui:ControlHelper.Header="Details"
+                         Width="498" HorizontalAlignment="Left"
+                         Text="{Binding SelectedItem.Detail}" />
+            </StackPanel>
+        </StackPanel>
+
+
     </ScrollViewer>
 </UserControl>

@@ -60,6 +60,12 @@ namespace GoninDigital.ViewModels
             get { return vendor; }
             set { vendor = value; OnPropertyChanged(); }
         }
+        private List<ProductSpecDetail> selectedProductSpecs ;
+        public List<ProductSpecDetail> SelectedProductSpecs
+        {
+            get { return selectedProductSpecs; }
+            set { selectedProductSpecs = value; OnPropertyChanged(); }
+        }
 
         private ObservableCollection<Product> products = null;
         public ObservableCollection<Product> Products
@@ -128,7 +134,6 @@ namespace GoninDigital.ViewModels
         public void AddCommandExec(object o)
         {
             
-
             var dialog = new ContentDialog
             {
                 Content = new EditProductDialog(),
@@ -145,7 +150,24 @@ namespace GoninDigital.ViewModels
         public ICommand EditCommand { get; set; }
         public void EditCommandExec(object o)
         {
-            productClone = selectedItem;
+            using (var db=new GoninDigitalDBContext())
+            {
+                selectedProductSpecs = db.ProductSpecDetails.Where(o => o.ProductId == selectedItem.Id).ToList();
+                var temp = selectedProductSpecs.Select(o => o.SpecId).ToList();
+                var availSpecType = db.ProductSpecs.Where(o => o.CategoryId == selectedItem.CategoryId).ToList();
+                availSpecType.ForEach(specType => { 
+                    if(!temp.Contains(specType.Id))
+                    {
+                        selectedProductSpecs.Add(new ProductSpecDetail
+                        {
+                            ProductId = selectedItem.Id,
+                            SpecId = specType.Id,
+                            Spec = specType,
+                        }) ;
+                        
+                    }
+                });
+            }
 
             var dialog = new ContentDialog
             {
@@ -328,7 +350,7 @@ namespace GoninDigital.ViewModels
         {
             using (var db = new GoninDigitalDBContext())
             {
-
+                
                 db.Entry(selectedItem).Reload();
                 Products = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).ToList());
             }
@@ -337,15 +359,18 @@ namespace GoninDigital.ViewModels
         {
             
             using (var db = new GoninDigitalDBContext())
-            {
-                var editProductDialog = new EditProductDialog();
-                selectedItem.Category.Name= (string)editProductDialog.cbCategory.SelectedItem;
-                selectedItem.Category.Name = (string)editProductDialog.cbBrand.SelectedItem;
-                selectedItem = productClone;
-                db.Products.Update(selectedItem);
+            {   
+                
+                SelectedProductSpecs.RemoveAll(o => string.IsNullOrEmpty(o.Value));
+                SelectedProductSpecs.ForEach(o =>
+                {
+                    o.Spec = null;
+                });
+                db.ProductSpecDetails.AddRange(selectedProductSpecs);
+                db.Entry(SelectedItem).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            MessageBox.Show("edited");
+            
         }
         public void UpgradeExec()
         {
@@ -392,9 +417,16 @@ namespace GoninDigital.ViewModels
                 {
                     Vendor = db.Vendors.Include(o => o.Owner)
                         .Include(o => o.Products)
+                        .ThenInclude(o => o.Brand)
+                        .Include(o=>o.Products)
+                        .ThenInclude(o=>o.Category)
+                        .ThenInclude(o=>o.ProductSpecs)
+                        .ThenInclude(o=>o.ProductSpecDetails)
+                        
                         .First(o => o.Owner.UserName == Settings.Default.usrname);
-                    db.ProductCategories.ToList();
+                    
                     Products = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).ToList());
+                    
                     ProductBestSeller = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).Take(10).ToList());
                     ProductSpecial = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).Take(5).ToList());
                     HasVendor = true;
