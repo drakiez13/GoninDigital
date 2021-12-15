@@ -154,7 +154,7 @@ namespace GoninDigital.ViewModels
                     Buy=0,
 
                 };
-                
+
                 db.Products.Add(selectedItem);
                 Products.Add(selectedItem);
                 db.SaveChanges();
@@ -223,11 +223,23 @@ namespace GoninDigital.ViewModels
                     Products.Remove(SelectedItem);
                     db.Update(SelectedItem);
                     _ = db.SaveChanges();
+                    var content = new ContentDialog
+                    {
+                        Content = "A Product have been removed!",
+                        Title = "Notification",
+                        PrimaryButtonText = "Ok",
+
+                    };
+
+                    
                 }
                 catch (Exception e)
                 {
 
-                    MessageBox.Show(e.Message);
+                    var content = new ContentDialog();
+                    content.Content = "An unexpected error occured!";
+                    content.Title = "Warning";
+                    content.PrimaryButtonText = "Ok";
                 }
             }
         }
@@ -373,7 +385,7 @@ namespace GoninDigital.ViewModels
 
             using (var db = new GoninDigitalDBContext())
             {
-
+                db.ProductSpecDetails.RemoveRange(db.ProductSpecDetails.Where(o => o.ProductId==selectedItem.Id));
                 SelectedProductSpecs.RemoveAll(o => string.IsNullOrEmpty(o.Value));
                 SelectedProductSpecs.ForEach(o =>
                 {
@@ -382,6 +394,11 @@ namespace GoninDigital.ViewModels
                 db.ProductSpecDetails.AddRange(selectedProductSpecs);
                 db.Entry(SelectedItem).State = EntityState.Modified;
                 db.SaveChanges();
+                var content = new ContentDialog();
+                content.Content = "A Product have been edited!";
+                content.Title = "Notification";
+                content.PrimaryButtonText = "Ok";
+                content.ShowAsync();
             }
 
         }
@@ -433,7 +450,7 @@ namespace GoninDigital.ViewModels
                     {
                         
                         db.ProductSpecDetails.AddRange(SelectedProductSpecs);
-                        db.Update(selectedItem);
+                        db.Entry(SelectedItem).State = EntityState.Modified;
                         db.SaveChanges();
                     }
                     catch
@@ -442,6 +459,7 @@ namespace GoninDigital.ViewModels
                         content.Content = "An unexpected error occured!";
                         content.Title = "Warning";
                         content.PrimaryButtonText = "Ok";
+                        content.ShowAsync();
                     }
                 }
             }
