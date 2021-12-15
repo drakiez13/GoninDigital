@@ -326,21 +326,21 @@ namespace GoninDigital.ViewModels
         }
         public void CloseBtnExec()
         {
-            /*using (var db = new GoninDigitalDBContext())
+            using (var db = new GoninDigitalDBContext())
             {
-                var productTemp = db.Products.Single(o => o == selectedItem);
-                selectedItem = productTemp;
-                productClone = productTemp;
-                db.Products.Update(selectedItem);
-                db.SaveChanges();
-                MessageBox.Show(productTemp.Origin);
-            }*/
+
+                db.Entry(selectedItem).Reload();
+                Products = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).ToList());
+            }
         }
         public void EditBtnExec()
         {
             
             using (var db = new GoninDigitalDBContext())
             {
+                var editProductDialog = new EditProductDialog();
+                selectedItem.Category.Name= (string)editProductDialog.cbCategory.SelectedItem;
+                selectedItem.Category.Name = (string)editProductDialog.cbBrand.SelectedItem;
                 selectedItem = productClone;
                 db.Products.Update(selectedItem);
                 db.SaveChanges();

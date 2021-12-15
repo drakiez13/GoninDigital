@@ -50,12 +50,14 @@
                 </StackPanel>
                     <StackPanel Grid.Column="1" Margin="5">
 
-                        <ComboBox ItemsSource="{Binding CategoryList}"
+                        <ComboBox x:Name="cbCategory"
+                                  ItemsSource="{Binding CategoryList}"
                                   ui:ControlHelper.Header="Category Name"
                                   Width="240" MaxDropDownHeight="200"
                                   SelectedItem="{Binding ProductClone.Category.Name}"/>
 
-                    <ComboBox ItemsSource="{Binding BrandList}"
+                    <ComboBox x:Name="cbBrand"
+                              ItemsSource="{Binding BrandList}"
                               ui:ControlHelper.Header="Category Name"
                               Width="240"
                               MaxDropDownHeight="200"
