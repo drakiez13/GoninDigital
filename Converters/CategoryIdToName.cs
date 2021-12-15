@@ -17,7 +17,15 @@ namespace GoninDigital.Converters
             string name;
             using (var db = new GoninDigitalDBContext())
             {
-                name = db.ProductCategories.Single(o => o.Id == id).Name;
+                try
+                { 
+                    name = db.ProductCategories.Single(o => o.Id == id).Name;
+                }
+                catch
+                {
+                    return null;
+                }
+
             }
             return name;
         }
@@ -27,7 +35,14 @@ namespace GoninDigital.Converters
             int id;
             using (var db = new GoninDigitalDBContext())
             {
-                id = db.ProductCategories.Single(o => o.Name == name).Id;
+                try
+                {
+                    id = db.ProductCategories.Single(o => o.Name == name).Id;
+                }
+                catch
+                {
+                    return null;
+                }
             }
             return id;
         }

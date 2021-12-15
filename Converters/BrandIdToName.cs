@@ -17,7 +17,14 @@ namespace GoninDigital.Converters
             string name;
             using (var db = new GoninDigitalDBContext())
             {
-                name = db.Brands.Single(o => o.Id == id).Name;
+                try
+                {
+                    name = db.Brands.Single(o => o.Id == id).Name;
+                }
+                catch
+                {
+                    return null;
+                }
             }
             return name;
         }
@@ -27,7 +34,14 @@ namespace GoninDigital.Converters
             int id;
             using (var db = new GoninDigitalDBContext())
             {
-                id = db.Brands.Single(o => o.Name == name).Id;
+                try
+                {
+                    id = db.Brands.Single(o => o.Name == name).Id;
+                }
+                catch
+                {
+                    return null;
+                }
             }
             return id;
         }
