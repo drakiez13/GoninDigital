@@ -25,11 +25,20 @@
                                    Width="350"
                                    HorizontalAlignment="Left"
                                    Margin="20"
-                                   Text="{Binding SearchName, Mode=TwoWay}">
+                                   Text="{Binding SearchName, Mode=TwoWay}"
+                                   TextChanged="AutoSuggestBox_TextChanged"
+                                   QuerySubmitted="AutoSuggestBox_QuerySubmitted">
                 </ui:AutoSuggestBox>
                 <Button Content="Delete" 
                         Margin="5"
                         Command="{Binding DeleteCommand}"/>
+                <ui:ToggleSwitch
+                        x:Name="toggleSwitch"
+                        Margin="30 0 0 0"
+                        OffContent="On Sale"
+                        OnContent="All"
+                        IsOn="False" 
+                    Toggled="toggleSwitch_Toggled"/>
             </StackPanel>
         </Grid>
         <DataGrid x:Name="dataGrid"
@@ -49,10 +58,18 @@
             <DataGrid.Resources>
                 <Style x:Key="DefaultStyle" TargetType="TextBlock">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding }" Value="False">
+                        <DataTrigger Binding="{Binding StatusId, Converter={StaticResource ProductStatustoVisibility}}" Value="True">
                             <Setter Property="TextDecorations" Value="Strikethrough"/>
                         </DataTrigger>
                     </Style.Triggers>
+                </Style>
+                <Style x:Key="CenterStyle" TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusId, Converter={StaticResource ProductStatustoVisibility}}" Value="True">
+                            <Setter Property="TextDecorations" Value="Strikethrough"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
@@ -61,7 +78,7 @@
                     MinWidth="40"
                     Width="0.5*"
                     Binding="{Binding Id}" 
-                    ElementStyle="{StaticResource DefaultStyle}"
+                    ElementStyle="{StaticResource CenterStyle}"
                     
                     IsReadOnly="True"/>
                 <DataGridTextColumn
@@ -101,24 +118,24 @@
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Rating"
-                    MinWidth="80"
+                    MinWidth="70"
                     Width="0.5*"
                     Binding="{Binding Rating}"
-                    ElementStyle="{StaticResource DefaultStyle}"
+                    ElementStyle="{StaticResource CenterStyle}"
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Buy"
                     MinWidth="50"
                     Width="0.5*"
                     Binding="{Binding Buy}"
-                    ElementStyle="{StaticResource DefaultStyle}"
+                    ElementStyle="{StaticResource CenterStyle}"
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Available"
-                    MinWidth="100"
+                    MinWidth="80"
                     Width="0.5*"
                     Binding="{Binding Available}"
-                    ElementStyle="{StaticResource DefaultStyle}"
+                    ElementStyle="{StaticResource CenterStyle}"
                     IsReadOnly="True"/>
                 <DataGridTextColumn
                     Header="Price"
@@ -141,7 +158,7 @@
             <StackPanel Grid.Column="1" Orientation="Horizontal"
                         >
                 <ui:AppBarButton 
-                Visibility="{Binding SelectedVendors.Count,
+                Visibility="{Binding SelectedProducts.Count,
                            Converter={StaticResource ListCountToVisibility},
                            ConverterParameter=True}"
                                  Icon="Delete"
@@ -150,7 +167,7 @@
                                 />
 
                 <ui:AppBarButton 
-                Visibility="{Binding SelectedVendors.Count,
+                Visibility="{Binding SelectedProducts.Count,
                            Converter={StaticResource ListCountToVisibility},
                            ConverterParameter=True}"
                                  Icon="Shop"
@@ -162,8 +179,8 @@
 
         <StackPanel Orientation="Vertical" Grid.Row="3" Margin="20,15,0,0">
             <ui:ListView ItemsSource="{Binding L_ProductNew}"
-                         x:Name="lvShopPage"
-                        
+                         x:Name="lvProductPage"
+                         SelectionChanged="ListView_SelectionChanged"
                                  SelectionMode="Multiple"
                                  HorizontalAlignment="Left"
                          Height="150"
@@ -179,35 +196,30 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <DockPanel HorizontalAlignment="Stretch" Height="60" >
-                            <Image Source="{Binding Avatar}"
-                                           Stretch="UniformToFill"
-                                           Width="40"
-                                           Height="30" 
-                                           Margin="0 0 0 0"
-                                           VerticalAlignment="Center" />
+
                             <TextBlock Text="{Binding Name}"
                                                TextWrapping="Wrap"
-                                               Width="100"
+                                               Width="280"
                                                Margin="20,10,0,10"
                                                VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Category.Name}"
                                                TextWrapping="Wrap"
-                                               Width="100"
+                                               Width="80"
                                                Margin="20,10,0,10"
                                                VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Vendor.Name}"
                                                TextWrapping="Wrap"
-                                               Width="170"
+                                               Width="100"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Description}"
                                                TextWrapping="Wrap"
-                                               Width="300"
+                                               Width="150"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
                             <TextBlock Text="{Binding Price}"
                                                TextWrapping="Wrap"
-                                               Width="150"
+                                               Width="120"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
                             <ui:CommandBar VerticalAlignment="Center"
@@ -218,11 +230,11 @@
                                     <ui:AppBarButton Icon="Delete"
                                                              Label="Remove"
                                                              CommandParameter="{Binding}"
-                                                             Command="{Binding Source={StaticResource ManageShopPageVM}, Path=RemoveCommand}"></ui:AppBarButton>
+                                                             Command="{Binding Source={StaticResource ManageProductPageVM}, Path=RemoveCommand}"></ui:AppBarButton>
                                     <ui:AppBarButton Icon="Shop"
                                                              Label="Accept"
                                                              CommandParameter="{Binding}"
-                                                             Command="{Binding Source={StaticResource ManageShopPageVM}, Path=AcceptCommand}"></ui:AppBarButton>
+                                                             Command="{Binding Source={StaticResource ManageProductPageVM}, Path=AcceptCommand}"></ui:AppBarButton>
                                 </ui:CommandBar.SecondaryCommands>
                             </ui:CommandBar>
                         </DockPanel>
