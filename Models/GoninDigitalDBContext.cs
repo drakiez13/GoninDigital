@@ -304,9 +304,7 @@ namespace GoninDigital.Models
 
                 entity.Property(e => e.Detail).HasColumnName("detail");
 
-                entity.Property(e => e.Image)
-                    .IsRequired()
-                    .HasColumnName("image");
+                entity.Property(e => e.Image).HasColumnName("image");
 
                 entity.Property(e => e.NRating).HasColumnName("n_rating");
 

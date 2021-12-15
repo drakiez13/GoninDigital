@@ -30,7 +30,7 @@ namespace GoninDigital.ViewModels
         {
 
             get { return hasVendor; }
-            set { hasVendor = value;OnPropertyChanged(); }
+            set { hasVendor = value; OnPropertyChanged(); }
         }
 
         private bool isUpgrade;
@@ -59,6 +59,12 @@ namespace GoninDigital.ViewModels
         {
             get { return vendor; }
             set { vendor = value; OnPropertyChanged(); }
+        }
+        private List<ProductSpecDetail> selectedProductSpecs;
+        public List<ProductSpecDetail> SelectedProductSpecs
+        {
+            get { return selectedProductSpecs; }
+            set { selectedProductSpecs = value; OnPropertyChanged(); }
         }
 
         private ObservableCollection<Product> products = null;
@@ -104,6 +110,18 @@ namespace GoninDigital.ViewModels
             get { return productClone; }
             set { productClone = value; OnPropertyChanged(); }
         }
+        private List<string> categoryList;
+        public List<string> CategoryList
+        {
+            get { return categoryList; }
+            set { categoryList = value; OnPropertyChanged(); }
+        }
+        private List<string> brandList;
+        public List<string> BrandList
+        {
+            get { return brandList; }
+            set { brandList = value; OnPropertyChanged(); }
+        }
 
         public int OnPrimaryButtonClick { get; private set; }
         public int PrimaryButtonClick { get; private set; }
@@ -116,24 +134,50 @@ namespace GoninDigital.ViewModels
         public void AddCommandExec(object o)
         {
             
+            using (var db = new GoninDigitalDBContext())
+            {
+                selectedItem = new Product
+                {
+                    Name = "Name",
+                    VendorId = Vendor.Id,
+                    CategoryId = db.ProductCategories.First().Id,
+                    Description = "Unknown",
+                    Origin = "Viet Nam",
+                    Price = 1000,
+                    OriginPrice = 1000,
+                    StatusId =(int)Constants.ProductStatus.CREATED,
+                    CreatedAt=DateTime.Now,
+                    UpdatedAt=DateTime.Now,
+                    BrandId=db.Brands.First().Id,
+                    NRating=0,
+                    Available=0,
+                    Buy=0,
 
+                };
+                
+                db.Products.Add(selectedItem);
+                Products.Add(selectedItem);
+                db.SaveChanges();
+            }
+            UpdateCategorySpecDetails();
             var dialog = new ContentDialog
             {
-                Content = new EditProductDialog(),
+                Content = new AddProductDialog(),
 
-                Title = "Edit Product",
-                PrimaryButtonText = "Change",
+                Title = "Add Product",
+                PrimaryButtonText = "Add",
                 CloseButtonText = "Cancel",
 
-                PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { EditBtnExec(); }),
-                CloseButtonCommand = new RelayCommand<object>((p) => true, (p) => { CloseBtnExec(); }),
+                PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { AddBtnExec(); }),
+                CloseButtonCommand = new RelayCommand<object>((p) => true, (p) => { CloseAddBtnExec(); }),
             };
             dialog.ShowAsync();
         }
+
         public ICommand EditCommand { get; set; }
         public void EditCommandExec(object o)
         {
-            productClone = selectedItem;
+            UpdateCategorySpecDetails();
 
             var dialog = new ContentDialog
             {
@@ -142,7 +186,7 @@ namespace GoninDigital.ViewModels
                 Title = "Edit Product",
                 PrimaryButtonText = "Change",
                 CloseButtonText = "Cancel",
-                
+
                 PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { EditBtnExec(); }),
                 CloseButtonCommand = new RelayCommand<object>((p) => true, (p) => { CloseBtnExec(); }),
             };
@@ -176,8 +220,9 @@ namespace GoninDigital.ViewModels
                 try
                 {
                     SelectedItem.StatusId = (int)Constants.ProductStatus.REMOVED;
+                    Products.Remove(SelectedItem);
                     db.Update(SelectedItem);
-                    _=db.SaveChanges();
+                    _ = db.SaveChanges();
                 }
                 catch (Exception e)
                 {
@@ -265,7 +310,7 @@ namespace GoninDigital.ViewModels
                 }
             }
         }
-        
+
         public async void EditAvatarExec()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -312,28 +357,33 @@ namespace GoninDigital.ViewModels
             }
 
         }
+
         public void CloseBtnExec()
         {
-            /*using (var db = new GoninDigitalDBContext())
+           
+            using (var db = new GoninDigitalDBContext())
             {
-                var productTemp = db.Products.Single(o => o == selectedItem);
-                selectedItem = productTemp;
-                productClone = productTemp;
-                db.Products.Update(selectedItem);
-                db.SaveChanges();
-                MessageBox.Show(productTemp.Origin);
-            }*/
+                db.Entry(selectedItem).Reload();
+                Products = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).ToList());
+            }
+
         }
         public void EditBtnExec()
         {
-            
+
             using (var db = new GoninDigitalDBContext())
             {
-                selectedItem = productClone;
-                db.Products.Update(selectedItem);
+
+                SelectedProductSpecs.RemoveAll(o => string.IsNullOrEmpty(o.Value));
+                SelectedProductSpecs.ForEach(o =>
+                {
+                    o.Spec = null;
+                });
+                db.ProductSpecDetails.AddRange(selectedProductSpecs);
+                db.Entry(SelectedItem).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            MessageBox.Show("edited");
+
         }
         public void UpgradeExec()
         {
@@ -350,13 +400,72 @@ namespace GoninDigital.ViewModels
             }
             upgradeDialog.Hide();
         }
-        
-        
+        public void UpdateCategorySpecDetails()
+        {
+            using (var db = new GoninDigitalDBContext())
+            {
+                selectedProductSpecs = db.ProductSpecDetails.Where(o => o.ProductId == selectedItem.Id && o.Spec.CategoryId == selectedItem.CategoryId).ToList();
+                var temp = selectedProductSpecs.Select(o => o.SpecId).ToList();
+                var availSpecType = db.ProductSpecs.Where(o => o.CategoryId == selectedItem.CategoryId).ToList();
+                availSpecType.ForEach(specType =>
+                {
+                    if (!temp.Contains(specType.Id))
+                    {
+                        selectedProductSpecs.Add(new ProductSpecDetail
+                        {
+                            ProductId = selectedItem.Id,
+                            SpecId = specType.Id,
+                            Spec = specType,
+                        });
+
+                    }
+                });
+                SelectedProductSpecs = selectedProductSpecs;
+            }
+        }
+        public void AddBtnExec()
+        {
+            using (var db = new GoninDigitalDBContext())
+            {
+                if (selectedItem != null)
+                {
+                    try
+                    {
+                        
+                        db.ProductSpecDetails.AddRange(SelectedProductSpecs);
+                        db.Update(selectedItem);
+                        db.SaveChanges();
+                    }
+                    catch
+                    {
+                        var content = new ContentDialog();
+                        content.Content = "An unexpected error occured!";
+                        content.Title = "Warning";
+                        content.PrimaryButtonText = "Ok";
+                    }
+                }
+            }
+        }
+        public void CloseAddBtnExec()
+        {
+            using (var db = new GoninDigitalDBContext())
+            {
+                if (selectedItem != null)
+                {
+                    db.Products.Remove(selectedItem);
+                    Products.Remove(selectedItem);
+                    db.SaveChanges();
+                }
+            }
+        }
+
         public MyShopViewModel()
         {
 
             using (var db = new GoninDigitalDBContext())
             {
+                categoryList = db.ProductCategories.Select(o => o.Name).ToList();
+                brandList = db.Brands.Select(o => o.Name).ToList();
                 if (db.Users.First(o => o.UserName == Settings.Default.usrname).TypeId == (int)Constants.UserType.CUSTOMER)
                 {
                     HasVendor = false;
@@ -378,9 +487,16 @@ namespace GoninDigital.ViewModels
                 {
                     Vendor = db.Vendors.Include(o => o.Owner)
                         .Include(o => o.Products)
+                        .ThenInclude(o => o.Brand)
+                        .Include(o => o.Products)
+                        .ThenInclude(o => o.Category)
+                        .ThenInclude(o => o.ProductSpecs)
+                        .ThenInclude(o => o.ProductSpecDetails)
+
                         .First(o => o.Owner.UserName == Settings.Default.usrname);
-                    db.ProductCategories.ToList();
+
                     Products = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).ToList());
+
                     ProductBestSeller = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).Take(10).ToList());
                     ProductSpecial = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).Take(5).ToList());
                     HasVendor = true;
@@ -409,7 +525,7 @@ namespace GoninDigital.ViewModels
                     isNameAvailable = false;
                     return false;
                 }
-                
+
                 return true;
             }, (p) => { UpgradeExec(); });
             CloseUpgradeBDCommand = new RelayCommand<object>((p) => true, (p) => { CloseUpgradeBDExec(); });
