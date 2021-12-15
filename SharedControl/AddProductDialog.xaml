@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GoninDigital.SharedControl.EditProductDialog"
+﻿<UserControl x:Class="GoninDigital.SharedControl.AddProductDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -68,7 +68,6 @@
                               Width="240"
                               MaxDropDownHeight="200"
                               SelectionChanged="cbCategory_SelectionChanged"
-                              
                               SelectedItem="{Binding SelectedItem.CategoryId,Converter={StaticResource CategoryIdToName},Mode=TwoWay}" />
 
 
@@ -101,9 +100,10 @@
 
             </Grid>
             <StackPanel>
-                
+
                 <TextBox ui:ControlHelper.Header="Details"
-                         Width="498" HorizontalAlignment="Left"
+                         Width="498"
+                         HorizontalAlignment="Left"
                          Text="{Binding SelectedItem.Detail}" />
             </StackPanel>
         </StackPanel>
