@@ -25,25 +25,7 @@ namespace GoninDigital.ViewModels
         public bool Flag
         {
             get { return flag; }
-            set { flag = value; OnPropertyChanged("Flag"); }
-        }
-        private string flag1;
-        public string Flag1
-        {
-            get { return flag1; }
-            set { flag1 = value; OnPropertyChanged("Flag1"); }
-        }
-        private string flag2;
-        public string Flag2
-        {
-            get { return flag2; }
-            set { flag2 = value; OnPropertyChanged("Flag2"); }
-        }
-        private bool flag3;
-        public bool Flag3
-        {
-            get { return flag3; }
-            set { flag3 = value; OnPropertyChanged("Flag3"); }
+            set { flag = value; OnPropertyChanged(); }
         }
         private List<String> lGender = new List<string>() { "Other", "Female", "Male" };
         public List<String> LGender
@@ -90,9 +72,6 @@ namespace GoninDigital.ViewModels
         public UserSettingViewModel()
         {
             Flag = true;
-            Flag1 = "Hidden";
-            Flag2 = "Visible";
-            Flag3 = false;
             load_page();
             EditPCommand = new RelayCommand<Window>((p) => { return Flag; }, (p) => { EditPExecute(); });
             ResetPCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ResetPExecute(); });
@@ -125,16 +104,10 @@ namespace GoninDigital.ViewModels
         void EditPExecute()
         {
             Flag = false;
-            Flag1 = "Visible";
-            Flag2 = "Hidden";
-            Flag3 = true;
         }
         void CancelPExecute()
         {
             Flag = true;
-            Flag1 = "Hidden";
-            Flag2 = "Visible";
-            Flag3 = false;
         }
         void ResetPExecute()
         {
@@ -149,8 +122,6 @@ namespace GoninDigital.ViewModels
                 gender = user.Gender.ToString();
                 Email = user.Email;
             }
-
-
         }
         void SavePExecute()
         {
@@ -209,9 +180,6 @@ namespace GoninDigital.ViewModels
                         };
                         content.ShowAsync();
                         Flag = true;
-                        Flag1 = "Hidden";
-                        Flag2 = "Visible";
-                        Flag3 = false;
                     }
                 }
             }
