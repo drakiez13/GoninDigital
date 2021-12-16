@@ -35,12 +35,12 @@ namespace GoninDigital.Views.AdminPages
 
         private void AutoSuggestBox_TextChanged(ModernWpf.Controls.AutoSuggestBox sender, ModernWpf.Controls.AutoSuggestBoxTextChangedEventArgs args)
         {
-            (DataContext as ManageProductPageViewModel).SearchChanged();
+            (DataContext as ManageProductPageViewModel).SearchChanged(toggleSwitch.IsOn);
         }
 
         private void AutoSuggestBox_QuerySubmitted(ModernWpf.Controls.AutoSuggestBox sender, ModernWpf.Controls.AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            (DataContext as ManageProductPageViewModel).SearchProduct();
+            (DataContext as ManageProductPageViewModel).SearchProduct(toggleSwitch.IsOn);
         }
 
         private void toggleSwitch_Toggled(object sender, RoutedEventArgs e)

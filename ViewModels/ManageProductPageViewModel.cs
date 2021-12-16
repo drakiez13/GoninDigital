@@ -12,17 +12,18 @@ namespace GoninDigital.ViewModels
 {
     class ManageProductPageViewModel: BaseViewModel
     {
+        #region Properties
         private ObservableCollection<Product> l_Product;
         public ObservableCollection<Product> L_Product
         {
             get { return l_Product; }
             set { l_Product = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<Product> l_ProductNew;
-        public ObservableCollection<Product> L_ProductNew
+        private ObservableCollection<Product> l_NewProduct;
+        public ObservableCollection<Product> L_NewProduct
         {
-            get { return l_ProductNew; }
-            set { l_ProductNew = value; OnPropertyChanged(); }
+            get { return l_NewProduct; }
+            set { l_NewProduct = value; OnPropertyChanged(); }
         }
         private Product selectedItem;
         public Product SelectedItem { get { return selectedItem; } set { selectedItem = value; OnPropertyChanged(); } }
@@ -46,12 +47,14 @@ namespace GoninDigital.ViewModels
         public ICommand AcceptCommand { get; set; }
         public ICommand RemoveSelectionsCommand { get; set; }
         public ICommand AcceptSelectionsCommand { get; set; }
+        #endregion
+        #region Constructor
         public ManageProductPageViewModel()
         {
             using(var db=new GoninDigitalDBContext())
             {
-                L_Product = new ObservableCollection<Product>(db.Products.Include(x => x.Vendor).Include(x => x.Category).Where(x => x.StatusId == 3 | x.StatusId==2));
-                L_ProductNew = new ObservableCollection<Product>(db.Products.Include(x => x.Vendor).Include(x => x.Category).Where(x => x.StatusId == 1));
+                L_Product = new ObservableCollection<Product>(db.Products.Include(x => x.Vendor).Include(x => x.Category).Where(x => x.StatusId == (int)Utils.Constants.ProductStatus.ACCEPTED | x.StatusId== (int)Utils.Constants.ProductStatus.UPDATED));
+                L_NewProduct = new ObservableCollection<Product>(db.Products.Include(x => x.Vendor).Include(x => x.Category).Where(x => x.StatusId == (int)Utils.Constants.ProductStatus.CREATED));
             }
             RemoveCommand = new RelayCommand<Product>(o => true,
                product => { RemoveExec(product); });
@@ -75,9 +78,11 @@ namespace GoninDigital.ViewModels
             SearchName = "";
             selectedProducts = new ObservableCollection<Product>();
         }
+        #endregion
+        #region Methods
         private void RemoveExec(Product product)
         {
-            L_ProductNew.Remove(product);
+            L_NewProduct.Remove(product);
             using (var db = new GoninDigitalDBContext())
             {
                 db.Products.Remove(product);
@@ -86,11 +91,11 @@ namespace GoninDigital.ViewModels
         }
         private void AcceptExec(Product product)
         {
-            L_ProductNew.Remove(product);
+            L_NewProduct.Remove(product);
             L_Product.Add(product);
             using (var db = new GoninDigitalDBContext())
             {
-                db.Products.First(x => x.Id == product.Id).StatusId = 3;
+                db.Products.First(x => x.Id == product.Id).StatusId = (int)Utils.Constants.ProductStatus.ACCEPTED;
                 db.SaveChanges();
             }
         }
@@ -101,7 +106,7 @@ namespace GoninDigital.ViewModels
             {
                 foreach (Product product in selectedProducts.ToList())
                 {
-                    L_ProductNew.Remove(product);
+                    L_NewProduct.Remove(product);
                     db.Products.Remove(product);
                     db.SaveChanges();
                 }
@@ -115,9 +120,9 @@ namespace GoninDigital.ViewModels
                 {
                     foreach (Product product in selectedProducts.ToList())
                     {
-                        L_ProductNew.Remove(product);
+                        L_NewProduct.Remove(product);
                         L_Product.Add(product);
-                        db.Products.First(x => x.Id == product.Id).StatusId = 3;
+                        db.Products.First(x => x.Id == product.Id).StatusId = (int)Utils.Constants.ProductStatus.ACCEPTED;
                         db.SaveChanges();
                     }
                 }
@@ -136,18 +141,21 @@ namespace GoninDigital.ViewModels
                         break;
                     }
                 }
-                db.Products.First(x => x.Id == product.Id).StatusId = 4;
+                db.Products.First(x => x.Id == product.Id).StatusId = (int)Utils.Constants.ProductStatus.REMOVED;
                 db.SaveChanges();
             }
         }
-        public void SearchProduct()
+        public void SearchProduct(bool flag)
         {
             string s = SearchName.ToLower();
             if (SearchName != "")
             {
                 using (var db = new GoninDigitalDBContext())
                 {
-                    L_Product = new ObservableCollection<Product>(db.Products.Include(x => x.Vendor).Include(x => x.Category).Where(x => x.StatusId == 3 | x.StatusId == 2));
+                    if (flag)
+                        L_Product = new ObservableCollection<Product>(db.Products.Include(x => x.Vendor).Include(x => x.Category).Where(x => x.StatusId != (int)Utils.Constants.ProductStatus.CREATED));
+                    else
+                        L_Product = new ObservableCollection<Product>(db.Products.Include(x => x.Vendor).Include(x => x.Category).Where(x => x.StatusId == (int)Utils.Constants.ProductStatus.ACCEPTED | x.StatusId == (int)Utils.Constants.ProductStatus.UPDATED));
                 }
                 int count = 0;
                 while (count < L_Product.Count())
@@ -159,13 +167,16 @@ namespace GoninDigital.ViewModels
                 }
             }
         }
-        public void SearchChanged()
+        public void SearchChanged(bool flag)
         {
             if (SearchName == "")
             {
                 using (var db = new GoninDigitalDBContext())
                 {
-                    L_Product = new ObservableCollection<Product>(db.Products.Include(x => x.Vendor).Include(x=>x.Category).Where(x => x.StatusId == 3 | x.StatusId == 2));
+                    if (flag)
+                        L_Product = new ObservableCollection<Product>(db.Products.Include(x => x.Vendor).Include(x => x.Category).Where(x => x.StatusId != (int)Utils.Constants.ProductStatus.CREATED));
+                    else
+                        L_Product = new ObservableCollection<Product>(db.Products.Include(x => x.Vendor).Include(x => x.Category).Where(x => x.StatusId == (int)Utils.Constants.ProductStatus.ACCEPTED | x.StatusId == (int)Utils.Constants.ProductStatus.UPDATED));
                 }
             }
         }
@@ -174,10 +185,11 @@ namespace GoninDigital.ViewModels
             using(var db = new GoninDigitalDBContext())
             {
                 if(flag)
-                    L_Product= new ObservableCollection<Product>(db.Products.Include(x => x.Vendor).Include(x => x.Category).Where(x => x.StatusId !=1));
+                    L_Product= new ObservableCollection<Product>(db.Products.Include(x => x.Vendor).Include(x => x.Category).Where(x => x.StatusId != (int)Utils.Constants.ProductStatus.CREATED));
                 else
-                    L_Product = new ObservableCollection<Product>(db.Products.Include(x => x.Vendor).Include(x => x.Category).Where(x => x.StatusId == 3 | x.StatusId == 2));
+                    L_Product = new ObservableCollection<Product>(db.Products.Include(x => x.Vendor).Include(x => x.Category).Where(x => x.StatusId == (int)Utils.Constants.ProductStatus.ACCEPTED | x.StatusId == (int)Utils.Constants.ProductStatus.UPDATED));
             }
         }
+        #endregion
     }
 }
