@@ -45,8 +45,8 @@ namespace GoninDigital.ViewModels
             set { refusedInvoices = value; OnPropertyChanged(); }
         }
 
-        public ICommand CancelInvoice { get; set; }
-        public ICommand ReOrderInvoice { get; set; }
+        public ICommand RefuseCommand { get; set; }
+        public ICommand AcceptCommand { get; set; }
 
         public ShopOrderManagerPageViewModel()
         {
@@ -56,26 +56,23 @@ namespace GoninDigital.ViewModels
             canceledInvoices = new ObservableCollection<Invoice>();
             refusedInvoices = new ObservableCollection<Invoice>();
 
-            CancelInvoice = new RelayCommand<Invoice>(o => true, o => {
-                o.StatusId = (int)Constants.InvoiceStatus.CANCELED;
-                o.FinishedAt = System.DateTime.Now;
+            RefuseCommand = new RelayCommand<Invoice>(o => true, o => {
+                o.StatusId = (int)Constants.InvoiceStatus.REFUSED;
                 CreatedInvoices.Remove(o);
-                CanceledInvoices.Add(o);
+                RefusedInvoices.Add(o);
                 using (var db = new GoninDigitalDBContext())
                 {
-                    db.Update(o);
+                    db.Invoices.Update(o);
                     db.SaveChanges();
                 }
             });
-            ReOrderInvoice = new RelayCommand<Invoice>(o => true, o => {
+            AcceptCommand = new RelayCommand<Invoice>(o => true, o => {
                 o.StatusId = (int)Constants.InvoiceStatus.ACCEPTED;
-                o.CreatedAt = System.DateTime.Now;
-                o.FinishedAt = null;
-                CanceledInvoices.Remove(o);
-                CreatedInvoices.Add(o);
+                CreatedInvoices.Remove(o);
+                AcceptedInvoices.Add(o);
                 using (var db = new GoninDigitalDBContext())
                 {
-                    db.Update(o);
+                    db.Invoices.Update(o);
                     db.SaveChanges();
                 }
             });
@@ -83,9 +80,9 @@ namespace GoninDigital.ViewModels
 
         public void OnNavigatedTo()
         {
-            Load_HistoryPurchase();
+            Load();
         }
-        private void Load_HistoryPurchase()
+        private void Load()
         {
 
             using (var db = new GoninDigitalDBContext())
