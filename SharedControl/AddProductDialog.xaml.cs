@@ -17,18 +17,13 @@ using System.Windows.Shapes;
 namespace GoninDigital.SharedControl
 {
     /// <summary>
-    /// Interaction logic for EditProductDialog.xaml
+    /// Interaction logic for AddProductDialog.xaml
     /// </summary>
-    public partial class EditProductDialog : UserControl
+    public partial class AddProductDialog : UserControl
     {
-        public EditProductDialog()
+        public AddProductDialog()
         {
             InitializeComponent();
-        }
-
-        private void cbCategory_Selected(object sender, RoutedEventArgs e)
-        {
-            
         }
 
         private void cbCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)

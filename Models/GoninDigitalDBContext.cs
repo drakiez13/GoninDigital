@@ -35,6 +35,7 @@ namespace GoninDigital.Models
         public virtual DbSet<Rating> Ratings { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
+        public virtual DbSet<Var> Vars { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -303,9 +304,7 @@ namespace GoninDigital.Models
 
                 entity.Property(e => e.Detail).HasColumnName("detail");
 
-                entity.Property(e => e.Image)
-                    .IsRequired()
-                    .HasColumnName("image");
+                entity.Property(e => e.Image).HasColumnName("image");
 
                 entity.Property(e => e.NRating).HasColumnName("n_rating");
 
@@ -547,6 +546,28 @@ namespace GoninDigital.Models
                     .IsRequired()
                     .HasMaxLength(10)
                     .HasColumnName("name");
+            });
+
+            modelBuilder.Entity<Var>(entity =>
+            {
+                entity.ToTable("Var");
+
+                entity.HasIndex(e => e.Id, "IX_Var")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("name")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.Value)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("value")
+                    .IsFixedLength(true);
             });
 
             modelBuilder.Entity<Vendor>(entity =>

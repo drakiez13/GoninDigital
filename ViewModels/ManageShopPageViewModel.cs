@@ -60,7 +60,6 @@ namespace GoninDigital.ViewModels
                 L_Shop = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.APPROVED));
                 L_ShopNew = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.WAITING));
             }
-            L_ShopClosed = new ObservableCollection<Vendor>();
             RemoveCommand = new RelayCommand<Vendor>(o => true,
                vendor => { RemoveExec(vendor); });
             ShowVendorCommand = new RelayCommand<Vendor>(o => true,
@@ -194,15 +193,6 @@ namespace GoninDigital.ViewModels
                 }
                 else
                     L_Shop = new ObservableCollection<Vendor>(db.Vendors.Include(x => x.Owner).Where(x => x.ApprovalStatus == (byte)Utils.Constants.ApprovalStatus.APPROVED));
-            }
-        }
-        public void StrikeThrough()
-        {
-            L_ShopClosed = new ObservableCollection<Vendor>();
-            foreach(Vendor vendor in L_Shop)
-            {
-                if (vendor.ApprovalStatus == 2)
-                    L_ShopClosed.Add(vendor);
             }
         }
         #endregion
