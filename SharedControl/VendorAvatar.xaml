@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="GoninDigital.SharedControl.VendorAvatar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GoninDigital.SharedControl"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             mc:Ignorable="d"
+             Name="vendorAvatar"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ui:PersonPicture MouseUp="OnClick"
+                          ProfilePicture="{Binding VendorInfo.Avatar, ElementName=vendorAvatar}"></ui:PersonPicture>
+        <Label Margin="0 5 0 0"
+               Content="{Binding VendorInfo.Name, ElementName=vendorAvatar}"
+               FontWeight="Bold"
+               HorizontalAlignment="Center"></Label>
+    </Grid>
+</UserControl>

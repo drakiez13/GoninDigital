@@ -22,6 +22,7 @@ namespace GoninDigital.Views.SharedPages
 {
     public partial class ProductListPage : Page
     {
+        public static Stack<Parameter> OldParameters { get; set; } = new Stack<Parameter>();
         public struct Parameter
         {
             public List<Product> products { get; set; }
@@ -42,14 +43,11 @@ namespace GoninDigital.Views.SharedPages
             Subtitle = parameters.subtitle;
             Cover = parameters.cover;
 
+            OldParameters.Push(parameters);
+
             InitializeComponent();
         }
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-            // Checkout page should not in back stack
-            DashBoard.RootFrame.RemoveBackEntry();
-        }
+        public ProductListPage() : this(OldParameters.Pop()) { }
     }
 }
