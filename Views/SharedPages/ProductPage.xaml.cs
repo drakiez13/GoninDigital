@@ -91,6 +91,8 @@ namespace GoninDigital.Views.SharedPages
                     userRating = 0;
                 }
             }
+
+            OldProduct.Push(product);
             
             InitializeComponent();
         }
