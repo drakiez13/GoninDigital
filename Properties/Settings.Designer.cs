@@ -12,7 +12,7 @@ namespace GoninDigital.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.0.3.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -50,7 +50,7 @@ namespace GoninDigital.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=tcp:0.tcp.ap.ngrok.io,14728;Initial Catalog=GoninDigitalDB;Persist Securit" +
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=tcp:0.tcp.ap.ngrok.io,15179;Initial Catalog=GoninDigitalDB;Persist Securit" +
             "y Info=False;User ID=gonindigital;Password=gonindigital;MultipleActiveResultSets" +
             "=False;TrustServerCertificate=False;Connection Timeout=30;")]
         public string DBconnstr {
