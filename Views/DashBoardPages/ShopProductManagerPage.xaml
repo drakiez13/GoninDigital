@@ -13,7 +13,8 @@
       Title="ProductManagerTab">
     <ui:Page.Resources>
         <CollectionViewSource x:Key="ProductsCVS"
-                              Source="{Binding Products}">
+                              Source="{Binding Products}"
+                              >
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="Category.Name" />
             </CollectionViewSource.GroupDescriptions>
@@ -22,112 +23,202 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </ui:Page.Resources>
-    <ScrollViewer>
-        <StackPanel Margin="20 10 20 0">
-            <Label Margin="0 10 0 20"
-               FontSize="22"
-               Content="Product Manager"
-               FontWeight="Bold"/>
-            <ui:CommandBar>
-                <ui:AppBarButton Icon="Add"
-                             Label="Add"
-                                 Command="{Binding AddCommand}" />
-                <ui:AppBarButton Icon="Edit"
-                             Label="Edit"
-                             Command="{Binding EditCommand}" />
-                <ui:AppBarButton Icon="Remove"
-                             Label="Remove"
-                             Command="{Binding RemoveCommand}" />
-            </ui:CommandBar>
+    
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+        <ScrollViewer>
+            <StackPanel Margin="20 10 20 0">
+                
+                <Label Margin="0 10 0 20"
+                       FontSize="22"
+                       Content="Product Manager"
+                       FontWeight="Bold" />
+                <StackPanel Margin="20 20 20 0">
+                    <Border BorderBrush="Gainsboro"
+                            BorderThickness="0,2,0,0" />
+                    <Label Content="Requesting"
+                           Margin="70 20 0 10"
+                           FontSize="20"
+                           FontWeight="Bold" />
+                    <ui:ListView ItemsSource="{Binding ProductCreated}"
+                                 SelectedItem="{Binding SelectedItem}"
+                                 Opacity="0.5"
+                                 SelectionMode="Single"
+                                 HorizontalAlignment="Center"
+                                 Width="800"
+                                 VirtualizingPanel.IsVirtualizing="True"
+                                 VirtualizingPanel.IsVirtualizingWhenGrouping="True">
+                        <ui:ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"></StackPanel>
+                            </ItemsPanelTemplate>
+                        </ui:ListView.ItemsPanel>
 
-            <StackPanel>
-                <ui:ListView ItemsSource="{Binding Source={StaticResource ProductsCVS}}"
-                         SelectedItem="{Binding SelectedItem}"
-                         SelectionMode="Single"
-                         HorizontalAlignment="Center"
-                         Width="800"
-                         VirtualizingPanel.IsVirtualizing="True"
-                         VirtualizingPanel.IsVirtualizingWhenGrouping="True">
-                    <ui:ListView.GroupStyle>
-                        <GroupStyle>
-                            <GroupStyle.HeaderTemplate>
-                                <DataTemplate>
-                                    <Border AutomationProperties.Name="{Binding Name, Mode=OneTime}"
-                                        Height="50">
-                                        <StackPanel Orientation="Horizontal">
-
-                                            <TextBlock Text="{Binding Name, Mode=OneTime}"
-                                                   Margin="10 0 0 0"
-                                                   VerticalAlignment="Center"
-                                                   FontSize="20"
-                                                   FontWeight="Bold" />
-                                        </StackPanel>
-                                    </Border>
-                                </DataTemplate>
-                            </GroupStyle.HeaderTemplate>
-                        </GroupStyle>
-                    </ui:ListView.GroupStyle>
-                    <ui:ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Vertical"></StackPanel>
-                        </ItemsPanelTemplate>
-                    </ui:ListView.ItemsPanel>
-
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <DockPanel HorizontalAlignment="Stretch">
-                                <Image Source="{Binding Image}"
-                                   Stretch="UniformToFill"
-                                   Width="100"
-                                   Height="100"
-                                   VerticalAlignment="Center" />
-                                <TextBlock Text="{Binding Name}"
-                                       TextWrapping="Wrap"
-                                       Width="260"
-                                       Margin="10,10,0,10"
-                                       VerticalAlignment="Center" />
-                                <StackPanel Orientation="Vertical"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        Width="120">
-                                    <TextBlock Text="{Binding Origin, StringFormat=C, ConverterCulture=vi-VN}"
-                                           HorizontalAlignment="Center"
-                                           TextAlignment="Center"
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel HorizontalAlignment="Stretch">
+                                    <Image Source="{Binding Image}"
+                                           Stretch="UniformToFill"
                                            Width="100"
-                                           Margin="0 0 0 8" />
+                                           Height="100"
+                                           VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Name}"
+                                               TextWrapping="Wrap"
+                                               Width="260"
+                                               Margin="10,10,0,10"
+                                               VerticalAlignment="Center" />
+                                    <StackPanel Orientation="Vertical"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Width="120">
+                                        <TextBlock Text="{Binding Origin}"
+                                                   HorizontalAlignment="Center"
+                                                   TextAlignment="Center"
+                                                   Width="100"
+                                                   Margin="0 0 0 8" />
 
-                                </StackPanel>
-                                <StackPanel Orientation="Vertical"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        Width="120">
-                                    <TextBlock Text="{Binding OriginPrice, StringFormat=C, ConverterCulture=vi-VN}"
-                                           HorizontalAlignment="Center"
-                                           TextAlignment="Center"
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Width="120">
+                                        <TextBlock HorizontalAlignment="Center"
+                                                   TextAlignment="Center"
+                                                   Width="100"
+                                                   Margin="0 0 0 8">
+                                        <Run TextDecorations="Strikethrough"
+                                             Text="{Binding OriginPrice, StringFormat=C, ConverterCulture=vi-VN}" />
+                                        </TextBlock>
+
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Right"
+                                                Width="120">
+                                        <TextBlock Text="{Binding Price, StringFormat=C, ConverterCulture=vi-VN}"
+                                                   HorizontalAlignment="Center"
+                                                   TextAlignment="Center"
+                                                   Width="100"
+                                                   Margin="0 0 0 8" />
+
+                                    </StackPanel>
+
+
+
+                                </DockPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ui:ListView>
+                </StackPanel>
+                <StackPanel>
+                    <ui:ListView ItemsSource="{Binding Source={StaticResource ProductsCVS}}"
+                                 SelectedItem="{Binding SelectedItem}"
+                                 SelectionMode="Single"
+                                 HorizontalAlignment="Center"
+                                 Width="800"
+                                 VirtualizingPanel.IsVirtualizing="True"
+                                 VirtualizingPanel.IsVirtualizingWhenGrouping="True">
+                        <ui:ListView.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Border AutomationProperties.Name="{Binding Name, Mode=OneTime}"
+                                                Height="50" BorderThickness="0 5 6 0">
+                                            <StackPanel Orientation="Horizontal">
+
+                                                <TextBlock Text="{Binding Name, Mode=OneTime}"
+                                                           Margin="10 0 0 0"
+                                                           VerticalAlignment="Center"
+                                                           FontSize="20"
+                                                           FontWeight="Bold" />
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </ui:ListView.GroupStyle>
+                        <ui:ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"></StackPanel>
+                            </ItemsPanelTemplate>
+                        </ui:ListView.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel HorizontalAlignment="Stretch">
+                                    <Image Source="{Binding Image}"
+                                           Stretch="UniformToFill"
                                            Width="100"
-                                           Margin="0 0 0 8" />
+                                           Height="100"
+                                           VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Name}"
+                                               TextWrapping="Wrap"
+                                               Width="260"
+                                               Margin="10,10,0,10"
+                                               VerticalAlignment="Center" />
+                                    <StackPanel Orientation="Vertical"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Width="120">
+                                        <TextBlock Text="{Binding Origin}"
+                                                   HorizontalAlignment="Center"
+                                                   TextAlignment="Center"
+                                                   Width="100"
+                                                   Margin="0 0 0 8" />
 
-                                </StackPanel>
-                                <StackPanel Orientation="Vertical"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Right"
-                                        Width="120">
-                                    <TextBlock Text="{Binding Price, StringFormat=C, ConverterCulture=vi-VN}"
-                                           HorizontalAlignment="Center"
-                                           TextAlignment="Center"
-                                           Width="100"
-                                           Margin="0 0 0 8" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Width="120">
+                                        <TextBlock HorizontalAlignment="Center"
+                                                   TextAlignment="Center"
+                                                   Width="100"
+                                                   Margin="0 0 0 8">
+                                        <Run TextDecorations="Strikethrough"
+                                             Text="{Binding OriginPrice, StringFormat=C, ConverterCulture=vi-VN}" />
+                                        </TextBlock>
 
-                                </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Right"
+                                                Width="120">
+                                        <TextBlock Text="{Binding Price, StringFormat=C, ConverterCulture=vi-VN}"
+                                                   HorizontalAlignment="Center"
+                                                   TextAlignment="Center"
+                                                   Width="100"
+                                                   Margin="0 0 0 8" />
+
+                                    </StackPanel>
 
 
 
-                            </DockPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ui:ListView>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ui:ListView>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
-    </ScrollViewer>
+        </ScrollViewer>
+        <StackPanel Grid.Row="1" >
+            <ui:CommandBar >
+                    <ui:AppBarButton Icon="Add"
+                                     Label="Add"
+                                     Command="{Binding AddCommand}" />
+                    <ui:AppBarButton Icon="Edit"
+                                     Label="Edit"
+                                     Command="{Binding EditCommand}" />
+                <ui:AppBarButton Icon="Remove"
+                                 
+                                 Label="Remove"
+                                     Command="{Binding RemoveCommand}" />
+                </ui:CommandBar>
+            </StackPanel>
+        </Grid>
+    
     
 </ui:Page>
