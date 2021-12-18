@@ -13,9 +13,10 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="290"/>
+            <RowDefinition Height="270"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
 
         <Grid>
@@ -151,7 +152,7 @@
                 <ColumnDefinition Width="800"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="Request" Margin="30,5,0,0"
+            <Label Grid.Column="0" Content="Request" Margin="30,0,0,0"
                FontSize="20"
                FontWeight="Bold"
                    />
@@ -177,7 +178,7 @@
         </Grid>
 
         <ScrollViewer Grid.Row="3">
-            <StackPanel Orientation="Vertical" Margin="20,15,0,0">
+            <StackPanel Orientation="Vertical" Margin="20,0,0,0">
                 <ui:ListView ItemsSource="{Binding L_NewProduct}"
                          x:Name="lvProductPage"
                          SelectionChanged="ListView_SelectionChanged"
