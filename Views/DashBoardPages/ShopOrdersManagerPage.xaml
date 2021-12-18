@@ -23,7 +23,7 @@
         <TabControl Grid.Row="1"
                     Margin="10 0 0 0"
                     Style="{StaticResource TabControlPivotStyle}">
-            <TabItem Header="Created">
+            <TabItem Header="New Order">
                 <ui:ListView Margin="0 10 0 0"
                              MaxWidth="900"
                              ItemsSource="{Binding CreatedInvoices}"
@@ -132,7 +132,7 @@
                 </ui:ListView>
 
             </TabItem>
-            <TabItem Header="Accepted">
+            <TabItem Header="Delivering">
                 <ui:ListView Margin="0 10 0 0"
                              MaxWidth="900"
                              ItemsSource="{Binding AcceptedInvoices}"
