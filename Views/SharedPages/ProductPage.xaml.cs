@@ -44,7 +44,7 @@ namespace GoninDigital.Views.SharedPages
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-
+        public static Stack<Product> OldProduct { get; set; } = new Stack<Product>();
         public Product ProductInfo { get; set; }
         public ICommand BuyCommand { get; set; }
         public ICommand AddtoCartCommand { get; set; }
@@ -67,6 +67,7 @@ namespace GoninDigital.Views.SharedPages
                     .Include(o => o.Brand)
                     .Include(o => o.ProductSpecDetails)
                     .ThenInclude(o => o.Spec)
+                    .Include(o => o.Vendor)
                     .First(o => o.Id == product.Id);
             }
             
@@ -90,16 +91,13 @@ namespace GoninDigital.Views.SharedPages
                     userRating = 0;
                 }
             }
+
+            OldProduct.Push(product);
             
             InitializeComponent();
         }
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-            // Checkout page should not in back stack
-            DashBoard.RootFrame.RemoveBackEntry();
-        }
+        public ProductPage() : this(OldProduct.Pop()) { }
 
         void AddtoCartExecute()
         {

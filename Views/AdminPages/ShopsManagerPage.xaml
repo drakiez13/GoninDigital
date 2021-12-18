@@ -13,9 +13,10 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="300"/>
+            <RowDefinition Height="290"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
 
         <Grid>
@@ -112,16 +113,12 @@
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="800"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="Request" Margin="30,5,0,0"
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Request" Margin="30,-10,0,0"
                FontSize="20"
                FontWeight="Bold"
+                       Width="800"
                    />
-            <StackPanel Grid.Column="1" Orientation="Horizontal"
-                        >
                 <ui:AppBarButton 
                 Visibility="{Binding SelectedVendors.Count,
                            Converter={StaticResource ListCountToVisibility},
@@ -140,72 +137,72 @@
                                  Command="{Binding AcceptSelectionsCommand}"/>
             </StackPanel>
         </Grid>
-
-
-        <StackPanel Orientation="Vertical" Grid.Row="3" Margin="20,15,0,0">
-            <ui:ListView ItemsSource="{Binding L_ShopNew}"
+        <ScrollViewer Grid.Row="3">
+            <StackPanel Orientation="Vertical"  Margin="20,0,0,15">
+                
+                <ui:ListView ItemsSource="{Binding L_ShopNew}"
                          x:Name="lvShopPage"
                          SelectionChanged="ListView_SelectionChanged"
                                  SelectionMode="Multiple"
                                  HorizontalAlignment="Left"
-                         Height="150"
                                  VirtualizingPanel.IsVirtualizing="True"
                                  VirtualizingPanel.IsVirtualizingWhenGrouping="True">
-                <ui:ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical"></StackPanel>
+                    <ui:ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"></StackPanel>
 
-                    </ItemsPanelTemplate>
-                </ui:ListView.ItemsPanel>
+                        </ItemsPanelTemplate>
+                    </ui:ListView.ItemsPanel>
 
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <DockPanel HorizontalAlignment="Stretch" Height="60" >
-                            <Image Source="{Binding Avatar}"
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel HorizontalAlignment="Stretch" Height="60" >
+                                <Image Source="{Binding Avatar}"
                                            Stretch="UniformToFill"
                                            Width="40"
                                            Height="30" 
                                            Margin="0 0 0 0"
                                            VerticalAlignment="Center" />
-                            <TextBlock Text="{Binding Name}"
+                                <TextBlock Text="{Binding Name}"
                                                TextWrapping="Wrap"
                                                Width="100"
                                                Margin="20,10,0,10"
                                                VerticalAlignment="Center" />
-                            <TextBlock Text="{Binding Description}"
+                                <TextBlock Text="{Binding Description}"
                                                TextWrapping="Wrap"
                                                Width="170"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
-                            <TextBlock Text="{Binding Address}"
+                                <TextBlock Text="{Binding Address}"
                                                TextWrapping="Wrap"
                                                Width="300"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
-                            <TextBlock Text="{Binding Phone}"
+                                <TextBlock Text="{Binding Phone}"
                                                TextWrapping="Wrap"
                                                Width="150"
                                                Margin="10,10,0,10"
                                                VerticalAlignment="Center" />
-                            <ui:CommandBar VerticalAlignment="Center"
+                                <ui:CommandBar VerticalAlignment="Center"
                                                    Background="Transparent"
                                                    Width="auto"
                                                    DockPanel.Dock="Right">
-                                <ui:CommandBar.SecondaryCommands>
-                                    <ui:AppBarButton Icon="Delete"
+                                    <ui:CommandBar.SecondaryCommands>
+                                        <ui:AppBarButton Icon="Delete"
                                                              Label="Remove"
                                                              CommandParameter="{Binding}"
                                                              Command="{Binding Source={StaticResource ManageShopPageVM}, Path=RemoveCommand}"></ui:AppBarButton>
-                                    <ui:AppBarButton Icon="Shop"
+                                        <ui:AppBarButton Icon="Shop"
                                                              Label="Accept"
                                                              CommandParameter="{Binding}"
                                                              Command="{Binding Source={StaticResource ManageShopPageVM}, Path=AcceptCommand}"></ui:AppBarButton>
-                                </ui:CommandBar.SecondaryCommands>
-                            </ui:CommandBar>
-                        </DockPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ui:ListView>
-        </StackPanel>
+                                    </ui:CommandBar.SecondaryCommands>
+                                </ui:CommandBar>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ui:ListView>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

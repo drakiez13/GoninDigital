@@ -23,6 +23,7 @@
             </Grid>
             <uc:ProductCardGroup2 
                 Title="Best seller this week"
+                Subtitle=""
                 ProductList="{Binding TopProducts}"
                 Margin="0 50 0 0">
             </uc:ProductCardGroup2>
@@ -40,16 +41,18 @@
                 GroupBackground="{Binding Ads[1].Cover}"></uc:ProductCardGroup>
             <uc:ProductCardGroup2
                 Title="Maybe you like"
+                Subtitle=""
                 Margin="0 50 0 0"
                 ProductList="{Binding RecommendedProducts}">
             </uc:ProductCardGroup2>
             <uc:ProductCardGroup2
                 Title="New top deals"
+                Subtitle=""
                 Margin="0 50 0 0"
                 ProductList="{Binding DiscountProducts}">
             </uc:ProductCardGroup2>
             <uc:ProductCardGroup 
-                Margin="0 50 0 100"
+                Margin="0 50 0 50"
                 Title="{Binding Ads[2].Title}"
                 Subtitle="{Binding Ads[2].Subtitle}"
                 ProductList="{Binding AdProducts[2]}"
