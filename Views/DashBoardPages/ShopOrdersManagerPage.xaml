@@ -41,7 +41,7 @@
                                                VerticalAlignment="Center"
                                                FontSize="18" />
                                 </StackPanel>
-                                <Grid>
+                                <Grid Height="60">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="2*" />
@@ -150,13 +150,14 @@
                                                VerticalAlignment="Center"
                                                FontSize="18" />
                                 </StackPanel>
-                                <Grid>
+                                <Grid Height="60">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="2*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal"
+                                                Margin="40 0 0 0">
                                         <TextBlock Text="Created At: "
                                                    VerticalAlignment="Center"
                                                    FontWeight="Light"></TextBlock>
@@ -184,10 +185,11 @@
 
                                 <StackPanel>
                                     <Label Content="Products"
-                                           FontWeight="Light" />
+                                           FontWeight="Light" 
+                                           Margin="40 0 0 0"/>
                                     <ItemsControl ItemsSource="{Binding InvoiceDetails}"
                                                   Width="800"
-                                                  Margin="30 0 0 0"
+                                                  Margin="40 0 0 0"
                                                   HorizontalAlignment="Left">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
@@ -230,7 +232,7 @@
             </TabItem>
 
             
-            <TabItem Header="Delivered">
+            <TabItem Header="Receiced">
                 <ui:ListView Margin="0 10 0 0"
                              MaxWidth="900"
                              ItemsSource="{Binding DeliveredInvoices}"
@@ -248,13 +250,14 @@
                                                VerticalAlignment="Center"
                                                FontSize="18" />
                                 </StackPanel>
-                                <Grid>
+                                <Grid Height="60">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="2*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal"
+                                                Margin="40 0 0 0">
                                         <TextBlock Text="Created At: "
                                                    VerticalAlignment="Center"
                                                    FontWeight="Light"></TextBlock>
@@ -282,10 +285,11 @@
 
                                 <StackPanel>
                                     <Label Content="Products"
-                                           FontWeight="Light" />
+                                           FontWeight="Light" 
+                                           Margin="40 0 0 0"/>
                                     <ItemsControl ItemsSource="{Binding InvoiceDetails}"
                                                   Width="800"
-                                                  Margin="30 0 0 0"
+                                                  Margin="40 0 0 0"
                                                   HorizontalAlignment="Left">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
@@ -344,13 +348,14 @@
                                                VerticalAlignment="Center"
                                                FontSize="18" />
                                 </StackPanel>
-                                <Grid>
+                                <Grid Height="60">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="2*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal"
+                                                Margin="40 0 0 0">
                                         <TextBlock Text="Created At: "
                                                    VerticalAlignment="Center"
                                                    FontWeight="Light"></TextBlock>
@@ -378,10 +383,11 @@
 
                                 <StackPanel>
                                     <Label Content="Products"
-                                           FontWeight="Light" />
+                                           FontWeight="Light" 
+                                           Margin="40 0 0 0"/>
                                     <ItemsControl ItemsSource="{Binding InvoiceDetails}"
                                                   Width="800"
-                                                  Margin="30 0 0 0"
+                                                  Margin="40 0 0 0"
                                                   HorizontalAlignment="Left">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
@@ -440,13 +446,14 @@
                                                VerticalAlignment="Center"
                                                FontSize="18" />
                                 </StackPanel>
-                                <Grid>
+                                <Grid Height="60">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="2*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal"
+                                                Margin="40 0 0 0">
                                         <TextBlock Text="Created At: "
                                                    VerticalAlignment="Center"
                                                    FontWeight="Light"></TextBlock>
@@ -474,10 +481,11 @@
 
                                 <StackPanel>
                                     <Label Content="Products"
-                                           FontWeight="Light" />
+                                           FontWeight="Light" 
+                                           Margin="40 0 0 0"/>
                                     <ItemsControl ItemsSource="{Binding InvoiceDetails}"
                                                   Width="800"
-                                                  Margin="30 0 0 0"
+                                                  Margin="40 0 0 0"
                                                   HorizontalAlignment="Left">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
