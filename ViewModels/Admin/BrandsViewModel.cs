@@ -12,6 +12,13 @@ namespace GoninDigital.ViewModels
 {
     public class BrandsViewModel : BaseViewModel
     {
+        #region Properties
+        private string searchName;
+        public string SearchName
+        { 
+            get { return searchName; }
+            set { searchName = value; OnPropertyChanged(); }
+        }
         private ObservableCollection<Brand> list;
         public ObservableCollection<Brand> List { get { return list; } set { list = value; OnPropertyChanged(); } }
         private Brand selectedItem;
@@ -20,6 +27,7 @@ namespace GoninDigital.ViewModels
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand AddCommand { get; set; }
+        #endregion
         public BrandsViewModel()
         {
             using (var db = new GoninDigitalDBContext())
@@ -35,7 +43,8 @@ namespace GoninDigital.ViewModels
                     return true;
                 }
                 return false;
-            }, (p) => {
+            }, (p) =>
+            {
                 using (var db = new GoninDigitalDBContext())
                 {
                     var brand = db.Brands.First(x => x.Id == SelectedItem.Id);
@@ -79,8 +88,38 @@ namespace GoninDigital.ViewModels
                     db.SaveChanges();
                 }
             });
-            #endregion
-
         }
+        #endregion
+        #region Methods
+        public void SearchChanged()
+            {
+                if (SearchName == "")
+                {
+                    using (var db = new GoninDigitalDBContext())
+                    {
+                        List = new ObservableCollection<Brand>(db.Brands);
+                    }
+                }
+            }
+            public void SearchBrand()
+            {
+                string s = SearchName.ToLower();
+                if(SearchName!="")
+                {
+                    using (var db = new GoninDigitalDBContext())
+                    {
+                            List = new ObservableCollection<Brand>(db.Brands);
+                    }
+                    int count = 0;
+                    while(count<List.Count())
+                    {
+                        if (!List[count].Name.ToLower().Contains(s))
+                                List.RemoveAt(count);
+                        else
+                            count += 1;
+                    }
+                }
+            }
+        #endregion
     }
 }
