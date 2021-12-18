@@ -22,7 +22,10 @@
                                    AutomationProperties.Name="Search"
                                    Width="300"
                                    HorizontalAlignment="Left"
-                                   Margin="20"/>
+                                   Margin="20"
+                                   Text="{Binding SearchName,Mode=TwoWay}"
+                                   TextChanged="AutoSuggestBox_TextChanged"
+                                   QuerySubmitted="AutoSuggestBox_QuerySubmitted"/>
                 <Button Content="New User" 
                         Margin="5"
                         Command="{Binding AddCommand}"/>
