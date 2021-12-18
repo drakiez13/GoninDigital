@@ -12,6 +12,13 @@ namespace GoninDigital.ViewModels
 {
     public class UsersViewModel : BaseViewModel
     {
+        #region Properties
+        private string searchName;
+        public string SearchName
+        {
+            get { return searchName; }
+            set { searchName = value; OnPropertyChanged(); }
+        }
         private ObservableCollection<User> list;
         public ObservableCollection<User> List { get { return list; } set { list = value; OnPropertyChanged(); } }
         private User selectedItem;
@@ -20,6 +27,7 @@ namespace GoninDigital.ViewModels
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand AddCommand { get; set; }
+        #endregion
         public UsersViewModel()
         {
             using (var db = new GoninDigitalDBContext())
@@ -86,7 +94,36 @@ namespace GoninDigital.ViewModels
             #endregion
 
         }
-
-
+        #region Methods
+        public void SearchChanged()
+        {
+            if (SearchName == "")
+            {
+                using (var db = new GoninDigitalDBContext())
+                {
+                    List = new ObservableCollection<User>(db.Users);
+                }
+            }
+        }
+        public void SearchUser()
+        {
+            string s = SearchName.ToLower();
+            if (SearchName != "")
+            {
+                using (var db = new GoninDigitalDBContext())
+                {
+                    List = new ObservableCollection<User>(db.Users);
+                }
+                int count = 0;
+                while (count < List.Count())
+                {
+                    if (!List[count].UserName.ToLower().Contains(s) & !List[count].FirstName.ToLower().Contains(s) & !List[count].LastName.ToLower().Contains(s))
+                        List.RemoveAt(count);
+                    else
+                        count += 1;
+                }
+            }
+        }
+        #endregion
     }
 }
