@@ -110,6 +110,10 @@ namespace GoninDigital.Views
             {
                 shopItem.IsSelected = true;
             }
+            else if (desType==typeof(AdsPage))
+            {
+                adsItem.IsSelected = true;
+            }
 
         }
         private void NavigationViewItem_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
