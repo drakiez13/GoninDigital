@@ -11,10 +11,10 @@
       d:DesignHeight="450" d:DesignWidth="800"
       DataContext="{StaticResource UsersVM}"
       Title="UserPage">
-    <Grid>
+    <Grid VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid>
             <StackPanel Orientation="Horizontal">
@@ -27,13 +27,13 @@
                                    TextChanged="AutoSuggestBox_TextChanged"
                                    QuerySubmitted="AutoSuggestBox_QuerySubmitted"/>
                 <Button Content="New User" 
-                        Margin="5"
+                        Margin="5,-10,0,0"
                         Command="{Binding AddCommand}"/>
                 <Button Content="Update" 
-                        Margin="5"
+                        Margin="20,-10,0,0"
                         Command="{Binding UpdateCommand}"/>
                 <Button Content="Delete" 
-                        Margin="5"
+                        Margin="20,-10,0,0"
                         Command="{Binding DeleteCommand}"/>
             </StackPanel>
         </Grid>
