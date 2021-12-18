@@ -67,6 +67,7 @@ namespace GoninDigital.Views.SharedPages
                     .Include(o => o.Brand)
                     .Include(o => o.ProductSpecDetails)
                     .ThenInclude(o => o.Spec)
+                    .Include(o => o.Vendor)
                     .First(o => o.Id == product.Id);
             }
             

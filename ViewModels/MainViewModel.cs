@@ -20,7 +20,7 @@ namespace GoninDigital.ViewModels
         public ICommand LoadedWidnowCommand { get; set; }
         public MainViewModel()
         {
-            if(Settings.Default.accentColor != "")
+            if (Settings.Default.accentColor != "")
             {
                 ThemeManagerProxy.Current.AccentColor = (Color)ColorConverter.ConvertFromString(Settings.Default.accentColor);
             }
@@ -35,7 +35,8 @@ namespace GoninDigital.ViewModels
                     ThemeManagerProxy.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
                 }
             }
-            LoadedWidnowCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
+            LoadedWidnowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
                 //initialize the splash screen and set it as the application main window
                 WindowManager.ChangeWindowContent(p, "", "GoninDigital.Views.SplashScreenView");
 
@@ -66,11 +67,12 @@ namespace GoninDigital.ViewModels
                     //to create and show the main window
                     p.Dispatcher.Invoke(() =>
                     {
+
                         //initialize the main window, set it as the application main window
                         //and close the splash screen
-                        if (Settings.Default.usrname != "")
+                        if (Settings.Default.usrname != "" && Settings.Default.passwod != "")
                         {
-                            using(var db = new GoninDigitalDBContext())
+                            using (var db = new GoninDigitalDBContext())
                             {
                                 if (db.Users.FirstOrDefault(o => o.UserName == Settings.Default.usrname).TypeId == (int)Constants.UserType.ADMIN)
                                 {
@@ -83,16 +85,18 @@ namespace GoninDigital.ViewModels
                                     WindowManager.ChangeWindowContent(p, dashboardWindow, Resources.HomepageWindowTitle, Resources.HomepageControlPath);
                                 }
                             }
-                            
+
                         }
                         else //login
                         {
                             //var loginWindow = new LoginViewModel(p);
                             WindowManager.ChangeWindowContent(p, Resources.LoginWindowTitle, Resources.LoginControlPath);
                         }
+
+
                     });
                 });
-            }); 
+            });
         }
     }
 }

@@ -150,12 +150,12 @@
                             Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal"
                                 Margin="0 0 40 0">
-                        <Label Content="Rating: " />
-                        <Label Content="0" />
+                        <!--<Label Content="Rating: " />
+                        <Label Content="0" />-->
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Products: " />
-                        <Label Content="0" />
+                        <!--<Label Content="Products: " />
+                        <Label Content="0" /> -->
                     </StackPanel>
                 </StackPanel>
             </Grid>

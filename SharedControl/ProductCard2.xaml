@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="GoninDigital.SharedControl.ProductCard2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:GoninDigital.SharedControl"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             mc:Ignorable="d"
+             Height="120"
+             Width="800"
+             Name="productCard"
+             MouseLeftButtonUp="OnClick">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Border}"
+               x:Key="BorderMouseOver">
+            <Setter Property="BorderBrush"
+                    Value="Transparent"></Setter>
+            <Setter Property="BorderThickness"
+                    Value="2"></Setter>
+            <Setter Property="Background"
+                    Value="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                             Value="True">
+                    <Setter Property="BorderBrush"
+                            Value="{DynamicResource SystemControlBackgroundAccentBrush}"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Border Style="{DynamicResource BorderMouseOver}">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="14"
+                              ShadowDepth="0"
+                              Opacity="0.4"
+                              Color="{DynamicResource SystemBaseMediumHighColor}" />
+        </Border.Effect>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0"
+                   HorizontalAlignment="Left"
+                   Height="120"
+                   Width="120"
+                   Margin="0,0,0,0"
+                   VerticalAlignment="Top"
+                   Source="{Binding ProductInfo.Image, ElementName=productCard}"
+                   Stretch="UniformToFill" />
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="440"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="140"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0"
+                            Orientation="Vertical"
+                            HorizontalAlignment="Left">
+                    <TextBlock Margin="10 10 10 0"
+                               HorizontalAlignment="Left"
+                               Text="{Binding ProductInfo.Name, ElementName=productCard}"
+                               TextWrapping="WrapWithOverflow"
+                               MaxWidth="380"
+                               FontSize="14"
+                               FontWeight="Bold"
+                               RibbonTwoLineText.HasTwoLines="True">
+                    </TextBlock>
+                    <TextBlock Text="{Binding ProductInfo.Description, ElementName=productCard}"
+                               Margin="10 0 0 0"
+                               Foreground="{DynamicResource SystemControlBackgroundBaseMediumBrush}" />
+                    <Label Content="{Binding ProductInfo.Vendor.Name, ElementName=productCard}"
+                           FontSize="10"
+                           Margin="10 19 0 0"
+                           Foreground="{DynamicResource SystemControlBackgroundBaseMediumBrush}">
+                    </Label>
+                    <ui:RatingControl HorizontalAlignment="Left"
+                                      Margin="10 5 10 0"
+                                      Caption="{Binding ProductInfo.NRating, ElementName=productCard}"
+                                      Value="{Binding ProductInfo.Rating, ElementName=productCard}"
+                                      IsReadOnly="True">
+                        <ui:RatingControl.LayoutTransform>
+                            <ScaleTransform ScaleX="0.9"
+                                            ScaleY="0.9"></ScaleTransform>
+                        </ui:RatingControl.LayoutTransform>
+                    </ui:RatingControl>
+
+                </StackPanel>
+                <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right">
+                            <Run TextDecorations="Strikethrough"
+                                 Text="{Binding ProductInfo.OriginPrice, StringFormat=C, ConverterCulture=vi-VN, ElementName=productCard}"
+                                 FontSize="14" />
+                </TextBlock>
+                <TextBlock Grid.Column="2"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Margin="0 0 10 0"
+                           Text="{Binding ProductInfo.Price, StringFormat=C, ConverterCulture=vi-VN, ElementName=productCard}"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource SystemControlForegroundAccentBrush}"></TextBlock>
+
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>
