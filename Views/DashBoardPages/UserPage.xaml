@@ -11,6 +11,7 @@
       Title="UserPage">
     <ScrollViewer>
         <Grid>
+           
             <Grid.RowDefinitions>
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="*"/>
@@ -40,6 +41,7 @@
                                       ProfilePicture="{Binding User.Avatar}"
                                       Height="150"
                                       Width="150"/>
+                        
                         <StackPanel Margin="0 20 0 0"
                                     Orientation="Horizontal"
                                     HorizontalAlignment="Center">
@@ -62,14 +64,14 @@
 
                     </StackPanel>
                     <Grid Grid.Row="1"
-                      Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
-                      Margin="0 10 0 0 ">
+                          Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
+                          Margin="0 10 0 0 ">
                         <StackPanel Margin="15 0 0 0">
                             <Grid Margin="0 20 0 0">
-                                <Label Content="Following"
+                                <Label Content="User Name"
                                    FontSize="16"
                                    FontWeight="DemiBold"/>
-                                <Label Content="20"
+                                <Label Content="{Binding User.UserName}"
                                    HorizontalAlignment="Right"
                                    FontSize="18"
                                    Margin="0 0 20 0"/>
@@ -83,11 +85,11 @@
                                    FontSize="18"
                                    Margin="0 0 20 0"/>
                             </Grid>
+                            <Button Content="Change Password"
+                                    HorizontalAlignment="Center"
+                                    Margin="0 30 0 0"
+                                    Command="{Binding ChangePasswordCommand}"/>
                         </StackPanel>
-                        <!--<Button Content="Upgrade Account To Vendor"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Bottom"
-                            Margin="0 0 0 15"/>-->
                     </Grid>
 
                 </Grid>
@@ -116,13 +118,20 @@
                                  Text="{Binding User.LastName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                  IsReadOnly="{Binding Flag}"/>
                         </StackPanel>
-                        <TextBox ui:ControlHelper.Header="User Name"
+                        <TextBox ui:ControlHelper.Header="Phone Number"
+                             FontSize="16"
+                             Width="500"
+                             Margin="0 20 0 0"
+                             HorizontalAlignment="Left"
+                             Text="{Binding User.PhoneNumber, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             IsReadOnly="{Binding Flag}"/>
+                        <TextBox ui:ControlHelper.Header="Email"
+                             FontSize="16"
                              Margin="0 20 0 0"
                              Width="500"
                              HorizontalAlignment="Left"
-                             FontSize="16"
-                             Text="{Binding User.UserName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                             IsReadOnly="{Binding Flag}"/>
+                             Text="{Binding User.Email, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             IsReadOnly="{Binding Flag }"/>
                         <StackPanel Orientation="Horizontal"
                                 Margin="0 20 0 0">
                             <ComboBox x:Name="cbGender"
@@ -141,23 +150,10 @@
                                     IsHitTestVisible="{Binding Flag, Converter={StaticResource BooleantoCombobox}}" />
                         </StackPanel>
 
-                        <TextBox ui:ControlHelper.Header="Phone Number"
-                             FontSize="16"
-                             Width="500"
-                             Margin="0 20 0 0"
-                             HorizontalAlignment="Left"
-                             Text="{Binding User.PhoneNumber, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             IsReadOnly="{Binding Flag}"/>
-                        <TextBox ui:ControlHelper.Header="Email"
-                             FontSize="16"
-                             Margin="0 20 0 0"
-                             Width="500"
-                             HorizontalAlignment="Left"
-                             Text="{Binding User.Email, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             IsReadOnly="{Binding Flag }"/>
+                        
 
                         <StackPanel Margin="0 20 0 0"
-                                Orientation="Horizontal">
+                                    Orientation="Horizontal">
                             <ui:AppBarButton x:Name="Btn_Save" Icon="Save" Label="Save"
                                          Command="{Binding SavePCommand}"
                                          Visibility="{Binding Flag}"/>

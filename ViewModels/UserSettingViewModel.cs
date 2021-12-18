@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
-using System.ComponentModel;
-using System.Windows.Controls;
 using GoninDigital.Models;
-using GoninDigital.Utils;
-using GoninDigital.Views.DashBoardPages;
 using GoninDigital.Properties;
+using Microsoft.EntityFrameworkCore;
+using GoninDigital.SharedControl;
 using ModernWpf.Controls;
+using System.Windows.Input;
 using Microsoft.Win32;
-using System.IO;
 using GoninDigital.Utils;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace GoninDigital.ViewModels
 {
@@ -38,6 +39,12 @@ namespace GoninDigital.ViewModels
             get { return gender; }
             set { gender = value; OnPropertyChanged(); }
         }
+        private ContentDialog changePassDialog;
+        public ContentDialog ChangePassDialog
+        {
+            get { return changePassDialog; }
+            set { changePassDialog = value;}
+        }
         public bool CanSave => !string.IsNullOrEmpty(User.Email) &&
             !string.IsNullOrEmpty(User.FirstName) &&
             !string.IsNullOrEmpty(User.LastName) &&
@@ -48,6 +55,24 @@ namespace GoninDigital.ViewModels
         {
             get { return user; }
             set { user = value; OnPropertyChanged(); }
+        }
+        private string oldPassword = "huy";
+        public string OldPassword
+        {
+            get { return oldPassword; }
+            set { oldPassword = value; OnPropertyChanged(); }
+        }
+        private string newPassword;
+        public string NewPassword
+        {
+            get { return newPassword; }
+            set { newPassword = value; OnPropertyChanged(); }
+        }
+        private string confirmNewPassword;
+        public string ConfirmNewPassword
+        {
+            get { return confirmNewPassword; }
+            set { confirmNewPassword = value; OnPropertyChanged(); }
         }
         private string userType;
         public string UserType
@@ -67,6 +92,8 @@ namespace GoninDigital.ViewModels
         public ICommand SavePCommand { get; set; }
         public ICommand CancelPCommand { get; set; }
         public ICommand EditAvatarCommand { get; set; }
+        public ICommand ChangePasswordCommand { get; set; }
+        public ICommand CancelDialogCommand { get; set; }
         #endregion
         #region Constructor
         public UserSettingViewModel()
@@ -74,10 +101,12 @@ namespace GoninDigital.ViewModels
             Flag = true;
             load_page();
             EditPCommand = new RelayCommand<Window>((p) => { return Flag; }, (p) => { EditPExecute(); });
-            ResetPCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ResetPExecute(); });
-            SavePCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { SavePExecute(); });
-            CancelPCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { CancelPExecute(); });
+            ResetPCommand = new RelayCommand<Window>((p) => { return !Flag; }, (p) => { load_page(); });
+            SavePCommand = new RelayCommand<Window>((p) => { return !Flag; }, (p) => { SavePExecute(); });
+            CancelPCommand = new RelayCommand<Window>((p) => { return !Flag; }, (p) => { CancelPExecute(); });
             EditAvatarCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { EditAvatarExecute(); });
+            ChangePasswordCommand = new RelayCommand<object>((p) => { return true; }, (p) => { ChangePasswordExecute(); });
+            CancelDialogCommand = new RelayCommand<object>((p) => { return true; }, (p) => { changePassDialog.Hide(); });
         }
         #endregion
         #region Private Methods
@@ -101,25 +130,36 @@ namespace GoninDigital.ViewModels
             }
 
         }
+        public void ChangePasswordExecute()
+        {
+            if (changePassDialog == null)
+            {
+                changePassDialog = new ContentDialog()
+                {
+
+                    CloseButtonText = "Close",
+                    Content = new ChangePasswordDialog(),
+                    Title = "Change Password",
+                };
+            }
+            changePassDialog.ShowAsync();
+        }
         void EditPExecute()
         {
             Flag = false;
         }
         void CancelPExecute()
         {
+
             Flag = true;
-        }
-        void ResetPExecute()
-        {
-            load_page();
         }
         private void load_page()
         {
             using (var db = new GoninDigitalDBContext())
             {
-                user = db.Users.Where(x => x.UserName == Settings.Default.usrname).First();
-                userType = db.UserTypes.First(x => x.Id == user.TypeId).Name;
-                gender = user.Gender.ToString();
+                User = db.Users.Where(x => x.UserName == Settings.Default.usrname).First();
+                UserType = db.UserTypes.First(x => x.Id == user.TypeId).Name;
+                Gender = user.Gender.ToString();
                 Email = user.Email;
             }
         }
