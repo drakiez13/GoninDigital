@@ -8,12 +8,13 @@
              mc:Ignorable="d"
              Name="vendorAvatar"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <StackPanel>
         <ui:PersonPicture MouseUp="OnClick"
                           ProfilePicture="{Binding VendorInfo.Avatar, ElementName=vendorAvatar}"></ui:PersonPicture>
+        
         <Label Margin="0 5 0 0"
                Content="{Binding VendorInfo.Name, ElementName=vendorAvatar}"
                FontWeight="Bold"
                HorizontalAlignment="Center"></Label>
-    </Grid>
+    </StackPanel>
 </UserControl>

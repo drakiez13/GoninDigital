@@ -10,6 +10,7 @@ using GoninDigital.Models;
 using GoninDigital.Views;
 using GoninDigital.Views.SharedPages;
 using Microsoft.EntityFrameworkCore;
+using GoninDigital.Utils;
 
 namespace GoninDigital.ViewModels
 {
@@ -83,6 +84,7 @@ namespace GoninDigital.ViewModels
                 List<Product> randomProducts = await db.Products
                     .Include(x => x.Vendor)
                     .Include(x => x.Brand)
+                    .Where(o => o.Status.Id == (int)Constants.ProductStatus.ACCEPTED)
                     .OrderBy(o => Guid.NewGuid()).Take(20).ToListAsync();
 
                 // Top products
@@ -97,7 +99,9 @@ namespace GoninDigital.ViewModels
 
                 var tmp = topInvoiceDetails.Select(o => o.Key);
 
-                var fetchedProducts = await db.Products.Where(o => tmp.Contains(o.Id)).ToListAsync();
+                var fetchedProducts = await db.Products
+                    .Where(o => tmp.Contains(o.Id) && o.StatusId == (int)Constants.ProductStatus.ACCEPTED)
+                    .ToListAsync();
                 if (fetchedProducts.Count < 20)
                     fetchedProducts.AddRange(randomProducts.Take(20 - fetchedProducts.Count));
                 else
@@ -109,13 +113,14 @@ namespace GoninDigital.ViewModels
                 RecommendedProducts = await db.Products
                     .Include(x => x.Vendor)
                     .Include(x => x.Brand)
+                    .Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED)
                     .OrderBy(o => Guid.NewGuid()).Take(20).ToListAsync();
 
                 // Discount Products
                 fetchedProducts = await db.Products
                     .Include(x => x.Vendor)
                     .Include(x => x.Brand)
-                    .Where(o => o.Price != o.OriginPrice)
+                    .Where(o => o.Price != o.OriginPrice && o.StatusId == (int)Constants.ProductStatus.ACCEPTED)
                     .OrderByDescending(o => o.UpdatedAt).ToListAsync();
 
                 if (fetchedProducts.Count < 20)

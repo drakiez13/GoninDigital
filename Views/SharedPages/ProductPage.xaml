@@ -131,6 +131,7 @@
                 <Grid Margin="20 0 0 0"
                       VerticalAlignment="Center">
                     <ui:PersonPicture ProfilePicture="{Binding ProductInfo.Vendor.Avatar}"
+                                      MouseUp="PersonPicture_MouseUp"
                                       VerticalAlignment="Top"
                                       HorizontalAlignment="Left"
                                       Width="50"

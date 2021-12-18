@@ -178,5 +178,10 @@ namespace GoninDigital.Views.SharedPages
                 }
             }
         }
+
+        private void PersonPicture_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            DashBoard.RootFrame.Navigate(new ShopPage(ProductInfo.Vendor.Id));
+        }
     }
 }
