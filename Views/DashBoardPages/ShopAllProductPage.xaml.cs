@@ -24,6 +24,7 @@ namespace GoninDigital.Views.DashBoardPages
         private Dictionary<string, Page> pages;
         public ShopAllProductPage()
         {
+            this.DataContext = new MyShopViewModel();
             InitializeComponent();
             pages = new Dictionary<string, Page>();
         }

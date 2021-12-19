@@ -7,7 +7,6 @@
       xmlns:ui="http://schemas.modernwpf.com/2019"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      DataContext="{StaticResource MyShopPageVM}"
       Title="AboutTab">
     <ScrollViewer>
         <Grid>
