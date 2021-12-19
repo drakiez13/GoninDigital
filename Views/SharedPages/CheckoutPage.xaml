@@ -32,7 +32,7 @@
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                <Grid>
+                <Grid >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="70" />
                         <RowDefinition Height="*" />
@@ -41,14 +41,13 @@
                            FontSize="22"
                            Margin="0 20 0 20"
                            FontWeight="Bold" />
-                    <StackPanel Grid.Row="1">
-                        <Label Content="Your order"
-                               FontSize="18" />
+                    <Grid Grid.Row="1"
+                          Background="{StaticResource SystemControlBackgroundChromeMediumBrush}">
+                        <StackPanel Width="620">
                         <ui:ListView ItemsSource="{Binding Source={StaticResource ProductsCVS}}"
                                      Grid.Row="1"
                                      HorizontalAlignment="Center"
                                      IsSelectionEnabled="False"
-                                     Width="550"
                                      VirtualizingPanel.IsVirtualizing="True"
                                      VirtualizingPanel.IsVirtualizingWhenGrouping="True">
                             <ui:ListView.GroupStyle>
@@ -72,6 +71,7 @@
                                     </GroupStyle.HeaderTemplate>
                                 </GroupStyle>
                             </ui:ListView.GroupStyle>
+                            
                             <ui:ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Vertical"></StackPanel>
@@ -126,55 +126,65 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ui:ListView>
+                        <Border>
+                                
+                        </Border>
                         <StackPanel Orientation="Horizontal"
-                                    HorizontalAlignment="Right"
-                                    Margin="0 0 50 0">
-                            <Label Content="Total "
+                                    Margin="0 20 10 0"
+                                    HorizontalAlignment="Right">
+                            <Label Content="Total: "
+                                   FontSize="26"
                                    Margin="2"
                                    VerticalAlignment="Center" />
-                            <TextBlock Margin="2"
-                                       FontWeight="Bold"
+                            <TextBlock FontWeight="Bold"
                                        FontSize="28"
                                        Foreground="{DynamicResource SystemControlForegroundAccentBrush}"
                                        VerticalAlignment="Center"
                                        Text="{Binding Products, Converter={StaticResource SumProductsPrice}, 
                                               StringFormat=C, ConverterCulture=vi-VN}">
-
                             </TextBlock>
                         </StackPanel>
                     </StackPanel>
+                    </Grid>
+                    
                 </Grid>
                 <Grid Grid.Column="1"
-                      Margin="20 70 0 0">
+                      Background="{StaticResource SystemControlBackgroundChromeMediumBrush}"
+                      Margin="20 70 20 0">
 
                     <ui:SimpleStackPanel Spacing="12"
-                                         Margin="10 0 20 0">
-                        <Label Grid.Row="1"
-                               Content="Shipping info"
-                               FontSize="18" />
-                        <ui:SimpleStackPanel Orientation="Horizontal"
-                                             HorizontalAlignment="Center">
-                            <TextBox ui:ControlHelper.Header="First name"
-                                     Width="130"
-                                     Text="{Binding User.FirstName}" />
-                            <TextBox ui:ControlHelper.Header="Last name"
-                                     Width="130"
-                                     Text="{Binding User.LastName}" />
-                        </ui:SimpleStackPanel>
+                                         Margin="20 20 20 0">
+
+                        <TextBox ui:ControlHelper.Header="First name"
+                                    Width="auto"
+                                    Text="{Binding User.FirstName}" />
+                        <TextBox ui:ControlHelper.Header="Last name"
+                                    Width="auto"
+                                    Text="{Binding User.LastName}" />
 
                         <TextBox ui:ControlHelper.Header="Phone"
-                                 Text="{Binding User.PhoneNumber}" />
+                                Text="{Binding User.PhoneNumber}" />
                         <TextBox ui:ControlHelper.Header="Email"
                                  Text="{Binding User.Email}" />
                         <TextBox ui:ControlHelper.Header="Address"
                                  Text="{Binding User.FirstName}" />
-                        <ui:SimpleStackPanel Orientation="Horizontal"
-                                             HorizontalAlignment="Center">
-                            <Button Margin="0 0 50 0"
+                        <Grid Margin="0 20 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Margin="10 0 5 0"
+                                    Width="120"
+                                    Background="{DynamicResource SystemControlHighlightAltListAccentHighBrush}"
+                                    HorizontalAlignment="Left"
                                     Command="{Binding CancelButton}">Cancel</Button>
-                            <Button
-                                Command="{Binding OrderButton}">Order</Button>
-                        </ui:SimpleStackPanel>
+                            <Button Width="120"
+                                    HorizontalAlignment="Right"
+                                    Grid.Column="1"
+                                    Margin="0 0 10 0"
+                                    Background="{DynamicResource SystemControlHighlightAltListAccentHighBrush}"
+                                    Command="{Binding OrderButton}">Order</Button>
+                        </Grid>
                     </ui:SimpleStackPanel>
                 </Grid>
             </Grid>

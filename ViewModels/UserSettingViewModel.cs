@@ -56,7 +56,7 @@ namespace GoninDigital.ViewModels
             get { return user; }
             set { user = value; OnPropertyChanged(); }
         }
-        private string oldPassword = "huy";
+        private string oldPassword;
         public string OldPassword
         {
             get { return oldPassword; }
@@ -126,6 +126,7 @@ namespace GoninDigital.ViewModels
                     User.Avatar = linkAvatar;
                     db.Users.Update(User);
                     _ = db.SaveChanges();
+                    User = db.Users.Where(x => x.UserName == Settings.Default.usrname).First();
                 }
             }
 

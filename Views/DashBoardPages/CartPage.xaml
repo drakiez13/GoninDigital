@@ -189,17 +189,11 @@
             Visibility="{Binding Products.Count,
                         Converter={StaticResource ListCountToVisibility},
                         ConverterParameter=False}">
-            <TextBlock FontSize="24"
-                       HorizontalAlignment="Center"
-                       Foreground="{DynamicResource SystemControlBackgroundBaseMediumLowBrush}">
-                You have not added any products to cart yet.
-            </TextBlock>
-            <TextBlock FontSize="20"
-                       HorizontalAlignment="Center"
-                       Foreground="{DynamicResource SystemControlBackgroundBaseMediumLowBrush}"
-                       >
-                Let's shopping now :)
-            </TextBlock>
+            <Label Content="You have not added any products to cart yet."/>
+            <Label HorizontalAlignment="Center"
+                   Content="Let's shopping now "/>
+
+
         </ui:SimpleStackPanel>
     </Grid>
 </ui:Page>
