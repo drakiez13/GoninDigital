@@ -17,8 +17,8 @@ namespace GoninDigital.ViewModels
         public Ad SelectedAd
         { get { return selectedAd; } set { selectedAd = value; OnPropertyChanged(); } }
         public ICommand DeleteCommand { get; set; }
-        private List<Product> adProducts = null;
-        public List<Product> AdProducts
+        private ObservableCollection<Product> adProducts = null;
+        public ObservableCollection<Product> AdProducts
         {
             get { return adProducts; }
             set { adProducts = value; OnPropertyChanged(); }
@@ -35,6 +35,7 @@ namespace GoninDigital.ViewModels
             get { return searchName; }
             set { searchName = value; OnPropertyChanged(); }
         }
+        public ICommand ProductDeleteCommand { get; set; }
         public AdsPageViewModel()
         {
             using (var db = new GoninDigitalDBContext())
@@ -52,8 +53,9 @@ namespace GoninDigital.ViewModels
             {
                 DeleteExec();
             });
+            ProductDeleteCommand = new RelayCommand<Product>(p=> true, p => { DeleteProductExec(p); });
             SelectedAd = new Ad();
-            AdProducts = new List<Product>();
+            AdProducts = new ObservableCollection<Product>();
         }
         private void DeleteExec()
         {
@@ -78,50 +80,70 @@ namespace GoninDigital.ViewModels
                 db.SaveChanges();
             }
             SelectedAd = new Ad();
-            AdProducts = new List<Product>();
+            AdProducts = new ObservableCollection<Product>();
         }
-            public async void Load_Ads()
+        private void DeleteProductExec(Product product)
+        {
+            try
             {
                 using (var db = new GoninDigitalDBContext())
                 {
-                    if(SelectedAd!=null)
-                        AdProducts = new List<Product>(await db.AdDetails.Where(o => o.AdId == SelectedAd.Id)
-                                                    .Include(x => x.Product.Vendor)
-                                                    .Include(x => x.Product.Brand)
-                                                    .Select(o => o.Product)
-                                                    .ToListAsync());
+                    db.AdDetails.Remove(db.AdDetails.First(o => o.ProductId == product.Id && o.AdId == selectedAd.Id));
+                    AdProducts.Remove(product);
+                    AdProducts = AdProducts;
+                    db.SaveChanges();
                 }
             }
-            public void SearchChanged()
+            catch (Exception ex)
             {
-                if (SearchName == "")
-                {
-                    using (var db = new GoninDigitalDBContext())
-                    {
-                        L_Ads = new ObservableCollection<Ad>(db.Ads);
-                    }
-                }
+
             }
-            public void SearchAd()
+            
+        }
+        public async void Load_Ads()
+        {
+            using (var db = new GoninDigitalDBContext())
             {
-                string s = SearchName.ToLower();
-                if (SearchName != "")
+                if (SelectedAd != null)
+                    AdProducts = new ObservableCollection<Product>(await db.AdDetails.Where(o => o.AdId == SelectedAd.Id)
+                                                .Include(x => x.Product.Vendor)
+                                                .Include(x => x.Product.Brand)
+                                                .Select(o => o.Product)
+                                                .ToListAsync());
+            }
+        }
+        public void SearchChanged()
+        {
+            if (SearchName == "")
+            {
+                using (var db = new GoninDigitalDBContext())
                 {
-                    using (var db = new GoninDigitalDBContext())
-                    {
-                        L_Ads = new ObservableCollection<Ad>(db.Ads);
-                    }
-                    int count = 0;
-                    while (count < L_Ads.Count())
-                    {
-                        if (!L_Ads[count].Title.ToLower().Contains(s))
-                            L_Ads.RemoveAt(count);
-                        else
-                            count += 1;
-                    }
+                    L_Ads = new ObservableCollection<Ad>(db.Ads);
                 }
             }
         }
+        public void SearchAd()
+        {
+            string s = SearchName.ToLower();
+            if (SearchName != "")
+            {
+                using (var db = new GoninDigitalDBContext())
+                {
+                    L_Ads = new ObservableCollection<Ad>(db.Ads);
+                }
+                int count = 0;
+                while (count < L_Ads.Count())
+                {
+                    if (!L_Ads[count].Title.ToLower().Contains(s))
+                        L_Ads.RemoveAt(count);
+                    else
+                        count += 1;
+                }
+            }
+        }
+
+
     }
+}
 
 
