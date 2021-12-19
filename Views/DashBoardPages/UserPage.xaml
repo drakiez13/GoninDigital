@@ -102,10 +102,9 @@
                   HorizontalAlignment="Left"
                   Background="{StaticResource SystemControlBackgroundChromeMediumBrush}">
                     <StackPanel Margin="0 20 0 0"
-                            HorizontalAlignment="Center">
-
+                                HorizontalAlignment="Center">
                         <StackPanel Orientation="Horizontal"
-                                Margin="0 10 0 0">
+                                    HorizontalAlignment="Center">
                             <TextBox ui:ControlHelper.Header="First Name"
                                  FontSize="16"
                                  Width="200"
@@ -118,6 +117,7 @@
                                  Text="{Binding User.LastName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                  IsReadOnly="{Binding Flag}"/>
                         </StackPanel>
+                        
                         <TextBox ui:ControlHelper.Header="Phone Number"
                              FontSize="16"
                              Width="500"
@@ -132,34 +132,29 @@
                              HorizontalAlignment="Left"
                              Text="{Binding User.Email, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              IsReadOnly="{Binding Flag }"/>
-                        <StackPanel Orientation="Horizontal"
-                                Margin="0 20 0 0">
-                            <ComboBox x:Name="cbGender"
-                                  Width="200"
+                        <ComboBox x:Name="cbGender"
+                                  Width="500"
+                                  Margin="0 20 0 0"
                                   FontSize="16"
                                   ui:ControlHelper.Header="Gender"
                                   ItemsSource="{Binding LGender}"
                                   SelectedIndex="{Binding Gender}"
                                   IsHitTestVisible="{Binding Flag, Converter={StaticResource BooleantoCombobox}}"/>
-                            <DatePicker x:Name="dpDoB"
+                        <DatePicker x:Name="dpDoB"
                                     ui:ControlHelper.Header="Date Of Birth"
                                     FontSize="16"
-                                    Width="200"
-                                    Margin="100 0 0 0"
+                                    Width="500"
+                                    Margin="0 20 0 0"
                                     SelectedDate="{Binding User.DateOfBirth, UpdateSourceTrigger=PropertyChanged}" DisplayDate="2021-11-10" 
                                     IsHitTestVisible="{Binding Flag, Converter={StaticResource BooleantoCombobox}}" />
-                        </StackPanel>
 
-                        
+
 
                         <StackPanel Margin="0 20 0 0"
                                     Orientation="Horizontal">
                             <ui:AppBarButton x:Name="Btn_Save" Icon="Save" Label="Save"
                                          Command="{Binding SavePCommand}"
                                          Visibility="{Binding Flag}"/>
-                            <ui:AppBarButton Icon="Refresh" Label="Reset" 
-                                               Command="{Binding ResetPCommand}"
-                                               Visibility="{Binding Flag}"/>
                             <ui:AppBarButton Icon="Cancel" Label="Cancel" 
                                                Margin="0 0 20 0"
                                                Command="{Binding CancelPCommand}"
