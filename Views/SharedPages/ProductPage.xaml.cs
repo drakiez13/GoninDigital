@@ -91,10 +91,15 @@ namespace GoninDigital.Views.SharedPages
                     userRating = 0;
                 }
             }
-
-            OldProduct.Push(product);
             
             InitializeComponent();
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            if (e.NavigationMode != NavigationMode.Back)
+                OldProduct.Push(ProductInfo);
         }
 
         public ProductPage() : this(OldProduct.Pop()) { }

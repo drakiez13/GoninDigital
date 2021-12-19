@@ -35,6 +35,7 @@ namespace GoninDigital.Views.SharedPages
         public string PageTitle { get; set; }
         public string Subtitle { get; set; }
         public string Cover { get; set; }
+        private Parameter parameters;
 
         public ProductListPage(Parameter parameters)
         {
@@ -43,9 +44,16 @@ namespace GoninDigital.Views.SharedPages
             Subtitle = parameters.subtitle;
             Cover = parameters.cover;
 
-            OldParameters.Push(parameters);
+            this.parameters = parameters;
 
             InitializeComponent();
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            if (e.NavigationMode != NavigationMode.Back)
+                OldParameters.Push(parameters);
         }
 
         public ProductListPage() : this(OldParameters.Pop()) { }

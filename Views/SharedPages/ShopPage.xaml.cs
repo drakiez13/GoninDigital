@@ -59,10 +59,14 @@ namespace GoninDigital.Views.SharedPages
                 }
 
             }
-
-            OldVendorId.Push(vendorId);
-
             InitializeComponent();
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            if (e.NavigationMode != NavigationMode.Back)
+                OldVendorId.Push(Vendor.Id);
         }
 
         public ShopPage() : this(OldVendorId.Pop()) { }

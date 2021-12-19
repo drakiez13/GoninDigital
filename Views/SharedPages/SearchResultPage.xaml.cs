@@ -51,8 +51,14 @@ namespace GoninDigital.Views.SharedPages
                 Vendors = vendorResult;
             }
 
-            OldQuery.Push(query);
             InitializeComponent();
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            if (e.NavigationMode != NavigationMode.Back)
+                OldQuery.Push(Query);
         }
 
         public SearchResultPage() : this(OldQuery.Pop()) { }
