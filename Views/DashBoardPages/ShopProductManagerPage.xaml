@@ -9,7 +9,6 @@
       xmlns:uc="clr-namespace:GoninDigital.SharedControl"
       mc:Ignorable="d"
       d:DesignWidth="1000"
-      DataContext="{StaticResource MyShopPageVM}"
       Title="ProductManagerTab">
     <ui:Page.Resources>
         <CollectionViewSource x:Key="ProductsCVS"
