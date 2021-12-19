@@ -13,7 +13,7 @@
             <StackPanel Orientation="Horizontal">
                 <ui:PersonPicture VerticalAlignment="Top"
                                   Margin="20 0 0 0"
-                                  ProfilePicture="{Binding SelectedItem.Image, UpdateSourceTrigger=PropertyChanged}"
+                                  ProfilePicture="{Binding SelectedItem.Image}"
                                   Height="80"
                                   Width="80">
 

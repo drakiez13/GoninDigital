@@ -239,6 +239,7 @@ namespace GoninDigital.ViewModels
                         SelectedItem.StatusId = (int)Constants.ProductStatus.REMOVED;
                         db.Update(SelectedItem);
                         ProductCreated.Remove(SelectedItem);
+                        db.Remove(SelectedItem);
                     }
                     
                     _ = db.SaveChanges();
@@ -341,6 +342,7 @@ namespace GoninDigital.ViewModels
 
                     db.Update(SelectedItem);
                     _ = db.SaveChanges();
+                    SelectedItem = selectedItem;
                 }
             }
         }
@@ -416,7 +418,9 @@ namespace GoninDigital.ViewModels
                 db.ProductSpecDetails.AddRange(selectedProductSpecs);
                 db.Entry(SelectedItem).State = EntityState.Modified;
                 db.SaveChanges();
-                
+                SelectedItem = selectedItem;
+                Products = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).ToList());
+                ProductCreated = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.CREATED).ToList());
             }
 
         }
@@ -472,10 +476,12 @@ namespace GoninDigital.ViewModels
                         {
                             o.Spec = null;
                         });
+                        
                         db.ProductSpecDetails.AddRange(SelectedProductSpecs);
                         db.Entry(SelectedItem).State = EntityState.Modified;
                         db.SaveChanges();
-                        
+                        SelectedItem = selectedItem;
+                       
                     }
                     catch
                     {
@@ -498,7 +504,7 @@ namespace GoninDigital.ViewModels
                 if (selectedItem != null)
                 {
                     db.Products.Remove(selectedItem);
-                    Products.Remove(selectedItem);
+                    ProductCreated.Remove(selectedItem);
                     db.SaveChanges();
                 }
             }
