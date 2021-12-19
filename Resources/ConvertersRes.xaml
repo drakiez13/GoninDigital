@@ -16,4 +16,5 @@
     <converter:CategoryIdToName x:Key="CategoryIdToName"></converter:CategoryIdToName>
     <converter:BooleantoCombobox x:Key="BooleantoCombobox"></converter:BooleantoCombobox>
     <converter:OriginPriceToVisibility x:Key="OriginPriceToVisibility"></converter:OriginPriceToVisibility>
+    <converter:ContenttoBoolean x:Key="ContenttoBoolean"></converter:ContenttoBoolean>
 </ResourceDictionary>

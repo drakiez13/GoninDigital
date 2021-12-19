@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
+using System.Windows.Controls;
 
 namespace GoninDigital.Utils
 {
@@ -45,6 +46,11 @@ namespace GoninDigital.Utils
 
             JObject json = JObject.Parse(responseString);
             return (bool)json["success"] ? (string)json["data"]["url"] : throw new Exception("Image uploader server error");
+        }
+
+        internal static Task UploadAsync(TextBox txb_Cover)
+        {
+            throw new NotImplementedException();
         }
     }
 

@@ -94,10 +94,6 @@ namespace GoninDigital.Views
             {
                 userItem.IsSelected = true;
             }
-            else if (desType == typeof(BrandsManagerPage))
-            {
-                brandItem.IsSelected = true;
-            }
             else if (desType == typeof(SettingPage))
             {
                 ((NavigationViewItem)navigationView.SettingsItem).IsSelected = true;

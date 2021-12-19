@@ -21,6 +21,8 @@ namespace GoninDigital.ViewModels
             set { selectedAd = value; OnPropertyChanged(); }
         }
         public ICommand DeleteCommand { get; set; }
+        public ICommand AddCommand { get; set; }
+        public ICommand UpdateCommand { get; set; }
         private ObservableCollection<Product> adProducts = null;
         public ObservableCollection<Product> AdProducts
         {
@@ -39,9 +41,24 @@ namespace GoninDigital.ViewModels
             get { return searchName; }
             set { searchName = value; OnPropertyChanged(); }
         }
+
+        private string contentUpdate;
+        public string ContentUpdate
+        {
+            get { return contentUpdate; }
+            set { contentUpdate = value; OnPropertyChanged(); }
+        }
+        private ContentDialog addAdDialog;
+        public ContentDialog AddAdDialog
+        {
+            get { return addAdDialog; }
+            set { addAdDialog = value; }
+        }
+
         public int ProductIdToAdd { get; set; }
         public ICommand ProductDeleteCommand { get; set; }
         public ICommand ProductAddCommand { get; set; }
+
         public AdsPageViewModel()
         {
             using (var db = new GoninDigitalDBContext())
@@ -59,10 +76,16 @@ namespace GoninDigital.ViewModels
             {
                 DeleteExec();
             });
+
+            UpdateCommand = new RelayCommand<Object>( (p) =>true, (p) =>{  UpdateExec(); });
+            AddCommand = new RelayCommand<Object>((p) => true, (p) => { AddExec(); });
+
             ProductDeleteCommand = new RelayCommand<Product>(p => true, p => { DeleteProductExec(p); });
             ProductAddCommand = new RelayCommand<object>(p => true, p => { AddProductExec(); });
+
             SelectedAd = new Ad();
             AdProducts = new ObservableCollection<Product>();
+            ContentUpdate = "Update";
         }
         private void DeleteExec()
         {
@@ -89,6 +112,71 @@ namespace GoninDigital.ViewModels
             SelectedAd = new Ad();
             AdProducts = new ObservableCollection<Product>();
         }
+        private void UpdateExec()
+        {
+            if (ContentUpdate == "Save")
+            {
+                bool flag = false;
+                foreach(Ad ad in L_Ads)
+                {
+                    if (ad.Subtitle == "" | ad.Title == "")
+                    {
+                        ContentDialog content = new()
+                        {
+                            Title = "Warning",
+                            Content = "No cell is allowed to be left blank",
+                            PrimaryButtonText = "Ok"
+                        };
+                        content.ShowAsync();
+                        flag = true;
+                        break;
+                    }
+                }
+                if (!flag)
+                {
+                    using (var db = new GoninDigitalDBContext())
+                    {
+                        db.Ads.UpdateRange(L_Ads);
+                        _ = db.SaveChanges();
+                    }
+                    ContentDialog content = new()
+                    {
+                        Title = "Complete",
+                        Content = "Updated Successfully",
+                        PrimaryButtonText = "Ok"
+                    };
+                    content.ShowAsync();
+                    ContentUpdate = "Update";
+                }
+            }
+            else
+            {
+                ContentUpdate = "Save";
+            }
+        }
+        private void AddExec()
+        {
+            AddAdDialog = new ContentDialog()
+            {
+
+                CloseButtonText = "Close",
+                Content = new AddAdDialog(),
+                Title = "Add Ad",
+
+            };
+            AddAdDialog.ShowAsync();
+            AddAdDialog.CloseButtonClick += AddAdDialog_CloseButtonClick;
+
+        }
+
+        private void AddAdDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            using (var db = new GoninDigitalDBContext())
+            { 
+                L_Ads = new ObservableCollection<Ad>(db.Ads); 
+            }
+        }
+
         private void DeleteProductExec(Product product)
         {
             try
