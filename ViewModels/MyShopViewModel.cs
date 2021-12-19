@@ -239,7 +239,7 @@ namespace GoninDigital.ViewModels
                         SelectedItem.StatusId = (int)Constants.ProductStatus.REMOVED;
                         db.Update(SelectedItem);
                         ProductCreated.Remove(SelectedItem);
-                        db.Remove(SelectedItem);
+                        /*db.Remove(SelectedItem);*/
                     }
                     
                     _ = db.SaveChanges();
@@ -552,13 +552,14 @@ namespace GoninDigital.ViewModels
                     {
                         ProductBestSeller = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).OrderByDescending(o => o.Buy).Take(10).ToList());
                         ProductSpecial = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).OrderByDescending(o => o.Rating).Take(10).ToList());
+                        
                     }
                     else
                     {
                         ProductBestSeller = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).OrderByDescending(o => o.Buy).Take(Products.Count()).ToList());
                         ProductSpecial = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).OrderByDescending(o => o.Rating).Take(10).ToList());
                     }
-                    
+                    ProductCreated = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.CREATED).ToList());
                     HasVendor = true;
                     VendorName = Vendor.Name;
                 }
