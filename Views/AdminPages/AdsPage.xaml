@@ -73,7 +73,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <ScrollViewer Grid.Row="2"
-                      Margin="5 10 20 0"
+                      Margin="5 10 20 10"
                       Visibility="{Binding AdProducts.Count,
                            Converter={StaticResource ListCountToVisibility},
                            ConverterParameter=True}">
@@ -157,11 +157,18 @@
                                                  Label="Remove"
                                                  VerticalAlignment="Center"
                                                  CommandParameter="{Binding}"
-                                                 Command="{Binding ProductDeleteCommand, Source={StaticResource AdsPageVM}}"/>
+                                                 Command="{Binding ProductDeleteCommand, Source={StaticResource AdsPageVM}}" />
                             </DockPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ui:ListView>
+                <ui:AppBarButton HorizontalAlignment="Center"
+                                 Width="900"
+                                 Icon="Add"
+                                 Label="Add Product"
+                                 Command="{Binding ProductAddCommand}">
+
+                </ui:AppBarButton>
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -16,7 +16,10 @@ namespace GoninDigital.ViewModels
     {
         private Ad selectedAd;
         public Ad SelectedAd
-        { get { return selectedAd; } set { selectedAd = value; OnPropertyChanged(); } }
+        {
+            get { return selectedAd; }
+            set { selectedAd = value; OnPropertyChanged(); }
+        }
         public ICommand DeleteCommand { get; set; }
         public ICommand AddCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
@@ -38,19 +41,24 @@ namespace GoninDigital.ViewModels
             get { return searchName; }
             set { searchName = value; OnPropertyChanged(); }
         }
+
         private string contentUpdate;
         public string ContentUpdate
         {
             get { return contentUpdate; }
             set { contentUpdate = value; OnPropertyChanged(); }
         }
-        public ICommand ProductDeleteCommand { get; set; }
         private ContentDialog addAdDialog;
         public ContentDialog AddAdDialog
         {
             get { return addAdDialog; }
             set { addAdDialog = value; }
         }
+
+        public int ProductIdToAdd { get; set; }
+        public ICommand ProductDeleteCommand { get; set; }
+        public ICommand ProductAddCommand { get; set; }
+
         public AdsPageViewModel()
         {
             using (var db = new GoninDigitalDBContext())
@@ -68,9 +76,13 @@ namespace GoninDigital.ViewModels
             {
                 DeleteExec();
             });
+
             UpdateCommand = new RelayCommand<Object>( (p) =>true, (p) =>{  UpdateExec(); });
             AddCommand = new RelayCommand<Object>((p) => true, (p) => { AddExec(); });
-            ProductDeleteCommand = new RelayCommand<Product>(p=> true, p => { DeleteProductExec(p); });
+
+            ProductDeleteCommand = new RelayCommand<Product>(p => true, p => { DeleteProductExec(p); });
+            ProductAddCommand = new RelayCommand<object>(p => true, p => { AddProductExec(); });
+
             SelectedAd = new Ad();
             AdProducts = new ObservableCollection<Product>();
             ContentUpdate = "Update";
@@ -172,16 +184,79 @@ namespace GoninDigital.ViewModels
                 using (var db = new GoninDigitalDBContext())
                 {
                     db.AdDetails.Remove(db.AdDetails.First(o => o.ProductId == product.Id && o.AdId == selectedAd.Id));
-                    AdProducts.Remove(product);
-                    AdProducts = AdProducts;
                     db.SaveChanges();
+                    Load_Ads();
                 }
             }
             catch (Exception ex)
             {
-
+                var dialog = new ContentDialog
+                {
+                    Content = ex.Message,
+                    Title = "Error",
+                    CloseButtonText = "Close",
+                };
+                dialog.ShowAsync();
             }
-            
+
+        }
+        private async void AddProductExec()
+        {
+            try
+            {
+
+                var addDialog = new ContentDialog
+                {
+                    Title = "Add Product",
+                    Content = new ProductSearchDialog(),
+                    PrimaryButtonText = "Add",
+                    CloseButtonText = "Cancel",
+                    PrimaryButtonCommand = new RelayCommand<object>(o => true, o => {
+                        if (ProductIdToAdd != 0)
+                        {
+                            using (var db = new GoninDigitalDBContext())
+                            {
+                                var currentAdProducts = db.AdDetails.Where(o => o.AdId == SelectedAd.Id).Select(o => o.ProductId);
+                                if (currentAdProducts.Contains(ProductIdToAdd))
+                                {
+                                    var dialog = new ContentDialog
+                                    {
+                                        Content = "Product existed! Nothing changed",
+                                        Title = "Warning",
+                                        CloseButtonText = "Close",
+                                    };
+                                    dialog.ShowAsync();
+                                }
+                                else
+                                {
+                                    var adDetailToAdd = new AdDetail
+                                    {
+                                        AdId = SelectedAd.Id,
+                                        ProductId = ProductIdToAdd,
+                                    };
+                                    db.AdDetails.Add(adDetailToAdd);
+                                    db.SaveChanges();
+                                    Load_Ads();
+                                }
+
+                            }
+                        }
+                    }),
+
+                };
+                await addDialog.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                var dialog = new ContentDialog
+                {
+                    Content = ex.Message,
+                    Title = "Error",
+                    CloseButtonText = "Close",
+                };
+                await dialog.ShowAsync();
+            }
+
         }
         public async void Load_Ads()
         {
