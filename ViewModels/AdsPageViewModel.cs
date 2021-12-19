@@ -151,7 +151,7 @@ namespace GoninDigital.ViewModels
                 Content = new AddAdDialog(),
                 Title = "Add Ad",
 
-            }
+            };
 
             AddAdDialog.ShowAsync();
         }
