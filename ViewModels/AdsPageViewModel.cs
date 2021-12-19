@@ -152,9 +152,19 @@ namespace GoninDigital.ViewModels
                 Title = "Add Ad",
 
             };
-
             AddAdDialog.ShowAsync();
+            AddAdDialog.CloseButtonClick += AddAdDialog_CloseButtonClick;
+
         }
+
+        private void AddAdDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            using (var db = new GoninDigitalDBContext())
+            { 
+                L_Ads = new ObservableCollection<Ad>(db.Ads); 
+            }
+        }
+
         private void DeleteProductExec(Product product)
         {
             try
