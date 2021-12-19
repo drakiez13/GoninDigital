@@ -2,6 +2,7 @@
 using GoninDigital.Properties;
 using GoninDigital.Utils;
 using Microsoft.EntityFrameworkCore;
+using ModernWpf.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -73,7 +74,35 @@ namespace GoninDigital.ViewModels
                 using (var db = new GoninDigitalDBContext())
                 {
                     db.Invoices.Update(o);
-                    db.SaveChanges();
+                    try
+                    {
+                        
+                        var invoice = db.Invoices.Include(i => i.InvoiceDetails)
+                                                 .ThenInclude(o => o.Product)
+                                                 .First(i => i.Id == o.Id);
+                        invoice.InvoiceDetails.ToList().ForEach(i => 
+                        { 
+                            if (i.Product.Available > i.Quantity)
+                            {
+                                i.Product.Available -= i.Quantity;
+                            }
+                            else
+                            {
+                                throw new Exception("This product is sold out");
+                            }
+                        });
+                        db.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        ContentDialog content = new ContentDialog()
+                        {
+                            Content = ex.Message,
+                            Title = "Error",
+                            CloseButtonText = "Ok",
+                        };
+                        content.ShowAsync();
+                    }
                 }
             });
         }

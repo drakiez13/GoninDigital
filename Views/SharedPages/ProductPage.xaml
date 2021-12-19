@@ -42,7 +42,7 @@
                 <Grid Grid.Column="1"
                       Margin="30 20 0 40 ">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="100" />
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
@@ -198,14 +198,22 @@
                             Grid.Row="1">
                     <ItemsControl ItemsSource="{Binding ProductInfo.ProductSpecDetails}">
                         <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Width="120"
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                <TextBlock Width="170"
+                                           VerticalAlignment="Bottom"
                                            Text="{Binding Spec.Name}"
                                            FontWeight="Bold"/>
-                                <TextBlock Text="{Binding Value}" />
-                            </StackPanel>
-                        </DataTemplate>
+                                <TextBlock Text="{Binding Value}" 
+                                           Grid.Column="1"
+                                           VerticalAlignment="Bottom"
+                                           Margin="40 15 0 0"/>
+                                </Grid>
+                            </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </StackPanel>

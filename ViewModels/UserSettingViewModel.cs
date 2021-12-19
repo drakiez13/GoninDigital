@@ -88,7 +88,6 @@ namespace GoninDigital.ViewModels
         }
         private User user_changed = new User();
         public ICommand EditPCommand { get; set; }
-        public ICommand ResetPCommand { get; set; }
         public ICommand SavePCommand { get; set; }
         public ICommand CancelPCommand { get; set; }
         public ICommand EditAvatarCommand { get; set; }
@@ -101,7 +100,6 @@ namespace GoninDigital.ViewModels
             Flag = true;
             load_page();
             EditPCommand = new RelayCommand<Window>((p) => { return Flag; }, (p) => { EditPExecute(); });
-            ResetPCommand = new RelayCommand<Window>((p) => { return !Flag; }, (p) => { load_page(); });
             SavePCommand = new RelayCommand<Window>((p) => { return !Flag; }, (p) => { SavePExecute(); });
             CancelPCommand = new RelayCommand<Window>((p) => { return !Flag; }, (p) => { CancelPExecute(); });
             EditAvatarCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { EditAvatarExecute(); });
@@ -151,7 +149,7 @@ namespace GoninDigital.ViewModels
         }
         void CancelPExecute()
         {
-
+            load_page();
             Flag = true;
         }
         private void load_page()
