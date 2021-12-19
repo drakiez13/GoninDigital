@@ -1,13 +1,15 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ui="http://schemas.modernwpf.com/2019"
-                    xmlns:viewmodel="clr-namespace:GoninDigital.ViewModels">
+                    xmlns:viewmodel="clr-namespace:GoninDigital.ViewModels" xmlns:viewmodel1="clr-namespace:GoninDigital.ViewModels.Admin">
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:UsersViewModel x:Key="UsersVM"></viewmodel:UsersViewModel>
     <viewmodel:BrandsViewModel x:Key="BrandsVM"></viewmodel:BrandsViewModel>
     <viewmodel:UserSettingViewModel x:Key="UserSettingVM"></viewmodel:UserSettingViewModel>
     <viewmodel:ManageShopPageViewModel x:Key="ManageShopPageVM"></viewmodel:ManageShopPageViewModel>
     <viewmodel:OrderPageViewModel x:Key="OrderPageVM"></viewmodel:OrderPageViewModel>
+    <viewmodel:ManageProductPageViewModel x:Key="ManageProductPageVM"></viewmodel:ManageProductPageViewModel>
+    <viewmodel:AdsPageViewModel x:Key="AdsPageVM"></viewmodel:AdsPageViewModel>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <Style x:Key="OptionsPanelStyle" TargetType="ui:SimpleStackPanel">
         <Setter Property="Spacing" Value="12" />

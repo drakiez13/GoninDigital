@@ -27,6 +27,7 @@ namespace GoninDigital.Views.SharedPages
     /// </summary>
     public partial class ShopPage : Page
     {
+        public static Stack<int> OldVendorId { get; set; } = new Stack<int>();
         public Vendor Vendor { get; set; }
         public ObservableCollection<Product> ProductBestSeller { get; set; }
         public ObservableCollection<Product> ProductSpecial { get; set; }
@@ -61,11 +62,13 @@ namespace GoninDigital.Views.SharedPages
             InitializeComponent();
         }
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            base.OnNavigatedFrom(e);
-            // Checkout page should not in back stack
-            DashBoard.RootFrame.RemoveBackEntry();
+            base.OnNavigatingFrom(e);
+            if (e.NavigationMode != NavigationMode.Back)
+                OldVendorId.Push(Vendor.Id);
         }
+
+        public ShopPage() : this(OldVendorId.Pop()) { }
     }
 }

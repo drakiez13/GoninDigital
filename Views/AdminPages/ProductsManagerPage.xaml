@@ -2,13 +2,251 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GoninDigital.Views.AdminPages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      DataContext="{StaticResource ManageProductPageVM}"
       Title="ProductPage">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="270"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="15"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <StackPanel Orientation="Horizontal">
+                <ui:AutoSuggestBox QueryIcon="Find" 
+                                   AutomationProperties.Name="Search"
+                                   Width="350"
+                                   HorizontalAlignment="Left"
+                                   Margin="20"
+                                   Text="{Binding SearchName, Mode=TwoWay}"
+                                   TextChanged="AutoSuggestBox_TextChanged"
+                                   QuerySubmitted="AutoSuggestBox_QuerySubmitted">
+                </ui:AutoSuggestBox>
+                <Button Content="Delete" 
+                        Margin="5"
+                        Command="{Binding DeleteCommand}"/>
+                <ui:ToggleSwitch
+                        x:Name="toggleSwitch"
+                        Margin="30 0 0 0"
+                        OffContent="On Sale"
+                        OnContent="All"
+                        IsOn="False" 
+                    Toggled="toggleSwitch_Toggled"/>
+            </StackPanel>
+        </Grid>
+        <DataGrid x:Name="dataGrid"
+                  Margin="10,0,0,10"
+                  ItemsSource="{Binding L_Product}"
+                  SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}"
+                  Grid.Row="1"
+                  HorizontalScrollBarVisibility="Auto"
+                  VerticalScrollBarVisibility="Auto"
+                  HeadersVisibility="Column"
+                  GridLinesVisibility="All"
+                  RowDetailsVisibilityMode="Collapsed"
+                  VirtualizingPanel.VirtualizationMode="Recycling"
+                  VirtualizingPanel.IsVirtualizingWhenGrouping="True" 
+                  AutoGenerateColumns="False"
+                  IsReadOnly="False" >
+            <DataGrid.Resources>
+                <Style x:Key="DefaultStyle" TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusId, Converter={StaticResource ProductStatustoVisibility}}" Value="True">
+                            <Setter Property="TextDecorations" Value="Strikethrough"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+                <Style x:Key="CenterStyle" TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusId, Converter={StaticResource ProductStatustoVisibility}}" Value="True">
+                            <Setter Property="TextDecorations" Value="Strikethrough"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Header="Id"
+                    MinWidth="40"
+                    Width="0.5*"
+                    Binding="{Binding Id}" 
+                    ElementStyle="{StaticResource CenterStyle}"
+                    
+                    IsReadOnly="True"/>
+                <DataGridTextColumn
+                    Header="Name"
+                    MinWidth="100"
+                    Width="4.5*"
+                    Binding="{Binding Name}"
+                    ElementStyle="{StaticResource DefaultStyle}"
+                    IsReadOnly="True"/>
+                <DataGridTextColumn
+                    Header="Category"
+                    MinWidth="80"
+                    Width="0.5*"
+                    Binding="{Binding Category.Name}"
+                    ElementStyle="{StaticResource DefaultStyle}"
+                    IsReadOnly="True"/>
+                <DataGridTextColumn
+                    Header="Origin"
+                    MinWidth="100"
+                    Width="*"
+                    Binding="{Binding Origin}"
+                    ElementStyle="{StaticResource DefaultStyle}"
+                    IsReadOnly="True"/>
+                <DataGridTextColumn
+                    Header="Vendor Name"
+                    MinWidth="100"
+                    Width="*"
+                    Binding="{Binding Vendor.Name}"
+                    ElementStyle="{StaticResource DefaultStyle}"
+                    IsReadOnly="True"/>
+                <DataGridTextColumn
+                    Header="Description"
+                    MinWidth="100"
+                    Binding="{Binding Description}"
+                    ElementStyle="{StaticResource DefaultStyle}"
+                    Width="3*"
+                    IsReadOnly="True"/>
+                <DataGridTextColumn
+                    Header="Rating"
+                    MinWidth="70"
+                    Width="0.5*"
+                    Binding="{Binding Rating}"
+                    ElementStyle="{StaticResource CenterStyle}"
+                    IsReadOnly="True"/>
+                <DataGridTextColumn
+                    Header="Buy"
+                    MinWidth="50"
+                    Width="0.5*"
+                    Binding="{Binding Buy}"
+                    ElementStyle="{StaticResource CenterStyle}"
+                    IsReadOnly="True"/>
+                <DataGridTextColumn
+                    Header="Available"
+                    MinWidth="80"
+                    Width="0.5*"
+                    Binding="{Binding Available}"
+                    ElementStyle="{StaticResource CenterStyle}"
+                    IsReadOnly="True"/>
+                <DataGridTextColumn
+                    Header="Price"
+                    MinWidth="70"
+                    Width="1.5*"
+                    Binding="{Binding Price}"
+                    ElementStyle="{StaticResource DefaultStyle}"
+                    IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="800"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Request" Margin="30,0,0,0"
+               FontSize="20"
+               FontWeight="Bold"
+                   />
+            <StackPanel Grid.Column="1" Orientation="Horizontal"
+                        >
+                <ui:AppBarButton 
+                Visibility="{Binding SelectedProducts.Count,
+                           Converter={StaticResource ListCountToVisibility},
+                           ConverterParameter=True}"
+                                 Icon="Delete"
+                                 Label="Remove"
+                                 Command="{Binding RemoveSelectionsCommand}"
+                                />
+
+                <ui:AppBarButton 
+                Visibility="{Binding SelectedProducts.Count,
+                           Converter={StaticResource ListCountToVisibility},
+                           ConverterParameter=True}"
+                                 Icon="Shop"
+                                 Label="Accept"
+                                 Command="{Binding AcceptSelectionsCommand}"/>
+            </StackPanel>
+        </Grid>
+
+        <ScrollViewer Grid.Row="3">
+            <StackPanel Orientation="Vertical" Margin="20,0,0,0">
+                <ui:ListView ItemsSource="{Binding L_NewProduct}"
+                         x:Name="lvProductPage"
+                         SelectionChanged="ListView_SelectionChanged"
+                                 SelectionMode="Multiple"
+                                 HorizontalAlignment="Left"
+                                 VirtualizingPanel.IsVirtualizing="True"
+                                 VirtualizingPanel.IsVirtualizingWhenGrouping="True">
+                    <ui:ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"></StackPanel>
+
+                        </ItemsPanelTemplate>
+                    </ui:ListView.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel HorizontalAlignment="Stretch" Height="60" >
+                                <Image Source="{Binding Image}"
+                                           Stretch="UniformToFill"
+                                           Width="40"
+                                           Height="30" 
+                                           Margin="0 0 0 0"
+                                           VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Name}"
+                                               TextWrapping="Wrap"
+                                               Width="280"
+                                               Margin="20,10,0,10"
+                                               VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Category.Name}"
+                                               TextWrapping="Wrap"
+                                               Width="80"
+                                               Margin="20,10,0,10"
+                                               VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Vendor.Name}"
+                                               TextWrapping="Wrap"
+                                               Width="100"
+                                               Margin="10,10,0,10"
+                                               VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Description}"
+                                               TextWrapping="Wrap"
+                                               Width="150"
+                                               Margin="10,10,0,10"
+                                               VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Price}"
+                                               TextWrapping="Wrap"
+                                               Width="120"
+                                               Margin="10,10,0,10"
+                                               VerticalAlignment="Center" />
+                                <ui:CommandBar VerticalAlignment="Center"
+                                                   Background="Transparent"
+                                                   Width="auto"
+                                                   DockPanel.Dock="Right">
+                                    <ui:CommandBar.SecondaryCommands>
+                                        <ui:AppBarButton Icon="Delete"
+                                                             Label="Remove"
+                                                             CommandParameter="{Binding}"
+                                                             Command="{Binding Source={StaticResource ManageProductPageVM}, Path=RemoveCommand}"></ui:AppBarButton>
+                                        <ui:AppBarButton Icon="Shop"
+                                                             Label="Accept"
+                                                             CommandParameter="{Binding}"
+                                                             Command="{Binding Source={StaticResource ManageProductPageVM}, Path=AcceptCommand}"></ui:AppBarButton>
+                                    </ui:CommandBar.SecondaryCommands>
+                                </ui:CommandBar>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ui:ListView>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

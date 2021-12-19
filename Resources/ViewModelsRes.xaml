@@ -4,5 +4,6 @@
     <viewmodel:HomePageViewModel x:Key="HomePageVM"></viewmodel:HomePageViewModel>
     <viewmodel:CartPageViewModel x:Key="CartPageVM"></viewmodel:CartPageViewModel>
     <viewmodel:MyShopViewModel x:Key="MyShopPageVM"></viewmodel:MyShopViewModel>
+    <viewmodel:ShopOrderManagerPageViewModel x:Key="ShopOrderManagerVM"></viewmodel:ShopOrderManagerPageViewModel>
     <viewmodel:DashBoardViewModel x:Key="DashBoardVM"></viewmodel:DashBoardViewModel>
 </ResourceDictionary>

@@ -12,30 +12,34 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using GoninDigital.Models;
 using GoninDigital.ViewModels;
+using GoninDigital.Models;
 
 namespace GoninDigital.Views.AdminPages
 {
     /// <summary>
-    /// Interaction logic for BrandPage.xaml
+    /// Interaction logic for AdsPage.xaml
     /// </summary>
-    public partial class BrandsManagerPage
+    public partial class AdsPage 
     {
-        public BrandsManagerPage()
+        public AdsPage()
         {
             InitializeComponent();
+        }
 
+        private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            (DataContext as AdsPageViewModel).Load_Ads();
         }
 
         private void AutoSuggestBox_TextChanged(ModernWpf.Controls.AutoSuggestBox sender, ModernWpf.Controls.AutoSuggestBoxTextChangedEventArgs args)
         {
-            (DataContext as BrandsViewModel).SearchChanged();
+            (DataContext as AdsPageViewModel).SearchChanged();
         }
 
         private void AutoSuggestBox_QuerySubmitted(ModernWpf.Controls.AutoSuggestBox sender, ModernWpf.Controls.AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            (DataContext as BrandsViewModel).SearchBrand();
+            (DataContext as AdsPageViewModel).SearchAd();
         }
     }
 }

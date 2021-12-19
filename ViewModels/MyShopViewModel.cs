@@ -547,9 +547,18 @@ namespace GoninDigital.ViewModels
                         .First(o => o.Owner.UserName == Settings.Default.usrname);
 
                     Products = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).ToList());
-                    ProductCreated = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.CREATED).ToList());
-                    ProductBestSeller = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).Take(10).ToList());
-                    ProductSpecial = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).Take(5).ToList());
+
+                    if (Products.Count() >= 10)
+                    {
+                        ProductBestSeller = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).OrderByDescending(o => o.Buy).Take(10).ToList());
+                        ProductSpecial = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).OrderByDescending(o => o.Rating).Take(10).ToList());
+                    }
+                    else
+                    {
+                        ProductBestSeller = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).OrderByDescending(o => o.Buy).Take(Products.Count()).ToList());
+                        ProductSpecial = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).OrderByDescending(o => o.Rating).Take(10).ToList());
+                    }
+                    
                     HasVendor = true;
                     VendorName = Vendor.Name;
                 }

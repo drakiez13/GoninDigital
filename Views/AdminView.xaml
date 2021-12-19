@@ -54,12 +54,10 @@
                            PaneTitle="Gonin Digital">
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem x:Name="userItem" Content="User" Icon="Contact" Tag="UsersManagerPage" IsSelected="True"/>
-                <ui:NavigationViewItem x:Name="shopItem" Content="Shop" Icon="Shop" Tag="ShopsManagerPage" >
-                    <ui:NavigationViewItem.MenuItems>
-                        <ui:NavigationViewItem x:Name="productItem" Content="Product" Icon="Library" Tag="ProductsManagerPage" />
-                    </ui:NavigationViewItem.MenuItems>
-                </ui:NavigationViewItem>
+                <ui:NavigationViewItem x:Name="shopItem" Content="Shop" Icon="Shop" Tag="ShopsManagerPage" />
+                <ui:NavigationViewItem x:Name="productItem" Content="Product" Icon="Library" Tag="ProductsManagerPage" />
                 <ui:NavigationViewItem x:Name="brandItem" Content="Brand" Icon="Tag" Tag="BrandsManagerPage" />
+                <ui:NavigationViewItem x:Name="adsItem" Content="Ads" Icon="Play" Tag="AdsPage" />
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.PaneFooter>
                 <StackPanel Orientation="Vertical">

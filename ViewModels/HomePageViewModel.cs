@@ -10,6 +10,7 @@ using GoninDigital.Models;
 using GoninDigital.Views;
 using GoninDigital.Views.SharedPages;
 using Microsoft.EntityFrameworkCore;
+using GoninDigital.Utils;
 
 namespace GoninDigital.ViewModels
 {
@@ -83,8 +84,10 @@ namespace GoninDigital.ViewModels
                 List<Product> randomProducts = await db.Products
                     .Include(x => x.Vendor)
                     .Include(x => x.Brand)
+                    .Where(o => o.Status.Id == (int)Constants.ProductStatus.ACCEPTED)
                     .OrderBy(o => Guid.NewGuid()).Take(20).ToListAsync();
 
+                // Top products
                 var topInvoiceDetails = db.InvoiceDetails
                     .Include(x => x.Invoice)
                     .Include(x => x.Product)
@@ -96,21 +99,37 @@ namespace GoninDigital.ViewModels
 
                 var tmp = topInvoiceDetails.Select(o => o.Key);
 
-                var fetchedProducts = await db.Products.Where(o => tmp.Contains(o.Id)).ToListAsync();
-                if (fetchedProducts.Count < 10)
-                    fetchedProducts.AddRange(randomProducts);
+                var fetchedProducts = await db.Products
+                    .Where(o => tmp.Contains(o.Id) && o.StatusId == (int)Constants.ProductStatus.ACCEPTED)
+                    .ToListAsync();
+                if (fetchedProducts.Count < 20)
+                    fetchedProducts.AddRange(randomProducts.Take(20 - fetchedProducts.Count));
+                else
+                    fetchedProducts = fetchedProducts.GetRange(0, 20);
 
                 TopProducts = fetchedProducts;
-
+                
+                // Recommended Products
                 RecommendedProducts = await db.Products
                     .Include(x => x.Vendor)
                     .Include(x => x.Brand)
+                    .Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED)
                     .OrderBy(o => Guid.NewGuid()).Take(20).ToListAsync();
 
-                DiscountProducts = await db.Products
+                // Discount Products
+                fetchedProducts = await db.Products
                     .Include(x => x.Vendor)
                     .Include(x => x.Brand)
-                    .OrderBy(o => Guid.NewGuid()).Take(6).ToListAsync();
+                    .Where(o => o.Price != o.OriginPrice && o.StatusId == (int)Constants.ProductStatus.ACCEPTED)
+                    .OrderByDescending(o => o.UpdatedAt).ToListAsync();
+
+                if (fetchedProducts.Count < 20)
+                    fetchedProducts.AddRange(randomProducts.Take(20 - fetchedProducts.Count));
+                else
+                    fetchedProducts = fetchedProducts.GetRange(0, 20);
+
+                DiscountProducts = fetchedProducts;
+
             }
         }
 

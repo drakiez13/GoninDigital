@@ -266,6 +266,8 @@ namespace GoninDigital.Views
             {
                 // Use args.QueryText to determine what to do.
                 //MessageBox.Show((string)args.QueryText);
+                navigationView.IsPaneOpen = false;
+                RootFrame.Navigate(new SearchResultPage(args.QueryText));
             }
             
         }
@@ -289,10 +291,8 @@ namespace GoninDigital.Views
                         Application.Current.Windows[i].DataContext = null;
                     }
                 }
-                catch (Exception ex)
-                {
-
-                }
+                catch
+                { }
                 
                 pages.Clear();
                 WindowManager.ChangeWindowContent(Application.Current.MainWindow, Properties.Resources.LoginWindowTitle, Properties.Resources.LoginControlPath);
