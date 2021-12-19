@@ -239,6 +239,7 @@ namespace GoninDigital.ViewModels
                         SelectedItem.StatusId = (int)Constants.ProductStatus.REMOVED;
                         db.Update(SelectedItem);
                         ProductCreated.Remove(SelectedItem);
+                        db.Remove(SelectedItem);
                     }
                     
                     _ = db.SaveChanges();
