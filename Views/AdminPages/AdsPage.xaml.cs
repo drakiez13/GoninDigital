@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GoninDigital.ViewModels;
 using GoninDigital.Models;
+using GoninDigital.SharedControl;
 
 namespace GoninDigital.Views.AdminPages
 {
@@ -41,5 +42,6 @@ namespace GoninDigital.Views.AdminPages
         {
             (DataContext as AdsPageViewModel).SearchAd();
         }
+
     }
 }
