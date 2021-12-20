@@ -12,7 +12,13 @@
 
     <ScrollViewer>
         <StackPanel>
-            <lvc:PieChart LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" Height="200" Width="300">
+            <StackPanel>
+                <TextBlock Text="10"/>
+                <TextBlock Text="10"/>
+                <TextBlock Text="10"/>
+                <TextBlock Text="10"/>
+            </StackPanel>
+            <lvc:PieChart LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" Height="300">
                 <lvc:PieChart.Series>
                     <lvc:PieSeries Title="Chờ xác nhận" Values="3" DataLabels="True"
                                LabelPoint="{Binding PointLabel}"/>
@@ -24,43 +30,7 @@
                                LabelPoint="{Binding PointLabel}"/>
                 </lvc:PieChart.Series>
             </lvc:PieChart>
-            <lvc:PieChart LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" Height="200" Width="300">
-                <lvc:PieChart.Series>
-                    <lvc:PieSeries Title="Chờ xác nhận" Values="3" DataLabels="True"
-                               LabelPoint="{Binding PointLabel}"/>
-                    <lvc:PieSeries Title="Đang giao" Values="4" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                    <lvc:PieSeries Title="Đã giao hàng" Values="6" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                    <lvc:PieSeries Title="Hủy bỏ" Values="2" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                </lvc:PieChart.Series>
-            </lvc:PieChart>
-            <lvc:PieChart LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" Height="200" Width="300">
-                <lvc:PieChart.Series>
-                    <lvc:PieSeries Title="Chờ xác nhận" Values="3" DataLabels="True"
-                               LabelPoint="{Binding PointLabel}"/>
-                    <lvc:PieSeries Title="Đang giao" Values="4" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                    <lvc:PieSeries Title="Đã giao hàng" Values="6" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                    <lvc:PieSeries Title="Hủy bỏ" Values="2" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                </lvc:PieChart.Series>
-            </lvc:PieChart>
-            <lvc:PieChart LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" Height="200" Width="300">
-                <lvc:PieChart.Series>
-                    <lvc:PieSeries Title="Chờ xác nhận" Values="3" DataLabels="True"
-                               LabelPoint="{Binding PointLabel}"/>
-                    <lvc:PieSeries Title="Đang giao" Values="4" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                    <lvc:PieSeries Title="Đã giao hàng" Values="6" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                    <lvc:PieSeries Title="Hủy bỏ" Values="2" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                </lvc:PieChart.Series>
-            </lvc:PieChart>
-            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" >
+            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" Height="400" >
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="Sales" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
