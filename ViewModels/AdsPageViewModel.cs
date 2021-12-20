@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,13 +42,6 @@ namespace GoninDigital.ViewModels
             get { return searchName; }
             set { searchName = value; OnPropertyChanged(); }
         }
-
-        private string contentUpdate;
-        public string ContentUpdate
-        {
-            get { return contentUpdate; }
-            set { contentUpdate = value; OnPropertyChanged(); }
-        }
         private ContentDialog addAdDialog;
         public ContentDialog AddAdDialog
         {
@@ -77,15 +71,19 @@ namespace GoninDigital.ViewModels
                 DeleteExec();
             });
 
-            UpdateCommand = new RelayCommand<Object>( (p) =>true, (p) =>{  UpdateExec(); });
+            UpdateCommand = new RelayCommand<Object>( (p) => {
+                if (SelectedAd != null)
+                {
+                    return true;
+                }
+                return false;
+            }, (p) =>{  UpdateExec(); });
             AddCommand = new RelayCommand<Object>((p) => true, (p) => { AddExec(); });
 
             ProductDeleteCommand = new RelayCommand<Product>(p => true, p => { DeleteProductExec(p); });
             ProductAddCommand = new RelayCommand<object>(p => true, p => { AddProductExec(); });
 
             SelectedAd = new Ad();
-            AdProducts = new ObservableCollection<Product>();
-            ContentUpdate = "Update";
         }
         private void DeleteExec()
         {
@@ -114,13 +112,9 @@ namespace GoninDigital.ViewModels
         }
         private void UpdateExec()
         {
-            if (ContentUpdate == "Save")
-            {
-                bool flag = false;
-                foreach(Ad ad in L_Ads)
+            
+                if (SelectedAd.Subtitle == "" | SelectedAd.Title == "")
                 {
-                    if (ad.Subtitle == "" | ad.Title == "")
-                    {
                         ContentDialog content = new()
                         {
                             Title = "Warning",
@@ -128,15 +122,12 @@ namespace GoninDigital.ViewModels
                             PrimaryButtonText = "Ok"
                         };
                         content.ShowAsync();
-                        flag = true;
-                        break;
-                    }
                 }
-                if (!flag)
+                else
                 {
                     using (var db = new GoninDigitalDBContext())
                     {
-                        db.Ads.UpdateRange(L_Ads);
+                        db.Ads.Update(SelectedAd);
                         _ = db.SaveChanges();
                     }
                     ContentDialog content = new()
@@ -146,13 +137,7 @@ namespace GoninDigital.ViewModels
                         PrimaryButtonText = "Ok"
                     };
                     content.ShowAsync();
-                    ContentUpdate = "Update";
                 }
-            }
-            else
-            {
-                ContentUpdate = "Save";
-            }
         }
         private void AddExec()
         {
