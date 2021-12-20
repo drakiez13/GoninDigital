@@ -1,0 +1,125 @@
+﻿<UserControl x:Class="GoninDigital.SharedControl.AddUserDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:local="clr-namespace:GoninDigital.SharedControl"
+             mc:Ignorable="d" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             d:DesignHeight="450" d:DesignWidth="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+            <Label Content="Username" />
+            <TextBox x:Name="tbUsername" 
+                         Width="355"
+                         HorizontalAlignment="Center"
+                         Text="{Binding UserName}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+            <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0 0 50 0">
+                <Label Content="First Name"/>
+                <TextBox x:Name="tbFirstName" 
+                             Width="150"
+                             Text="{Binding FirstName}" />
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                <Label Content="Last Name" />
+                <TextBox x:Name="tbLastName" 
+                             Width="150"
+                             Text="{Binding LastName}" />
+            </StackPanel>
+
+        </StackPanel>
+        <StackPanel Grid.Row="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+            <Label Content="Phone Number" />
+            <TextBox x:Name="tbPhoneNum" 
+                         Width="355"
+                         Text="{Binding PhoneNumber}" />
+        </StackPanel>
+        <StackPanel Grid.Row="3"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+            <Label Content="Email"/>
+            <TextBox x:Name="tbEmail" 
+                         Width="355"
+                         Text="{Binding Email}" />
+        </StackPanel>
+        <StackPanel Grid.Row="4" 
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+            <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0 0 50 0">
+                <Label Content="Gender:" />
+                <ComboBox x:Name="cbGender"
+                              SelectedIndex="{Binding Gender}"
+                              Width="150">
+                    <ComboBoxItem Content="Other"/>
+                    <ComboBoxItem Content="Female"/>
+                    <ComboBoxItem Content="Male"/>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel>
+                <Label Content="Date of Birth" />
+                <DatePicker x:Name="dpDoB"
+                                Width="150"
+                                SelectedDate="{Binding DoB}" />
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="5"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+            <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0 0 50 0">
+                <Label Content="Password"/>
+                <PasswordBox x:Name="FloatingPasswordBox"
+                                 Width="150">
+                </PasswordBox>
+            </StackPanel>
+            <StackPanel>
+                <Label Content="Confirm Password" />
+                <PasswordBox x:Name="FloatingrePasswordBox"
+                                 Width="150">
+                </PasswordBox>
+            </StackPanel>
+        </StackPanel>
+        <TextBlock x:Name="Error" Grid.Row="6"
+                   Margin="0 10 0 0"/>
+        <Button x:Name="btnSubmit" 
+                    Grid.Row="7"
+                    Width="250"
+                    Content="Add"
+                    Foreground="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                    Background="{DynamicResource SystemAccentColorDark1Brush}"
+                    HorizontalAlignment="Center"
+                    Click="btnSubmit_Click"/>
+    </Grid>
+</UserControl>
