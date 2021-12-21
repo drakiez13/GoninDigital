@@ -513,14 +513,14 @@ namespace GoninDigital.ViewModels
                 }
             }
         }
-
-        public MyShopViewModel()
+        public void OnNavigatedTo()
         {
-
+            Init();
+        }
+        private async void Init()
+        {
             using (var db = new GoninDigitalDBContext())
             {
-                categoryList = db.ProductCategories.Select(o => o.Name).ToList();
-                brandList = db.Brands.Select(o => o.Name).ToList();
                 if (db.Users.First(o => o.UserName == Settings.Default.usrname).TypeId == (int)Constants.UserType.CUSTOMER)
                 {
                     HasVendor = false;
@@ -540,7 +540,7 @@ namespace GoninDigital.ViewModels
                 }
                 else
                 {
-                    Vendor = db.Vendors.Include(o => o.Owner)
+                    Vendor = await db.Vendors.Include(o => o.Owner)
                         .Include(o => o.Products)
                         .ThenInclude(o => o.Brand)
                         .Include(o => o.Products)
@@ -548,7 +548,7 @@ namespace GoninDigital.ViewModels
                         .ThenInclude(o => o.ProductSpecs)
                         .ThenInclude(o => o.ProductSpecDetails)
 
-                        .First(o => o.Owner.UserName == Settings.Default.usrname);
+                        .FirstAsync(o => o.Owner.UserName == Settings.Default.usrname);
 
                     Products = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).ToList());
 
@@ -556,7 +556,7 @@ namespace GoninDigital.ViewModels
                     {
                         ProductBestSeller = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).OrderByDescending(o => o.Buy).Take(10).ToList());
                         ProductSpecial = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).OrderByDescending(o => o.Rating).Take(10).ToList());
-                        
+
                     }
                     else
                     {
@@ -567,8 +567,38 @@ namespace GoninDigital.ViewModels
                     HasVendor = true;
                     VendorName = Vendor.Name;
                 }
+                categoryList = await db.ProductCategories.Select(o => o.Name).ToListAsync();
+                brandList = await db.Brands.Select(o => o.Name).ToListAsync();
             }
-            productClone = new Product();
+        }
+        public MyShopViewModel()
+        {
+
+            using (var db = new GoninDigitalDBContext())
+            {
+                if (db.Users.First(o => o.UserName == Settings.Default.usrname).TypeId == (int)Constants.UserType.CUSTOMER)
+                {
+                    HasVendor = false;
+                    try
+                    {
+                        Vendor = db.Vendors.Include(o => o.Owner)
+                            .Include(o => o.Products)
+                            .First(o => o.Owner.UserName == Settings.Default.usrname);
+                        IsUpgrade = true;
+                    }
+                    catch
+                    {
+                        var query = from o in db.Vendors select o.Name;
+                        AllVendorNames = query.ToList();
+                        IsUpgrade = false;
+                    }
+                }
+                else
+                {
+                    HasVendor = true;
+                }
+            }
+                    productClone = new Product();
             newVendor = new Vendor();
             AddCommand = new RelayCommand<Product>(o => true, o => AddCommandExec(o));
             EditCommand = new RelayCommand<Product>(o => true, o => EditCommandExec(o));

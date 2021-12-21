@@ -50,7 +50,6 @@
                 <RowDefinition Height="60" />
                 <RowDefinition Height="60" />
                 <RowDefinition Height="60" />
-                <RowDefinition Height="60" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid>
@@ -70,7 +69,7 @@
                          HorizontalAlignment="Center"
                          Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
-            <StackPanel Grid.Row="2"
+            <StackPanel Grid.Row="4"
                         Orientation="Horizontal"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center">
@@ -92,7 +91,7 @@
                 </StackPanel>
 
             </StackPanel>
-            <StackPanel Grid.Row="3"
+            <StackPanel Grid.Row="5"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center">
                 <Label Content="Phone Number" />
@@ -100,7 +99,7 @@
                          Width="355"
                          Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>   
-            <StackPanel Grid.Row="4"
+            <StackPanel Grid.Row="3"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center">
                 <Label Content="Email"/>
@@ -108,7 +107,7 @@
                          Width="355"
                          Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
-            <StackPanel Grid.Row="5" 
+            <StackPanel Grid.Row="6" 
                         Orientation="Horizontal"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center">
@@ -132,7 +131,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Grid.Row="7"
+            <StackPanel Grid.Row="2"
                         Orientation="Horizontal"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center">
@@ -159,7 +158,7 @@
             </StackPanel>
 
             <Button x:Name="btnSubmit" 
-                    Grid.Row="8"
+                    Grid.Row="7"
                     Width="250"
                     Content="Register"
                     Foreground="{DynamicResource SystemControlBackgroundAltHighBrush}"
