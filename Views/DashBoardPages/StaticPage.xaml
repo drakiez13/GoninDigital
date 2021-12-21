@@ -93,27 +93,32 @@
                     
                 </ui:ThemeShadowChrome>
             </Border>
-            <lvc:PieChart LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" Height="300" Series="{Binding pie_SeriesCollection, Mode=TwoWay}">
+            <lvc:PieChart LegendLocation="Right" 
+                          DataClick="Chart_OnDataClick" 
+                          Hoverable="False" 
+                          DataTooltip="{x:Null}" 
+                          Height="300" 
+                          Series="{Binding pie_SeriesCollection, Mode=TwoWay}">
             </lvc:PieChart>
 
-            <lvc:CartesianChart Series="{Binding top5_SeriesCollection}" LegendLocation="Bottom" Height="300">
+            <lvc:CartesianChart Series="{Binding top5_SeriesCollection, Mode=TwoWay}" LegendLocation="Bottom" Height="300">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Salesman" LabelFormatter="{Binding top5_Formatter}"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Sold Apps" Labels="{Binding top5_Labels}"></lvc:Axis>
+                    <lvc:Axis Title="Sold Apps" Labels="{Binding top5_Labels, Mode=TwoWay}"></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.DataTooltip>
                     <lvc:DefaultTooltip SelectionMode="SharedYValues"></lvc:DefaultTooltip>
                 </lvc:CartesianChart.DataTooltip>
             </lvc:CartesianChart>
 
-            <lvc:CartesianChart Series="{Binding SeriesCollection}" Height="400" >
+            <lvc:CartesianChart Series="{Binding SeriesCollection, Mode=TwoWay}" Height="400" >
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="Sales" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Month" Labels="{Binding Labels}"></lvc:Axis>
+                    <lvc:Axis Title="Month" Labels="{Binding Labels, Mode=TwoWay}"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
         </StackPanel>

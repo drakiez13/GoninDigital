@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -29,13 +30,33 @@ namespace GoninDigital.ViewModels
 
 
         // Biểu đồ cột ngang
-        public SeriesCollection top5_SeriesCollection { get; set; }
-        public string[] top5_Labels { get; set; }
+        private SeriesCollection _top5_SeriesCollection;
+        public SeriesCollection top5_SeriesCollection
+        {
+            get { return _top5_SeriesCollection; }
+            set { _top5_SeriesCollection = value; OnPropertyChanged(); }
+        }
+        private string[] _top5_Labels;
+        public string[] top5_Labels
+        {
+            get { return _top5_Labels; }
+            set { _top5_Labels = value; OnPropertyChanged(); }
+        }
         public Func<double, string> top5_Formatter { get; set; }
 
         // Biểu đồ đường
-        public SeriesCollection SeriesCollection { get; set; }
-        public string[] Labels { get; set; }
+        private SeriesCollection _SeriesCollection;
+        public SeriesCollection SeriesCollection
+        {
+            get { return _SeriesCollection; }
+            set { _SeriesCollection = value; OnPropertyChanged(); }
+        }
+        private string[] _Labels;
+        public string[] Labels
+        {
+            get { return _Labels; }
+            set { _Labels = value; OnPropertyChanged(); }
+        }
         public Func<double, string> YFormatter { get; set; }
 
 
@@ -61,8 +82,6 @@ namespace GoninDigital.ViewModels
         public StatisPageViewModel()
         {
             Load_HistoryPurchase();
-            Load_Revenue();
-            Load_Top5BestSeller();
 
             // Biểu đồ tròn
             pie_SeriesCollection = new SeriesCollection()
@@ -89,29 +108,50 @@ namespace GoninDigital.ViewModels
 
             // biểu đồ ngang
             top5_SeriesCollection = new SeriesCollection
-            {
-                new RowSeries
                 {
-                    Title = "2021",
-                    Values = new ChartValues<double> { 10, 50, 39, 50 }
-                }
-            };
+                    new RowSeries
+                    {
+                        Title = "2015",
+                        //Values = new ChartValues<double> { 10, 50, 39, 50 }
+                        Values = new ChartValues<int>(Load_Top5BestSeller(0).Select(r=>r.Buy).ToArray())
+                    }
+                };
 
-            top5_Labels = new[] { "Maria", "Susan", "Charles", "Frida" };
+            top5_Labels = Load_Top5BestSeller(0).Select(r => r.Name).ToArray();
             top5_Formatter = value => value.ToString("N");
 
             // Biểu đồ đường
-            SeriesCollection = new SeriesCollection
+            using (var db = new GoninDigitalDBContext())
             {
-                new LineSeries
-                {
-                    Values = new ChartValues<double> { 40000000, 600000000, 5000000000, 200000000 ,40000000 }
-                }
-            };
+                int thisVendorId = db.Vendors.Include(o => o.Owner)
+                                             .Where(o => o.Owner.UserName == Settings.Default.usrname)
+                                             .Single().Id;
 
-            Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May" };
-            CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
-            YFormatter = value => value.ToString("C", cul.NumberFormat);
+                var perMonth = db.Invoices.Where(o => o.VendorId == thisVendorId
+                                          && o.StatusId == (int)Constants.InvoiceStatus.DELIVERED
+                                          && o.FinishedAt.Value.Year == DateTime.Now.Year)
+                                   .GroupBy(o => o.FinishedAt.Value.Month)
+                                   .Select(o => new
+                                   {
+                                       o.Key,
+                                       sum = o.Sum(x => x.Value),
+                                   })
+                                   .OrderBy(o => o.Key)
+                                   .ToList();
+
+                SeriesCollection = new SeriesCollection
+                {
+                    new LineSeries
+                    {
+
+                        Values = new ChartValues<double> (perMonth.Select(r=>(double)r.sum).ToArray())
+                    }
+                };
+
+                Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" };
+                CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
+                YFormatter = value => value.ToString("C", cul.NumberFormat);
+            }
 
             optionchangedCommand = new RelayCommand<RadioButtons>((p) => { return true; }, (p) => { optionchangedCommandExcute(p); });
         }
@@ -148,25 +188,46 @@ namespace GoninDigital.ViewModels
                     new RowSeries
                     {
                         Title = "2015",
-                        Values = new ChartValues<double> { 10, 50, 39, 50 }
+                        //Values = new ChartValues<double> { 10, 50, 39, 50 }
+                        Values = new ChartValues<int>(Load_Top5BestSeller(0).Select(r=>r.Buy).ToArray())
                     }
                 };
 
-                top5_Labels = new[] { "Maria", "Susan", "Charles", "Frida" };
+                top5_Labels = Load_Top5BestSeller(0).Select(r => r.Name).ToArray();
                 top5_Formatter = value => value.ToString("N");
 
                 // Biểu đồ đường
-                SeriesCollection = new SeriesCollection
+                using (var db = new GoninDigitalDBContext())
                 {
-                    new LineSeries
-                    {
-                        Values = new ChartValues<double> { 40000000, 600000000, 5000000000, 200000000 ,40000000 }
-                    }
-                };
+                    int thisVendorId = db.Vendors.Include(o => o.Owner)
+                                                 .Where(o => o.Owner.UserName == Settings.Default.usrname)
+                                                 .Single().Id;
 
-                Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May" };
-                CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
-                YFormatter = value => value.ToString("C", cul.NumberFormat);
+                    var perMonth = db.Invoices.Where(o => o.VendorId == thisVendorId
+                                              && o.StatusId == (int)Constants.InvoiceStatus.DELIVERED
+                                              && o.FinishedAt.Value.Year == DateTime.Now.Year)
+                                       .GroupBy(o => o.FinishedAt.Value.Month)
+                                       .Select(o => new
+                                       {
+                                           o.Key,
+                                           sum = o.Sum(x => x.Value),
+                                       })
+                                       .OrderBy(o => o.Key)
+                                       .ToList();
+
+                    SeriesCollection = new SeriesCollection
+                    {
+                        new LineSeries
+                        {
+
+                            Values = new ChartValues<double> (perMonth.Select(r=>(double)r.sum).ToArray())
+                        }
+                    };
+
+                    Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" };
+                    CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
+                    YFormatter = value => value.ToString("C", cul.NumberFormat);
+                }
             }
             else
             {
@@ -199,25 +260,48 @@ namespace GoninDigital.ViewModels
                     new RowSeries
                     {
                         Title = "2015",
-                        Values = new ChartValues<double> { 10, 50, 39, 50 }
+                        //Values = new ChartValues<double> { 10, 50, 39, 50 }
+                        Values = new ChartValues<int>(Load_Top5BestSeller(1).Select(r=>r.Buy).ToArray())
                     }
                 };
 
-                top5_Labels = new[] { "Maria", "Susan", "Charles", "Frida" };
+                top5_Labels = Load_Top5BestSeller(1).Select(r => r.Name).ToArray();
                 top5_Formatter = value => value.ToString("N");
 
                 // Biểu đồ đường
-                SeriesCollection = new SeriesCollection
+                using (var db = new GoninDigitalDBContext())
                 {
-                    new LineSeries
-                    {
-                        Values = new ChartValues<double> { 40000000, 600000000, 5000000000, 200000000 ,40000000 }
-                    }
-                };
+                    int thisVendorId = db.Vendors.Include(o => o.Owner)
+                                                 .Where(o => o.Owner.UserName == Settings.Default.usrname)
+                                                 .Single().Id;
 
-                Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May" };
-                CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
-                YFormatter = value => value.ToString("C", cul.NumberFormat);
+                    var perDay = db.Invoices.Where(o => o.VendorId == thisVendorId
+                                          && o.StatusId == (int)Constants.InvoiceStatus.DELIVERED
+                                          && o.FinishedAt.Value.Month == DateTime.Now.Month
+                                          && o.FinishedAt.Value.Year == DateTime.Now.Year)
+                                   .GroupBy(o => o.FinishedAt.Value.Day)
+                                   .Select(o => new
+                                   {
+                                       o.Key,
+                                       sum = o.Sum(x => x.Value),
+                                   })
+                                   .OrderBy(o => o.Key)
+                                   .ToList();
+
+                    SeriesCollection = new SeriesCollection
+                    {
+                        new LineSeries
+                        {
+
+                            Values = new ChartValues<double> (perDay.Select(r=>(double)r.sum).ToArray())
+                        }
+                    };
+
+                    Labels = new[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" +
+                        "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" };
+                    CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
+                    YFormatter = value => value.ToString("C", cul.NumberFormat);
+                }
             }
         }
 
@@ -242,41 +326,42 @@ namespace GoninDigital.ViewModels
             }
         }
 
-        private void Load_Revenue()
-        {
-            using (var db = new GoninDigitalDBContext())
-            {
-                int thisVendorId = db.Vendors.Include(o => o.Owner)
-                                             .Where(o => o.Owner.UserName == Settings.Default.usrname)
-                                             .Single().Id;
+        //private void Load_Revenue()
+        //{
+        //    using (var db = new GoninDigitalDBContext())
+        //    {
+        //        int thisVendorId = db.Vendors.Include(o => o.Owner)
+        //                                     .Where(o => o.Owner.UserName == Settings.Default.usrname)
+        //                                     .Single().Id;
 
-                var perDay = db.Invoices.Where(o => o.VendorId == thisVendorId
-                                          && o.StatusId == (int)Constants.InvoiceStatus.DELIVERED
-                                          && o.FinishedAt.Value.Month == DateTime.Now.Month
-                                          && o.FinishedAt.Value.Year == DateTime.Now.Year)
-                                   .GroupBy(o => o.FinishedAt.Value.Day)
-                                   .Select(o => new
-                                   {
-                                       o.Key,
-                                       sum = o.Sum(x => x.Value),
-                                   })
-                                   .OrderBy(o => o.Key)
-                                   .ToList();
+        //        var perDay = db.Invoices.Where(o => o.VendorId == thisVendorId
+        //                                  && o.StatusId == (int)Constants.InvoiceStatus.DELIVERED
+        //                                  && o.FinishedAt.Value.Month == DateTime.Now.Month
+        //                                  && o.FinishedAt.Value.Year == DateTime.Now.Year)
+        //                           .GroupBy(o => o.FinishedAt.Value.Day)
+        //                           .Select(o => new
+        //                           {
+        //                               o.Key,
+        //                               sum = o.Sum(x => x.Value),
+        //                           })
+        //                           .OrderBy(o => o.Key)
+        //                           .ToList();
 
-                var perMonth = db.Invoices.Where(o => o.VendorId == thisVendorId
-                                          && o.StatusId == (int)Constants.InvoiceStatus.DELIVERED
-                                          && o.FinishedAt.Value.Year == DateTime.Now.Year)
-                                   .GroupBy(o => o.FinishedAt.Value.Month)
-                                   .Select(o => new
-                                   {
-                                       o.Key,
-                                       sum = o.Sum(x => x.Value),
-                                   })
-                                   .OrderBy(o => o.Key)
-                                   .ToList();
-            }
-        }
-        private void Load_Top5BestSeller()
+        //        var perMonth = db.Invoices.Where(o => o.VendorId == thisVendorId
+        //                                  && o.StatusId == (int)Constants.InvoiceStatus.DELIVERED
+        //                                  && o.FinishedAt.Value.Year == DateTime.Now.Year)
+        //                           .GroupBy(o => o.FinishedAt.Value.Month)
+        //                           .Select(o => new
+        //                           {
+        //                               o.Key,
+        //                               sum = o.Sum(x => x.Value),
+        //                           })
+        //                           .OrderBy(o => o.Key)
+        //                           .ToList();
+
+        //    }
+        //}
+        private List<Product> Load_Top5BestSeller(int choose_type)
         {
             using (var db = new GoninDigitalDBContext())
             {
@@ -293,6 +378,11 @@ namespace GoninDigital.ViewModels
                     allTime = fetchedProducts.Take(5).ToList();
                 else
                     allTime = fetchedProducts;
+
+                if (choose_type == 0)
+                {
+                    return allTime;
+                }
 
                 List<Product> byMonth;
                 var fetched = db.InvoiceDetails.Include(o => o.Invoice)
@@ -316,7 +406,7 @@ namespace GoninDigital.ViewModels
                     byMonth = fetchedProductsMonth.Take(5).ToList();
                 else
                     byMonth = fetchedProductsMonth;
-
+                return byMonth;
             }
         }
     }
