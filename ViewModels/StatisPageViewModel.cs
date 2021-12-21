@@ -29,6 +29,10 @@ namespace GoninDigital.ViewModels
             // Biểu đồ tròn
             PointLabel = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
 
+            // biểu đồ ngang
+            Values1 = new List<string> { "1", "2", "3", "4", "5" };
+            Values2 = new ChartValues<double> { 6, 2, 6, 3, 2};
+
             // Biểu đồ đường
             SeriesCollection = new SeriesCollection
             {
@@ -43,6 +47,8 @@ namespace GoninDigital.ViewModels
             YFormatter = value => value.ToString("C", cul.NumberFormat);
         }
         public Func<ChartPoint, string> PointLabel { get; set; }
+        public List<string> Values1 { get; set; }
+        public ChartValues<double> Values2 { get; set; }
         public SeriesCollection SeriesCollection { get; set; }
         public string[] Labels { get; set; }
         public Func<double, string> YFormatter { get; set; }

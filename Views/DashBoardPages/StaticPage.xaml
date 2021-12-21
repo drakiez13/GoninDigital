@@ -12,12 +12,6 @@
 
     <ScrollViewer>
         <StackPanel>
-            <StackPanel>
-                <TextBlock Text="10"/>
-                <TextBlock Text="10"/>
-                <TextBlock Text="10"/>
-                <TextBlock Text="10"/>
-            </StackPanel>
             <lvc:PieChart LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" Height="300">
                 <lvc:PieChart.Series>
                     <lvc:PieSeries Title="Chờ xác nhận" Values="3" DataLabels="True"
@@ -30,6 +24,26 @@
                                LabelPoint="{Binding PointLabel}"/>
                 </lvc:PieChart.Series>
             </lvc:PieChart>
+
+            <lvc:CartesianChart Height="300">
+                <lvc:CartesianChart.Series>
+                    <lvc:RowSeries Values="{Binding Values2}" Panel.ZIndex="1"></lvc:RowSeries>
+                </lvc:CartesianChart.Series>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis>
+                        <lvc:Axis.Separator>
+                            <lvc:Separator Step="1"></lvc:Separator>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis MinValue="0"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.DataTooltip>
+                    <lvc:DefaultTooltip SelectionMode="SharedYValues"></lvc:DefaultTooltip>
+                </lvc:CartesianChart.DataTooltip>
+            </lvc:CartesianChart>
+
             <lvc:CartesianChart Series="{Binding SeriesCollection}" Height="400" >
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="Sales" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
