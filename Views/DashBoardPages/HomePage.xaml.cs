@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoninDigital.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,12 @@ namespace GoninDigital.Views.DashBoardPages
         public HomePage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            (DataContext as HomePageViewModel).OnNavigatedTo();
         }
     }
 }

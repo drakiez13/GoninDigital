@@ -36,20 +36,12 @@ namespace GoninDigital.SharedControl
             set => SetValue(GroupBackgroundProperty, value);
         }
 
-        private static List<Product> metaProducts = new List<Product> {
-            new Product { Name="Loading...", Price=100000},
-            new Product { Name="Loading...", Price=200000},
-            new Product { Name="Loading...", Price=300000},
-            new Product { Name="Loading...", Price=400000},
-            new Product { Name="Loading...", Price=500000}
-        };
-
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register("Title", typeof(object), typeof(ProductCardGroup2), new PropertyMetadata("Title"));
         public static readonly DependencyProperty SubtitleProperty =
             DependencyProperty.Register("Subtitle", typeof(object), typeof(ProductCardGroup2), new PropertyMetadata("Subtitle"));
         public static readonly DependencyProperty ProductListProperty =
-            DependencyProperty.Register("ProductList", typeof(object), typeof(ProductCardGroup2), new PropertyMetadata(metaProducts), o => o != null);
+            DependencyProperty.Register("ProductList", typeof(object), typeof(ProductCardGroup2));
         public static readonly DependencyProperty GroupBackgroundProperty =
             DependencyProperty.Register("GroupBackground", typeof(object), typeof(ProductCardGroup2), new PropertyMetadata("DarkSeaGreen"), o => o != null);
         

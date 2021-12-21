@@ -138,15 +138,54 @@ namespace GoninDigital.ViewModels
             }
         }
 
+        public void OnNavigatedTo()
+        {
+            InitProducts();
+        }
+
         public HomePageViewModel()
         {
             art = "/Resources/Images/HomeBanner.jpg";
 
-            ads = new List<Ad>(3);
-            adProducts = new List<List<Product>>(3);
+            var metaProduct = new Product
+            {
+                Name = "Loading",
+                Image = "/Resources/Images/BlankImage.jpg",
+            };
+            var metaProducts = new List<Product>(5)
+            {
+                metaProduct,
+                metaProduct,
+                metaProduct,
+                metaProduct,
+                metaProduct
+            };
 
+            var metaAd = new Ad
+            {
+                Title = "Loading",
+                Subtitle = "Loading",
+                Cover = "/Resources/Images/ProductListBackgroundFallback.jpg",
+            };
+            ads = new List<Ad>(3)
+            {
+                metaAd,
+                metaAd,
+                metaAd
+            };
+
+            AdProducts = new List<List<Product>>(3)
+            {
+                metaProducts,
+                metaProducts,
+                metaProducts
+            };
+
+            TopProducts = metaProducts;
+            RecommendedProducts = metaProducts;
+            DiscountProducts = metaProducts;
+            
             InitAds();
-            InitProducts();
         }
     }
 }

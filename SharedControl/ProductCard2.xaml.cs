@@ -41,7 +41,7 @@ namespace GoninDigital.SharedControl
 
         private void OnClick(object sender, MouseButtonEventArgs e)
         {
-            if (ProductInfo != null && Clickable)
+            if (ProductInfo != null && ProductInfo.Id != 0 && Clickable)
             {
                 DashBoard.RootFrame.Navigate(new ProductPage(ProductInfo));
             }
