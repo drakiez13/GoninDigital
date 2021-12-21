@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:GoninDigital.Views.DashBoardPages"
       xmlns:ui="http://schemas.modernwpf.com/2019"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="StaticPage">
@@ -19,7 +20,14 @@
                 </Grid.ColumnDefinitions>
                 <ui:RadioButtons
                         x:Name="Options"
-                        Header="Thống kê theo:">
+                        Header="Thống kê theo:"
+                        SelectedIndex="0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding optionchangedCommand}"
+                                            CommandParameter="{Binding ElementName=Options}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <!-- A RadioButton group. -->
                     <RadioButton
                             x:Name="Option1RadioButton"
@@ -36,33 +44,16 @@
                         Grid.Column="1"
                         Margin="8,0" />
             </Grid>
-            <lvc:PieChart LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" Height="300">
-                <lvc:PieChart.Series>
-                    <lvc:PieSeries Title="Chờ xác nhận" Values="3" DataLabels="True"
-                               LabelPoint="{Binding PointLabel}"/>
-                    <lvc:PieSeries Title="Đang giao" Values="4" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                    <lvc:PieSeries Title="Đã giao hàng" Values="6" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                    <lvc:PieSeries Title="Hủy bỏ" Values="2" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                </lvc:PieChart.Series>
+            <lvc:PieChart LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" Height="300" Series="{Binding pie_SeriesCollection, Mode=TwoWay}">
             </lvc:PieChart>
 
-            <lvc:CartesianChart Height="300">
-                <lvc:CartesianChart.Series>
-                    <lvc:RowSeries Values="{Binding Values2}" Panel.ZIndex="1"></lvc:RowSeries>
-                </lvc:CartesianChart.Series>
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis>
-                        <lvc:Axis.Separator>
-                            <lvc:Separator Step="1"></lvc:Separator>
-                        </lvc:Axis.Separator>
-                    </lvc:Axis>
-                </lvc:CartesianChart.AxisY>
+            <lvc:CartesianChart Series="{Binding top5_SeriesCollection}" LegendLocation="Bottom" Height="300">
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis MinValue="0"></lvc:Axis>
+                    <lvc:Axis Title="Salesman" LabelFormatter="{Binding top5_Formatter}"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Sold Apps" Labels="{Binding top5_Labels}"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.DataTooltip>
                     <lvc:DefaultTooltip SelectionMode="SharedYValues"></lvc:DefaultTooltip>
                 </lvc:CartesianChart.DataTooltip>
