@@ -44,6 +44,55 @@
                         Grid.Column="1"
                         Margin="8,0" />
             </Grid>
+            <Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                    Padding="96"
+                    ui:ThemeManager.RequestedTheme="Light">
+                <ui:ThemeShadowChrome
+                    IsShadowEnabled="True"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Depth="{Binding ElementName=DepthSlider, Path=Value}">
+                    <ui:SimpleStackPanel>
+                        <ui:SimpleStackPanel Orientation="Horizontal">
+                            <Rectangle
+                                Width="200"
+                                Height="200"
+                                Margin="20"
+                                Fill="{DynamicResource SystemControlBackgroundAltHighBrush}" />
+                            <Rectangle
+                                Width="200"
+                                Height="200"
+                                Margin="20"
+                                Fill="{DynamicResource SystemControlBackgroundAltHighBrush}" />
+                            <Rectangle
+                                Width="200"
+                                Height="200"
+                                Margin="20"
+                                Fill="{DynamicResource SystemControlBackgroundAltHighBrush}" />
+                        </ui:SimpleStackPanel>
+                        
+                        <ui:SimpleStackPanel Orientation="Horizontal">
+                            <Rectangle
+                                Width="200"
+                                Height="200"
+                                Margin="20"
+                                Fill="{DynamicResource SystemControlBackgroundAltHighBrush}" />
+                            <Rectangle
+                                Width="200"
+                                Height="200"
+                                Margin="20"
+                                Fill="{DynamicResource SystemControlBackgroundAltHighBrush}" />
+                            <Rectangle
+                                Width="200"
+                                Height="200"
+                                Margin="20"
+                                Fill="{DynamicResource SystemControlBackgroundAltHighBrush}" />
+                        </ui:SimpleStackPanel>
+                    </ui:SimpleStackPanel>
+                    
+                    
+                </ui:ThemeShadowChrome>
+            </Border>
             <lvc:PieChart LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" Height="300" Series="{Binding pie_SeriesCollection, Mode=TwoWay}">
             </lvc:PieChart>
 
