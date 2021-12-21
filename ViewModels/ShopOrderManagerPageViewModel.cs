@@ -59,6 +59,7 @@ namespace GoninDigital.ViewModels
 
             RefuseCommand = new RelayCommand<Invoice>(o => true, o => {
                 o.StatusId = (int)Constants.InvoiceStatus.REFUSED;
+                o.FinishedAt = System.DateTime.Now;
                 CreatedInvoices.Remove(o);
                 RefusedInvoices.Add(o);
                 using (var db = new GoninDigitalDBContext())
