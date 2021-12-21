@@ -100,7 +100,10 @@ namespace GoninDigital.ViewModels
                 var tmp = topInvoiceDetails.Select(o => o.Key);
 
                 var fetchedProducts = await db.Products
-                    .Where(o => tmp.Contains(o.Id) && o.StatusId == (int)Constants.ProductStatus.ACCEPTED)
+                    .Include(x => x.Vendor)
+                    .Where(o => tmp.Contains(o.Id) &&
+                                o.StatusId == (int)Constants.ProductStatus.ACCEPTED &&
+                                o.Vendor.ApprovalStatus == (int)Constants.ApprovalStatus.APPROVED)
                     .ToListAsync();
                 if (fetchedProducts.Count < 20)
                     fetchedProducts.AddRange(randomProducts.Take(20 - fetchedProducts.Count));
@@ -113,14 +116,16 @@ namespace GoninDigital.ViewModels
                 RecommendedProducts = await db.Products
                     .Include(x => x.Vendor)
                     .Include(x => x.Brand)
-                    .Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED)
+                    .Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED &&
+                                o.Vendor.ApprovalStatus == (int)Constants.ApprovalStatus.APPROVED)
                     .OrderBy(o => Guid.NewGuid()).Take(20).ToListAsync();
 
                 // Discount Products
                 fetchedProducts = await db.Products
                     .Include(x => x.Vendor)
                     .Include(x => x.Brand)
-                    .Where(o => o.Price != o.OriginPrice && o.StatusId == (int)Constants.ProductStatus.ACCEPTED)
+                    .Where(o => o.Price != o.OriginPrice && o.StatusId == (int)Constants.ProductStatus.ACCEPTED &&
+                                o.Vendor.ApprovalStatus == (int)Constants.ApprovalStatus.APPROVED)
                     .OrderByDescending(o => o.UpdatedAt).ToListAsync();
 
                 if (fetchedProducts.Count < 20)

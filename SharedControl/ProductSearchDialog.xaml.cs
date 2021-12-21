@@ -1,6 +1,7 @@
 ﻿using GoninDigital.Models;
 using GoninDigital.Utils;
 using GoninDigital.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using ModernWpf.Controls;
 using System;
 using System.Collections.Generic;
@@ -36,8 +37,11 @@ namespace GoninDigital.SharedControl
                 var content = sender.Text;
                 using (var context = new GoninDigitalDBContext())
                 {
-                    var productResult = context.Products.Where(
-                            product => product.StatusId == (int)Constants.ProductStatus.ACCEPTED
+                    var productResult = context.Products
+                        .Include(o => o.Vendor)
+                        .Where(
+                            product => product.StatusId == (int)Constants.ProductStatus.ACCEPTED &&
+                                product.Vendor.ApprovalStatus == (int)Constants.ApprovalStatus.APPROVED
                             && product.Name.Contains(content)
                         ).ToList();
 
