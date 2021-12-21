@@ -12,6 +12,30 @@
 
     <ScrollViewer>
         <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <ui:RadioButtons
+                        x:Name="Options"
+                        Header="Thống kê theo:">
+                    <!-- A RadioButton group. -->
+                    <RadioButton
+                            x:Name="Option1RadioButton"
+                            Content="Toàn bộ" />
+                    <RadioButton
+                            x:Name="Option2RadioButton"
+                            Content="Tháng" />
+                </ui:RadioButtons>
+                <TextBlock
+                        x:Name="Control1Output"
+                        Text="{Binding ElementName=Options, Path=SelectedItem.Content, StringFormat='You selected {0}.', FallbackValue='Select an option.'}"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        VerticalAlignment="Center"
+                        Grid.Column="1"
+                        Margin="8,0" />
+            </Grid>
             <lvc:PieChart LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" Height="300">
                 <lvc:PieChart.Series>
                     <lvc:PieSeries Title="Chờ xác nhận" Values="3" DataLabels="True"
