@@ -42,7 +42,7 @@ namespace GoninDigital.Views.SharedPages
                             product.Vendor.ApprovalStatus == (int)Constants.ApprovalStatus.APPROVED &&
                             product.Name.Contains(query)
                         ).ToList();
-                if (productResult.Count > 20)
+                if (productResult.Count > 30)
                     productResult = productResult.GetRange(0, 30).ToList();
                 Products = productResult;
 

@@ -90,7 +90,12 @@
                     <StackPanel Grid.Row="3"
                                 Orientation="Horizontal">
                         <StackPanel Orientation="Horizontal"
-                                    Margin="0 0 70 0">
+                                    Margin="0 0 40 0">
+                            <Label Content="Sold: " />
+                            <Label Content="{Binding ProductInfo.Buy}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 0 40 0">
                             <Label Content="Available: " />
                             <Label Content="{Binding ProductInfo.Available}" />
                         </StackPanel>

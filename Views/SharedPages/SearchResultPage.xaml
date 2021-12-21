@@ -15,47 +15,73 @@
          d:Background="White"
          Title="CartPage_Purchase">
     <ScrollViewer>
-        <StackPanel Orientation="Vertical"
-                    Margin="0 0 0 20">
+        <Grid>
             <Label Margin="20 20 0 0"
                    FontSize="22"
                    FontWeight="Bold"
                    Content="Search Results"></Label>
             <StackPanel Orientation="Horizontal"
-                        Margin="20 10 0 20">
+                        Margin="20 60 0 20">
                 <Label Content="Keyword: "></Label>
-                <Label Content="{Binding Query}" FontStyle="Italic"></Label>
+                <Label Content="{Binding Query}"
+                       FontStyle="Italic"></Label>
             </StackPanel>
-            <ScrollViewer>
-                <ItemsControl ItemsSource="{Binding Vendors}"
-                              Margin="40 0 20 20">
+            <StackPanel Orientation="Vertical"
+                        Margin="0 40 0 0"
+                        HorizontalAlignment="Center">
+
+                
+                <Label Margin="20 40 0 0"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Content="Shop"
+                       Visibility="{Binding Vendors.Count,
+                                            Converter={StaticResource ListCountToVisibility},
+                                            ConverterParameter=True}"></Label>
+                <ScrollViewer>
+                    <ItemsControl ItemsSource="{Binding Vendors}"
+                                  MaxWidth="1200"
+                                  HorizontalAlignment="Left"
+                                  Margin="10 20 0 20">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ui:SimpleStackPanel Orientation="Horizontal"
+                                                     HorizontalAlignment="Center"
+                                                     Spacing="20"></ui:SimpleStackPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <uc:VendorAvatar VendorInfo="{Binding}"></uc:VendorAvatar>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                <Label Margin="20 20 0 0"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Content="Products"
+                       Visibility="{Binding Products.Count,
+                                            Converter={StaticResource ListCountToVisibility},
+                                            ConverterParameter=True}"></Label>
+                <ItemsControl ItemsSource="{Binding Products}"
+                              Margin="0 20 0 20"
+                              HorizontalAlignment="Center"
+                              MaxWidth="1200">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <ui:SimpleStackPanel Orientation="Horizontal"
-                                                 Spacing="20"></ui:SimpleStackPanel>
+                            <WrapPanel Orientation="Horizontal"
+                                       HorizontalAlignment="Center"></WrapPanel>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <uc:VendorAvatar VendorInfo="{Binding}"></uc:VendorAvatar>
+                            <uc:ProductCard Margin="10 10 10 10"
+                                            ProductInfo="{Binding}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </ScrollViewer>
-            <ItemsControl ItemsSource="{Binding Products}"
-                          Margin="20 20 20 20">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ui:SimpleStackPanel Orientation="Vertical"
-                                             Spacing="12"></ui:SimpleStackPanel>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <uc:ProductCard2 ProductInfo="{Binding}" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
+            </StackPanel>
+        </Grid>
     </ScrollViewer>
 </ui:Page>
