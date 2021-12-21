@@ -80,7 +80,7 @@
                         <ui:NavigationViewItem Content="Vendor Profile"
                                                Tag="ShopAboutPage"
                                                SelectsOnInvoked="True"/>
-                        <ui:NavigationViewItem Content="Static"
+                        <ui:NavigationViewItem Content="Statistics"
                                                Tag="StaticPage"
                                                SelectsOnInvoked="True"/>
                     </ui:NavigationViewItem.MenuItems>

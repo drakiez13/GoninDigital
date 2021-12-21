@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using GoninDigital.Models;
 using GoninDigital.Properties;
+using GoninDigital.Utils;
 using LiveCharts;
 using LiveCharts.Wpf;
 using Microsoft.EntityFrameworkCore;
@@ -60,25 +61,27 @@ namespace GoninDigital.ViewModels
         public StatisPageViewModel()
         {
             Load_HistoryPurchase();
+            Load_Revenue();
+            Load_Top5BestSeller();
 
             // Biểu đồ tròn
             pie_SeriesCollection = new SeriesCollection()
                 {
                     new PieSeries
                     {
-                        Title = "Đã giao",
+                        Title = "Completed",
                         Values = new ChartValues<double> { deliveredInvoices.Count },
                         LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                     },
                     new PieSeries
                     {
-                        Title = "Đã hủy",
+                        Title = "Cancelled",
                         Values = new ChartValues<double> { canceledInvoices.Count },
                         LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                     },
                     new PieSeries
                     {
-                        Title = "Đã từ chối",
+                        Title = "Refused",
                         Values = new ChartValues<double> { refusedInvoices.Count },
                         LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                     }
@@ -89,7 +92,7 @@ namespace GoninDigital.ViewModels
             {
                 new RowSeries
                 {
-                    Title = "2015",
+                    Title = "2021",
                     Values = new ChartValues<double> { 10, 50, 39, 50 }
                 }
             };
@@ -172,19 +175,19 @@ namespace GoninDigital.ViewModels
                 {
                     new PieSeries
                     {
-                        Title = "Đã giao",
+                        Title = "Completed",
                         Values = new ChartValues<double> { deliveredInvoices.Count },
                         LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                     },
                     new PieSeries
                     {
-                        Title = "Đã hủy",
+                        Title = "Cancelled",
                         Values = new ChartValues<double> { canceledInvoices.Count },
                         LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                     },
                     new PieSeries
                     {
-                        Title = "Đã từ chối",
+                        Title = "Refused",
                         Values = new ChartValues<double> { refusedInvoices.Count },
                         LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                     }
@@ -217,7 +220,7 @@ namespace GoninDigital.ViewModels
                 YFormatter = value => value.ToString("C", cul.NumberFormat);
             }
         }
-        
+
         private void Load_HistoryPurchase()
         {
             deliveredInvoices = new ObservableCollection<Invoice>();
@@ -235,6 +238,84 @@ namespace GoninDigital.ViewModels
                 DeliveredInvoices = new ObservableCollection<Invoice>(userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.DELIVERED));
                 CanceledInvoices = new ObservableCollection<Invoice>(userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.CANCELED));
                 RefusedInvoices = new ObservableCollection<Invoice>(userInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.REFUSED));
+
+            }
+        }
+
+        private void Load_Revenue()
+        {
+            using (var db = new GoninDigitalDBContext())
+            {
+                int thisVendorId = db.Vendors.Include(o => o.Owner)
+                                             .Where(o => o.Owner.UserName == Settings.Default.usrname)
+                                             .Single().Id;
+
+                var perDay = db.Invoices.Where(o => o.VendorId == thisVendorId
+                                          && o.StatusId == (int)Constants.InvoiceStatus.DELIVERED
+                                          && o.FinishedAt.Value.Month == DateTime.Now.Month
+                                          && o.FinishedAt.Value.Year == DateTime.Now.Year)
+                                   .GroupBy(o => o.FinishedAt.Value.Day)
+                                   .Select(o => new
+                                   {
+                                       o.Key,
+                                       sum = o.Sum(x => x.Value),
+                                   })
+                                   .OrderBy(o => o.Key)
+                                   .ToList();
+
+                var perMonth = db.Invoices.Where(o => o.VendorId == thisVendorId
+                                          && o.StatusId == (int)Constants.InvoiceStatus.DELIVERED
+                                          && o.FinishedAt.Value.Year == DateTime.Now.Year)
+                                   .GroupBy(o => o.FinishedAt.Value.Month)
+                                   .Select(o => new
+                                   {
+                                       o.Key,
+                                       sum = o.Sum(x => x.Value),
+                                   })
+                                   .OrderBy(o => o.Key)
+                                   .ToList();
+            }
+        }
+        private void Load_Top5BestSeller()
+        {
+            using (var db = new GoninDigitalDBContext())
+            {
+                int thisVendorId = db.Vendors.Include(o => o.Owner)
+                                             .Where(o => o.Owner.UserName == Settings.Default.usrname)
+                                             .Single().Id;
+
+                List<Product> allTime;
+                var fetchedProducts = db.Vendors.Include(o => o.Products)
+                                                .Where(o => o.Id == thisVendorId)
+                                                .Single().Products
+                                                .OrderByDescending(o => o.Buy).ToList();
+                if (fetchedProducts.Count >= 5)
+                    allTime = fetchedProducts.Take(5).ToList();
+                else
+                    allTime = fetchedProducts;
+
+                List<Product> byMonth;
+                var fetched = db.InvoiceDetails.Include(o => o.Invoice)
+                                               .Include(o => o.Product)
+                                               .Where(o => o.Invoice.VendorId == thisVendorId
+                                                     && o.Invoice.StatusId == (int)Constants.InvoiceStatus.DELIVERED
+                                                     && DateTime.Now.Month == o.Invoice.FinishedAt.Value.Month
+                                                     && DateTime.Now.Year == o.Invoice.FinishedAt.Value.Year)
+                                               .GroupBy(o => o.ProductId)
+                                               .Select(o => new
+                                               {
+                                                   o.Key,
+                                                   sum = o.Sum(x => x.Quantity)
+                                               })
+                                               .OrderByDescending(o => o.sum)
+                                               .Select(o => o.Key)
+                                               .ToList();
+                var fetchedProductsMonth = db.Products.Where(o => fetched.Contains(o.Id)).ToList();
+
+                if (fetchedProductsMonth.Count >= 5)
+                    byMonth = fetchedProductsMonth.Take(5).ToList();
+                else
+                    byMonth = fetchedProductsMonth;
 
             }
         }
