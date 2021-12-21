@@ -93,6 +93,7 @@ namespace GoninDigital.ViewModels
             });
             ReceiveCommand = new RelayCommand<Invoice>(o => true, o => {
                 o.StatusId = (int)Constants.InvoiceStatus.DELIVERED;
+                o.FinishedAt = System.DateTime.Now;
                 AcceptedInvoices.Remove(o);
                 DeliveredInvoices.Add(o);
                 using (var db = new GoninDigitalDBContext())
