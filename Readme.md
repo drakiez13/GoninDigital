@@ -17,4 +17,4 @@
 2. Download hoặc clone reposity về máy
 3. Tạo database dựa trên file Assets/database.sql
 4. Thay đổi thông tin server lưu trữ database ở file Properties/Settings.settings
-5. Mở project bằng Visual Studio và chạy file GoninDigital.sln
+5. Mở project bằng Visual Studio và chạy file GoninDigital.sln (đảm bảo kết nối mạng)
