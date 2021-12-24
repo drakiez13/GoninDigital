@@ -204,6 +204,7 @@ namespace GoninDigital.ViewModels
         public ICommand CloseUpgradeBDCommand { get; set; }
         public void CloseUpgradeBDExec()
         {
+            newVendor = null;
             upgradeDialog.Hide();
         }
         public ICommand UpgradeCommand { get; set; }
@@ -613,6 +614,7 @@ namespace GoninDigital.ViewModels
             {
                 if (string.IsNullOrEmpty(newVendor.Name))
                 {
+                    IsNameAvailable = true;
                     return false;
                 }
                 if (allVendorNames.Any(s => newVendor.Name.Contains(s)))
