@@ -27,9 +27,6 @@
                                    Text="{Binding SearchName, Mode=TwoWay}"
                                    TextChanged="AutoSuggestBox_TextChanged"
                                    QuerySubmitted="AutoSuggestBox_QuerySubmitted"/>
-                <Button Content="New Brand" 
-                        Margin="5"
-                        Command="{Binding AddCommand}"/>
                 <Button Content="Update" 
                         Margin="5"
                         Command="{Binding UpdateCommand}"/>
