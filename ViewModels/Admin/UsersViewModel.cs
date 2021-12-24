@@ -44,30 +44,7 @@ namespace GoninDigital.ViewModels
         #endregion
         public UsersViewModel()
         {
-            using (var db = new GoninDigitalDBContext())
-            {
-                var t = db.Bans.ToList();
-                list = new ObservableCollection<User>(db.Users);
-                int count = 0;
-                while(count<list.Count())
-                {
-                    bool flag = false;
-                    foreach(Ban ban in t)
-                    {
-                        if (ban.UserId == list[count].Id)
-                        {
-                            flag = true;
-                            break;
-                        }
-                    }
-                    if (flag)
-                        list.RemoveAt(count);
-                    else
-                        count+=1;
-                }
-            }
-            
-
+            Load_Users();
             #region UpdateCommand
             UpdateCommand = new RelayCommand<Object>((p) =>
             {
@@ -151,38 +128,14 @@ namespace GoninDigital.ViewModels
 
         private void DeleteUserDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            using (var db = new GoninDigitalDBContext())
-            {
-                var t = db.Bans.ToList();
-                List = new ObservableCollection<User>(db.Users);
-                int count = 0;
-                while (count < list.Count())
-                {
-                    bool flag = false;
-                    foreach (Ban ban in t)
-                    {
-                        if (ban.UserId == List[count].Id)
-                        {
-                            flag = true;
-                            break;
-                        }
-                    }
-                    if (flag)
-                        List.RemoveAt(count);
-                    else
-                        count += 1;
-                }
-            }
+            Load_Users();
         }
         #region Methods
         public void SearchChanged()
         {
             if (SearchName == "")
             {
-                using (var db = new GoninDigitalDBContext())
-                {
-                    List = new ObservableCollection<User>(db.Users);
-                }
+                Load_Users();
             }
         }
         public void SearchUser()
@@ -244,13 +197,35 @@ namespace GoninDigital.ViewModels
             }
 
         }
-
-        private void AddUserDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void Load_Users()
         {
             using (var db = new GoninDigitalDBContext())
             {
+                var t = db.Bans.ToList();
                 List = new ObservableCollection<User>(db.Users);
+                int count = 0;
+                while (count < list.Count())
+                {
+                    bool flag = false;
+                    foreach (Ban ban in t)
+                    {
+                        if (ban.UserId == List[count].Id)
+                        {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if (flag)
+                        List.RemoveAt(count);
+                    else
+                        count += 1;
+                }
             }
+        }
+
+        private void AddUserDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            Load_Users();
         }
         #endregion
     }
