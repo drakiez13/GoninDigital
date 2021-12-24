@@ -12,6 +12,6 @@ namespace GoninDigital.Models
         public string Reason { get; set; }
         public DateTime EndDate { get; set; }
 
-        public virtual User IdNavigation { get; set; }
+        public virtual User User { get; set; }
     }
 }

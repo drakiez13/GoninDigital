@@ -9,6 +9,7 @@ namespace GoninDigital.Models
     {
         public User()
         {
+            Bans = new HashSet<Ban>();
             Carts = new HashSet<Cart>();
             Comments = new HashSet<Comment>();
             Favorites = new HashSet<Favorite>();
@@ -30,7 +31,7 @@ namespace GoninDigital.Models
         public string Avatar { get; set; }
 
         public virtual UserType Type { get; set; }
-        public virtual Ban Ban { get; set; }
+        public virtual ICollection<Ban> Bans { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Favorite> Favorites { get; set; }

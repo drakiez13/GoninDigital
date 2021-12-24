@@ -102,7 +102,7 @@ namespace GoninDigital.ViewModels
                 //we need to do the work in batches so that we can report progress
                 GoninDigitalDBContext context = new();
                 string passEncode = Cryptography.MD5Hash(Cryptography.Base64Encode(Password));
-                isExist = context.Users.Include(o => o.Ban)
+                isExist = context.Users.Include(o => o.Bans)
                                        .FirstOrDefault(x => x.UserName == UserName && x.Password == passEncode);
                 Settings.Default.usrname = UserName.ToString();
 
@@ -116,9 +116,9 @@ namespace GoninDigital.ViewModels
                     //and close the splash screen
                     if (isExist != default)
                     {
-                        if (isExist.Ban != null)
+                        if (isExist.Bans != null)
                         {
-                            if (isExist.Ban.EndDate >= DateTime.Now)
+                            if (isExist.Bans.First().EndDate >= DateTime.Now)
                             {
                                 var content = new ContentDialog();
                                 content.Title = "Warning";
