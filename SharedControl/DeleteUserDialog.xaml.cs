@@ -36,37 +36,35 @@ namespace GoninDigital.SharedControl
             string enddate = dp_EndDate.Text;
             if (reason == "" | enddate == "")
             {
-                ContentDialog content = new()
-                {
-                    Title = "Warning",
-                    Content = "Please enter full information",
-                    PrimaryButtonText = "Ok"
-                };
-                content.ShowAsync();
+                Error.Foreground = Brushes.Red;
+                Error.Text = "Please enter full information";
             }
-            else
+            else 
             {
-                Ban ban = new Ban();
-                ban.UserId = UserId;
-                ban.Reason = reason;
-                if (enddate[1] == '/')
-                    enddate = "0" + enddate;
-                if (enddate[4] == '/')
-                    enddate = enddate.Insert(3, "0");
-                Error.Text = enddate;
-                ban.EndDate = DateTime.ParseExact(enddate, "mm/dd/yyyy",CultureInfo.InvariantCulture);
+                int IsCheck = 0;
                 using(var db=new GoninDigitalDBContext())
                 {
-                    db.Bans.Add(ban);
-                    _ = db.SaveChanges();
+                    IsCheck = db.Bans.Where(x => x.UserId == UserId).Count();
                 }
-                ContentDialog content = new()
+                if (IsCheck != 0)
                 {
-                    Title = "Complete",
-                    Content = "Deleted Successfully",
-                    PrimaryButtonText = "Ok"
-                };
-                content.ShowAsync();
+                    Error.Foreground = Brushes.Red;
+                    Error.Text = "This account has been deleted";
+                }
+                else
+                {
+                    Ban ban = new Ban();
+                    ban.UserId = UserId;
+                    ban.Reason = reason;
+                    ban.EndDate = DateTime.ParseExact(enddate, "M/d/yyyy", CultureInfo.InvariantCulture);
+                    using (var db = new GoninDigitalDBContext())
+                    {
+                        db.Bans.Add(ban);
+                        _ = db.SaveChanges();
+                    }
+                    Error.Foreground = Brushes.Green;
+                    Error.Text = "Deleted Successfully";
+                }
 
             }    
         }
