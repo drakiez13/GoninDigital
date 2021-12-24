@@ -8,44 +8,47 @@
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="1000"
       Title="StaticPage">
 
     <ScrollViewer>
-        <StackPanel>
+        <StackPanel Margin="20 0 20 0">
+            <Label Margin="0 10 0 20"
+                       FontSize="22"
+                       Content="Statistics"
+                       FontWeight="Bold" />
             <Grid>
-                <Grid.ColumnDefinitions>
+                <!--<Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <ui:RadioButtons
-                        x:Name="Options"
-                        Header="Thống kê theo:"
-                        SelectedIndex="0">
+                </Grid.ColumnDefinitions>-->
+                
+                <ui:RadioButtons x:Name="Options"
+                                 FontSize="18"
+                                 SelectedIndex="0">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <i:InvokeCommandAction Command="{Binding optionchangedCommand}"
                                             CommandParameter="{Binding ElementName=Options}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <!-- A RadioButton group. -->
-                    <RadioButton
+                    <RadioButton 
                             x:Name="Option1RadioButton"
-                            Content="Toàn bộ" />
-                    <RadioButton
+                            Content="Global" />
+                    <RadioButton 
                             x:Name="Option2RadioButton"
-                            Content="Tháng" />
+                            Content="Most recent month" />
                 </ui:RadioButtons>
-                <TextBlock
+                <!--<TextBlock
                         x:Name="Control1Output"
                         Text="{Binding ElementName=Options, Path=SelectedItem.Content, StringFormat='You selected {0}.', FallbackValue='Select an option.'}"
                         Style="{StaticResource BodyTextBlockStyle}"
                         VerticalAlignment="Center"
                         Grid.Column="1"
-                        Margin="8,0" />
+                        Margin="8,0" />-->
             </Grid>
-            <Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
-                    Padding="96"
+            <!--<Border Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
+                    Padding="0"
                     ui:ThemeManager.RequestedTheme="Light">
                 <ui:ThemeShadowChrome
                     IsShadowEnabled="True"
@@ -92,35 +95,71 @@
                     
                     
                 </ui:ThemeShadowChrome>
-            </Border>
-            <lvc:PieChart LegendLocation="Right" 
-                          DataClick="Chart_OnDataClick" 
-                          Hoverable="False" 
-                          DataTooltip="{x:Null}" 
-                          Height="300" 
-                          Series="{Binding pie_SeriesCollection, Mode=TwoWay}">
-            </lvc:PieChart>
+            </Border>-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Column="0">
+                    <Label Content="Best Sellers"
+                           Margin="0 0 0 10"
+                           HorizontalAlignment="Center"/>
+                    <lvc:CartesianChart Series="{Binding top5_SeriesCollection, Mode=TwoWay}" 
+                                        LegendLocation="Bottom"
+                                        Height="300">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis LabelFormatter="{Binding top5_Formatter}"/>
+                        </lvc:CartesianChart.AxisX>
+                        
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Labels="{Binding top5_Labels, Mode=TwoWay}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.DataTooltip>
+                            <lvc:DefaultTooltip SelectionMode="SharedYValues"></lvc:DefaultTooltip>
+                        </lvc:CartesianChart.DataTooltip>
+                    </lvc:CartesianChart>
+                </StackPanel>
+                <StackPanel Grid.Column="1"
+                            Grid.Row="0">
+                    <Label Content="Orders "
+                           Margin="0 0 0 10"
+                           HorizontalAlignment="Center"/>
+                    <lvc:PieChart LegendLocation="Right" 
+                                  DataClick="Chart_OnDataClick"
+                                  Hoverable="False" 
+                                  
+                                  DataTooltip="{x:Null}" 
+                                  Height="300" 
+                                  Series="{Binding pie_SeriesCollection, Mode=TwoWay}">
+                    </lvc:PieChart>
+                </StackPanel>
 
-            <lvc:CartesianChart Series="{Binding top5_SeriesCollection, Mode=TwoWay}" LegendLocation="Bottom" Height="300">
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Salesman" LabelFormatter="{Binding top5_Formatter}"></lvc:Axis>
-                </lvc:CartesianChart.AxisX>
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Sold Apps" Labels="{Binding top5_Labels, Mode=TwoWay}"></lvc:Axis>
-                </lvc:CartesianChart.AxisY>
-                <lvc:CartesianChart.DataTooltip>
-                    <lvc:DefaultTooltip SelectionMode="SharedYValues"></lvc:DefaultTooltip>
-                </lvc:CartesianChart.DataTooltip>
-            </lvc:CartesianChart>
-
-            <lvc:CartesianChart Series="{Binding SeriesCollection, Mode=TwoWay}" Height="400" >
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Sales" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
-                </lvc:CartesianChart.AxisY>
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Month" Labels="{Binding Labels, Mode=TwoWay}"></lvc:Axis>
-                </lvc:CartesianChart.AxisX>
-            </lvc:CartesianChart>
+                
+                <StackPanel Grid.ColumnSpan="2"
+                            Grid.Column="0"
+                            Margin=" 0 20 0 0"
+                            Grid.Row="1">
+                    <Label Content="Revenue"
+                           Margin="0 0 0 10"
+                           HorizontalAlignment="Center"/>
+                    <lvc:CartesianChart Series="{Binding SeriesCollection, Mode=TwoWay}" 
+                                    Height="300">
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Sales" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Month" Labels="{Binding Labels, Mode=TwoWay}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+                </StackPanel>
+                
+            </Grid>
+            
         </StackPanel>
     </ScrollViewer>
 </ui:Page>

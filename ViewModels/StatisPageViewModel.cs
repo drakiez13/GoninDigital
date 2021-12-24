@@ -88,18 +88,21 @@ namespace GoninDigital.ViewModels
                 {
                     new PieSeries
                     {
+                        DataLabels = true,
                         Title = "Completed",
                         Values = new ChartValues<double> { deliveredInvoices.Count },
                         LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                     },
                     new PieSeries
                     {
+                        DataLabels = true,
                         Title = "Cancelled",
                         Values = new ChartValues<double> { canceledInvoices.Count },
                         LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                     },
                     new PieSeries
                     {
+                        DataLabels = true,
                         Title = "Refused",
                         Values = new ChartValues<double> { refusedInvoices.Count },
                         LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
@@ -111,7 +114,7 @@ namespace GoninDigital.ViewModels
                 {
                     new RowSeries
                     {
-                        Title = "2015",
+                        Title = "Total Revenue",
                         //Values = new ChartValues<double> { 10, 50, 39, 50 }
                         Values = new ChartValues<int>(Load_Top5BestSeller(0).Select(r=>r.Buy).ToArray())
                     }
@@ -164,19 +167,19 @@ namespace GoninDigital.ViewModels
                 {
                     new PieSeries
                     {
-                        Title = "Đã giao",
+                        Title = "Completed",
                         Values = new ChartValues<double> { deliveredInvoices.Count },
                         LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                     },
                     new PieSeries
                     {
-                        Title = "Đã hủy",
+                        Title = "Cancelled",
                         Values = new ChartValues<double> { canceledInvoices.Count },
                         LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                     },
                     new PieSeries
                     {
-                        Title = "Đã từ chối",
+                        Title = "Refused",
                         Values = new ChartValues<double> { refusedInvoices.Count },
                         LabelPoint = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
                     }
@@ -187,7 +190,7 @@ namespace GoninDigital.ViewModels
                 {
                     new RowSeries
                     {
-                        Title = "2015",
+                        Title = "Total Revenue",
                         //Values = new ChartValues<double> { 10, 50, 39, 50 }
                         Values = new ChartValues<int>(Load_Top5BestSeller(0).Select(r=>r.Buy).ToArray())
                     }
@@ -259,7 +262,7 @@ namespace GoninDigital.ViewModels
                 {
                     new RowSeries
                     {
-                        Title = "2015",
+                        Title = "Total Revenue",
                         //Values = new ChartValues<double> { 10, 50, 39, 50 }
                         Values = new ChartValues<int>(Load_Top5BestSeller(1).Select(r=>r.Buy).ToArray())
                     }
