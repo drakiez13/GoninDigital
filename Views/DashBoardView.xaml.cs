@@ -52,8 +52,14 @@ namespace GoninDigital.Views
             get => rootFrame;
         }
 
-        Dictionary<string, Page> pages;
+        public static Dictionary<string, Page> pages;
         public User currentUser = null;
+
+        public static void PreLoad()
+        {
+            pages = new Dictionary<string, Page>();
+            pages.Add("GoninDigital.Views.DashBoardPages.HomePage", new HomePage());
+        }
 
         // Flyout currently not support binding data
         // Use behind code to generate UI instead
@@ -61,6 +67,8 @@ namespace GoninDigital.Views
 
         public DashBoard()
         {
+            rootFrame = contentFrame;
+            
             InitializeComponent();
             DataContext = this;
             using (var db = new GoninDigitalDBContext())
@@ -74,10 +82,6 @@ namespace GoninDigital.Views
                     hasVendor = false;
                 }
             }
-
-
-            rootFrame = contentFrame;
-            pages = new Dictionary<string, Page>();
         }
 
         private void NavigationView_SelectionChanged(ModernWpf.Controls.NavigationView sender, ModernWpf.Controls.NavigationViewSelectionChangedEventArgs args)
@@ -194,14 +198,14 @@ namespace GoninDigital.Views
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
 
-        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        private async void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
                 var content = sender.Text;
                 using (var context = new GoninDigitalDBContext())
                 {
-                    var productResult = context.Products
+                    var productResult = await context.Products
                         .Include(o => o.Vendor)
                         .Where(
                             product => product.StatusId == (int)Constants.ProductStatus.ACCEPTED &&
@@ -215,8 +219,8 @@ namespace GoninDigital.Views
                             Image = product.Image,
                             Type = SearchItem.ItemType.PRODUCT
                         })
-                        .ToList();
-                    var vendorResult = context.Vendors.Where(
+                        .ToListAsync();
+                    var vendorResult = await context.Vendors.Where(
                             vendor => vendor.Name.Contains(content)
                             && vendor.ApprovalStatus == (int)Constants.ApprovalStatus.APPROVED
                         )
@@ -228,7 +232,7 @@ namespace GoninDigital.Views
                             Image = vendor.Avatar,
                             Type = SearchItem.ItemType.VENDOR
                         })
-                        .ToList();
+                        .ToListAsync();
 
 
                     var combined = vendorResult.Concat(productResult);
