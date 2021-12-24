@@ -19,6 +19,7 @@ namespace GoninDigital.Models
 
         public virtual DbSet<Ad> Ads { get; set; }
         public virtual DbSet<AdDetail> AdDetails { get; set; }
+        public virtual DbSet<Ban> Bans { get; set; }
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
@@ -92,6 +93,32 @@ namespace GoninDigital.Models
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ADDETAIL_PRODUCT");
+            });
+
+            modelBuilder.Entity<Ban>(entity =>
+            {
+                entity.ToTable("Ban");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.EndDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("endDate");
+
+                entity.Property(e => e.Reason)
+                    .IsRequired()
+                    .HasColumnType("text")
+                    .HasColumnName("reason");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.Ban)
+                    .HasForeignKey<Ban>(d => d.Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Ban_User");
             });
 
             modelBuilder.Entity<Brand>(entity =>
@@ -513,7 +540,7 @@ namespace GoninDigital.Models
                     .HasColumnName("password");
 
                 entity.Property(e => e.PhoneNumber)
-                    .HasMaxLength(10)
+                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("phone_number");
 
