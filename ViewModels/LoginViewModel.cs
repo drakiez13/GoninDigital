@@ -116,19 +116,19 @@ namespace GoninDigital.ViewModels
                     //and close the splash screen
                     if (isExist != default)
                     {
-                        if (isExist.Bans != null)
+                        if (isExist.Bans != null && isExist.Bans.Count > 0)
                         {
                             if (isExist.Bans.First().EndDate >= DateTime.Now)
                             {
                                 var content = new ContentDialog();
                                 content.Title = "Warning";
-                                content.Content = "Your account has been blocked to " + isExist.Ban.EndDate.ToString() + " because " + isExist.Ban.Reason;
+                                content.Content = "Your account has been blocked to " + isExist.Bans.First().EndDate.ToString() + " because " + isExist.Bans.First().Reason;
                                 content.PrimaryButtonText = "Ok";
                                 content.ShowAsync();
                                 return;
                             }
                         }
-
+                        DashBoard.PreLoad();
                         var dashboardWindow = new DashBoard();
                         if (isExist.TypeId == 1) //admin
                         {
