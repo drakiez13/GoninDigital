@@ -614,12 +614,10 @@ namespace GoninDigital.ViewModels
             {
                 if (string.IsNullOrEmpty(newVendor.Name))
                 {
-                    IsNameAvailable = true;
                     return false;
                 }
                 if (allVendorNames.Any(s => newVendor.Name.Contains(s)))
                 {
-                    isNameAvailable = false;
                     return false;
                 }
 

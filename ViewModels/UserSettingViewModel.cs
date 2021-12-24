@@ -103,10 +103,15 @@ namespace GoninDigital.ViewModels
             CancelPCommand = new RelayCommand<Window>((p) => { return !Flag; }, (p) => { CancelPExecute(); });
             EditAvatarCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { EditAvatarExecute(); });
             ChangePasswordCommand = new RelayCommand<object>((p) => { return true; }, (p) => { ChangePasswordExecute(); });
-            CancelDialogCommand = new RelayCommand<object>((p) => { return true; }, (p) => { changePassDialog.Hide(); });
+            CancelDialogCommand = new RelayCommand<object>((p) => { return true; }, (p) => { CancelDialogExecute(); });
         }
         #endregion
         #region Private Methods
+
+        private void CancelDialogExecute()
+        {
+            changePassDialog.Hide();
+        }
         public async void EditAvatarExecute()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -130,14 +135,12 @@ namespace GoninDigital.ViewModels
         }
         public void ChangePasswordExecute()
         {
-            if (changePassDialog == null)
+            changePassDialog = null;
+            changePassDialog = new ContentDialog()
             {
-                changePassDialog = new ContentDialog()
-                {
-                    Content = new ChangePasswordDialog(),
-                    Title = "Change Password",
-                };
-            }
+                Content = new ChangePasswordDialog(),
+                Title = "Change Password",
+            };
             changePassDialog.ShowAsync();
         }
         void EditPExecute()
