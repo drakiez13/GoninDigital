@@ -15,7 +15,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid>
             <StackPanel Orientation="Horizontal">
@@ -27,39 +27,46 @@
                                    Text="{Binding SearchName, Mode=TwoWay}"
                                    TextChanged="AutoSuggestBox_TextChanged"
                                    QuerySubmitted="AutoSuggestBox_QuerySubmitted"/>
-                <Button Content="New User" 
+                <Button Content="New Brand" 
                         Margin="5"
                         Command="{Binding AddCommand}"/>
                 <Button Content="Update" 
                         Margin="5"
                         Command="{Binding UpdateCommand}"/>
-                <Button Content="Delete" 
-                        Margin="5"
-                        Command="{Binding DeleteCommand}"/>
+                <ui:AutoSuggestBox QueryIcon="Add" 
+                                   AutomationProperties.Name="Add"
+                                   Width="300"
+                                   HorizontalAlignment="Left"
+                                   Margin="20"
+                                   Text="{Binding BrandName, Mode=TwoWay}"
+                                   QuerySubmitted="AutoSuggestBox_QuerySubmitted_1"/>
             </StackPanel>
         </Grid>
         <DataGrid x:Name="dataGrid"
                   Grid.Row="1"
                   ItemsSource="{Binding List}"
-                  SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}"
-                  AutoGenerateColumns="False"
+                  SelectedItem="{Binding SelectedBrand, Mode=OneWayToSource}"
+                  HorizontalScrollBarVisibility="Auto"
+                  VerticalScrollBarVisibility="Auto"
                   HeadersVisibility="Column"
-                  GridLinesVisibility="Horizontal"
+                  GridLinesVisibility="All"
                   RowDetailsVisibilityMode="Collapsed"
                   VirtualizingPanel.VirtualizationMode="Recycling"
-                  VirtualizingPanel.IsVirtualizingWhenGrouping="True" SelectionMode="Single"
+                  VirtualizingPanel.IsVirtualizingWhenGrouping="True" 
+                  AutoGenerateColumns="False"
+                  IsReadOnly="False" 
                   >
-            <DataGrid.Columns>
-                <DataGridTextColumn
+                <DataGrid.Columns>
+                    <DataGridTextColumn
                     Header="Id"
-                    Width="50"
+                    Width="*"
                     Binding="{Binding Id}"
                     IsReadOnly="True"/>
-                <DataGridTextColumn
+                    <DataGridTextColumn
                     Header="Name"
-                    Width="*"
+                    Width="2*"
                     Binding="{Binding Name}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+                </DataGrid.Columns>
+            </DataGrid>
     </Grid>
 </ui:Page>

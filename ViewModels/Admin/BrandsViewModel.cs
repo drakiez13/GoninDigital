@@ -1,5 +1,7 @@
 ﻿using ABI.Windows.System;
 using GoninDigital.Models;
+using GoninDigital.SharedControl;
+using ModernWpf.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,15 +21,28 @@ namespace GoninDigital.ViewModels
             get { return searchName; }
             set { searchName = value; OnPropertyChanged(); }
         }
+        private string brandName;
+        public string BrandName
+        {
+            get { return brandName; }
+            set { brandName = value; OnPropertyChanged(); }
+        }
         private ObservableCollection<Brand> list;
         public ObservableCollection<Brand> List { get { return list; } set { list = value; OnPropertyChanged(); } }
-        private Brand selectedItem;
-        public Brand SelectedItem { get { return selectedItem; } set { selectedItem = value; OnPropertyChanged(); } }
+        private Brand selectedBrand;
+        public Brand SelectedBrand { get { return selectedBrand; } set { selectedBrand = value; OnPropertyChanged(); } }
+        private ContentDialog addBrandDialog;
+        public ContentDialog AddBrandDialog
+        {
+            get { return addBrandDialog; }
+            set { addBrandDialog = value; }
+        }
 
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand AddCommand { get; set; }
         #endregion
+        #region Constructor
         public BrandsViewModel()
         {
             using (var db = new GoninDigitalDBContext())
@@ -38,27 +53,21 @@ namespace GoninDigital.ViewModels
             #region UpdateCommand
             UpdateCommand = new RelayCommand<Object>((p) =>
             {
-                if (SelectedItem != null)
+                if (SelectedBrand != null)
                 {
                     return true;
                 }
                 return false;
             }, (p) =>
             {
-                using (var db = new GoninDigitalDBContext())
-                {
-                    var brand = db.Brands.First(x => x.Id == SelectedItem.Id);
-
-                    brand = SelectedItem;
-                    db.SaveChanges();
-                }
+                UpdateExec();
             });
             #endregion
 
             #region DeleteCommand
             DeleteCommand = new RelayCommand<Object>((p) =>
             {
-                if (SelectedItem != null)
+                if (SelectedBrand!= null)
                 {
                     return true;
                 }
@@ -67,7 +76,7 @@ namespace GoninDigital.ViewModels
             {
                 using (var db = new GoninDigitalDBContext())
                 {
-                    var brand = db.Brands.First(x => x.Id == SelectedItem.Id);
+                    var brand = db.Brands.First(x => x.Id == SelectedBrand.Id);
                     List.Remove(brand);
                     db.Brands.Remove(brand);
                     db.SaveChanges();
@@ -75,19 +84,6 @@ namespace GoninDigital.ViewModels
             });
             #endregion
 
-            #region AddCommand
-            AddCommand = new RelayCommand<Object>((p) =>
-            {
-                return false;
-            }, (p) =>
-            {
-                using (var db = new GoninDigitalDBContext())
-                {
-                    var user = db.Brands.First(x => x.Id == SelectedItem.Id);
-                    user = SelectedItem;
-                    db.SaveChanges();
-                }
-            });
         }
         #endregion
         #region Methods
@@ -120,6 +116,68 @@ namespace GoninDigital.ViewModels
                     }
                 }
             }
+        private void UpdateExec()
+        {
+            if (SelectedBrand.Name == "")
+            {
+                ContentDialog content = new()
+                {
+                    Title = "Warning",
+                    Content = "No cell is allowed to be left blank",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
+            }
+            else
+            {
+                using (var db = new GoninDigitalDBContext())
+                {
+                    db.Brands.Update(SelectedBrand);
+                    _ = db.SaveChanges();
+                }
+                ContentDialog content = new()
+                {
+                    Title = "Complete",
+                    Content = "Updated Successfully",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
+            }
+        }
+        public void AddBrand()
+        {
+            if(BrandName!="")
+            {
+                using(var db = new GoninDigitalDBContext())
+                {
+                    if(db.Brands.Where(x=>x.Name==BrandName).Count()>0)
+                    {
+                        ContentDialog content = new()
+                        {
+                            Title = "Warning",
+                            Content = "Brand already exists",
+                            PrimaryButtonText = "Ok"
+                        };
+                        content.ShowAsync();
+                    }
+                    else
+                    {
+                        Brand brand = new Brand();
+                        brand.Name = BrandName;
+                        db.Brands.Add(brand);
+                        _=db.SaveChanges();
+                        List = new ObservableCollection<Brand>(db.Brands);
+                        ContentDialog content = new()
+                        {
+                            Title = "Complete",
+                            Content = "Added successfully",
+                            PrimaryButtonText = "Ok"
+                        };
+                        content.ShowAsync();
+                    }
+                }
+            }
+        }
         #endregion
     }
 }

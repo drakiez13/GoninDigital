@@ -57,6 +57,8 @@
                 <ui:NavigationViewItem x:Name="shopItem" Content="Shop" Icon="Shop" Tag="ShopsManagerPage" />
                 <ui:NavigationViewItem x:Name="productItem" Content="Product" Icon="Library" Tag="ProductsManagerPage" />
                 <ui:NavigationViewItem x:Name="adsItem" Content="Ads" Icon="Play" Tag="AdsPage" />
+                <ui:NavigationViewItem x:Name="brandItem" Content="Brand" Icon="Play" Tag="BrandsManagerPage" />
+                <ui:NavigationViewItem x:Name="categoryItem" Content="Category" Icon="Play" Tag="CategoryManagePage" />
             </ui:NavigationView.MenuItems>
             <ui:NavigationView.PaneFooter>
                 <StackPanel Orientation="Vertical">

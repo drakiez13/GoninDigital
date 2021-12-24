@@ -37,5 +37,10 @@ namespace GoninDigital.Views.AdminPages
         {
             (DataContext as BrandsViewModel).SearchBrand();
         }
+
+        private void AutoSuggestBox_QuerySubmitted_1(ModernWpf.Controls.AutoSuggestBox sender, ModernWpf.Controls.AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            (DataContext as BrandsViewModel).AddBrand();
+        }
     }
 }
