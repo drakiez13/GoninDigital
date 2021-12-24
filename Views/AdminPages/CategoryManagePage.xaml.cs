@@ -12,35 +12,34 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using GoninDigital.Models;
 using GoninDigital.ViewModels;
+using GoninDigital.Models;
 
 namespace GoninDigital.Views.AdminPages
 {
     /// <summary>
-    /// Interaction logic for BrandPage.xaml
+    /// Interaction logic for CategoryManagePage.xaml
     /// </summary>
-    public partial class BrandsManagerPage
+    public partial class CategoryManagePage : Page
     {
-        public BrandsManagerPage()
+        public CategoryManagePage()
         {
             InitializeComponent();
-
         }
 
         private void AutoSuggestBox_TextChanged(ModernWpf.Controls.AutoSuggestBox sender, ModernWpf.Controls.AutoSuggestBoxTextChangedEventArgs args)
         {
-            (DataContext as BrandsViewModel).SearchChanged();
+            (DataContext as ManageCategoryViewModel).SearchChanged();
         }
 
         private void AutoSuggestBox_QuerySubmitted(ModernWpf.Controls.AutoSuggestBox sender, ModernWpf.Controls.AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            (DataContext as BrandsViewModel).SearchBrand();
+            (DataContext as ManageCategoryViewModel).SearchCategory();
         }
 
         private void AutoSuggestBox_QuerySubmitted_1(ModernWpf.Controls.AutoSuggestBox sender, ModernWpf.Controls.AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            (DataContext as BrandsViewModel).AddBrand();
+            (DataContext as ManageCategoryViewModel).AddCategory();
         }
     }
 }
