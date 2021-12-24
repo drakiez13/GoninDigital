@@ -67,8 +67,6 @@ namespace GoninDigital.Views
 
         public DashBoard()
         {
-            rootFrame = contentFrame;
-            
             InitializeComponent();
             DataContext = this;
             using (var db = new GoninDigitalDBContext())
@@ -82,6 +80,7 @@ namespace GoninDigital.Views
                     hasVendor = false;
                 }
             }
+            rootFrame = contentFrame;
         }
 
         private void NavigationView_SelectionChanged(ModernWpf.Controls.NavigationView sender, ModernWpf.Controls.NavigationViewSelectionChangedEventArgs args)
