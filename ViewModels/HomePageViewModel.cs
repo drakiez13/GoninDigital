@@ -150,7 +150,7 @@ namespace GoninDigital.ViewModels
 
         public HomePageViewModel()
         {
-            art = "/Resources/Images/HomeBanner.jpg";
+            art = "/Resources/Images/Noel3.jpg";
 
             var metaProduct = new Product
             {

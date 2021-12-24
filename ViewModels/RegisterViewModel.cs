@@ -121,7 +121,7 @@ namespace GoninDigital.ViewModels
         public ICommand PasswordChangedCommand { get; set; }
         public RegisterViewModel(Window p)
         {
-            art = "/GoninDigital;component/Resources/Images/LoginImage.jpg";
+            art = "/GoninDigital;component/Resources/Images/Noel2.jpg";
             curWindow = p;
             RegisterCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { RegisterExecute(); });
             CancelCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { CancelExecute(); });

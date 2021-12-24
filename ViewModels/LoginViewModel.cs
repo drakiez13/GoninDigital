@@ -65,7 +65,7 @@ namespace GoninDigital.ViewModels
         #region Constructor
         public LoginViewModel(Window window)
         {
-            art = "/GoninDigital;component/Resources/Images/LoginImage.jpg";
+            art = "/GoninDigital;component/Resources/Images/Noel.jpg";
             curWindow = window;
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { 
                 
