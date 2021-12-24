@@ -31,6 +31,12 @@ namespace GoninDigital.ViewModels
             get { return addUserDialog; }
             set { addUserDialog = value; }
         }
+        private ContentDialog deleteUserDialog;
+        public ContentDialog DeleteUserDialog
+        {
+            get { return deleteUserDialog; }
+            set { deleteUserDialog = value; }
+        }
 
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
@@ -83,11 +89,15 @@ namespace GoninDigital.ViewModels
             {
                 try
                 {
-                    using (var db = new GoninDigitalDBContext())
+                    DeleteUserDialog = new ContentDialog()
                     {
-                        db.Users.First(x => x.Id == SelectedItem.Id).TypeId = (int)Utils.Constants.UserType.BAN;
-                        db.SaveChanges();
-                    }
+
+                        CloseButtonText = "Close",
+                        Content = new DeleteUserDialog(SelectedItem.Id),
+                        Title = "Add User",
+
+                    };
+                    DeleteUserDialog.ShowAsync();
                     for (int i = 0; i < List.Count(); i++)
                         if (List[i].Id == SelectedItem.Id)
                         {
@@ -100,7 +110,7 @@ namespace GoninDigital.ViewModels
                     ContentDialog content = new()
                     {
                         Title = "Warning",
-                        Content = "Execution error",
+                        Content = "Unexpected Exception",
                         PrimaryButtonText = "Ok"
                     };
                     content.ShowAsync();
