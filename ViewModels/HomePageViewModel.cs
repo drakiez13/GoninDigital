@@ -11,6 +11,7 @@ using GoninDigital.Views;
 using GoninDigital.Views.SharedPages;
 using Microsoft.EntityFrameworkCore;
 using GoninDigital.Utils;
+using GoninDigital.Properties;
 
 namespace GoninDigital.ViewModels
 {
@@ -57,6 +58,7 @@ namespace GoninDigital.ViewModels
             get { return discountProducts; }
             set { discountProducts = value; OnPropertyChanged(); }
         }
+        private string currentUser = null;
 
         private async void InitAds()
         {
@@ -140,6 +142,9 @@ namespace GoninDigital.ViewModels
 
         public void OnNavigatedTo()
         {
+            if (currentUser != null && currentUser == Settings.Default.usrname)
+                return;
+            currentUser = Settings.Default.usrname;
             InitProducts();
         }
 
