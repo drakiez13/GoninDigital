@@ -28,24 +28,23 @@ Là người sử dụng hệ thống để mua hàng. Có khả năng xem thôn
 ## 4. Công nghệ sử dụng:
 - Nền tảng: .NET core 5.0
 - Frontend: XAML, C#, WPF
-- Backend: C#
 - Cơ sở dữ liệu: SQL Server
 - IDE: Microsoft Visual Studio 2019
 - Thư viện hỗ trợ: MordernWpfUI, Microsoft.Xaml.Behaviors.Wpf, Microsoft.EntityFrameworkCore.SqlServer, Microsoft.EntityFrameworkCore.Tool, System.Drawing.Common
 ## 5. Hướng dẫn cài đặt
 <details>
-  <summary>Hướng dẫn cài đặt từ mã nguồn </summary>
+  <summary>Build from source </summary>
   
 - Cài đặt Visual Studio và SQL Server
 - Download hoặc clone reposity về máy
 - Tạo database dựa trên file Assets/database.sql
-- Mở project bằng Visual Studio và chạy file GoninDigital.sln (có kết nối mạng)
+- Mở project bằng Visual Studio và chạy file GoninDigital.sln 
  </details>
  <details>
-  <summary>Hướng dẫn cài đặt từ bản release </summary>
+  <summary>Install from packet </summary>
   
 - Download file zip tại mục release
-- Giải nén file zip và mở để sử dụng (có kết nối mạng)
+- Giải nén file zip và mở để sử dụng 
  </details>
 
 
