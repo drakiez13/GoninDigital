@@ -26,6 +26,7 @@
             <TabItem Header="New Order">
                 <ui:ListView Margin="0 10 0 0"
                              MaxWidth="900"
+                             
                              ItemsSource="{Binding CreatedInvoices}"
                              IsSelectionEnabled="False"
                              ScrollViewer.CanContentScroll="False">

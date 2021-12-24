@@ -36,6 +36,10 @@ namespace GoninDigital.Views.DashBoardPages
             InitializeComponent();
             pages = new Dictionary<string, Page>();
         }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            (DataContext as MyShopViewModel).OnNavigatedTo();
+        }
 
     }
 }

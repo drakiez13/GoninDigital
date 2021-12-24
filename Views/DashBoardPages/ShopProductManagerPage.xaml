@@ -58,6 +58,7 @@
 
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
+                                
                                 <DockPanel HorizontalAlignment="Stretch">
                                     <Image Source="{Binding Image}"
                                            Stretch="UniformToFill"
@@ -115,6 +116,7 @@
                 <StackPanel>
                     <ui:ListView ItemsSource="{Binding Source={StaticResource ProductsCVS}}"
                                  SelectedItem="{Binding SelectedItem}"
+                                 
                                  SelectionMode="Single"
                                  HorizontalAlignment="Center"
                                  Width="800"

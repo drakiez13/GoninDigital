@@ -59,6 +59,7 @@ namespace GoninDigital.ViewModels
 
             RefuseCommand = new RelayCommand<Invoice>(o => true, o => {
                 o.StatusId = (int)Constants.InvoiceStatus.REFUSED;
+                o.FinishedAt = System.DateTime.Now;
                 CreatedInvoices.Remove(o);
                 RefusedInvoices.Add(o);
                 using (var db = new GoninDigitalDBContext())
@@ -111,18 +112,18 @@ namespace GoninDigital.ViewModels
         {
             Load();
         }
-        private void Load()
+        private async void Load()
         {
 
             using (var db = new GoninDigitalDBContext())
             {
-                var vendor = db.Vendors.Include(o => o.Owner)
-                               .First(o => o.Owner.UserName == Settings.Default.usrname);
-                var vendorInvoices = db.Invoices.Include(o => o.Customer)
+                var vendor = await db.Vendors.Include(o => o.Owner)
+                               .FirstAsync(o => o.Owner.UserName == Settings.Default.usrname);
+                var vendorInvoices = await db.Invoices.Include(o => o.Customer)
                                               .Include(o => o.Vendor)
                                               .Include(o => o.InvoiceDetails).ThenInclude(o => o.Product)
                                               .Where(o => o.Vendor.Equals(vendor))
-                                              .ToList();
+                                              .ToListAsync();
                 CreatedInvoices = new ObservableCollection<Invoice>(vendorInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.CREATED));
                 AcceptedInvoices = new ObservableCollection<Invoice>(vendorInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.ACCEPTED));
                 DeliveredInvoices = new ObservableCollection<Invoice>(vendorInvoices.Where(o => o.StatusId == (int)Utils.Constants.InvoiceStatus.DELIVERED));
