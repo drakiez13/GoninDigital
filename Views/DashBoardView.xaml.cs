@@ -37,7 +37,7 @@ namespace GoninDigital.Views
         }
     }
 
-    
+
     public partial class DashBoard : UserControl
     {
         private bool hasVendor;
@@ -58,7 +58,7 @@ namespace GoninDigital.Views
         // Flyout currently not support binding data
         // Use behind code to generate UI instead
         public StackPanel userFlyoutContent = null;
-        
+
         public DashBoard()
         {
             InitializeComponent();
@@ -91,7 +91,7 @@ namespace GoninDigital.Views
             if (selectedItem != null)
             {
                 string selectedItemTag = (string)selectedItem.Tag;
-                if(selectedItemTag != null)
+                if (selectedItemTag != null)
                 {
                     string pageName = "GoninDigital.Views.DashBoardPages." + selectedItemTag;
                     if (!pages.TryGetValue(pageName, out Page togo))
@@ -190,7 +190,7 @@ namespace GoninDigital.Views
                 userFlyoutContent.Children.Add((UIElement)Resources["ok"]);
                 flyout.Content = userFlyoutContent;
             }
-            
+
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
 
@@ -201,11 +201,14 @@ namespace GoninDigital.Views
                 var content = sender.Text;
                 using (var context = new GoninDigitalDBContext())
                 {
-                    var productResult = context.Products.Where(
-                            product => product.StatusId == (int)Constants.ProductStatus.ACCEPTED
-                            && product.Name.Contains(content)
-                        )
-                        .Select(product => new SearchItem {
+                    var productResult = context.Products
+                        .Include(o => o.Vendor)
+                        .Where(
+                            product => product.StatusId == (int)Constants.ProductStatus.ACCEPTED &&
+                            product.Vendor.ApprovalStatus == (int)Constants.ApprovalStatus.APPROVED &&
+                            product.Name.Contains(content))
+                        .Select(product => new SearchItem
+                        {
                             Id = product.Id,
                             Name = product.Name,
                             Description = product.Description,
@@ -215,14 +218,15 @@ namespace GoninDigital.Views
                         .ToList();
                     var vendorResult = context.Vendors.Where(
                             vendor => vendor.Name.Contains(content)
-                            && vendor.ApprovalStatus == 1
+                            && vendor.ApprovalStatus == (int)Constants.ApprovalStatus.APPROVED
                         )
-                        .Select(vendor => new SearchItem {
-                            Id=vendor.Id,
+                        .Select(vendor => new SearchItem
+                        {
+                            Id = vendor.Id,
                             Name = vendor.Name,
                             Description = vendor.Description,
                             Image = vendor.Avatar,
-                            Type=SearchItem.ItemType.VENDOR
+                            Type = SearchItem.ItemType.VENDOR
                         })
                         .ToList();
 
@@ -231,10 +235,10 @@ namespace GoninDigital.Views
                     if (combined.Any())
                         sender.ItemsSource = combined;
                     else
-                        sender.ItemsSource = new List<SearchItem>() 
+                        sender.ItemsSource = new List<SearchItem>()
                         { new SearchItem { Name = "No Results Found",
                                            Image = null, Description = null,
-                                           Type=SearchItem.ItemType.NOTFOUND } 
+                                           Type=SearchItem.ItemType.NOTFOUND }
                         };
                 }
             }
@@ -269,7 +273,7 @@ namespace GoninDigital.Views
                 navigationView.IsPaneOpen = false;
                 RootFrame.Navigate(new SearchResultPage(args.QueryText));
             }
-            
+
         }
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -293,7 +297,7 @@ namespace GoninDigital.Views
                 }
                 catch
                 { }
-                
+
                 pages.Clear();
                 WindowManager.ChangeWindowContent(Application.Current.MainWindow, Properties.Resources.LoginWindowTitle, Properties.Resources.LoginControlPath);
             }

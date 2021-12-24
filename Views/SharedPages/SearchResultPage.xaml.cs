@@ -2,6 +2,7 @@
 using GoninDigital.Properties;
 using GoninDigital.Utils;
 using GoninDigital.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,11 +35,14 @@ namespace GoninDigital.Views.SharedPages
             Query = query;
             using (var context = new GoninDigitalDBContext())
             {
-                var productResult = context.Products.Where(
-                            product => product.StatusId == (int)Constants.ProductStatus.ACCEPTED
-                            && product.Name.Contains(query)
+                var productResult = context.Products
+                    .Include(o => o.Vendor)
+                    .Where(
+                            product => product.StatusId == (int)Constants.ProductStatus.ACCEPTED &&
+                            product.Vendor.ApprovalStatus == (int)Constants.ApprovalStatus.APPROVED &&
+                            product.Name.Contains(query)
                         ).ToList();
-                if (productResult.Count > 20)
+                if (productResult.Count > 30)
                     productResult = productResult.GetRange(0, 30).ToList();
                 Products = productResult;
 

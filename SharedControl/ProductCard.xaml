@@ -68,7 +68,7 @@
                                   Margin="10,0,0,0"
                                   Grid.Row="1"
                                   Caption="{Binding ProductInfo.NRating, ElementName=productCard}"
-                                  Value="{Binding ProductInfo.Rating, ElementName=productCard}"
+                                  Value="{Binding ProductInfo.Rating, ElementName=productCard, NotifyOnSourceUpdated=True, Mode=TwoWay}"
                                   IsReadOnly="True">
                     <ui:RatingControl.LayoutTransform>
                         <ScaleTransform ScaleX="0.7"

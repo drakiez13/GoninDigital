@@ -6,7 +6,7 @@
              xmlns:uc="clr-namespace:GoninDigital.SharedControl"
              Name="productCardGroup"
              mc:Ignorable="d">
-    <Grid MaxWidth="1200">
+    <Grid MaxWidth="1000">
         <Grid.Background>
             <ImageBrush ImageSource="{Binding GroupBackground, ElementName=productCardGroup}"
                         Stretch="UniformToFill"></ImageBrush>

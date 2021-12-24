@@ -78,7 +78,7 @@
                     <ui:RatingControl HorizontalAlignment="Left"
                                       Margin="10 5 10 0"
                                       Caption="{Binding ProductInfo.NRating, ElementName=productCard}"
-                                      Value="{Binding ProductInfo.Rating, ElementName=productCard}"
+                                      Value="{Binding ProductInfo.Rating, ElementName=productCard, Mode=TwoWay}"
                                       IsReadOnly="True">
                         <ui:RatingControl.LayoutTransform>
                             <ScaleTransform ScaleX="0.9"
