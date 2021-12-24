@@ -81,19 +81,30 @@ namespace GoninDigital.ViewModels
                 return false;
             }, (p) =>
             {
-
-                using (var db = new GoninDigitalDBContext())
+                try
                 {
-                    var user = db.Users.First(x => x.Id == SelectedItem.Id);
-                    db.Users.Remove(user);
-                    db.SaveChanges();
-                }
-                for (int i = 0; i < List.Count(); i++)
-                    if (List[i].Id == SelectedItem.Id)
+                    using (var db = new GoninDigitalDBContext())
                     {
-                        List.RemoveAt(i);
-                        break;
+                        db.Users.First(x => x.Id == SelectedItem.Id).TypeId = (int)Utils.Constants.UserType.BAN;
+                        db.SaveChanges();
                     }
+                    for (int i = 0; i < List.Count(); i++)
+                        if (List[i].Id == SelectedItem.Id)
+                        {
+                            List.RemoveAt(i);
+                            break;
+                        }
+                }
+                catch
+                {
+                    ContentDialog content = new()
+                    {
+                        Title = "Warning",
+                        Content = "Execution error",
+                        PrimaryButtonText = "Ok"
+                    };
+                    content.ShowAsync();
+                }
             });
             #endregion
 

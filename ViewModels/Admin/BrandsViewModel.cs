@@ -64,26 +64,6 @@ namespace GoninDigital.ViewModels
             });
             #endregion
 
-            #region DeleteCommand
-            DeleteCommand = new RelayCommand<Object>((p) =>
-            {
-                if (SelectedBrand!= null)
-                {
-                    return true;
-                }
-                return false;
-            }, (p) =>
-            {
-                using (var db = new GoninDigitalDBContext())
-                {
-                    var brand = db.Brands.First(x => x.Id == SelectedBrand.Id);
-                    List.Remove(brand);
-                    db.Brands.Remove(brand);
-                    db.SaveChanges();
-                }
-            });
-            #endregion
-
         }
         #endregion
         #region Methods

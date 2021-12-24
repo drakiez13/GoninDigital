@@ -13,6 +13,7 @@ namespace GoninDigital.Utils
             ADMIN = 1,
             VENDOR = 2,
             CUSTOMER = 3,
+            BAN = 4
         }
         public enum ApprovalStatus
         {
