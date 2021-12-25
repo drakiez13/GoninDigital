@@ -39,6 +39,7 @@
                     <Border BorderBrush="Gainsboro"
                             BorderThickness="0,2,0,0" />
                     <Label Content="Requesting"
+                          
                            Margin="70 20 0 10"
                            FontSize="20"
                            FontWeight="Bold" />
