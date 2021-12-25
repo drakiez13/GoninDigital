@@ -9,7 +9,6 @@
          mc:Ignorable="d"
          d:DesignWidth="1000"
          DataContext="{StaticResource MyShopPageVM}"
-         Background="{DynamicResource AppBackgroundBrush}"
          Title="MyShop">
 
     <ScrollViewer>

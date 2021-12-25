@@ -1,6 +1,7 @@
 ﻿using GoninDigital.Models;
 using GoninDigital.Properties;
 using GoninDigital.Utils;
+using GoninDigital.Views;
 using Microsoft.EntityFrameworkCore;
 using ModernWpf.Controls;
 using System;
@@ -9,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace GoninDigital.ViewModels
@@ -48,6 +50,7 @@ namespace GoninDigital.ViewModels
 
         public ICommand RefuseCommand { get; set; }
         public ICommand AcceptCommand { get; set; }
+        public ICommand ExportBillCommand { get; set; }
 
         public ShopOrderManagerPageViewModel()
         {
@@ -106,6 +109,15 @@ namespace GoninDigital.ViewModels
                     }
                 }
             });
+            ExportBillCommand = new RelayCommand<Invoice>(o => true, o => {
+                fuck(o);
+            });
+        }
+
+        public void fuck(Invoice tmp)
+        {
+            Template_bill x = new(tmp);
+            x.Show();
         }
 
         public void OnNavigatedTo()
