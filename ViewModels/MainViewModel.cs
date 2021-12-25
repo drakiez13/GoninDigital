@@ -12,12 +12,56 @@ using GoninDigital.Utils;
 using GoninDigital.Properties;
 using GoninDigital.SharedControl;
 using System.Windows.Media;
+using Microsoft.EntityFrameworkCore;
+using ModernWpf.Controls;
 
 namespace GoninDigital.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
         public ICommand LoadedWidnowCommand { get; set; }
+        private async void Load(Window p)
+        {
+            if (Settings.Default.usrname != "" && Settings.Default.passwod != "")
+            {
+                using (var db = new GoninDigitalDBContext())
+                {
+
+                    if ((await db.Users.FirstOrDefaultAsync(o => o.UserName == Settings.Default.usrname)).TypeId == (int)Constants.UserType.ADMIN)
+                    {
+                        var adminWindow = new AdminView();
+                        WindowManager.ChangeWindowContent(p, adminWindow, Resources.AdminpageWindowTitle, Resources.AdminpageControlPath);
+                    }
+                    else
+                    {
+                        var user = await db.Users.Include(o => o.Bans).Where(o => o.UserName == Settings.Default.usrname).SingleAsync();
+                        if (user.Bans != null && user.Bans.Count > 0)
+                        {
+                            if (user.Bans.First().EndDate >= DateTime.Now)
+                            {
+                                WindowManager.ChangeWindowContent(p, Resources.LoginWindowTitle, Resources.LoginControlPath);
+                                var content = new ContentDialog();
+                                content.Title = "Warning";
+                                content.Content = "Your account has been blocked to " + user.Bans.First().EndDate.ToString() + " because " + user.Bans.First().Reason;
+                                content.PrimaryButtonText = "Ok";
+                                await content.ShowAsync();
+                                return;
+                            }
+                        }
+                        DashBoard.PreLoad();
+                        var dashboardWindow = new DashBoard();
+                        await Task.Delay(3000);
+                        WindowManager.ChangeWindowContent(p, dashboardWindow, Resources.HomepageWindowTitle, Resources.HomepageControlPath);
+                    }
+                }
+
+            }
+            else //login
+            {
+                //var loginWindow = new LoginViewModel(p);
+                WindowManager.ChangeWindowContent(p, Resources.LoginWindowTitle, Resources.LoginControlPath);
+            }
+        }
         public MainViewModel()
         {
             if (Settings.Default.accentColor != "")
@@ -37,65 +81,9 @@ namespace GoninDigital.ViewModels
             }
             LoadedWidnowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
-                //initialize the splash screen and set it as the application main window
                 WindowManager.ChangeWindowContent(p, "", "GoninDigital.Views.SplashScreenView");
 
-                //in order to ensure the UI stays responsive, we need to
-                //do the work on a different thread
-                Task.Factory.StartNew(() =>
-                {
-                    //we need to do the work in batches so that we can report progress
-                    GoninDigitalDBContext db = new();
-                    db.Products.ToList();
-                    db.Brands.ToList();
-                    db.AdDetails.ToList();
-                    db.Ads.ToList();
-                    db.Brands.ToList();
-                    db.Favorites.ToList();
-                    db.InvoiceDetails.ToList();
-                    db.Invoices.ToList();
-                    db.InvoiceStatuses.ToList();
-                    db.ProductCategories.ToList();
-                    db.ProductImages.ToList();
-                    db.ProductImages.ToList();
-                    db.ProductSpecDetails.ToList();
-                    db.ProductSpecs.ToList();
-                    db.Ratings.ToList();
-                    db.Vendors.ToList();
-
-                    //once we're done we need to use the Dispatcher
-                    //to create and show the main window
-                    p.Dispatcher.Invoke(() =>
-                    {
-
-                        //initialize the main window, set it as the application main window
-                        //and close the splash screen
-                        if (Settings.Default.usrname != "" && Settings.Default.passwod != "")
-                        {
-                            using (var db = new GoninDigitalDBContext())
-                            {
-                                if (db.Users.FirstOrDefault(o => o.UserName == Settings.Default.usrname).TypeId == (int)Constants.UserType.ADMIN)
-                                {
-                                    var adminWindow = new AdminView();
-                                    WindowManager.ChangeWindowContent(p, adminWindow, Resources.AdminpageWindowTitle, Resources.AdminpageControlPath);
-                                }
-                                else
-                                {
-                                    var dashboardWindow = new DashBoard();
-                                    WindowManager.ChangeWindowContent(p, dashboardWindow, Resources.HomepageWindowTitle, Resources.HomepageControlPath);
-                                }
-                            }
-
-                        }
-                        else //login
-                        {
-                            //var loginWindow = new LoginViewModel(p);
-                            WindowManager.ChangeWindowContent(p, Resources.LoginWindowTitle, Resources.LoginControlPath);
-                        }
-
-
-                    });
-                });
+                Load(p);
             });
         }
     }

@@ -26,7 +26,7 @@
         </CollectionViewSource>
     </Page.Resources>
     <ScrollViewer>
-        <Grid Margin="20 0 0 0">
+        <Grid Margin="20 0 0 20">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
@@ -174,11 +174,11 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Button Margin="10 0 5 0"
-                                    Width="120"
+                                    
                                     Background="{DynamicResource SystemControlHighlightAltListAccentHighBrush}"
                                     HorizontalAlignment="Left"
                                     Command="{Binding CancelButton}">Cancel</Button>
-                            <Button Width="120"
+                            <Button 
                                     HorizontalAlignment="Right"
                                     Grid.Column="1"
                                     Margin="0 0 10 0"

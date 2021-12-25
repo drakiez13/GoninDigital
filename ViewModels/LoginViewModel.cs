@@ -13,6 +13,7 @@ using GoninDigital.Views;
 using ModernWpf.Controls;
 using GoninDigital.Properties;
 using System.Threading;
+using Microsoft.EntityFrameworkCore;
 
 namespace GoninDigital.ViewModels
 {
@@ -64,7 +65,7 @@ namespace GoninDigital.ViewModels
         #region Constructor
         public LoginViewModel(Window window)
         {
-            art = "/GoninDigital;component/Resources/Images/LoginImage.jpg";
+            art = "/GoninDigital;component/Resources/Images/Noel.jpg";
             curWindow = window;
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { 
                 
@@ -72,7 +73,16 @@ namespace GoninDigital.ViewModels
             });
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
             RegisterCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { RegisterCommandExcute(); });
-            ResetCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ResetCommandExcute(); });
+            ResetCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
+                //ResetCommandExcute(); 
+                var content = new ContentDialog
+                {
+                    Title = "Warning",
+                    Content = "Experimental feature, please comeback later",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
+            });
         }
         #endregion
 
@@ -101,7 +111,8 @@ namespace GoninDigital.ViewModels
                 //we need to do the work in batches so that we can report progress
                 GoninDigitalDBContext context = new();
                 string passEncode = Cryptography.MD5Hash(Cryptography.Base64Encode(Password));
-                isExist = context.Users.FirstOrDefault(x => x.UserName == UserName && x.Password == passEncode);
+                isExist = context.Users.Include(o => o.Bans)
+                                       .FirstOrDefault(x => x.UserName == UserName && x.Password == passEncode);
                 Settings.Default.usrname = UserName.ToString();
 
                 //once we're done we need to use the Dispatcher
@@ -114,6 +125,19 @@ namespace GoninDigital.ViewModels
                     //and close the splash screen
                     if (isExist != default)
                     {
+                        if (isExist.Bans != null && isExist.Bans.Count > 0)
+                        {
+                            if (isExist.Bans.First().EndDate >= DateTime.Now)
+                            {
+                                var content = new ContentDialog();
+                                content.Title = "Warning";
+                                content.Content = "Your account has been blocked to " + isExist.Bans.First().EndDate.ToString() + " because " + isExist.Bans.First().Reason;
+                                content.PrimaryButtonText = "Ok";
+                                content.ShowAsync();
+                                return;
+                            }
+                        }
+                        DashBoard.PreLoad();
                         var dashboardWindow = new DashBoard();
                         if (isExist.TypeId == 1) //admin
                         {

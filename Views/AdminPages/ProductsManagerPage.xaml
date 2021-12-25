@@ -36,8 +36,8 @@
                         Command="{Binding DeleteCommand}" />
                 <ui:ToggleSwitch x:Name="toggleSwitch"
                                  Margin="30 0 0 0"
-                                 OffContent="On Sale"
-                                 OnContent="All"
+                                 OffContent="Only Current Products"
+                                 OnContent="All Products"
                                  IsOn="False"
                                  Toggled="toggleSwitch_Toggled" />
             </StackPanel>

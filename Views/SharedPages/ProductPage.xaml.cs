@@ -17,6 +17,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Collections.ObjectModel;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Page = ModernWpf.Controls.Page;
@@ -48,6 +49,7 @@ namespace GoninDigital.Views.SharedPages
         public Product ProductInfo { get; set; }
         public ICommand BuyCommand { get; set; }
         public ICommand AddtoCartCommand { get; set; }
+        public ICommand SendCommentCommand { get; set; }
         public ICommand RatingBoxCommand { get; set; }
         public string IsDisc { get; set; }
 
@@ -57,6 +59,18 @@ namespace GoninDigital.Views.SharedPages
             get { return _userRating; }
             set { _userRating = value; OnPropertyChanged(); }
         }
+        private ObservableCollection<Comment> comments;
+        public ObservableCollection<Comment> Comments
+        {
+            get { return comments; }
+            set { comments = value; OnPropertyChanged(); }
+        }
+        private string newComment;
+        public string NewComment
+        {
+            get { return newComment; }  
+            set { newComment = value; OnPropertyChanged();}
+        }
 
         public ProductPage(Product product)
         {
@@ -65,13 +79,27 @@ namespace GoninDigital.Views.SharedPages
                 ProductInfo = db.Products
                     .Include(o => o.Category)
                     .Include(o => o.Brand)
+                    .Include(o => o.Comments).ThenInclude(o => o.User)
                     .Include(o => o.ProductSpecDetails)
                     .ThenInclude(o => o.Spec)
                     .Include(o => o.Vendor)
                     .First(o => o.Id == product.Id);
+                Comments = new ObservableCollection<Comment>(ProductInfo.Comments.ToList());
             }
             
             AddtoCartCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddtoCartExecute(); });
+            SendCommentCommand = new RelayCommand<Window>((p) => 
+            {
+                if (string.IsNullOrEmpty(newComment))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+                
+            }, (p) => { SendCommentExecute(); });
             BuyCommand = new RelayCommand<Product>(p => true, p => DashBoard.RootFrame.Navigate(new CheckoutPage(ProductInfo, 1)));
             if (product.Price == product.OriginPrice)
                 IsDisc = "Hidden";
@@ -104,6 +132,48 @@ namespace GoninDigital.Views.SharedPages
 
         public ProductPage() : this(OldProduct.Pop()) { }
 
+        private void SendCommentExecute()
+        {
+            using (var context = new GoninDigitalDBContext())
+            {
+                User tmp = context.Users.FirstOrDefault(x => Settings.Default.usrname == x.UserName);
+                List<Invoice> all_invoice_current_user = context.Invoices.Where(x => x.CustomerId == tmp.Id && x.StatusId == 4).ToList();
+                bool isBought = false;
+                foreach (var inv in all_invoice_current_user)
+                {
+                    isBought = (context.InvoiceDetails.Where(x => x.InvoiceId == inv.Id && x.ProductId == ProductInfo.Id).Any() && true);
+                }
+
+                if (isBought) // user bought product
+                {
+                    Comment comment = new Comment();
+                    comment.ProductId = ProductInfo.Id;
+                    comment.Time = DateTime.Now;
+                    comment.Value = newComment;
+                    using (var db = new GoninDigitalDBContext())
+                    {
+                        User user = db.Users.FirstOrDefault(x => Settings.Default.usrname == x.UserName);
+                        comment.UserId = user.Id;
+                        db.Comments.Add(comment);
+                        Comments.Add(comment);
+                        db.SaveChanges();
+                    }
+                    NewComment = null;
+                }
+                else
+                {
+                    ContentDialog content = new()
+                    {
+                        Title = "Warning",
+                        Content = "You must buy item before comment.",
+                        PrimaryButtonText = "Ok"
+                    };
+                    content.ShowAsync();
+                }
+            }
+            
+                
+        }
         void AddtoCartExecute()
         {
             using (var context = new GoninDigitalDBContext())

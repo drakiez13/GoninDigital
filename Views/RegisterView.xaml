@@ -69,6 +69,39 @@
                          HorizontalAlignment="Center"
                          Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
+            <StackPanel Grid.Row="2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0 0 50 0">
+                    <Label Content="Password"/>
+                    <PasswordBox x:Name="FloatingPasswordBox"
+                                 Width="150">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PasswordChanged">
+                                <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
+                                               CommandParameter="{Binding ElementName=FloatingPasswordBox}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </PasswordBox>
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Confirm Password" />
+                    <PasswordBox x:Name="FloatingrePasswordBox"
+                                 Width="150">
+                    </PasswordBox>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="3"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+                <Label Content="Email"/>
+                <TextBox x:Name="tbEmail" 
+                         Width="355"
+                         Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
             <StackPanel Grid.Row="4"
                         Orientation="Horizontal"
                         HorizontalAlignment="Left"
@@ -99,14 +132,7 @@
                          Width="355"
                          Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>   
-            <StackPanel Grid.Row="3"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center">
-                <Label Content="Email"/>
-                <TextBox x:Name="tbEmail" 
-                         Width="355"
-                         Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
-            </StackPanel>
+            
             <StackPanel Grid.Row="6" 
                         Orientation="Horizontal"
                         HorizontalAlignment="Left"
@@ -131,34 +157,11 @@
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Grid.Row="2"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center">
-                <StackPanel HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Margin="0 0 50 0">
-                    <Label Content="Password"/>
-                    <PasswordBox x:Name="FloatingPasswordBox"
-                                 Width="150">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PasswordChanged">
-                                <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
-                                               CommandParameter="{Binding ElementName=FloatingPasswordBox}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </PasswordBox>
-                </StackPanel>
-                <StackPanel>
-                    <Label Content="Confirm Password" />
-                    <PasswordBox x:Name="FloatingrePasswordBox"
-                                 Width="150">
-                    </PasswordBox>
-                </StackPanel>
-            </StackPanel>
+            
 
             <Button x:Name="btnSubmit" 
                     Grid.Row="7"
+                    IsDefault="True"
                     Width="250"
                     Content="Register"
                     Foreground="{DynamicResource SystemControlBackgroundAltHighBrush}"

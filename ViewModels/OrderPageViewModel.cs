@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using GoninDigital.Utils;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
+using ModernWpf.Controls;
+using System;
 
 namespace GoninDigital.ViewModels
 {
@@ -55,18 +57,62 @@ namespace GoninDigital.ViewModels
             canceledInvoices = new ObservableCollection<Invoice>();
             refusedInvoices = new ObservableCollection<Invoice>();
 
-            CancelInvoice = new RelayCommand<Invoice>(o => true, o => { 
-                o.StatusId = (int)Constants.InvoiceStatus.CANCELED;
-                o.FinishedAt = System.DateTime.Now;
-                CreatedInvoices.Remove(o);
-                CanceledInvoices.Add(o);
-                using (var db = new GoninDigitalDBContext())
+            CancelInvoice = new RelayCommand<Invoice>(o => true, o =>
+            {
+                try
                 {
-                    db.Update(o);
-                    db.SaveChanges();
+                    o.StatusId = (int)Constants.InvoiceStatus.CANCELED;
+                    o.FinishedAt = System.DateTime.Now;
+                    CreatedInvoices.Remove(o);
+                    CanceledInvoices.Add(o);
+                    using (var db = new GoninDigitalDBContext())
+                    {
+                        db.Update(o);
+                        db.SaveChanges();
+                        var userId = db.Users.Where(o => o.UserName == Settings.Default.usrname).Single().Id;
+                        var numcancel = int.Parse(db.Vars.Where(o => o.Name == "numCancelAWeekToBan").Single().Value);
+                        var banDays = int.Parse(db.Vars.Where(o => o.Name == "cancelBanDays").Single().Value);
+                        var cancel = db.Invoices.Where(o => o.FinishedAt >= DateTime.Now.AddDays(-7) &&
+                                                       o.CustomerId == userId &&
+                                                       o.StatusId == (int)Constants.InvoiceStatus.CANCELED).ToList().Count();
+                        if (cancel > numcancel)
+                        {
+                            int IsCheck = 0;
+
+                            IsCheck = db.Bans.Where(x => x.UserId == userId).Count();
+
+                            if (IsCheck != 0)
+                            {
+                            }
+                            else
+                            {
+                                Ban ban = new Ban();
+                                ban.UserId = userId;
+                                ban.Reason = "you cancelled too much invoices in a short time";
+                                ban.EndDate = DateTime.Now.AddDays(banDays);
+                                db.Bans.Add(ban);
+                                _ = db.SaveChanges();
+
+                            }
+
+                        }
+                    }
+
                 }
+                catch (Exception e)
+                {
+                    var dialog = new ContentDialog
+                    {
+                        Title = "Error",
+                        Content = e.Message,
+                        PrimaryButtonText = "Ok"
+                    };
+                    dialog.ShowAsync();
+                }
+
             });
-            ReOrderInvoice = new RelayCommand<Invoice>(o => true, o => {
+            ReOrderInvoice = new RelayCommand<Invoice>(o => true, o =>
+            {
                 if (o.StatusId == (int)Constants.InvoiceStatus.CANCELED)
                 {
                     CanceledInvoices.Remove(o);
@@ -81,17 +127,18 @@ namespace GoninDigital.ViewModels
                 }
                 o.StatusId = (int)Constants.InvoiceStatus.CREATED;
                 o.CreatedAt = System.DateTime.Now;
-                o.FinishedAt=null;
-                
+                o.FinishedAt = null;
+
                 CreatedInvoices.Add(o);
-                
+
                 using (var db = new GoninDigitalDBContext())
                 {
                     db.Update(o);
                     db.SaveChanges();
                 }
             });
-            ReceiveCommand = new RelayCommand<Invoice>(o => true, o => {
+            ReceiveCommand = new RelayCommand<Invoice>(o => true, o =>
+            {
                 o.StatusId = (int)Constants.InvoiceStatus.DELIVERED;
                 o.FinishedAt = System.DateTime.Now;
                 AcceptedInvoices.Remove(o);
@@ -110,7 +157,7 @@ namespace GoninDigital.ViewModels
         }
         private void Load_HistoryPurchase()
         {
-            
+
             using (var db = new GoninDigitalDBContext())
             {
                 var userInvoices = db.Invoices.Include(o => o.Customer)
