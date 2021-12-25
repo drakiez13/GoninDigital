@@ -233,7 +233,7 @@
             </TabItem>
 
             
-            <TabItem Header="Receiced">
+            <TabItem Header="Received">
                 <ui:ListView Margin="0 10 0 0"
                              MaxWidth="900"
                              ItemsSource="{Binding DeliveredInvoices}"

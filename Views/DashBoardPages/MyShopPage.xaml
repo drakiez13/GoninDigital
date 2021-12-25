@@ -51,7 +51,7 @@
                     <Label Margin="20 0 0 0"
                            FontWeight="Bold"
                            FontSize="18">Best seller</Label>
-                    <StackPanel Margin="20 0">
+                    <StackPanel Margin="50 0">
                         <ItemsControl ItemsSource="{Binding ProductBestSeller}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -69,7 +69,7 @@
                     <Label Margin="20 30 0 0"
                            FontWeight="Bold"
                            FontSize="18">Special Product</Label>
-                    <StackPanel Margin="20 0">
+                    <StackPanel Margin="50 0">
                         <ItemsControl ItemsSource="{Binding ProductSpecial}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
