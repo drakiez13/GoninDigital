@@ -47,7 +47,7 @@ namespace GoninDigital.ViewModels
             get { return isNameAvailable; }
             set { isNameAvailable = value; OnPropertyChanged(); }
         }
-        private Product selectedItem = null;
+        private Product selectedItem =null ;
         public Product SelectedItem
         {
             get { return selectedItem; }
@@ -139,66 +139,95 @@ namespace GoninDigital.ViewModels
         public ICommand AddCommand { get; set; }
         public void AddCommandExec(object o)
         {
-            
-            using (var db = new GoninDigitalDBContext())
+            try
             {
-                selectedItem = new Product
+                using (var db = new GoninDigitalDBContext())
                 {
-                    Name = "Name",
-                    VendorId = Vendor.Id,
-                    CategoryId = db.ProductCategories.First().Id,
-                    Description = "Unknown",
-                    Origin = "Viet Nam",
-                    Price = 0,
-                    OriginPrice = 0,
-                    StatusId =(int)Constants.ProductStatus.CREATED,
-                    CreatedAt=DateTime.Now,
-                    UpdatedAt=DateTime.Now,
-                    BrandId=db.Brands.First().Id,
-                    NRating=0,
-                    Available=0,
-                    Buy=0,
-                    Detail="Unknown",
-                    Image= "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOMAAADeCAMAAAD4tEcNAAAAsVBMVEXu7u4REiRmZmYAAADX19jz8/NiYmJ9fX2MjIzl5eXt7e1WVlb29vZ0dHRoaGjb29sAABsAABhbW1sLDCB5eXkAAAkAABRtbXbOztEGCB6UlZy9vb3Dw8OXl5eBgYFxcXEAABBbW2WdnaVGRlM+PkqFhYwZGiosLTs0NEAkJTKEhIq0tLSgoKB2d38MDyW4t7xmZ3FPUFqrqq5TVFsgITEWFyk+QEgwMTx6eoVhYW06O0lY5vjcAAAEdklEQVR4nO3aC1eqShyHYZBLwskdOCkwmQk4KuxIxjC3fv8PdgZvibc6q9oK5/eUXcBavv1hpFaSBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPBjzDMkUyp89v72fZ+0+viqdW++Q/320h1naL/0f75Of7ruxtqd8VWq3rjyRuPL3+QOjZeGxk9C48Whcf/O2vHtlWnUJPWhc3e0siqNmnrfbDb1x2OXplVpVJt6TWh2j+yrSKP2tEwUkb8PD9eKNKrN2tp9VRu1zraxWd1GfdNYq2qjZGzmqNer0mioeyW3z+vIpnp471I2Gje6uz+uev7koesPR64Cytho3us1fX+S0kP3qfF4sDVXwsY8sXYYqUmmefyCtXyN5s1qDT2c5Cmla1xN8YPI4o6yNW6meC5SM+qFS/OSNb5P8Uykcd+82Y0sV+PuFE9Faka+7HZ3IkvVuJ94NNJsLJfdncgyNRYP1BORxvq3LP39cC1R4+EUDyM1o7FddreR5Wk8nrgXaeyMenu4lqbxVGIh0iguu+vIsjSeThQ2kWZjb9ld/XWnJI3Hlpv9SWrm08Gyuzwny9F4doqbSKNxZNm9kUrS+FFiHnlrHB21OCe1EjRqHycK7qllt1uCOZqfSqzpJ5fd7tU3/jI+lXiu/ql27Y1fTcxdeePXA9F4eWhEIxqvhyae27/BVf9PoFT/Fo+f/XPzRWjf49IZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/1uapFafpFSfJFcfGqvhPzcS8hMP40etG4m1ui3Zm52kpbRI6z2qJTYNh6WLXDWSt8QiUdJqy7LXbrEX2WoT2bPJ2B1HHY94PZFv9xRXaWdOWrrI9RztwLJ87lDP5kHKAiUN+nKYUqq8jtzfL+HEb/eSYGAoScrn0V9/kETe/bESb7u5sNXzLPFiizf5XTyyvd+mMeE9mvoe7TOFUCt1FLqYRNychIr7Gt75qv88TrI79tDOsr8+RtL3+rJFxIMXN2KFob18P52JGLGJiDJvMJr7PA1T7qdv6aDPyTwb+qTQSEaszSacUyaTNn157hE5cNp2xozEtYJY4WO3Zyu3UusSx6nlhGw0n6bhJHN4n485Xcz9gRMmodV3Bs6Ip37IucOGzA/8fkDr04C9+gFlvrfbKPdoEgWLUZQs8vORTnsL5thEUfyxa8XPSjJxZ4pixJPWBRrFANJxJ45nNBXnUcgZ85OY+QuVK5O3IHwOWMKcwRu1mcLjWTKM43jOWZ+Fc6vQaCVjJaSxMxC3BV3QmGZ/WrHbcd8SNet01CxV3b6puIl9+rH8mF4wTP6ENI05jVNCqcMp5XSeJouYzmmS8JHjTBkLX0PqOJlPQ0adwE+CPik0yiQiXjbLyHQWeZGVjQgZyC/RjFh25FkzccwPZnLkydFFFlVx1k1tIk69/FWsLrI4BfNVZWrJ4mX5lE3kfKmZ2vkTuNhLplOLFM9HebVKLW/LVWy1e/3VB9vLBddy1YDGavgXIXiOOOUMCCAAAAAASUVORK5CYII=",
-                    New=100,
+                    selectedItem = new Product
+                    {
+                        Name = "Name",
+                        VendorId = Vendor.Id,
+                        CategoryId = db.ProductCategories.FirstOrDefault().Id,
+                        Description = "Unknown",
+                        Origin = "Viet Nam",
+                        Price = 0,
+                        OriginPrice = 0,
+                        StatusId = (int)Constants.ProductStatus.CREATED,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                        BrandId = db.Brands.FirstOrDefault().Id,
+                        NRating = 0,
+                        Available = 0,
+                        Buy = 0,
+                        Detail = "Unknown",
+                        Image = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOMAAADeCAMAAAD4tEcNAAAAsVBMVEXu7u4REiRmZmYAAADX19jz8/NiYmJ9fX2MjIzl5eXt7e1WVlb29vZ0dHRoaGjb29sAABsAABhbW1sLDCB5eXkAAAkAABRtbXbOztEGCB6UlZy9vb3Dw8OXl5eBgYFxcXEAABBbW2WdnaVGRlM+PkqFhYwZGiosLTs0NEAkJTKEhIq0tLSgoKB2d38MDyW4t7xmZ3FPUFqrqq5TVFsgITEWFyk+QEgwMTx6eoVhYW06O0lY5vjcAAAEdklEQVR4nO3aC1eqShyHYZBLwskdOCkwmQk4KuxIxjC3fv8PdgZvibc6q9oK5/eUXcBavv1hpFaSBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPBjzDMkUyp89v72fZ+0+viqdW++Q/320h1naL/0f75Of7ruxtqd8VWq3rjyRuPL3+QOjZeGxk9C48Whcf/O2vHtlWnUJPWhc3e0siqNmnrfbDb1x2OXplVpVJt6TWh2j+yrSKP2tEwUkb8PD9eKNKrN2tp9VRu1zraxWd1GfdNYq2qjZGzmqNer0mioeyW3z+vIpnp471I2Gje6uz+uev7koesPR64Cytho3us1fX+S0kP3qfF4sDVXwsY8sXYYqUmmefyCtXyN5s1qDT2c5Cmla1xN8YPI4o6yNW6meC5SM+qFS/OSNb5P8Uykcd+82Y0sV+PuFE9Faka+7HZ3IkvVuJ94NNJsLJfdncgyNRYP1BORxvq3LP39cC1R4+EUDyM1o7FddreR5Wk8nrgXaeyMenu4lqbxVGIh0iguu+vIsjSeThQ2kWZjb9ld/XWnJI3Hlpv9SWrm08Gyuzwny9F4doqbSKNxZNm9kUrS+FFiHnlrHB21OCe1EjRqHycK7qllt1uCOZqfSqzpJ5fd7tU3/jI+lXiu/ql27Y1fTcxdeePXA9F4eWhEIxqvhyae27/BVf9PoFT/Fo+f/XPzRWjf49IZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/1uapFafpFSfJFcfGqvhPzcS8hMP40etG4m1ui3Zm52kpbRI6z2qJTYNh6WLXDWSt8QiUdJqy7LXbrEX2WoT2bPJ2B1HHY94PZFv9xRXaWdOWrrI9RztwLJ87lDP5kHKAiUN+nKYUqq8jtzfL+HEb/eSYGAoScrn0V9/kETe/bESb7u5sNXzLPFiizf5XTyyvd+mMeE9mvoe7TOFUCt1FLqYRNychIr7Gt75qv88TrI79tDOsr8+RtL3+rJFxIMXN2KFob18P52JGLGJiDJvMJr7PA1T7qdv6aDPyTwb+qTQSEaszSacUyaTNn157hE5cNp2xozEtYJY4WO3Zyu3UusSx6nlhGw0n6bhJHN4n485Xcz9gRMmodV3Bs6Ip37IucOGzA/8fkDr04C9+gFlvrfbKPdoEgWLUZQs8vORTnsL5thEUfyxa8XPSjJxZ4pixJPWBRrFANJxJ45nNBXnUcgZ85OY+QuVK5O3IHwOWMKcwRu1mcLjWTKM43jOWZ+Fc6vQaCVjJaSxMxC3BV3QmGZ/WrHbcd8SNet01CxV3b6puIl9+rH8mF4wTP6ENI05jVNCqcMp5XSeJouYzmmS8JHjTBkLX0PqOJlPQ0adwE+CPik0yiQiXjbLyHQWeZGVjQgZyC/RjFh25FkzccwPZnLkydFFFlVx1k1tIk69/FWsLrI4BfNVZWrJ4mX5lE3kfKmZ2vkTuNhLplOLFM9HebVKLW/LVWy1e/3VB9vLBddy1YDGavgXIXiOOOUMCCAAAAAASUVORK5CYII=",
+                        New = 100,
+                    };
+                    /*SelectedItem = selectedItem;
+                    db.Products.Add(selectedItem);
+                    ProductCreated.Add(selectedItem);
+                    db.SaveChanges();*/
+                }
+
+                UpdateCategorySpecDetails();
+                var dialog = new ContentDialog
+                {
+                    Content = new AddProductDialog(),
+
+                    Title = "Add Product",
+                    PrimaryButtonText = "Add",
+                    CloseButtonText = "Cancel",
+
+                    PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { AddBtnExec(); }),
+                    /*CloseButtonCommand = new RelayCommand<object>((p) => true, (p) => { CloseAddBtnExec(); }),*/
                 };
-                /*SelectedItem = selectedItem;
-                db.Products.Add(selectedItem);
-                ProductCreated.Add(selectedItem);
-                db.SaveChanges();*/
+                dialog.ShowAsync();
             }
-            UpdateCategorySpecDetails();
-            var dialog = new ContentDialog
+            catch (Exception e)
             {
-                Content = new AddProductDialog(),
+                var dialog = new ContentDialog
+                {
+                    Title = "Warning",
+                    Content = e.ToString(),
+                    PrimaryButtonText = "Ok"
+                };
+                dialog.ShowAsync();
 
-                Title = "Add Product",
-                PrimaryButtonText = "Add",
-                CloseButtonText = "Cancel",
+            }
 
-                PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { AddBtnExec(); }),
-                /*CloseButtonCommand = new RelayCommand<object>((p) => true, (p) => { CloseAddBtnExec(); }),*/
-            };
-            dialog.ShowAsync();
         }
 
         public ICommand EditCommand { get; set; }
         public void EditCommandExec(object o)
         {
-            UpdateCategorySpecDetails();
-
-            var dialog = new ContentDialog
+            try
             {
-                Content = new EditProductDialog(),
+                UpdateCategorySpecDetails();
 
-                Title = "Edit Product",
-                PrimaryButtonText = "Change",
-                CloseButtonText = "Cancel",
+                var dialog = new ContentDialog
+                {
+                    Content = new EditProductDialog(),
 
-                PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { EditBtnExec(); }),
-                CloseButtonCommand = new RelayCommand<object>((p) => true, (p) => { CloseBtnExec(); }),
-            };
-            dialog.ShowAsync();
+                    Title = "Edit Product",
+                    PrimaryButtonText = "Change",
+                    CloseButtonText = "Cancel",
+
+                    PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { EditBtnExec(); }),
+                    CloseButtonCommand = new RelayCommand<object>((p) => true, (p) => { CloseBtnExec(); }),
+                };
+                dialog.ShowAsync();
+            }
+            catch (Exception e)
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = "Warning",
+                    Content = e.ToString(),
+                    PrimaryButtonText = "Ok"
+                };
+                dialog.ShowAsync();
+
+            }
         }
         public ICommand UpgradeVendorCommand { get; set; }
         public ICommand CloseUpgradeBDCommand { get; set; }
@@ -237,9 +266,10 @@ namespace GoninDigital.ViewModels
                     if(ProductCreated.Contains(selectedItem))
                     {
                         SelectedItem.StatusId = (int)Constants.ProductStatus.REMOVED;
+                        db.Remove(SelectedItem);
                         db.Update(SelectedItem);
                         ProductCreated.Remove(SelectedItem);
-                        /*db.Remove(SelectedItem);*/
+                        
                     }
                     
                     _ = db.SaveChanges();
@@ -288,7 +318,7 @@ namespace GoninDigital.ViewModels
             {
                 Vendor = db.Vendors.Include(o => o.Owner)
                     .Include(o => o.Products)
-                    .First(o => o.Owner.UserName == Settings.Default.usrname);
+                    .FirstOrDefault(o => o.Owner.UserName == Settings.Default.usrname);
                 db.ProductCategories.ToList();
                 VendorName = Vendor.Name;
             }
@@ -326,25 +356,38 @@ namespace GoninDigital.ViewModels
         public ICommand ImageEditCommand { get; set; }
         public async void ImageEditCommandExec(object o)
         {
-
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-
-            openFileDialog.Title = "Choose Image..";
-
-            openFileDialog.InitialDirectory = @"C:\";
-            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog() == true)
+            try
             {
-                var linkAvatar = await ImageUploader.UploadAsync(openFileDialog.FileName);
-                using (var db = new GoninDigitalDBContext())
-                {
-                    SelectedItem.Image = linkAvatar;
+                OpenFileDialog openFileDialog = new OpenFileDialog();
 
-                    db.Update(SelectedItem);
-                    _ = db.SaveChanges();
-                    SelectedItem = selectedItem;
+                openFileDialog.Title = "Choose Image..";
+
+                openFileDialog.InitialDirectory = @"C:\";
+                openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    var linkAvatar = await ImageUploader.UploadAsync(openFileDialog.FileName);
+                    using (var db = new GoninDigitalDBContext())
+                    {
+                        SelectedItem.Image = linkAvatar;
+
+                        db.Update(SelectedItem);
+                        _ = db.SaveChanges();
+                        SelectedItem = selectedItem;
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = "Error",
+                    Content = e.Message,
+                    PrimaryButtonText = "Ok"
+                };
+                await dialog.ShowAsync();
+            }
+            
         }
 
         public async void EditAvatarExec()
@@ -365,7 +408,7 @@ namespace GoninDigital.ViewModels
                     _ = db.SaveChanges();
                     Vendor = db.Vendors.Include(o => o.Owner)
                             .Include(o => o.Products)
-                            .First(o => o.Owner.UserName == Settings.Default.usrname);
+                            .FirstOrDefault(o => o.Owner.UserName == Settings.Default.usrname);
                 }
             }
 
@@ -388,7 +431,7 @@ namespace GoninDigital.ViewModels
                     _ = db.SaveChanges();
                     Vendor = db.Vendors.Include(o => o.Owner)
                             .Include(o => o.Products)
-                            .First(o => o.Owner.UserName == Settings.Default.usrname);
+                            .FirstOrDefault(o => o.Owner.UserName == Settings.Default.usrname);
                 }
             }
 
@@ -429,7 +472,7 @@ namespace GoninDigital.ViewModels
 
             using (var db = new GoninDigitalDBContext())
             {
-                int userId = db.Users.First(u => u.UserName == Settings.Default.usrname).Id;
+                int userId = db.Users.FirstOrDefault(u => u.UserName == Settings.Default.usrname).Id;
                 newVendor.OwnerId = userId;
                 newVendor.ApprovalStatus = (int)Constants.ApprovalStatus.WAITING;
                 db.Vendors.Add(newVendor);
@@ -443,23 +486,36 @@ namespace GoninDigital.ViewModels
         {
             using (var db = new GoninDigitalDBContext())
             {
-                selectedProductSpecs = db.ProductSpecDetails.Where(o => o.ProductId == selectedItem.Id && o.Spec.CategoryId == selectedItem.CategoryId).ToList();
-                var temp = selectedProductSpecs.Select(o => o.SpecId).ToList();
-                var availSpecType = db.ProductSpecs.Where(o => o.CategoryId == selectedItem.CategoryId).ToList();
-                availSpecType.ForEach(specType =>
+                try
                 {
-                    if (!temp.Contains(specType.Id))
+                    selectedProductSpecs = db.ProductSpecDetails.Where(o => o.ProductId == selectedItem.Id && o.Spec.CategoryId == selectedItem.CategoryId).ToList();
+                    var temp = selectedProductSpecs.Select(o => o.SpecId).ToList();
+                    var availSpecType = db.ProductSpecs.Where(o => o.CategoryId == selectedItem.CategoryId).ToList();
+                    availSpecType.ForEach(specType =>
                     {
-                        selectedProductSpecs.Add(new ProductSpecDetail
+                        if (!temp.Contains(specType.Id))
                         {
-                            ProductId = selectedItem.Id,
-                            SpecId = specType.Id,
-                            Spec = specType,
-                        });
+                            selectedProductSpecs.Add(new ProductSpecDetail
+                            {
+                                ProductId = selectedItem.Id,
+                                SpecId = specType.Id,
+                                Spec = specType,
+                            });
 
-                    }
-                });
-                SelectedProductSpecs = selectedProductSpecs;
+                        }
+                    });
+                    SelectedProductSpecs = selectedProductSpecs;
+                }
+                catch
+                {
+                    var dialog = new ContentDialog
+                    {
+                        Title = "Warning",
+                        Content = "An unexpected error occured!",
+                        PrimaryButtonText = "Ok"
+                    };
+                    dialog.ShowAsync();
+                }
             }
         }
         public void AddBtnExec()
@@ -521,14 +577,14 @@ namespace GoninDigital.ViewModels
             {
                 categoryList = db.ProductCategories.Select(o => o.Name).ToList();
                 brandList = db.Brands.Select(o => o.Name).ToList();
-                if (db.Users.First(o => o.UserName == Settings.Default.usrname).TypeId == (int)Constants.UserType.CUSTOMER)
+                if (db.Users.FirstOrDefault(o => o.UserName == Settings.Default.usrname).TypeId == (int)Constants.UserType.CUSTOMER)
                 {
                     HasVendor = false;
                     try
                     {
                         Vendor = db.Vendors.Include(o => o.Owner)
                             .Include(o => o.Products)
-                            .First(o => o.Owner.UserName == Settings.Default.usrname);
+                            .FirstOrDefault(o => o.Owner.UserName == Settings.Default.usrname);
                         IsUpgrade = true;
                     }
                     catch
