@@ -24,6 +24,7 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Orientation="Horizontal" Margin="30" Grid.Row="0">
+                    <Image Source="../GoninDigital.bmp" Width="100" Height="100" VerticalAlignment="Center"/>
                     <TextBlock Text="INVOICE" VerticalAlignment="Center" FontSize="35" FontWeight="Bold" Foreground="#154854"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="20">
