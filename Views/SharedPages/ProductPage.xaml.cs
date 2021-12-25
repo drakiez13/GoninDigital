@@ -134,19 +134,44 @@ namespace GoninDigital.Views.SharedPages
 
         private void SendCommentExecute()
         {
-            Comment comment = new Comment();
-            comment.ProductId = ProductInfo.Id;
-            comment.Time = DateTime.Now;
-            comment.Value = newComment;
-            using (var db = new GoninDigitalDBContext())
+            using (var context = new GoninDigitalDBContext())
             {
-                User user = db.Users.FirstOrDefault(x => Settings.Default.usrname == x.UserName);
-                comment.UserId = user.Id;
-                db.Comments.Add(comment);
-                Comments.Add(comment);
-                db.SaveChanges();
+                User tmp = context.Users.FirstOrDefault(x => Settings.Default.usrname == x.UserName);
+                List<Invoice> all_invoice_current_user = context.Invoices.Where(x => x.CustomerId == tmp.Id && x.StatusId == 4).ToList();
+                bool isBought = false;
+                foreach (var inv in all_invoice_current_user)
+                {
+                    isBought = (context.InvoiceDetails.Where(x => x.InvoiceId == inv.Id && x.ProductId == ProductInfo.Id).Any() && true);
+                }
+
+                if (isBought) // user bought product
+                {
+                    Comment comment = new Comment();
+                    comment.ProductId = ProductInfo.Id;
+                    comment.Time = DateTime.Now;
+                    comment.Value = newComment;
+                    using (var db = new GoninDigitalDBContext())
+                    {
+                        User user = db.Users.FirstOrDefault(x => Settings.Default.usrname == x.UserName);
+                        comment.UserId = user.Id;
+                        db.Comments.Add(comment);
+                        Comments.Add(comment);
+                        db.SaveChanges();
+                    }
+                    NewComment = null;
+                }
+                else
+                {
+                    ContentDialog content = new()
+                    {
+                        Title = "Warning",
+                        Content = "You must buy item before comment.",
+                        PrimaryButtonText = "Ok"
+                    };
+                    content.ShowAsync();
+                }
             }
-            NewComment = null;
+            
                 
         }
         void AddtoCartExecute()

@@ -774,6 +774,10 @@ namespace GoninDigital.ViewModels
             UpgradeCommand = new RelayCommand<object>((p) => true, (p) => { UpgradeCommandExec(); });
             UpgradeVendorCommand = new RelayCommand<object>((p) =>
             {
+                if (newVendor == null)
+                {
+                    return false;
+                }
                 if (string.IsNullOrEmpty(newVendor.Name))
                 {
                     return false;
@@ -782,7 +786,6 @@ namespace GoninDigital.ViewModels
                 {
                     return false;
                 }
-
                 return true;
             }, (p) => { UpgradeExec(); });
             CloseUpgradeBDCommand = new RelayCommand<object>((p) => true, (p) => { CloseUpgradeBDExec(); });
