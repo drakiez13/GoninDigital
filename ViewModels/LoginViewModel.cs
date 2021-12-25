@@ -73,7 +73,16 @@ namespace GoninDigital.ViewModels
             });
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
             RegisterCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { RegisterCommandExcute(); });
-            ResetCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ResetCommandExcute(); });
+            ResetCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
+                //ResetCommandExcute(); 
+                var content = new ContentDialog
+                {
+                    Title = "Warning",
+                    Content = "Experimental feature, please comeback later",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
+            });
         }
         #endregion
 
