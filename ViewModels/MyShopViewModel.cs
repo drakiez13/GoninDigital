@@ -692,20 +692,32 @@ namespace GoninDigital.ViewModels
                 brandList = db.Brands.Select(o => o.Name).ToList();
                 if (db.Users.FirstOrDefault(o => o.UserName == Settings.Default.usrname).TypeId == (int)Constants.UserType.CUSTOMER)
                 {
-                    HasVendor = false;
                     try
                     {
+                        HasVendor = false;
                         Vendor = db.Vendors.Include(o => o.Owner)
-                            .Include(o => o.Products)
-                            .FirstOrDefault(o => o.Owner.UserName == Settings.Default.usrname);
-                        IsUpgrade = true;
+                                .Include(o => o.Products)
+                                .FirstOrDefault(o => o.Owner.UserName == Settings.Default.usrname);
+                        if (Vendor != null)
+                        {
+                            IsUpgrade = true;
+                        }
+                        else
+                        {
+                            var query = from o in db.Vendors select o.Name;
+                            AllVendorNames = query.ToList();
+                            IsUpgrade = false;
+                        }
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        var query = from o in db.Vendors select o.Name;
-                        AllVendorNames = query.ToList();
-                        IsUpgrade = false;
+                        ContentDialog content = new ContentDialog()
+                        {
+                            Content = ex.Message,
+                            CloseButtonText = "Ok",
+                        };
                     }
+                    
                 }
                 else
                 {
