@@ -97,16 +97,29 @@ namespace GoninDigital.ViewModels
             {
                 try
                 {
-                    DeleteUserDialog = new ContentDialog()
+                    if (SelectedItem.TypeId == (int)Utils.Constants.UserType.ADMIN)
                     {
+                        ContentDialog content = new()
+                        {
+                            Title = "Warning",
+                            Content = "Admin cannot be deleted",
+                            PrimaryButtonText = "Ok"
+                        };
+                        content.ShowAsync();
+                    }
+                    else
+                    {
+                        DeleteUserDialog = new ContentDialog()
+                        {
 
-                        CloseButtonText = "Close",
-                        Content = new DeleteUserDialog(SelectedItem.Id),
-                        Title = "Add User",
+                            CloseButtonText = "Close",
+                            Content = new DeleteUserDialog(SelectedItem.Id),
+                            Title = "Add User",
 
-                    };
-                    DeleteUserDialog.ShowAsync();
-                    DeleteUserDialog.CloseButtonClick += DeleteUserDialog_CloseButtonClick;
+                        };
+                        DeleteUserDialog.ShowAsync();
+                        DeleteUserDialog.CloseButtonClick += DeleteUserDialog_CloseButtonClick;
+                    }
                 }
                 catch
                 {
