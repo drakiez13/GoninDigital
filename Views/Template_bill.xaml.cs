@@ -24,6 +24,7 @@ namespace GoninDigital.Views
     /// </summary>
     public partial class Template_bill : Window
     {
+
         public Template_bill(Invoice x)
         {
             InitializeComponent();
@@ -55,7 +56,18 @@ namespace GoninDigital.Views
             get { return deliveredInvoices; }
             set { deliveredInvoices = value; OnPropertyChanged(); }
         }
-        
+        private Invoice invoiceCurrent;
+        public Invoice InvoiceCurrent
+        {
+            get { return invoiceCurrent; }
+            set { invoiceCurrent = value; OnPropertyChanged();}
+        }
+        private User customer;
+        public User Customer
+        {
+            get { return customer; }
+            set { customer = value; OnPropertyChanged(); }
+        }
         public export_bill(Invoice x)
         {
             Load(x);
@@ -63,6 +75,8 @@ namespace GoninDigital.Views
         private async void Load(Invoice x)
         {
             DeliveredInvoices = new ObservableCollection<Invoice> { x };
+            Customer = x.Customer;
+            InvoiceCurrent = x;
         }
     }
 }

@@ -279,7 +279,8 @@
                                                    VerticalAlignment="Center"
                                                    FontSize="20"
                                                    Foreground="{DynamicResource SystemControlHighlightAccentBrush}"></TextBlock>
-                                        <ui:AppBarButton Icon="Accept"
+                                        <ui:AppBarButton Icon="Print"
+                                                         Margin="20 0 0 0"
                                                          Label="In hóa đơn"
                                                          HorizontalAlignment="Right"
                                                          CommandParameter="{Binding}"
