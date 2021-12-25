@@ -49,7 +49,7 @@ namespace GoninDigital.SharedControl
                 if (IsCheck != 0)
                 {
                     Error.Foreground = Brushes.Red;
-                    Error.Text = "This account has been deleted";
+                    Error.Text = "This account has been banned";
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace GoninDigital.SharedControl
                         _ = db.SaveChanges();
                     }
                     Error.Foreground = Brushes.Green;
-                    Error.Text = "Deleted Successfully";
+                    Error.Text = "Banned Successfully";
                 }
 
             }    
