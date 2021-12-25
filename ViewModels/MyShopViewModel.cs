@@ -238,19 +238,33 @@ namespace GoninDigital.ViewModels
         public ICommand UpgradeCommand { get; set; }
         public void UpgradeCommandExec()
         {
-            if (upgradeDialog == null)
+            try
             {
-                upgradeDialog = new ContentDialog
+                if (upgradeDialog == null)
                 {
-                    Content = new UpgradeVendorDialog(),
+                    upgradeDialog = new ContentDialog
+                    {
+                        Content = new UpgradeVendorDialog(),
 
-                    Title = "Upgrade",
-                };
+                        Title = "Upgrade",
+                    };
+                }
+                upgradeDialog.ShowAsync();
             }
-            upgradeDialog.ShowAsync();
+            catch (Exception e)
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = "Warning",
+                    Content = e.ToString(),
+                    PrimaryButtonText = "Ok"
+                };
+                dialog.ShowAsync();
+
+            }
         }
         public ICommand RemoveCommand { get; set; }
-        public async void RemoveCommandExec(object o)
+        public void RemoveCommandExec(object o)
         {
             
             using (var db = new GoninDigitalDBContext())
@@ -280,7 +294,7 @@ namespace GoninDigital.ViewModels
                         PrimaryButtonText = "Ok",
 
                     };
-                    await content.ShowAsync();
+                    content.ShowAsync();
                     
                 }
                 catch (Exception e)
@@ -291,7 +305,7 @@ namespace GoninDigital.ViewModels
                         Content = e.ToString(),
                         PrimaryButtonText = "Ok"
                     };
-                     await dialog.ShowAsync();
+                     dialog.ShowAsync();
                     
                 }
             }
@@ -299,28 +313,56 @@ namespace GoninDigital.ViewModels
         public ICommand SaveVendorInfoCommand { get; set; }
         public void SaveVendorConfirm()
         {
-            var dialog = new ContentDialog
+            try
             {
-                Content = "Do you want to change your vendor information ?",
+                var dialog = new ContentDialog
+                {
+                    Content = "Do you want to change your vendor information ?",
 
-                Title = "Confirm",
-                PrimaryButtonText = "Save",
-                CloseButtonText = "Cancel",
-                CloseButtonCommand = new RelayCommand<object>((p) => true, (p) => { ResetVendorInfoExec(); }),
-                PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { SaveVendorInfoExec(); }),
-            };
-            dialog.ShowAsync();
+                    Title = "Confirm",
+                    PrimaryButtonText = "Save",
+                    CloseButtonText = "Cancel",
+                    CloseButtonCommand = new RelayCommand<object>((p) => true, (p) => { ResetVendorInfoExec(); }),
+                    PrimaryButtonCommand = new RelayCommand<object>((p) => true, (p) => { SaveVendorInfoExec(); }),
+                };
+                dialog.ShowAsync();
+            }
+            catch (Exception e)
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = "Warning",
+                    Content = e.ToString(),
+                    PrimaryButtonText = "Ok"
+                };
+                dialog.ShowAsync();
+
+            }
         }
         public ICommand ResetVendorInfoCommand { get; set; }
         public void ResetVendorInfoExec()
         {
-            using (var db = new GoninDigitalDBContext())
+            try
             {
-                Vendor = db.Vendors.Include(o => o.Owner)
-                    .Include(o => o.Products)
-                    .FirstOrDefault(o => o.Owner.UserName == Settings.Default.usrname);
-                db.ProductCategories.ToList();
-                VendorName = Vendor.Name;
+                using (var db = new GoninDigitalDBContext())
+                {
+                    Vendor = db.Vendors.Include(o => o.Owner)
+                        .Include(o => o.Products)
+                        .FirstOrDefault(o => o.Owner.UserName == Settings.Default.usrname);
+                    db.ProductCategories.ToList();
+                    VendorName = Vendor.Name;
+                }
+            }
+            catch (Exception e)
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = "Warning",
+                    Content = e.ToString(),
+                    PrimaryButtonText = "Ok"
+                };
+                dialog.ShowAsync();
+
             }
         }
         public async void SaveVendorInfoExec()
@@ -392,95 +434,157 @@ namespace GoninDigital.ViewModels
 
         public async void EditAvatarExec()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-
-            openFileDialog.Title = "Choose Image..";
-
-            openFileDialog.InitialDirectory = @"C:\";
-            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog() == true)
+            try
             {
-                var linkAvatar = await ImageUploader.UploadAsync(openFileDialog.FileName);
-                using (var db = new GoninDigitalDBContext())
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+
+                openFileDialog.Title = "Choose Image..";
+
+                openFileDialog.InitialDirectory = @"C:\";
+                openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
+                if (openFileDialog.ShowDialog() == true)
                 {
-                    Vendor.Avatar = linkAvatar;
-                    db.Vendors.Update(Vendor);
-                    _ = db.SaveChanges();
-                    Vendor = db.Vendors.Include(o => o.Owner)
-                            .Include(o => o.Products)
-                            .FirstOrDefault(o => o.Owner.UserName == Settings.Default.usrname);
+                    var linkAvatar = await ImageUploader.UploadAsync(openFileDialog.FileName);
+                    using (var db = new GoninDigitalDBContext())
+                    {
+                        Vendor.Avatar = linkAvatar;
+                        db.Vendors.Update(Vendor);
+                        _ = db.SaveChanges();
+                        Vendor = db.Vendors.Include(o => o.Owner)
+                                .Include(o => o.Products)
+                                .FirstOrDefault(o => o.Owner.UserName == Settings.Default.usrname);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = "Error",
+                    Content = e.Message,
+                    PrimaryButtonText = "Ok"
+                };
+                await dialog.ShowAsync();
             }
 
         }
         public async void EditCoverPhotoExec()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-
-            openFileDialog.Title = "Choose Image..";
-
-            openFileDialog.InitialDirectory = @"C:\";
-            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog() == true)
+            try
             {
-                var linkAvatar = await ImageUploader.UploadAsync(openFileDialog.FileName);
-                using (var db = new GoninDigitalDBContext())
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+
+                openFileDialog.Title = "Choose Image..";
+
+                openFileDialog.InitialDirectory = @"C:\";
+                openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+                if (openFileDialog.ShowDialog() == true)
                 {
-                    Vendor.Cover = linkAvatar;
-                    db.Vendors.Update(Vendor);
-                    _ = db.SaveChanges();
-                    Vendor = db.Vendors.Include(o => o.Owner)
-                            .Include(o => o.Products)
-                            .FirstOrDefault(o => o.Owner.UserName == Settings.Default.usrname);
+                    var linkAvatar = await ImageUploader.UploadAsync(openFileDialog.FileName);
+                    using (var db = new GoninDigitalDBContext())
+                    {
+                        Vendor.Cover = linkAvatar;
+                        db.Vendors.Update(Vendor);
+                        _ = db.SaveChanges();
+                        Vendor = db.Vendors.Include(o => o.Owner)
+                                .Include(o => o.Products)
+                                .FirstOrDefault(o => o.Owner.UserName == Settings.Default.usrname);
+                    }
                 }
+            }
+            
+            catch (Exception e)
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = "Error",
+                    Content = e.Message,
+                    PrimaryButtonText = "Ok"
+                };
+                await dialog.ShowAsync();
             }
 
         }
 
         public void CloseBtnExec()
         {
-           
-            using (var db = new GoninDigitalDBContext())
+            try
             {
-                db.Entry(selectedItem).Reload();
-                Products = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).ToList());
+                using (var db = new GoninDigitalDBContext())
+                {
+                    db.Entry(selectedItem).Reload();
+                    Products = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).ToList());
+                }
             }
-
+            catch (Exception e)
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = "Error",
+                    Content = e.Message,
+                    PrimaryButtonText = "Ok"
+                };
+                dialog.ShowAsync();
+            }
         }
         public void EditBtnExec()
         {
-
-            using (var db = new GoninDigitalDBContext())
+            try
             {
-                db.ProductSpecDetails.RemoveRange(db.ProductSpecDetails.Where(o => o.ProductId==selectedItem.Id));
-                SelectedProductSpecs.RemoveAll(o => string.IsNullOrEmpty(o.Value));
-                SelectedProductSpecs.ForEach(o =>
+                using (var db = new GoninDigitalDBContext())
                 {
-                    o.Spec = null;
-                });
-                db.ProductSpecDetails.AddRange(selectedProductSpecs);
-                db.Entry(SelectedItem).State = EntityState.Modified;
-                db.SaveChanges();
-                SelectedItem = selectedItem;
-                Products = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).ToList());
-                ProductCreated = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.CREATED).ToList());
+                    db.ProductSpecDetails.RemoveRange(db.ProductSpecDetails.Where(o => o.ProductId == selectedItem.Id));
+                    SelectedProductSpecs.RemoveAll(o => string.IsNullOrEmpty(o.Value));
+                    SelectedProductSpecs.ForEach(o =>
+                    {
+                        o.Spec = null;
+                    });
+                    db.ProductSpecDetails.AddRange(selectedProductSpecs);
+                    db.Entry(SelectedItem).State = EntityState.Modified;
+                    db.SaveChanges();
+                    SelectedItem = selectedItem;
+                    Products = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.ACCEPTED).ToList());
+                    ProductCreated = new ObservableCollection<Product>(Vendor.Products.Where(o => o.StatusId == (int)Constants.ProductStatus.CREATED).ToList());
+                }
             }
-
+            
+            catch (Exception e)
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = "Error",
+                    Content = e.Message,
+                    PrimaryButtonText = "Ok"
+                };
+                dialog.ShowAsync();
+            }
         }
         public void UpgradeExec()
         {
-
-            using (var db = new GoninDigitalDBContext())
+            try
             {
-                int userId = db.Users.FirstOrDefault(u => u.UserName == Settings.Default.usrname).Id;
-                newVendor.OwnerId = userId;
-                newVendor.ApprovalStatus = (int)Constants.ApprovalStatus.WAITING;
-                db.Vendors.Add(newVendor);
-                Vendor = newVendor;
-                IsUpgrade = true;
-                db.SaveChanges();
+                using (var db = new GoninDigitalDBContext())
+                {
+                    int userId = db.Users.FirstOrDefault(u => u.UserName == Settings.Default.usrname).Id;
+                    newVendor.OwnerId = userId;
+                    newVendor.ApprovalStatus = (int)Constants.ApprovalStatus.WAITING;
+                    db.Vendors.Add(newVendor);
+                    Vendor = newVendor;
+                    IsUpgrade = true;
+                    db.SaveChanges();
+                }
+                upgradeDialog.Hide();
             }
-            upgradeDialog.Hide();
+            catch (Exception e)
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = "Error",
+                    Content = e.Message,
+                    PrimaryButtonText = "Ok"
+                };
+                dialog.ShowAsync();
+            }
         }
         public void UpdateCategorySpecDetails()
         {
