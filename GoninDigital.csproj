@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows10.0.18362.0</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Gonindigital.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +19,10 @@
     <None Remove="Resources\Images\Noel3.jpg" />
     <None Remove="Resources\Images\NoOrderYet.jpg" />
     <None Remove="Resources\Images\ProductListBackgroundFallback.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Gonindigital.ico" />
   </ItemGroup>
 
   <ItemGroup>
