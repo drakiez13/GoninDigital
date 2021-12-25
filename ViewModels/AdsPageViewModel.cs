@@ -87,41 +87,55 @@ namespace GoninDigital.ViewModels
         }
         private void DeleteExec()
         {
-            using (var db = new GoninDigitalDBContext())
+            try
             {
-                var ad = db.Ads.First(x => x.Id == SelectedAd.Id);
-                int count = 0;
-                while (count < L_Ads.Count())
+                using (var db = new GoninDigitalDBContext())
                 {
-                    if (ad.Id == L_Ads[count].Id)
+                    var ad = db.Ads.First(x => x.Id == SelectedAd.Id);
+                    int count = 0;
+                    while (count < L_Ads.Count())
                     {
+                        if (ad.Id == L_Ads[count].Id)
+                        {
 
-                        L_Ads.RemoveAt(count);
+                            L_Ads.RemoveAt(count);
 
-                        break;
+                            break;
+                        }
+                        count += 1;
                     }
-                    count += 1;
+                    var addetails = db.AdDetails.Where(x => x.AdId == ad.Id);
+                    db.AdDetails.RemoveRange(addetails);
+                    db.Ads.Remove(ad);
+                    db.SaveChanges();
                 }
-                var addetails = db.AdDetails.Where(x => x.AdId == ad.Id);
-                db.AdDetails.RemoveRange(addetails);
-                db.Ads.Remove(ad);
-                db.SaveChanges();
+                SelectedAd = new Ad();
+                AdProducts = new ObservableCollection<Product>();
             }
-            SelectedAd = new Ad();
-            AdProducts = new ObservableCollection<Product>();
+            catch
+            {
+                ContentDialog content = new()
+                {
+                    Title = "Warning",
+                    Content = "Expected Exception",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
+            }
         }
         private void UpdateExec()
         {
-            
+            try
+            {
                 if (SelectedAd.Subtitle == "" | SelectedAd.Title == "")
                 {
-                        ContentDialog content = new()
-                        {
-                            Title = "Warning",
-                            Content = "No cell is allowed to be left blank",
-                            PrimaryButtonText = "Ok"
-                        };
-                        content.ShowAsync();
+                    ContentDialog content = new()
+                    {
+                        Title = "Warning",
+                        Content = "No cell is allowed to be left blank",
+                        PrimaryButtonText = "Ok"
+                    };
+                    content.ShowAsync();
                 }
                 else
                 {
@@ -138,19 +152,43 @@ namespace GoninDigital.ViewModels
                     };
                     content.ShowAsync();
                 }
+            }
+            catch
+            {
+                ContentDialog content = new()
+                {
+                    Title = "Warning",
+                    Content = "Expected Exception",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
+            }
         }
         private void AddExec()
         {
-            AddAdDialog = new ContentDialog()
+            try
             {
+                AddAdDialog = new ContentDialog()
+                {
 
-                CloseButtonText = "Close",
-                Content = new AddAdDialog(),
-                Title = "Add Ad",
+                    CloseButtonText = "Close",
+                    Content = new AddAdDialog(),
+                    Title = "Add Ad",
 
-            };
-            AddAdDialog.ShowAsync();
-            AddAdDialog.CloseButtonClick += AddAdDialog_CloseButtonClick;
+                };
+                AddAdDialog.ShowAsync();
+                AddAdDialog.CloseButtonClick += AddAdDialog_CloseButtonClick;
+            }
+            catch
+            {
+                ContentDialog content = new()
+                {
+                    Title = "Warning",
+                    Content = "Expected Exception",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
+            }
 
         }
 
@@ -267,21 +305,34 @@ namespace GoninDigital.ViewModels
         }
         public void SearchAd()
         {
-            string s = SearchName.ToLower();
-            if (SearchName != "")
+            try
             {
-                using (var db = new GoninDigitalDBContext())
+                string s = SearchName.ToLower();
+                if (SearchName != "")
                 {
-                    L_Ads = new ObservableCollection<Ad>(db.Ads);
+                    using (var db = new GoninDigitalDBContext())
+                    {
+                        L_Ads = new ObservableCollection<Ad>(db.Ads);
+                    }
+                    int count = 0;
+                    while (count < L_Ads.Count())
+                    {
+                        if (!L_Ads[count].Title.ToLower().Contains(s))
+                            L_Ads.RemoveAt(count);
+                        else
+                            count += 1;
+                    }
                 }
-                int count = 0;
-                while (count < L_Ads.Count())
+            }
+            catch
+            {
+                ContentDialog content = new()
                 {
-                    if (!L_Ads[count].Title.ToLower().Contains(s))
-                        L_Ads.RemoveAt(count);
-                    else
-                        count += 1;
-                }
+                    Title = "Warning",
+                    Content = "Expected Exception",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
             }
         }
 

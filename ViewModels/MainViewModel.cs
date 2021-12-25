@@ -13,6 +13,7 @@ using GoninDigital.Properties;
 using GoninDigital.SharedControl;
 using System.Windows.Media;
 using Microsoft.EntityFrameworkCore;
+using ModernWpf.Controls;
 
 namespace GoninDigital.ViewModels
 {
@@ -25,6 +26,7 @@ namespace GoninDigital.ViewModels
             {
                 using (var db = new GoninDigitalDBContext())
                 {
+
                     if ((await db.Users.FirstOrDefaultAsync(o => o.UserName == Settings.Default.usrname)).TypeId == (int)Constants.UserType.ADMIN)
                     {
                         var adminWindow = new AdminView();
@@ -32,6 +34,20 @@ namespace GoninDigital.ViewModels
                     }
                     else
                     {
+                        var user = await db.Users.Include(o => o.Bans).Where(o => o.UserName == Settings.Default.usrname).SingleAsync();
+                        if (user.Bans != null && user.Bans.Count > 0)
+                        {
+                            if (user.Bans.First().EndDate >= DateTime.Now)
+                            {
+                                WindowManager.ChangeWindowContent(p, Resources.LoginWindowTitle, Resources.LoginControlPath);
+                                var content = new ContentDialog();
+                                content.Title = "Warning";
+                                content.Content = "Your account has been blocked to " + user.Bans.First().EndDate.ToString() + " because " + user.Bans.First().Reason;
+                                content.PrimaryButtonText = "Ok";
+                                await content.ShowAsync();
+                                return;
+                            }
+                        }
                         DashBoard.PreLoad();
                         var dashboardWindow = new DashBoard();
                         await Task.Delay(3000);

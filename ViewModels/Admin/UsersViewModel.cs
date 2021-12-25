@@ -31,6 +31,12 @@ namespace GoninDigital.ViewModels
             get { return addUserDialog; }
             set { addUserDialog = value; }
         }
+        private ContentDialog deleteUserDialog;
+        public ContentDialog DeleteUserDialog
+        {
+            get { return deleteUserDialog; }
+            set { deleteUserDialog = value; }
+        }
 
         public ICommand UpdateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
@@ -38,12 +44,7 @@ namespace GoninDigital.ViewModels
         #endregion
         public UsersViewModel()
         {
-            using (var db = new GoninDigitalDBContext())
-            {
-                list = new ObservableCollection<User>(db.Users);
-            }
-            
-
+            Load_Users();
             #region UpdateCommand
             UpdateCommand = new RelayCommand<Object>((p) =>
             {
@@ -54,19 +55,32 @@ namespace GoninDigital.ViewModels
                 return false;
             }, (p) =>
             {
-                using (var db = new GoninDigitalDBContext())
+                try
                 {
-                    db.Users.Update(selectedItem);
-                    _= db.SaveChanges();
-                }
-                ContentDialog content = new()
-                {
-                    Title = "Success",
+                    using (var db = new GoninDigitalDBContext())
+                    {
+                        db.Users.Update(selectedItem);
+                        _ = db.SaveChanges();
+                    }
+                    ContentDialog content = new()
+                    {
+                        Title = "Success",
 
-                    Content = "Updated Successfully",
-                    PrimaryButtonText = "Ok"
-                };
-                content.ShowAsync();
+                        Content = "Updated Successfully",
+                        PrimaryButtonText = "Ok"
+                    };
+                    content.ShowAsync();
+                }
+                catch
+                {
+                    ContentDialog content = new()
+                    {
+                        Title = "Warning",
+                        Content = "Expected Exception",
+                        PrimaryButtonText = "Ok"
+                    };
+                    content.ShowAsync();
+                }
 
             });
             #endregion
@@ -83,24 +97,23 @@ namespace GoninDigital.ViewModels
             {
                 try
                 {
-                    using (var db = new GoninDigitalDBContext())
+                    DeleteUserDialog = new ContentDialog()
                     {
-                        db.Users.First(x => x.Id == SelectedItem.Id).TypeId = (int)Utils.Constants.UserType.BAN;
-                        db.SaveChanges();
-                    }
-                    for (int i = 0; i < List.Count(); i++)
-                        if (List[i].Id == SelectedItem.Id)
-                        {
-                            List.RemoveAt(i);
-                            break;
-                        }
+
+                        CloseButtonText = "Close",
+                        Content = new DeleteUserDialog(SelectedItem.Id),
+                        Title = "Add User",
+
+                    };
+                    DeleteUserDialog.ShowAsync();
+                    DeleteUserDialog.CloseButtonClick += DeleteUserDialog_CloseButtonClick;
                 }
                 catch
                 {
                     ContentDialog content = new()
                     {
                         Title = "Warning",
-                        Content = "Execution error",
+                        Content = "Unexpected Exception",
                         PrimaryButtonText = "Ok"
                     };
                     content.ShowAsync();
@@ -112,57 +125,107 @@ namespace GoninDigital.ViewModels
             AddCommand = new RelayCommand<Object>((p) => true, (p) =>{ AddExec(); });
             #endregion
         }
+
+        private void DeleteUserDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            Load_Users();
+        }
         #region Methods
         public void SearchChanged()
         {
             if (SearchName == "")
             {
-                using (var db = new GoninDigitalDBContext())
-                {
-                    List = new ObservableCollection<User>(db.Users);
-                }
+                Load_Users();
             }
         }
         public void SearchUser()
         {
-            string s = SearchName.ToLower();
-            if (SearchName != "")
+            try
             {
-                using (var db = new GoninDigitalDBContext())
+                string s = SearchName.ToLower();
+                if (SearchName != "")
                 {
-                    List = new ObservableCollection<User>(db.Users);
+                    using (var db = new GoninDigitalDBContext())
+                    {
+                        List = new ObservableCollection<User>(db.Users);
+                    }
+                    int count = 0;
+                    while (count < List.Count())
+                    {
+                        if (!List[count].UserName.ToLower().Contains(s) & !List[count].FirstName.ToLower().Contains(s) & !List[count].LastName.ToLower().Contains(s))
+                            List.RemoveAt(count);
+                        else
+                            count += 1;
+                    }
                 }
-                int count = 0;
-                while (count < List.Count())
+            }
+            catch
+            {
+                ContentDialog content = new()
                 {
-                    if (!List[count].UserName.ToLower().Contains(s) & !List[count].FirstName.ToLower().Contains(s) & !List[count].LastName.ToLower().Contains(s))
+                    Title = "Warning",
+                    Content = "Expected Exception",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
+            }
+        }
+        public void AddExec()
+        {
+            try
+            {
+                AddUserDialog = new ContentDialog()
+                {
+
+                    CloseButtonText = "Close",
+                    Content = new AddUserDialog(),
+                    Title = "Add User",
+
+                };
+                AddUserDialog.ShowAsync();
+                AddUserDialog.CloseButtonClick += AddUserDialog_CloseButtonClick;
+            }
+            catch
+            {
+                ContentDialog content = new()
+                {
+                    Title = "Warning",
+                    Content = "Expected Exception",
+                    PrimaryButtonText = "Ok"
+                };
+                content.ShowAsync();
+            }
+
+        }
+        private void Load_Users()
+        {
+            using (var db = new GoninDigitalDBContext())
+            {
+                var t = db.Bans.ToList();
+                List = new ObservableCollection<User>(db.Users);
+                int count = 0;
+                while (count < list.Count())
+                {
+                    bool flag = false;
+                    foreach (Ban ban in t)
+                    {
+                        if (ban.UserId == List[count].Id)
+                        {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if (flag)
                         List.RemoveAt(count);
                     else
                         count += 1;
                 }
             }
         }
-        public void AddExec()
-        {
-            AddUserDialog = new ContentDialog()
-            {
-
-                CloseButtonText = "Close",
-                Content = new AddUserDialog(),
-                Title = "Add User",
-
-            };
-            AddUserDialog.ShowAsync();
-            AddUserDialog.CloseButtonClick += AddUserDialog_CloseButtonClick;
-
-        }
 
         private void AddUserDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            using (var db = new GoninDigitalDBContext())
-            {
-                List = new ObservableCollection<User>(db.Users);
-            }
+            Load_Users();
         }
         #endregion
     }

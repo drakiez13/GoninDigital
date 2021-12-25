@@ -99,9 +99,7 @@ namespace GoninDigital.Models
             {
                 entity.ToTable("Ban");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.EndDate)
                     .HasColumnType("datetime")
@@ -114,9 +112,9 @@ namespace GoninDigital.Models
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.Ban)
-                    .HasForeignKey<Ban>(d => d.Id)
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Bans)
+                    .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Ban_User");
             });
