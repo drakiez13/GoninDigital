@@ -24,6 +24,7 @@ namespace GoninDigital.SharedControl
         public AddProductDialog()
         {
             InitializeComponent();
+           
         }
 
         private void cbCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)

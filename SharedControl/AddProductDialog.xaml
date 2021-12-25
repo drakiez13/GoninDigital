@@ -18,7 +18,7 @@
                                   Width="80">
 
                 </ui:PersonPicture>
-                <Button Content="Edit"
+                <Button Content="Add"
                         Margin="20"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
