@@ -8,6 +8,7 @@
       xmlns:ui="http://schemas.modernwpf.com/2019"
       d:DesignHeight="600" d:DesignWidth="950"
       d:Background="White"
+      DataContext="{StaticResource UserSettingVM}"
       Title="UserPage">
     <ScrollViewer>
         <Grid>
@@ -27,7 +28,7 @@
                     <ColumnDefinition Width="350"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Margin="10 0 0 0"
+                <Grid Margin="20 0 0 0"
                   VerticalAlignment="Top"
                   MaxWidth="400">
                     <Grid.RowDefinitions>
@@ -95,7 +96,7 @@
                 </Grid>
                 <Grid Grid.Column="1"
                   Width="570"
-                  Margin="20 0 0 0"
+                  Margin="10 0 0 0"
                   MaxWidth="600"
                   Height="550"
                   VerticalAlignment="Top"

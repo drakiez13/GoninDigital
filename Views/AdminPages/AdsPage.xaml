@@ -74,10 +74,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <ScrollViewer Grid.Row="2"
-                      Margin="5 10 20 10"
-                      Visibility="{Binding AdProducts.Count,
-                           Converter={StaticResource ListCountToVisibility},
-                           ConverterParameter=True}">
+                      Margin="5 10 20 10">
             <StackPanel>
                 <Label Content="Preview"
                        FontWeight="Bold"

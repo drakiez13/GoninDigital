@@ -13,8 +13,7 @@
       Title="ProductManagerTab">
     <ui:Page.Resources>
         <CollectionViewSource x:Key="ProductsCVS"
-                              Source="{Binding Products}"
-                              >
+                              Source="{Binding Products}">
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="Category.Name" />
             </CollectionViewSource.GroupDescriptions>

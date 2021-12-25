@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows10.0.18362.0</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Gonindigital.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,11 +14,20 @@
     <None Remove="Resources\Images\HomeProductCardGroupBackground.png" />
     <None Remove="Resources\Images\HomeProductCardGroupBackground2.jpg" />
     <None Remove="Resources\Images\LoginImage.jpg" />
+    <None Remove="Resources\Images\Noel.jpg" />
+    <None Remove="Resources\Images\Noel2.jpg" />
+    <None Remove="Resources\Images\Noel3.jpg" />
     <None Remove="Resources\Images\NoOrderYet.jpg" />
     <None Remove="Resources\Images\ProductListBackgroundFallback.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Gonindigital.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LiveCharts" Version="0.9.7" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -36,6 +46,9 @@
     <Resource Include="Resources\Images\HomeProductCardGroupBackground.png" />
     <Resource Include="Resources\Images\HomeProductCardGroupBackground2.jpg" />
     <Resource Include="Resources\Images\LoginImage.jpg" />
+    <Resource Include="Resources\Images\Noel.jpg" />
+    <Resource Include="Resources\Images\Noel2.jpg" />
+    <Resource Include="Resources\Images\Noel3.jpg" />
     <Resource Include="Resources\Images\NoOrderYet.jpg" />
     <Resource Include="Resources\Images\ProductListBackgroundFallback.jpg" />
   </ItemGroup>
