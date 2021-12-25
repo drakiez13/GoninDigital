@@ -30,7 +30,7 @@ Là người sử dụng hệ thống để mua hàng. Có khả năng xem thôn
 - Frontend: XAML, C#, WPF
 - Cơ sở dữ liệu: SQL Server
 - IDE: Microsoft Visual Studio 2019
-- Thư viện hỗ trợ: MordernWpfUI, Microsoft.Xaml.Behaviors.Wpf, Microsoft.EntityFrameworkCore.SqlServer, Microsoft.EntityFrameworkCore.Tool, System.Drawing.Common
+- Thư viện hỗ trợ: MordernWpfUI, Microsoft.Xaml.Behaviors.Wpf, Microsoft.EntityFrameworkCore, System.Drawing.Common
 ## 5. Hướng dẫn cài đặt
 <details>
   <summary>Build from source </summary>
@@ -41,7 +41,7 @@ Là người sử dụng hệ thống để mua hàng. Có khả năng xem thôn
 - Mở project bằng Visual Studio và chạy file GoninDigital.sln 
  </details>
  <details>
-  <summary>Install from packet </summary>
+  <summary>Install from package </summary>
   
 - Download file zip tại mục release
 - Giải nén file zip và mở để sử dụng 
