@@ -32,7 +32,7 @@ namespace GoninDigital.Views.DashBoardPages
         
         public MyShopPage()
         {
-            this.DataContext = new MyShopViewModel();
+            //this.DataContext = new MyShopViewModel();
             InitializeComponent();
             pages = new Dictionary<string, Page>();
         }

@@ -21,12 +21,10 @@ namespace GoninDigital.Views.DashBoardPages
     /// </summary>
     public partial class ShopProductManagerPage : Page
     {
-        private Dictionary<string, Page> pages;
         public ShopProductManagerPage()
         {
             this.DataContext = new MyShopViewModel();
             InitializeComponent();
-            pages = new Dictionary<string, Page>();
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

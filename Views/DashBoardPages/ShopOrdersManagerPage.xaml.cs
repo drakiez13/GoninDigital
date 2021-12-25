@@ -21,11 +21,9 @@ namespace GoninDigital.Views.DashBoardPages
     /// </summary>
     public partial class ShopOrdersManagerPage : Page
     {
-        private Dictionary<string, Page> pages;
         public ShopOrdersManagerPage()
         {
             InitializeComponent();
-            pages = new Dictionary<string, Page>();
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
