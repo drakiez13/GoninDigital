@@ -22,44 +22,56 @@ namespace GoninDigital.ViewModels
         public ICommand LoadedWidnowCommand { get; set; }
         private async void Load(Window p)
         {
-            if (Settings.Default.usrname != "" && Settings.Default.passwod != "")
+            try
             {
-                using (var db = new GoninDigitalDBContext())
+                if (Settings.Default.usrname != "" && Settings.Default.passwod != "")
                 {
+                    using (var db = new GoninDigitalDBContext())
+                    {
 
-                    if ((await db.Users.FirstOrDefaultAsync(o => o.UserName == Settings.Default.usrname)).TypeId == (int)Constants.UserType.ADMIN)
-                    {
-                        var adminWindow = new AdminView();
-                        WindowManager.ChangeWindowContent(p, adminWindow, Resources.AdminpageWindowTitle, Resources.AdminpageControlPath);
-                    }
-                    else
-                    {
-                        var user = await db.Users.Include(o => o.Bans).Where(o => o.UserName == Settings.Default.usrname).SingleAsync();
-                        if (user.Bans != null && user.Bans.Count > 0)
+                        if ((await db.Users.FirstOrDefaultAsync(o => o.UserName == Settings.Default.usrname)).TypeId == (int)Constants.UserType.ADMIN)
                         {
-                            if (user.Bans.First().EndDate >= DateTime.Now)
-                            {
-                                WindowManager.ChangeWindowContent(p, Resources.LoginWindowTitle, Resources.LoginControlPath);
-                                var content = new ContentDialog();
-                                content.Title = "Warning";
-                                content.Content = "Your account has been blocked to " + user.Bans.First().EndDate.ToString() + " because " + user.Bans.First().Reason;
-                                content.PrimaryButtonText = "Ok";
-                                await content.ShowAsync();
-                                return;
-                            }
+                            var adminWindow = new AdminView();
+                            WindowManager.ChangeWindowContent(p, adminWindow, Resources.AdminpageWindowTitle, Resources.AdminpageControlPath);
                         }
-                        DashBoard.PreLoad();
-                        var dashboardWindow = new DashBoard();
-                        await Task.Delay(3000);
-                        WindowManager.ChangeWindowContent(p, dashboardWindow, Resources.HomepageWindowTitle, Resources.HomepageControlPath);
+                        else
+                        {
+                            var user = await db.Users.Include(o => o.Bans).Where(o => o.UserName == Settings.Default.usrname).SingleAsync();
+                            if (user.Bans != null && user.Bans.Count > 0)
+                            {
+                                if (user.Bans.First().EndDate >= DateTime.Now)
+                                {
+                                    WindowManager.ChangeWindowContent(p, Resources.LoginWindowTitle, Resources.LoginControlPath);
+                                    var content = new ContentDialog();
+                                    content.Title = "Warning";
+                                    content.Content = "Your account has been blocked to " + user.Bans.First().EndDate.ToString() + " because " + user.Bans.First().Reason;
+                                    content.PrimaryButtonText = "Ok";
+                                    await content.ShowAsync();
+                                    return;
+                                }
+                            }
+                            DashBoard.PreLoad();
+                            var dashboardWindow = new DashBoard();
+                            await Task.Delay(3000);
+                            WindowManager.ChangeWindowContent(p, dashboardWindow, Resources.HomepageWindowTitle, Resources.HomepageControlPath);
+                        }
                     }
-                }
 
+                }
+                else //login
+                {
+                    //var loginWindow = new LoginViewModel(p);
+                    WindowManager.ChangeWindowContent(p, Resources.LoginWindowTitle, Resources.LoginControlPath);
+                }
             }
-            else //login
+            catch (Exception ex)
             {
-                //var loginWindow = new LoginViewModel(p);
-                WindowManager.ChangeWindowContent(p, Resources.LoginWindowTitle, Resources.LoginControlPath);
+                var content = new ContentDialog();
+                content.Title = "Warning";
+                content.Content = "Cannot connect to Database";
+                content.PrimaryButtonText = "Ok";
+                await content.ShowAsync();
+                Application.Current.Shutdown();
             }
         }
         public MainViewModel()
