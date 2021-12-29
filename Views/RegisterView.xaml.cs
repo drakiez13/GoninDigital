@@ -57,7 +57,7 @@ namespace GoninDigital.Views
                 ContentDialog content = new()
                 {
                     Title = "Warning",
-                    Content = "Your Password not match, Pleace try again!",
+                    Content = "Your Password not match, Please try again!",
                     PrimaryButtonText = "Ok"
                 };
                 content.ShowAsync();
