@@ -34,38 +34,48 @@ namespace GoninDigital.SharedControl
             string passEncode = Cryptography.MD5Hash(Cryptography.Base64Encode(OldPasswordBox.Password));
             if (passEncode == Settings.Default.passwod)
             {
-                
-                if (NewPasswordBox.Password == ConfirmNewPasswordBox.Password)
+                if (NewPasswordBox.Password != "")
                 {
-                    if (NewPasswordBox.Password == OldPasswordBox.Password)
+                    if (NewPasswordBox.Password == ConfirmNewPasswordBox.Password)
                     {
-                        Error.Text = "Old password and new password is same";
+                        if (NewPasswordBox.Password == OldPasswordBox.Password)
+                        {
+                            Error.Text = "Old password and new password is same";
+                            Error.Foreground = new SolidColorBrush(Colors.Red);
+                        }
+                        else
+                        {
+                            using (var db = new GoninDigitalDBContext())
+                            {
+                                string Encode = Cryptography.MD5Hash(Cryptography.Base64Encode(NewPasswordBox.Password));
+                                db.Users.First(o => o.UserName == Settings.Default.usrname).Password = Encode;
+                                db.SaveChanges();
+                            }
+                            NewPasswordBox.Password = "";
+                            OldPasswordBox.Password = "";
+                            ConfirmNewPasswordBox.Password = "";
+                            Error.Text = "Your password is changed";
+                            Error.Foreground = new SolidColorBrush(Colors.Green);
+                        }
+
                     }
                     else
                     {
-                        using (var db = new GoninDigitalDBContext())
-                        {
-                            string Encode = Cryptography.MD5Hash(Cryptography.Base64Encode(NewPasswordBox.Password));
-                            db.Users.First(o => o.UserName == Settings.Default.usrname).Password = Encode;
-                            db.SaveChanges();
-                        }
-                        NewPasswordBox.Password = "";
-                        OldPasswordBox.Password = "";
-                        ConfirmNewPasswordBox.Password = "";
-                        Error.Text = "Your password is changed";
-                        Error.Foreground = new SolidColorBrush(Colors.Green);
+                        Error.Text = "Password and confirm password is not match";
+                        Error.Foreground = new SolidColorBrush(Colors.Red);
                     }
-                    
                 }
                 else
                 {
-                    Error.Text = "Password and confirm password is not match";
+                    Error.Text = "New Password was null";
+                    Error.Foreground = new SolidColorBrush(Colors.Red);
                 }
+                
             }
             else
             {
-                Error.Text = "";
                 Error.Text = "Your password is wrong";
+                Error.Foreground = new SolidColorBrush(Colors.Red);
             }
         }
     }
