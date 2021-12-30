@@ -1,7 +1,6 @@
   # Gonin Digital
   
  ## 1. Giới thiệu
-- Đồ án cuối kì môn Lập trình trực quan - IT008
 - Tên đề tài: Phần nềm mua bán thiết bị, linh kiện điện tử online
 - Giảng viên hướng dẫn: Thầy Nguyễn Tấn Toàn
 
